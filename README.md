@@ -10,3 +10,6 @@ BlueWave Onboard helps app owners build knowledge and user-experience oriented a
 - Links
 
 This is a work-in-progress application, and all the source code is available under GNU AGPLv3.
+
+![Main dashboard](https://github.com/bluewave-labs/onboarding/blob/main/Screenshot.png?raw=true)
+
