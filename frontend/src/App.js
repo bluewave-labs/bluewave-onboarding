@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 
+
 function App() {
   const [isSidebar, setIsSidebar] = useState(true);
 

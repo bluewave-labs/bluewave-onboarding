@@ -29,6 +29,7 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script src="script.js"></script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -39,5 +40,45 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <!--website input-->
+    <div class="input-group">
+      <label for="website">Website</label>
+      <input type="text" id="website" placeholder="http://www.untiteledui.com" class="input input-website">
+      <small class="hint">This is a hint text to help user.</small>
+    </div>
+
+    <!--Email input-->
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" class="input" value="olivia@untitledui.com">
+      <small class="hint">This is a hint text to help user.</small>
+    </div>
+
+    <!--Email error message-->
+    <div class="input-group">
+      <label for="email-error">Email</label>
+      <input type="email" id="email-error" class="input input-error" value="olivia@untitledui.com">
+      <small class="error-message">This is an error message.</small>
+
+      <!--Description-->
+      <div class="input-group">
+        <label for="description-tags">Description</label>
+        <div class="input input-tags">
+          <span class="tag">Design</span>
+          <span class="tag">Software</span>
+          <span class="tag">Marketing</span>
+          <input type="text" id="description-tags" placeholder="Enter a description..." class="input-description">
+        </div>
+        <small class="hint">This is a hint text to help user.</small>
+      </div>
+
+      <!--Description error message-->
+      <div class="input-group">
+        <label for="description-error">Description</label>
+        <textarea id="description-error" class="input input-description-error" placeholder="Enter a description..."></textarea>
+        <small class="error-message">This is an error message.</small>
+      </div>
+    </div>
   </body>
 </html>
+
