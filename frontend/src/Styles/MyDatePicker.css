@@ -1,0 +1,20 @@
+/* selected range color */
+.css-1juxbee-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected{
+  background-color: #7F56D9 !important;
+  color: white;
+}
+
+/* today's day color */
+.css-tbuks1-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected {
+  color: #fff;
+  background-color: #7F56D9 !important;
+  font-weight: 500;
+}
+
+/* apply button color */
+.apply {
+  color: white;
+  background-color: #7F56D9;
+}
+
+  
