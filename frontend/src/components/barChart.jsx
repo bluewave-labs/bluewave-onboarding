@@ -1,6 +1,5 @@
-// src/components/BarChart.jsx
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Bar } from 'react-charts-2';
 
 // Data configuration for the Bar chart
 const data = {
