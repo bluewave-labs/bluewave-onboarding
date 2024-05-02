@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom";
 // import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
+import Logos from "./components/Logos";
+import TextEditor from "./TextEditor";
 
 
 function App() {
@@ -17,6 +19,9 @@ function App() {
               <Route path="/" element={<Dashboard />} />   
                <barChart />
             <lineChart /> 
+            <ToolTip />
+            <Logos />
+            <TextEditor />
             </Routes>
           </main>
     </div>
