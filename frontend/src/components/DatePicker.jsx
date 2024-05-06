@@ -7,17 +7,19 @@ import '../Styles/MyDatePicker.css';
 
 const MyDatePicker = ({ onClose }) => {
   const [dateRange, setDateRange] = useState([null, null]);
+  const [selectedButton, setSelectedButton] = useState(null);
 
   const handleDateChange = (newDateRange) => {
     setDateRange(newDateRange);
   };
 
-  const handleShortcut = (startOffset, endOffset) => {
+  const handleShortcut = (startOffset, endOffset, buttonId) => {
     const startDate = new Date();
     startDate.setDate(startDate.getDate() + startOffset);
     const endDate = new Date();
     endDate.setDate(endDate.getDate() + endOffset);
     setDateRange([startDate, endDate]);
+    setSelectedButton(buttonId);
   };
 
   const handleApply = () => {
@@ -27,6 +29,27 @@ const MyDatePicker = ({ onClose }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={enUS}>
       <div className="date-picker-container">
+        <div className="button-container">
+          <button
+            className={selectedButton === 'today' ? 'selected' : ''}
+            onClick={() => handleShortcut(0, 0, 'today')}>Today</button>
+            <button
+            className={selectedButton === 'today' ? 'selected' : ''} onClick={() => handleShortcut(-1, -1)}>Yesterday</button>
+            <button
+            className={selectedButton === 'today' ? 'selected' : ''} onClick={() => handleShortcut(-6, 0)}>This Week</button>
+            <button
+            className={selectedButton === 'today' ? 'selected' : ''} onClick={() => handleShortcut(-13, -7)}>Last Week</button>
+            <button
+            className={selectedButton === 'today' ? 'selected' : ''} onClick={() => handleShortcut(-29, 0)}>This Month</button>
+            <button
+            className={selectedButton === 'today' ? 'selected' : ''} onClick={() => handleShortcut(-59, -30)}>Last Month</button>
+            <button
+            className={selectedButton === 'today' ? 'selected' : ''} onClick={() => handleShortcut(-364, 0)}>This Year</button>
+            <button
+            className={selectedButton === 'today' ? 'selected' : ''} onClick={() => handleShortcut(-729, -365)}>Last Year</button>
+            <button
+            className={selectedButton === 'today' ? 'selected' : ''} onClick={() => handleShortcut(-36500, 0)}>All Time</button>
+        </div>
         <div className="calendar-container">
           <DateRangeCalendar
             startText="Start Date"
@@ -38,21 +61,11 @@ const MyDatePicker = ({ onClose }) => {
             toolbarFormat="MMM d"
             calendars={2}
           />
-          <div className="button-container">
-            <button onClick={() => handleShortcut(0, 0)}>Today</button>
-            <button onClick={() => handleShortcut(-1, -1)}>Yesterday</button>
-            <button onClick={() => handleShortcut(-6, 0)}>This Week</button>
-            <button onClick={() => handleShortcut(-13, -7)}>Last Week</button>
-            <button onClick={() => handleShortcut(-29, 0)}>This Month</button>
-            <button onClick={() => handleShortcut(-59, -30)}>Last Month</button>
-            <button onClick={() => handleShortcut(-364, 0)}>This Year</button>
-            <button onClick={() => handleShortcut(-729, -365)}>Last Year</button>
-            <button onClick={() => handleShortcut(-36500, 0)}>All Time</button>
-          </div>
-          <div className="button-container">
-            <button onClick={onClose}>Cancel</button>
-            <button className="apply" onClick={handleApply}>Apply</button>
-          </div>
+        </div>
+        
+        <div className="button-container1">
+          <button className="cancel" onClick={onClose}>Cancel</button>
+          <button className="apply" onClick={handleApply}>Apply</button>
         </div>
       </div>
     </LocalizationProvider>

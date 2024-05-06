@@ -1,20 +1,103 @@
-/* selected range color */
-.css-1juxbee-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected{
-  background-color: #7F56D9 !important;
-  color: white;
+/* Start date color */
+.css-grqin-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected {
+  background-color: #7f56d9 !important;
+  color: white !important;
 }
 
-/* today's day color */
-.css-tbuks1-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected {
-  color: #fff;
-  background-color: #7F56D9 !important;
-  font-weight: 500;
+/* End date color */
+.css-1juxbee-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected {
+  background-color: #7f56d9 !important;
+  color: white !important;
 }
 
-/* apply button color */
+/* Dates between start and end */
+.MuiPickersDay-rangeIntervalDay:not(.Mui-selected):not(:first-child):not(:last-child) {
+  background-color: #f9fafb !important;
+  color: #000 !important; 
+}
+/* Individual button */
+.button-container button {
+  width: 160px;
+  height: 40px;
+  padding: var(--spacing-md, 8px) var(--spacing-xl, 16px);
+  align-items: center;
+  border-radius: var(--radius-sm, 6px);
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+/* Individual button when selected */
+.button-container button.selected {
+  background-color: #f9fafb;
+  border-color: #f9fafb;
+}
+
+/* Container */
+.date-picker-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 980px;
+}
+
+/* Button container */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-xs, 4px);
+  padding: var(--spacing-lg, 12px) var(--spacing-xl, 16px);
+  order: 0; 
+}
+
+/* Apply and Cancel buttons container */
+.button-container1 {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%; 
+  margin-top: -36px;
+  margin-left: 70%;
+  padding: var(--spacing-xl, 16px);
+  align-items: flex-start;
+  gap: var(--spacing-lg, 12px);
+  align-self: stretch;
+}
+
+/* Individual button */
+.button-container1 button {
+  padding: 10px 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radius-xs, 4px);
+}
+
+/* Apply button */
 .apply {
+  background-color: #7f56d9;
   color: white;
-  background-color: #7F56D9;
+  width: 142px;
+  height: 34px;
+  gap: var(--spacing-xs, 4px);
+  flex: 1 0 0;
+  border: 1px solid var(--Component-colors-Components-Buttons-Primary-button-primary-border, #7F56D9);
+  background: var(--Component-colors-Components-Buttons-Primary-button-primary-bg, #7F56D9);
+
+  /* Shadows/shadow-xs */
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 }
 
-  
+/* Cancel button */
+.cancel {
+  background-color: #fff;
+  color: #344054;
+  width: 142px;
+  height: 34px;
+  gap: var(--spacing-xs, 4px);
+  flex: 1 0 0;
+  border: 1px solid var(--Component-colors-Components-Buttons-Secondary-button-secondary-border, #D0D5DD);
+  background: var(--Component-colors-Components-Buttons-Secondary-button-secondary-bg, #FFF);
+
+  /* Shadows/shadow-xs */
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}

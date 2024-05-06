@@ -1,38 +1,49 @@
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, TablePagination } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField } from '@mui/material';
+import '../Styles/Table.css';
 
 const MyTable = ({ data }) => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
 
   if (!data) {
     return null;
   }
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage) => {
     setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
   };
 
   const filteredData = data.filter(item =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const pageCount = Math.ceil(filteredData.length / rowsPerPage);
+
+  const displayData = filteredData.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+
+  const pageNumbers = [];
+  for (let i = 0; i < pageCount; i++) {
+    pageNumbers.push(i);
+  }
+
   return (
-    <div>
-      <TextField
+    <div className="tableContainer">
+      <div className="companyHeading">
+        Company Members 
+        <span className="totalEntriesCircle"> {data.length}</span>
+        
+      </div>
+      <TextField className='searchBox'
         label="Search"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+      
       <TableContainer component={Paper}>
         <Table>
-          <TableHead>
+          <TableHead className='tableHeadRow'>
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Status</TableCell>
@@ -42,7 +53,7 @@ const MyTable = ({ data }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
+            {displayData.map(row => (
               <TableRow key={row.id}>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.status}</TableCell>
@@ -54,15 +65,37 @@ const MyTable = ({ data }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={filteredData.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      <div className="paginationContainer">
+        <button className="direct_buttons"
+          onClick={() => handleChangePage(page - 1)}
+          disabled={page === 0}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M15.8332 10.0001H4.1665M4.1665 10.0001L9.99984 15.8334M4.1665 10.0001L9.99984 4.16675" stroke="#344054" stroke-width="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          Previous
+        </button>
+        <div className="paginationNumbers">
+          {pageNumbers.map((pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => handleChangePage(pageNumber)}
+              disabled={pageNumber === page}
+            >
+              {pageNumber + 1}
+            </button>
+          ))}
+        </div>
+        <button className="direct_buttons"
+          onClick={() => handleChangePage(page + 1)}
+          disabled={page >= pageCount - 1}
+        >
+          Next
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M4.1665 10.0001H15.8332M15.8332 10.0001L9.99984 4.16675M15.8332 10.0001L9.99984 15.8334" stroke="#344054" stroke-width="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
     </div>
   );
 };

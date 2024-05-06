@@ -10,12 +10,12 @@ function App() {
   return (
     <div className="app">
       <Sidebar isSidebar={isSidebar} />
-          <main className="content">
-            {/* <Topbar setIsSidebar={setIsSidebar} /> */}
-            <Routes>
-              <Route path="/" element={<Dashboard />} />           
-            </Routes>
-          </main>
+      <main className="content">
+        {/* <Topbar setIsSidebar={setIsSidebar} /> */}
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+        </Routes>
+      </main>
     </div>
   );
 }
