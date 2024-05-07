@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from 'sequelize';
 require('dotenv').config(); // Load environment variables from .env file
 
 const databaseConfig = {
@@ -34,4 +34,4 @@ const databaseConfig = {
 const env = process.env.NODE_ENV || 'development';
 const sequelize = new Sequelize(databaseConfig[env]);
 
-module.exports = sequelize;
+export default sequelize;
