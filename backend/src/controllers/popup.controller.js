@@ -6,7 +6,8 @@ const popup = async (req, res) =>{
             {
                 no:1,
                 headerText: 'test header text',
-                headerBg : '#A2A2A2',
+                headerTextColor: '#5F5014',
+                headerBg : '#4F9EBF',
                 contentHtml : 'tek content',
                 font: '14px',
                 fontColor: '#AAAAAA',
