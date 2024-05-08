@@ -3,7 +3,6 @@ import Header from "../../components/Header";
 import MyDatePicker from "../../components/DatePicker/DatePicker";
 import MyTabs from "../../components/Tabs/Tabs";
 import MyTable from "../../components/Table/Table";
-import './Index.css';
 
 const Dashboard = () => {
     
