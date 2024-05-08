@@ -1,21 +1,12 @@
-import React, { useState } from 'react';
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import Header from "../../components/Header";
-import MyDatePicker from "../../components/DatePicker";
-import MyTabs from "../../components/Tabs";
-import MyTable from "../../components/Table";
-import '../../Styles/Index.css';
+import MyDatePicker from "../../components/DatePicker/DatePicker";
+import MyTabs from "../../components/Tabs/Tabs";
+import MyTable from "../../components/Table/Table";
+import './Index.css';
 
 const Dashboard = () => {
-    const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-
-    const handleDatePickerButtonClick = () => {
-        setIsDatePickerOpen(true);
-    };
-
-    const handleDatePickerClose = () => {
-        setIsDatePickerOpen(false);
-    };
+    
     const demoData = [
         { id: 1, name: "John Doe1", status: "Active", role:"Frontend Dev", team:"Development", hireDate:"10 April, 2024" },
         { id: 2, name: "Jane Smith2", status: "Active", role:"Frontend Dev", team:"Development", hireDate:"14 Jan, 2023" },
@@ -79,8 +70,7 @@ const Dashboard = () => {
                 <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
                 
             </Box>
-            <Button className='dateSelect' onClick={handleDatePickerButtonClick}>Select Date</Button>
-            {isDatePickerOpen && <MyDatePicker onClose={handleDatePickerClose} />}
+            <MyDatePicker/>
             <MyTabs />
             <MyTable data={demoData} />
         </Box>

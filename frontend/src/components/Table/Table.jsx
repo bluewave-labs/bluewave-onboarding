@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField } from '@mui/material';
-import '../Styles/Table.css';
+import './TableStyles.css';
 
 const MyTable = ({ data }) => {
   const [page, setPage] = useState(0);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Tab, Tabs } from '@mui/material';
-import '../Styles/Tabs.css';
+import './TabStyles.css';
 
 const MyTabs = () => {
   const [value, setValue] = useState(0);
