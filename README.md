@@ -9,7 +9,7 @@ BlueWave Onboard helps app owners build knowledge and user-experience oriented a
 - Banners
 - Links
 
-This is a work-in-progress application, and all the source code is available under GNU AGPLv3.
+This is a work-in-progress application and all the source code is available under GNU AGPLv3.
 
-![Main dashboard](https://github.com/bluewave-labs/onboarding/blob/main/Screenshot.png?raw=true)
+![Main dashboard](https://github.com/bluewave-labs/bluewave-onboarding/blob/master/Screenshot.png)
 
