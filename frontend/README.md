@@ -27,6 +27,12 @@ Use camel case or uppercase. Example: `let currentDog = 'Buddy'; const WORLD_DOG
 ## File Names
 For files that export React components, use Pascal case. Example: `DogProfile.jsx`
 
+## Global Variables
+Use camel case or uppercase. Example: `let currentDog = 'Buddy'; const WORLD_DOG_DAY = 'August 26';`
+
+## File Names
+For files that export React components, use Pascal case. Example: `DogProfile.jsx`
+
 # Getting Started with React App
 
 ## Available Scripts
@@ -61,3 +67,4 @@ Launches the test runner in the interactive watch mode.
 ### `npm run test:coverage`
 
 Runs Vitest and collects coverage information.
+
