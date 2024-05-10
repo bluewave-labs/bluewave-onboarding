@@ -27,25 +27,20 @@ Use camel case or uppercase. Example: `let currentDog = 'Buddy'; const WORLD_DOG
 ## File Names
 For files that export React components, use Pascal case. Example: `DogProfile.jsx`
 
-# Getting Started with Create React App
-
-This project was bootstrapped with Create React App.
+# Getting Started with React App
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open http://localhost:3000 to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
 ### `npm run dev`
 
 Runs the Vite development server.
+
+Open http://localhost:5173/ to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
 ### `npm run build`
 
@@ -61,8 +56,7 @@ Sets up a local preview server for the production build.
 
 ### `npm run test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about running tests for more information.
+Launches the test runner in the interactive watch mode.
 
 ### `npm run test:coverage`
 
