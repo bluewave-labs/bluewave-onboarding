@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/login.css'; 
+import './login.css'; 
 import GoogleIconSvg from '../../assets/google-icon.svg';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
@@ -103,7 +103,7 @@ function CreateAccountPage() {
         <img src={GoogleIconSvg} alt="Google Icon" className="google-icon" /> Sign up with Google
       </button>
       <div className="sign-up-link">
-        Already have an account? <a href="#">Log in</a>
+        Already have an account? <a href="login">Log in</a>
       </div>
     </div>
   );

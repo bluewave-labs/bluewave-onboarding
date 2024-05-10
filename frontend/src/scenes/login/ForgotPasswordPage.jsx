@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/login.css';
+import './login.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import KeyIcon from '@mui/icons-material/Key';
 

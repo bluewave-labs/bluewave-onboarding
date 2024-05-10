@@ -1,11 +1,10 @@
-import { useState } from "react";
-// import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography } from "@mui/material";
+import Header from '../../components/Header'
 
 const Sidebar = () => {
     return (
         <Box>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+            <Header title="Sidebar" subtitle="" />
         </Box>
     );
 };

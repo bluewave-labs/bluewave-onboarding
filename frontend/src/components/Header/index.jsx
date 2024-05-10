@@ -4,7 +4,7 @@ const Header = ({ title, subtitle }) => {
   return (
     <Box mb="30px">
         <Typography
-            variant="h2"
+            variant="h3"
             fontWeight="bold"
         >
             {title}

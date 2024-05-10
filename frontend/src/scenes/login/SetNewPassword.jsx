@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/login.css'; 
+import './login.css'; 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
