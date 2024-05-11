@@ -1,7 +1,9 @@
 const express = require('express');
-const {popup} = require('./../controllers/popup.controller');
+const {popup, onboard} = require('./../controllers/popup.controller');
 
 const router = express.Router();
 router.get('/popup', popup);
+router.get('/onboard/', onboard)
+router.get('/onboard/:userId', onboard)
 
 module.exports = router;

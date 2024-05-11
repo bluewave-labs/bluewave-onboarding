@@ -1,3 +1,5 @@
+
+
 const popup = async (req, res) =>{
     const { key } = req.query;
     let returnObj ={}
@@ -46,5 +48,16 @@ const popup = async (req, res) =>{
 
     res.status(200).json(returnObj);
 }
+const onboard = async (req, res) =>{
+    const { userId } = req.params;
+    let returnObj = {
+        userId,
+        popupData:{},
+        bannerData:undefined,
+        tourData: undefined,
+        linkData:undefined,
+    }
 
-module.exports = {popup};
+    res.status(200).json(returnObj);
+}
+module.exports = {popup, onboard};
