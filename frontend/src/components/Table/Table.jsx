@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField } from '@mui/material';
 import './TableStyles.css';
 
-const MyTable = ({ data }) => {
+const DataTable = ({ data }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
@@ -100,4 +100,4 @@ const MyTable = ({ data }) => {
   );
 };
 
-export default MyTable;
+export default DataTable;

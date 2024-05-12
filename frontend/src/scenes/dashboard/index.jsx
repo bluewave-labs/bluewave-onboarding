@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import Header from "../../components/Header";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import HeadingTabs from "../../components/Tabs/Tabs";
-import MyTable from "../../components/Table/Table";
+import DataTable from "../../components/Table/Table";
 import { demoData } from '../../data/demoData';
 
 const Dashboard = () => {
@@ -16,7 +16,7 @@ const Dashboard = () => {
             </Box>
             <DatePicker/>
             <HeadingTabs />
-            <MyTable data={demoData} />
+            <DataTable data={demoData} />
         </Box>
     );
 };
