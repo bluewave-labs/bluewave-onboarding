@@ -2,7 +2,7 @@
 
 const popup = async (req, res) =>{
     const { key } = req.query;
-    let returnObj ={}
+    let returnObj =[]
     if(key==='A') {
         returnObj =[
             {
@@ -49,10 +49,24 @@ const popup = async (req, res) =>{
     res.status(200).json(returnObj);
 }
 const onboard = async (req, res) =>{
-    const { userId } = req.params;
+    const { userId } = req.body;
     let returnObj = {
         userId,
-        popupData:{},
+        popupData:
+        [
+            {
+                no: 1,
+                headerText: 'test header text',
+                headerTextColor: '#5F5014',
+                headerBg: '#4F9EBF',
+                contentHtml: 'tek content',
+                font: '14px',
+                fontColor: '#AAAAAA',
+                action: 'close',
+                actionButtonText: 'Kapat/Close',
+                actionButtonColor: '#CCCCCC'
+            }
+        ],
         bannerData:undefined,
         tourData: undefined,
         linkData:undefined,

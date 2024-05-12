@@ -1,7 +1,7 @@
 //CONSTANTS
 
 const BW_SERVER_ENDPOINT_BASE = 'https://24mzwmm3-3000.euw.devtunnels.ms';
-const BW_POPUP_JS_URL ='';
+const BW_POPUP_JS_URL ='https://24mzwmm3-3002.euw.devtunnels.ms/popup.js';
 const BW_BANNER_JS_URL ='';
 const BW_TOUR_JS_URL ='';
 const BW_LINKS_JS_URL ='';
@@ -10,10 +10,12 @@ const BW_USER_KEY = 'BW_USER_KEY';
 //GLOBALS
 window.BW_USER = '';
 
-if (window.bwHelper === undefined) { window.bwHelper = {} }
-if (bwHelper.util === undefined) { bwHelper.util = {} }
+if (window.bw === undefined) { window.bw = {} }
+if (bw.util === undefined) { bw.util = {} }
 
-bwHelper.util = {
+
+
+bw.util = {
     isScriptLoaded : function (src) {
         var scripts = document.getElementsByTagName("script");
         for (var i = 0; i < scripts.length; i++)
@@ -22,7 +24,7 @@ bwHelper.util = {
     },
     loadScriptAsync : function (url, cb, errcb) {
         try {
-            if (bwHelper.util.isScriptLoaded(url)) {
+            if (bw.util.isScriptLoaded(url)) {
                 cb && cb();
             } else {
                 var script = document.createElement("script");
@@ -50,6 +52,19 @@ bwHelper.util = {
             console.log(e);
         }
     },
+    bindLive: function (selector, event, cb, cnx) {
+        bw.util.addEvent(cnx || document, event, function (e) {
+            var qs = (cnx || document).querySelectorAll(selector);
+            if (qs) {
+                var el = e.target || e.srcElement, index = -1;
+                while (el && ((index = Array.prototype.indexOf.call(qs, el)) === -1)) el = el.parentElement;
+                if (index > -1) cb.call(el, e);
+            }
+        });
+    },
+    addEvent: function (el, type, fn) {
+        if (el.attachEvent) el.attachEvent('on' + type, fn); else el.addEventListener(type, fn);
+    },
     generateGUID :function () {
         var guid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (o) {
             var n = Math.random() * 16 | 0,
@@ -60,21 +75,25 @@ bwHelper.util = {
     }
 }
 
-bwHelper.data={
-    getData : async function(userID){
-        const response = await fetch(`${server_endpoint_base}/onboarddata`,postOption);
-        let dataObj =  {
-            user: 22,
-            type: 'popup', //banner, tour, link,
-            data: {
-            }
-        }
+bw.data={
+    getData: async function (userId) {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: JSON.stringify({ userId }),
+            redirect: "follow"
+        };
+
+        const response = await fetch(`${BW_SERVER_ENDPOINT_BASE}/mock/onboard`, requestOptions);
         const data = await response.json();
         return data;
-    }  
+    }
 }
 
-bwHelper.store = {
+bw.store = {
     insert: function (key, value) {
         localStorage.setItem(key, value);
     },
@@ -86,48 +105,50 @@ bwHelper.store = {
     }
 }
 
-bwHelper.user = {
+bw.user = {
     createUser: function () {
-        const generated_userId = bwHelper.util.generateGUID();
-        bwHelper.store.insert(BW_USER_KEY, generated_userId);
+        const generated_userId = bw.util.generateGUID();
+        bw.store.insert(BW_USER_KEY, generated_userId);
+        window.BW_USER = generated_userId;
     },
     checkIfBwUserCreated: function () {
         let result = false;
-        let userID = bwHelper.store.get(BW_USER_KEY);
+        let userID = bw.store.get(BW_USER_KEY);
         if (userID != null) {
             result = true;
         }
         return result;
     },
     getUserID : function(){
-        return bwHelper.store.get(BW_USER_KEY);
+        return bw.store.get(BW_USER_KEY);
     },
     removeUser: function(){
-        bwHelper.store.remove(BW_USER_KEY);
+        bw.store.remove(BW_USER_KEY);
     }
 }
-
-bwHelper.init = function(){
-    if(!bwHelper.user.checkIfBwUserCreated()){
-        bwHelper.user.createUser();
+bw.init = (cb) => {
+    if(!bw.user.checkIfBwUserCreated()){
+        bw.user.createUser();
     }
-    window.BW_USER = bwHelper.user.getUserID();
-    window.BW_ONBOARD_DATA = {};
-}
+    window.BW_USER = bw.user.getUserID();
+    cb && cb();
+};
 
-(async function () {
-    bwHelper.init();
-    const onBoardConfig = await getData();
-    if (onBoardConfig.hasPopup) {
-        //load popup.js
-        if(!bwHelper.util.isScriptLoaded(BW_POPUP_JS_URL)){
-            bwHelper.util.loadScriptAsync(BW_POPUP_JS_URL);
-        }
+(
+    function () {
+
+        bw.init(async function (){
+            const onBoardConfig = await bw.data.getData(window.BW_USER);
+            debugger;
+            if (onBoardConfig.popupData) {
+                bw.util.loadScriptAsync(BW_POPUP_JS_URL);
+            } else if (onBoardConfig.tourData) {
+                bw.util.loadScriptAsync(BW_TOUR_JS_URL);
+            } else if(onBoardConfig.bannerData){
+                bw.util.loadScriptAsync(BW_BANNER_JS_URL);
+            } else if(onBoardConfig.linkData){
+                bw.util.loadScriptAsync(BW_LINKS_JS_URL);
+            }
+        });
     }
-
-    if (onBoardConfig.hasTour) {
-        //load tour.js
-        //initialize onBoardConfig parameters
-    }
-
-})();
+)();

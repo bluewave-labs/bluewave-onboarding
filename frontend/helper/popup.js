@@ -5,35 +5,21 @@ const defaultOptions = {
     padding: 16,
     hasFooter: true
 }
-if(window.bwHelper === undefined){window.bwHelper={}}
-bwHelper.util = {
-    bindLive: function (selector, event, cb, cnx) {
-        bwHelper.util.addEvent(cnx || document, event, function (e) {
-            var qs = (cnx || document).querySelectorAll(selector);
-            if (qs) {
-                var el = e.target || e.srcElement, index = -1;
-                while (el && ((index = Array.prototype.indexOf.call(qs, el)) === -1)) el = el.parentElement;
-                if (index > -1) cb.call(el, e);
-            }
-        });
-    },
-    addEvent: function (el, type, fn) {
-        if (el.attachEvent) el.attachEvent('on' + type, fn); else el.addEventListener(type, fn);
-    },
-}
-bwHelper.popup = {
+
+bw.popup = {
     
-    init: function () { },
-    getData: async function(cb){ 
-        const response = await fetch(`${server_endpoint_base}/mock/popup?key=A`);
-        const data = await response.json();
-        return data;
-    },
+    init: function () {
+        bw.popup.addOverlay();
+        bw.popup.addModal(()=>{
+            bw.popup.bindEvents();
+        });
+     },
+    
     addOverlay: function () {
         document.body.insertAdjacentHTML('afterbegin', `<div id='bw-overlay' style='position: fixed;top: 0;bottom: 0;left: 0;right: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(3px); z-index: 999;'></div>`);
     },
-    addModal: function (options, cb) {
-        
+    addModal: function (cb) {
+        const options = window
         let overlay = document.getElementById('bw-overlay');
         for (let i = 0; i < options.length; i++) {
             let option = {
@@ -43,11 +29,11 @@ bwHelper.popup = {
             let temp_html = `
             <div id='bw-modal' class='bw-order-${option.no}' style='display: block;position: fixed;z-index: 1;padding-top: 100px;left: 0;top: 0;width: 100%;height: 100%;overflow: auto;background-color: rgb(0,0,0);background-color: rgba(0,0,0,0.4);'>
                 <div class='modal-content' style='position: relative;background-color: #fefefe;margin: auto;padding: 0;border: 1px solid #888; border-radius: 15px; width: 80%;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);'>
-                    ${bwHelper.popup.addHeader(option.headerText, option.headerBg, option.headerTextColor, option.padding)}
+                    ${bw.popup.addHeader(option.headerText, option.headerBg, option.headerTextColor, option.padding)}
                     <div class="modal-body" style='padding: ${option.padding}px ${option.padding}px;'>
                         ${option.contentHtml}
                     </div>
-                    ${bwHelper.popup.addButton(option.actionButtonText, option.actionButtonColor, option.padding, `bw-popup-btn-${i}`, option.action)}
+                    ${bw.popup.addButton(option.actionButtonText, option.actionButtonColor, option.padding, `bw-popup-btn-${i}`, option.action)}
                 </div>
             </div>`
             overlay.insertAdjacentHTML('afterbegin', temp_html);
@@ -67,15 +53,15 @@ bwHelper.popup = {
         </div>`;
         
         if(btnEvent == 'close'){
-            bwHelper.util.bindLive(`#${btnId}`, 'click', function(){
-                bwHelper.popup.hideModal();
+            bw.util.bindLive(`#${btnId}`, 'click', function(){
+                bw.popup.hideModal();
             });
         }
         return footerHtml;
     },  
     bindEvents: function(){
-        bwHelper.util.bindLive(`#bw-modal-close`, 'click', function(){
-            bwHelper.popup.hideModal();
+        bw.util.bindLive(`#bw-modal-close`, 'click', function(){
+            bw.popup.hideModal();
         });
     },
     showModal: function () {
@@ -85,16 +71,8 @@ bwHelper.popup = {
         document.getElementById('bw-overlay').style.display = 'none';
     }
 };
-bwHelper.banner = {};
-bwHelper.tour = {};
-bwHelper.links = {};
+
 
 (async function () {
-    let config = await bwHelper.popup.getData();
-    console.log('config:', config);
-    bwHelper.popup.addOverlay();
-    bwHelper.popup.addModal(config, ()=>{
-        bwHelper.popup.bindEvents();
-    });
-    
+    bw.popup.init();
 })();
