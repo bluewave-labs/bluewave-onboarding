@@ -39,7 +39,7 @@ function DatePickerWithButtons({ value, onChange, onClose }) {
     </div>
   );
 }
-const MyDatePicker = ({ onClose }) => {
+const DatePicker = ({ onClose }) => {
   const [dateRange, setDateRange] = useState([null, null]);
   const [selectedButton, setSelectedButton] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -121,4 +121,4 @@ const MyDatePicker = ({ onClose }) => {
   );
 };
 
-export default MyDatePicker;
+export default DatePicker;

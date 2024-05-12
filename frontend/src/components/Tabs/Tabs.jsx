@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Tab, Tabs } from '@mui/material';
 import './TabStyles.css';
 
-const MyTabs = () => {
+const HeadingTabs = () => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -19,4 +19,4 @@ const MyTabs = () => {
   );
 };
 
-export default MyTabs;
+export default HeadingTabs;
