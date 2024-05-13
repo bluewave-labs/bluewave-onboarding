@@ -4,9 +4,9 @@ import { Box, IconButton, Typography } from "@mui/material";
 
 const Sidebar = () => {
     return (
-        <Box>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-        </Box>
+        <>
+            
+        </>
     );
 };
 export default Sidebar;
