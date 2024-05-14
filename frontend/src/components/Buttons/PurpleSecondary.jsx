@@ -2,8 +2,9 @@ import React from "react";
 import { Button } from "@mui/material";
 //BASE
 const BORDER_COLOR = "rgba(127,60,217,0.2)";
-const HOVER_BORDER_COLOR = "rgba(127,60,217,0.2)";
+
 //HOVER
+const HOVER_BORDER_COLOR = "rgba(127,60,217,0.2)";
 const HOVER__BACKGROUND_COLOR = "rgba(127,60,217,0.1)";
 //ACTIVE
 const ACTIVE_BOX_SHADOW = "0 0 0 0.2rem rgba(127,60,217,0.1)";
@@ -14,10 +15,9 @@ const STYLE_COLOR = "rgba(127,60,217,0.7)";
 const STYLE_TEXT_TRANSFORM = "none";
 
 
-const DisabledButton = ()=>{
+const PurpleSecondary = ()=>{
     return ( 
-        <Button 
-            disabled 
+        <Button  
             disableRipple
             variant="outlined"
             sx={{
@@ -42,4 +42,4 @@ const DisabledButton = ()=>{
     )
 }
 
-export default DisabledButton;
+export default PurpleSecondary;

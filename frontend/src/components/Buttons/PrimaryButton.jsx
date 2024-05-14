@@ -1,25 +1,37 @@
 import React from "react";
 import { Button } from "@mui/material";
 
+const COLOR = "white";
+const BACKGROUND_COLOR = "#7f55d9";
+const TEXT_TRANSFORM = "none";
+const BOX_SHADOW = "none";
+const WIDTH = "80px";
+
+// HOVER 
+const HOVER_BACKGROUND_COLOR = "black";
+
+
+
 const PrimaryButton =({onClick, buttonText})=>{
     return (
-        <Button 
+        <Button
+            disableRipple 
             onClick={onClick}
             variant="contained"
             style={{ 
-                color: "white", 
-                backgroundColor: "#7f55d9", 
-                textTransform: 'none', 
-                boxShadow: "none" 
+                color: COLOR, 
+                backgroundColor: BACKGROUND_COLOR, 
+                textTransform: TEXT_TRANSFORM, 
+                boxShadow: BOX_SHADOW 
             }}
             sx={{ 
-                width: '80px', 
+                width: WIDTH, 
                 "&:hover": { 
-                    backgroundColor: "black" 
+                    backgroundColor: HOVER_BACKGROUND_COLOR 
                 } 
             }}
         >
-            {buttonText}
+            Primary
         </Button>
     )
 }
