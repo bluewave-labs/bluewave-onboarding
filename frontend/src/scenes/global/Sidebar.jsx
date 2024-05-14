@@ -1,11 +1,30 @@
-import { Box, IconButton, Typography } from "@mui/material";
-import Header from '../../components/Header'
+import React from 'react';
+import { List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Home, BarChart, Settings } from '@mui/icons-material';
 
 const Sidebar = () => {
     return (
-        <Box>
-            <Header title="Sidebar" subtitle="" />
-        </Box>
+        <List >
+            <ListItemButton>
+                <ListItemIcon>
+                    <Home />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+            </ListItemButton>
+            <ListItemButton>
+                <ListItemIcon>
+                    <BarChart />
+                </ListItemIcon>
+                <ListItemText primary="Popups" />
+            </ListItemButton>
+            <ListItemButton>
+                <ListItemIcon>
+                    <Settings />
+                </ListItemIcon>
+                <ListItemText primary="Settings" />
+            </ListItemButton>
+        </List>
     );
 };
+
 export default Sidebar;

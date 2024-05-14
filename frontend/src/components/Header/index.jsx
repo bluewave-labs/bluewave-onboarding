@@ -1,19 +1,21 @@
-import { Typography, Box } from "@mui/material";
+import React from 'react';
+import { AppBar, Toolbar, Typography, IconButton, Button } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu'; 
 
-const Header = ({ title, subtitle }) => {
-  return (
-    <Box mb="30px">
-        <Typography
-            variant="h3"
-            fontWeight="bold"
-        >
-            {title}
-        </Typography>
-        <Typography variant="h5">
-            {subtitle}
-        </Typography>
-    </Box>
-  );
+const Header = () => {
+    return (
+        <AppBar position="static" style={{ backgroundColor: 'white' }}>
+            <Toolbar>
+                <Typography variant="h6" style={{ flexGrow: 1 }}>
+                    Onboarding
+                </Typography>
+                <Button color="inherit">Login</Button>
+                <IconButton edge="start" color="inherit" aria-label="menu">
+                    <MenuIcon />
+                </IconButton>
+            </Toolbar>
+        </AppBar>
+    );
 };
 
 export default Header;
