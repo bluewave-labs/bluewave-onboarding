@@ -13,7 +13,7 @@ const Dashboard = () => {
                 
                 {/* <DatePicker/> */}
                 <HeadingTabs />
-                <DataTable dasta={demoData} />
+                <DataTable data={demoData} />
             </Box>
         </>
     );
