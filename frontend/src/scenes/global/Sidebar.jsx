@@ -1,12 +1,30 @@
-import { useState } from "react";
-// import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography } from "@mui/material";
+import React from 'react';
+import { List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Home, BarChart, Settings } from '@mui/icons-material';
 
 const Sidebar = () => {
     return (
-        <Box>
-            Lorem.
-        </Box>
+        <List >
+            <ListItemButton>
+                <ListItemIcon>
+                    <Home />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+            </ListItemButton>
+            <ListItemButton>
+                <ListItemIcon>
+                    <BarChart />
+                </ListItemIcon>
+                <ListItemText primary="Popups" />
+            </ListItemButton>
+            <ListItemButton>
+                <ListItemIcon>
+                    <Settings />
+                </ListItemIcon>
+                <ListItemText primary="Settings" />
+            </ListItemButton>
+        </List>
     );
 };
+
 export default Sidebar;

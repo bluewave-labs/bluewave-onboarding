@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/login.css'; 
+import './login.css'; 
 import GoogleIconSvg from '../../assets/google-icon.svg';
 
 function LoginPage() {
@@ -11,16 +11,18 @@ function LoginPage() {
     <div className="login-container">
       <h2>Log in to your account</h2>
       <div className="form-group">
-        <label>Email:</label>
+        <label htmlFor="email">Email:</label>
         <input
+          id="email"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       <div className="form-group">
-        <label>Password:</label>
+        <label htmlFor="password">Password:</label>
         <input
+          id="password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -36,17 +38,17 @@ function LoginPage() {
             />
             Remember for 30 days
           </label>
-          <a href="#">Forgot Password</a>
+          <a href="/forgot-password">Forgot Password</a>
         </div>
       </div>
       <button className="sign-in-button">
         Sign in
       </button>
       <button className="google-sign-in-button">
-        <img src={GoogleIconSvg} alt="Google Icon" className="google-icon" /> Sign in with Google
+        <img src={GoogleIconSvg} alt="Google Icon" className="google-icon" />Sign in with Google
       </button>
       <div className="sign-up-link">
-        Don't have an account? <a href="#">Sign up</a>
+        Don't have an account? <a href="/signup">Sign up</a>
       </div>
     </div>
   );
