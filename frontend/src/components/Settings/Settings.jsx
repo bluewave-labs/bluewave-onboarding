@@ -1,8 +1,8 @@
 // settings.jsx
 
 import {useState, React} from 'react';
-import styles from '../styles/Settings.module.scss';
-import Switch from './Switch/Switch'
+import styles from './Settings.module.scss';
+import Switch from '../Switch/Switch'
 
 const Settings = () => {
 

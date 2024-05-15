@@ -1,9 +1,10 @@
 import React from 'react';
-import './login.css';
+import './login.css'; 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const CheckYourEmailPage = () => {
   return (
+    <body class="login-body">
     <div className="login-container">
       <h2>Check Your Email</h2>
       <h3 style={{margin: "0px"}}>We sent a password reset link to</h3>
@@ -14,6 +15,7 @@ const CheckYourEmailPage = () => {
       </div>
       <button className="back-to-login-button" style={{marginTop: "20px"}}> <ArrowBackIcon style={{fontSize: "18px", marginRight: "5px"}}/>Back to log in</button>
     </div>
+    </body >
   );
 };
 

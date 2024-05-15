@@ -1,5 +1,5 @@
 import {useState, React} from 'react';
-import styles from '../styles/Announcements.module.scss';
+import styles from './Announcements.module.scss';
 
 const Announcements = () => {
     const [showFirstSection, setShowFirstSection] = useState(false);

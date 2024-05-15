@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../styles/FileUpload.module.scss';
+import styles from './FileUpload.module.scss';
 import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';

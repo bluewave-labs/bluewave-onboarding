@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../styles/ProgressSteps.module.scss';
+import styles from './ProgressSteps.module.scss';
 import { CheckCircle as CheckCircleIcon, TripOrigin as TripOriginIcon } from '@mui/icons-material';
 
 const ProgressSteps = () => {

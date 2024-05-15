@@ -8,6 +8,7 @@ function LoginPage() {
   const [rememberMe, setRememberMe] = useState(false);
 
   return (
+    <body class="login-body">
     <div className="login-container">
       <h2>Log in to your account</h2>
       <div className="form-group">
@@ -51,6 +52,7 @@ function LoginPage() {
         Don't have an account? <a href="/signup">Sign up</a>
       </div>
     </div>
+    </body>
   );
 }
 

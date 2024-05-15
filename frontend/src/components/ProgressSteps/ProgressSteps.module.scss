@@ -1,4 +1,4 @@
-@import url('variables.css');
+@use '../../styles/globals.scss' as *;
 
   .container{
     display:flex;
