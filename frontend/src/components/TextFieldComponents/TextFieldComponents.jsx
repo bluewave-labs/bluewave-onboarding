@@ -1,57 +1,97 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
+import { TextField, Box, Typography, Button, InputAdornment, Chip } from '@mui/material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
-const TextFieldComponents =() => {
-    return (
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              label="Website"
-              type="url"
-              placeholder="www.untitledui.com"
-              helperText="This is a hint text to help user."
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              label="Email"
-              type="email"
-              placeholder="olivia@untitledui.com"
-              helperText="This is a hint text to help user."
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              label="Email"
-              type="email"
-              placeholder="olivia@untitledui.com"
-              helperText="This is an error message."
-              error
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              label="Email"
-              type="email"
-              placeholder="olivia@untitledui.com"
-              helperText="This is a hint to help user."
-            />
-          </Grid>
-         
-          <Grid item xs={12}>
-            <TextField
-              label="Website"
-              type="url"
-              placeholder="http://www.untitledui.com"
-              helperText="This is a hint text to help user."
-            />
-          </Grid>
-        </Grid>
-      );
-    };
+const TextFieldComponents = () => {
+  return (
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+      <Box sx={{ flex: 1, minWidth: 200 }}>
+        
+        <TextField
+          label="Website"
+          fullWidth
+          margin="normal"
+          defaultValue="http://www.untitledui.com"
+          InputProps={{
+            startAdornment: <InputAdornment position="start"></InputAdornment>,
+          }}
+          helperText="This is a hint text to help user."
+        />
+        <TextField
+          label="Email"
+          fullWidth
+          margin="normal"
+          defaultValue="olivia@untitledui.com"
+          helperText="This is a hint text to help user."
+        />
+        <TextField
+          label="Email"
+          fullWidth
+          margin="normal"
+          defaultValue="olivia@untitledui.com"
+          error
+          helperText="This is an error message."
+        />
+        <TextField
+          label="Email"
+          fullWidth
+          margin="normal"
+          defaultValue="olivia@untitledui.com"
+          helperText="This is a hint text to help user."
+        />
+        <TextField
+          label="Website"
+          fullWidth
+          margin="normal"
+          defaultValue="www.untitledui.com"
+          InputProps={{
+            startAdornment: <InputAdornment position="start">http://</InputAdornment>,
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button variant="contained" startIcon={<ContentCopyIcon />}>Copy</Button>
+              </InputAdornment>
+            ),
+          }}
+          helperText="This is a hint text to help user."
+        />
+      </Box>
+      <Box sx={{ flex: 1, minWidth: 300 }}>
+        <TextField
+          label="Description"
+          fullWidth
+          margin="normal"
+          placeholder="Enter a description..."
+          helperText="This is a hint text to help user."
+        />
+        
+        <TextField
+          label="Description"
+          fullWidth
+          margin="normal"
+          placeholder= " "
+          helperText="This is a hint text to help user."
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Chip label="Design" onDelete={() => {}} />
+                  <Chip label="Software" onDelete={() => {}} />
+                </Box>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <TextField
+          label="Description"
+          fullWidth
+          margin="normal"
+          placeholder="Enter a description..."
+          error
+          helperText="This is an error message."
+        />
+      </Box>
+    </Box>
+  );
+};
 
 export default TextFieldComponents;
