@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const authRoutes = require('./src/routes/auth.routes');
+const mocks = require('./src/routes/mocks.routes');
 // const tourRoutes = require('./src/routes/tour.routes');
 
 const app = express();
@@ -15,7 +16,9 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json());
 
+
 app.use('/auth', authRoutes);
+app.use('/mock/', mocks);
 // app.use('/tours', tourRoutes);
 
 app.use((err, req, res, next) => {
