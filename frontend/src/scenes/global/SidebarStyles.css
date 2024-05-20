@@ -1,16 +1,29 @@
 .dropDown_search{
     display: flex;
     width: 231px;
-    padding: 10px 14px;
     align-items: center;
     gap: var(--spacing-md, 8px);
     border-radius: var(--radius-md, 8px);
     border: 1px solid var(--Colors-Border-border-primary, #D0D5DD);
     background: var(--Colors-Background-bg-primary, #FFF);
-
+    
     /* Shadows/shadow-xs */
     box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 }
 .dropDown_search .MuiAutocomplete-popupIndicator {
     display: none;
   }
+.sidebar{
+    width: 280px;
+    height: 1288px;
+    flex-shrink: 0;
+    border-right: 1px solid #EBEBEB;
+    background: #FFF;
+    padding-top: 25px;
+}
+svg{
+    filter: invert(48%) sepia(14%) saturate(589%) hue-rotate(182deg) brightness(86%) contrast(88%);
+}
+TextField{
+    border: none;
+}
