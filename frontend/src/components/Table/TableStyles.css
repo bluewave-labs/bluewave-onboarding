@@ -92,4 +92,10 @@
 .tableContainer .tableHeadRow {
     background-color: #F9FAFB;
   }
+.popoverContent {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
   

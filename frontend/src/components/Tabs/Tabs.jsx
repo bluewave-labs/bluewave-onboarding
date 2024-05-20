@@ -11,10 +11,8 @@ const HeadingTabs = () => {
 
   return (
     <Tabs value={value} onChange={handleChange}>
-      <Tab label="My Details" />
+      <Tab label="Directory" />
       <Tab label="My Team" />
-      <Tab label="Departments" />
-      <Tab label="Approvals" />
     </Tabs>
   );
 };

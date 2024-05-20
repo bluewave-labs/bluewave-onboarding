@@ -7,12 +7,9 @@ const Header = () => {
         <AppBar position="static" style={{ backgroundColor: 'white' }}>
             <Toolbar>
                 <Typography variant="h6" style={{ flexGrow: 1 }}>
-                    Onboarding
+                    BlueWave HR
                 </Typography>
-                <Button color="inherit">Login</Button>
-                <IconButton edge="start" color="inherit" aria-label="menu">
-                    <MenuIcon />
-                </IconButton>
+                <Button color="inherit">Gorkem Cetin</Button>
             </Toolbar>
         </AppBar>
     );
