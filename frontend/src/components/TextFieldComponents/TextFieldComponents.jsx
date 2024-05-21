@@ -1,6 +1,7 @@
 import React from 'react';
-import { TextField, Box, Typography, Button, InputAdornment, Chip } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { Box, IconButton, Toolbar } from '@mui/material';
+import { FormatBold, FormatItalic, FormatUnderlined, Code, FormatQuote, Link, 
+         Image, FormatListBulleted, FormatListNumbered } from '@mui/icons-material';
 
 const TextFieldComponents = () => {
   return (

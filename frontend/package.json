@@ -16,14 +16,17 @@
     "@testing-library/user-event": "^13.5.0",
     "@vitejs/plugin-react-swc": "^3.6.0",
     "axios": "^1.6.8",
+    "chart.js": "^4.4.2",
     "date-fns": "^3.6.0",
     "formik": "^2.4.5",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-pro-sidebar": "^1.1.0",
     "react-redux": "^9.1.2",
     "react-router": "^6.23.0",
     "react-router-dom": "^6.23.0",
+    "react-scripts": "^5.0.1",
     "redux": "^5.0.1",
     "vite": "^5.2.11",
     "vite-plugin-svgr": "^4.2.0",
@@ -41,11 +44,24 @@
     "vitest": "^1.6.0"
   },
   "scripts": {
+    "start": "react-scripts start",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest",
     "test:coverage": "vitest run --coverage"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
