@@ -1,0 +1,142 @@
+@use '../../styles/globals.scss' as *;
+
+.container {
+  width: 35vw;
+  max-width: 400px;
+  min-height: 60px;
+  border: 1px solid var(--light-gray);
+  padding: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  border-radius: 4px;
+  &.redBorder{
+    border: 1px solid var(--border-error-solid);
+  }
+
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .fileDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-right: 20px;
+  }
+
+  .fileType {
+    font-weight: bold;
+    position: absolute;
+    background-color: #D92D20;
+    color: white;
+    font-size: 10px;
+    margin-top: 13px;
+    padding: 2px;
+    border-radius: 2px;
+  }
+
+  .fileIcon {
+    font-size: 3em;
+    color: var(--light-border-color);
+  }
+  .dragDrop{
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .fileUpload {
+    display: block;
+    width: 100%;
+  }
+
+  .fileInput {
+    margin-bottom: 5px;
+    width: 100%;
+  }
+
+  .fileInput:focus + .fileLabel {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+  }
+
+  .informativeText{
+    @include text-style(informative);
+    margin-bottom: 2px;
+    margin-top: 5px;
+    color: var(--third-text-color);
+  }
+
+  progress[value] {
+    width: 100%;
+    margin-top: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    border-radius: 10em;
+    background: var(--light-gray);
+    max-height: 13px;
+  }
+  progress[value]::-webkit-progress-bar {
+    border-radius: 10em;
+    background: var(--light-gray);
+  }
+  progress[value]::-webkit-progress-value {
+    border-radius: 10em;
+    background: var(--main-purple);
+  }
+  progress[value]::-moz-progress-bar {
+    border-radius: 10em;
+    background: var(--main-purple);
+  }
+
+  progress[value]::-moz-progress-bar {
+    border-radius: 10em;
+    background: var(--main-purple);
+  }
+
+  .progressText {
+    @include text-style(regular);
+  }
+
+  input[type="file"]{
+    display: none;
+
+  }
+
+  label{
+    @include text-style(regular);
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    width: 100%;
+    height: 100%;
+    color: var(--second-text-color);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border: 2px dashed var(--light-border-color);
+  }
+
+  label:hover{
+    border: 3px dashed var(--light-border-color);
+    box-shadow: 0px 1px 2px 0px #1018280D;
+  }
+
+  .thirdBlock{
+    display: flex;
+    flex-direction: column;
+    margin-left: auto; 
+    margin-right: 0;
+    justify-content: space-between; 
+    margin-left: 10px;
+  }
+}

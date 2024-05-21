@@ -1,0 +1,102 @@
+.css-1wy8uaa-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+  background-color: #7f56d9 !important;
+  color: white !important;
+}
+/* Start date color */
+.css-grqin-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected {
+  background-color: #7f56d9 !important;
+  color: white !important;
+}
+
+/* End date color */
+.css-1juxbee-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected {
+  background-color: #7f56d9 !important;
+  color: white !important;
+}
+
+/* Dates between start and end */
+.MuiPickersDay-rangeIntervalDay:not(.Mui-selected):not(:first-child):not(:last-child) {
+  background-color: #f9fafb !important;
+  color: #000 !important; 
+}
+/* Individual button */
+.button-container button {
+  width: 160px;
+  height: 40px;
+  padding: var(--spacing-md, 8px) var(--spacing-xl, 16px);
+  align-items: center;
+  border-radius: var(--radius-sm, 6px);
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+/* Individual button when selected */
+.button-container button.selected {
+  background-color: #f9fafb;
+  border-color: #f9fafb;
+}
+
+/* Container */
+.date-picker-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 980px;
+}
+
+/* Button container */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-xs, 4px);
+  padding: var(--spacing-lg, 12px) var(--spacing-xl, 16px);
+  order: 0; 
+}
+
+.date-button {
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin-top: -36px !important;
+  margin-left: 70% !important;
+  align-items: flex-start !important;
+  gap: var(--spacing-lg, 12px) !important;
+  align-self: stretch !important;
+  padding: 10px 14px !important;
+  border-radius: var(--radius-xs, 4px) !important;
+  border: 1px solid var(--Component-colors-Components-Buttons-Primary-button-primary-border, #D0D5DD) !important;
+}
+
+/* Apply button */
+.apply {
+  background-color: #7f56d9 !important;
+  color: white !important;
+  width: 142px;
+  height: 34px;
+  gap: var(--spacing-xs, 4px);
+  flex: 1 0 0;
+  border: 1px solid var(--Component-colors-Components-Buttons-Primary-button-primary-border, #7F56D9) !important;
+  background: var(--Component-colors-Components-Buttons-Primary-button-primary-bg, #7F56D9);
+
+  /* Shadows/shadow-xs */
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+/* Cancel button */
+.cancel {
+  background-color: #fff !important;
+  color: #344054 !important;
+  width: 142px;
+  height: 34px;
+  gap: var(--spacing-xs, 4px);
+  flex: 1 0 0;
+  border: 1px solid var(--Component-colors-Components-Buttons-Secondary-button-secondary-border, #D0D5DD) !important;
+  background: var(--Component-colors-Components-Buttons-Secondary-button-secondary-bg, #FFF);
+
+  /* Shadows/shadow-xs */
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+.datepicker-btn{
+  display: flex;
+}
