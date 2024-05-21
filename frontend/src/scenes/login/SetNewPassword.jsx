@@ -35,6 +35,7 @@ function SetNewPasswordPage() {
   };
 
   return (
+    <body class="login-body">
     <div className="login-container">
       <h2 style={{marginBottom: "0px"}}>Set new Password</h2>
       <h3>Your new password must be different to previously used passwords.</h3>
@@ -74,6 +75,7 @@ function SetNewPasswordPage() {
       </button>
       <button className="back-to-login-button"> <ArrowBackIcon style={{fontSize: "18px", marginRight: "5px"}}/>Back to log in</button>
     </div>
+    </body>
   );
 }
 
