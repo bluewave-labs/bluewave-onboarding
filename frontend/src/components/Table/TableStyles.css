@@ -34,10 +34,12 @@
     margin-left: 10px;
 }
 
-/* Style for the search box */
-.searchBox {
-    margin-top: 10px;
-    display:inline;
+/* Style for the customize button */
+.customize-btn {
+    color: #344054 !important;
+    border:1px solid #344054 !important;
+    margin-top: 10px !important;
+    display:inline !important;
     float:right;
 }
 
@@ -98,4 +100,12 @@
     flex-direction: column;
     align-items: flex-start;
   }
-  
+.tableCell{
+    display: flex;
+    height: 48px;
+    padding: var(--spacing-xl, 16px) var(--spacing-3xl, 24px);
+    align-items: center;
+    gap: var(--spacing-lg, 12px);
+    align-self: stretch;
+    border-bottom: 1px solid var(--Colors-Border-border-secondary, #EAECF0);
+}
