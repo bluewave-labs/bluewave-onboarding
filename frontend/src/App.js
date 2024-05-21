@@ -8,6 +8,8 @@ import Checkbox from "./components/CheckBox";
 import ButtonGroup from "./components/ButtonGroup";
 import CheckIcons from "./components/CheckIcons";
 import ProgressBar from "./components/ProgressBar/ProgressBar";
+import RadioButton from "./components/Radio/RadioButton";
+import { Avatar } from "@mui/material";
 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
           <Route path="/buttongroup" element={<ButtonGroup />} />
           <Route path="/checkicons" element={<CheckIcons />} />
           <Route path="/progressbar" element={<ProgressBar/>} />
+          <Route path="/radio" element={<RadioButton/>} />
+          <Route path="/avatar" element={<Avatar/>}/>
         </Routes>
       </main>
     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../ProgressBar/styles.css'
 
-const ProgressBar = ({value = 10}) => {
+const ProgressBar = ({value = 50}) => {
 
 //  const [value, setValue] = useState(0)
 //  useEffect(()=>{

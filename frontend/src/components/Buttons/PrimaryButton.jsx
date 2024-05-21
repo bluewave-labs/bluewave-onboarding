@@ -10,25 +10,28 @@ const WIDTH = "80px";
 // HOVER 
 const HOVER_BACKGROUND_COLOR = "black";
 
+// style={{ 
+//     color: COLOR, 
+//     backgroundColor: BACKGROUND_COLOR, 
+//     textTransform: TEXT_TRANSFORM, 
+//     boxShadow: BOX_SHADOW 
+// }}
 
 
-const PrimaryButton =({onClick, buttonText})=>{
+const PrimaryButton = () => {
     return (
         <Button
-            disableRipple 
-            onClick={onClick}
+            disableRipple
             variant="contained"
-            style={{ 
-                color: COLOR, 
-                backgroundColor: BACKGROUND_COLOR, 
-                textTransform: TEXT_TRANSFORM, 
-                boxShadow: BOX_SHADOW 
-            }}
-            sx={{ 
-                width: WIDTH, 
-                "&:hover": { 
-                    backgroundColor: HOVER_BACKGROUND_COLOR 
-                } 
+            sx={{
+                color: "white",
+                backgroundColor: "#7f55d9",
+                textTransform: "none",
+                boxShadow: "none",
+                width: "80px",
+                "&:hover": {
+                    backgroundColor: "black",
+                }
             }}
         >
             Primary

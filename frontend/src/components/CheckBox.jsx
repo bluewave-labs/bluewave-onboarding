@@ -1,56 +1,36 @@
 import * as React from 'react';
+import { styled } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
-
-
+import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 export default function SizeCheckbox() {
     return (
-        <>
+        <div style={{textAlign: 'center'}}>
             <div>
-                <Checkbox />
-                <Checkbox {...label} defaultChecked
-                    sx={{
-                        '&.Mui-checked': {
-                            color: "#7f55d9",
-                        },
-                        "&:active": {
-                            boxShadow: '0 0 0 0.2rem rgba(127,60,217,0.1)',
-                            backgroundColor: 'white',
-                            borderColor: 'rgba(127,60,217,0.2)',
-                        },
-                    }}
+                <Checkbox disableRipple
+                style={{border:"0px"}}
+                icon={<CheckBoxOutlineBlankIcon/>} 
+                checkedIcon={<CheckBoxOutlineBlankIcon/>} 
+                color='secondary'
+                sx={{
+                    '& .MuiSvgIcon-root': {
+                      borderRadius: '40px', // Change this value to adjust the border radius
+                    },
+                  }}/>
+                <Checkbox disableRipple 
+                defaultChecked 
+                color='secondary'
                 />
-                <Checkbox
-                    {...label}
-                    indeterminate sx={{
-
-                        '&.Mui-checked': {
-                            color: "#7f55d9",
-                        },
-                    }}
-                />
+                <Checkbox disableRipple 
+                icon={<IndeterminateCheckBoxIcon/>} 
+                checkedIcon={<IndeterminateCheckBoxIcon/>} 
+                defaultChecked 
+                color='secondary'/>
             </div>
-            <div>
-                <Checkbox size='large' />
-                <Checkbox size='large' {...label} defaultChecked
-                    sx={{
-                        '&.Mui-checked': {
-                            color: "#7f55d9",
-                        },
-                    }}
-                />
-                <Checkbox size='large'
-                    {...label}
-                    indeterminate sx={{
-
-                        '&.Mui-checked': {
-                            color: "#7f55d9",
-                        },
-                    }}
-                />
-            </div>
-        </>
+            <div></div>
+        </div>
 
     );
 }
