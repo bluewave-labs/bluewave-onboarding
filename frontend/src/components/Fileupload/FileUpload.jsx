@@ -4,6 +4,7 @@ import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import classNames from 'classnames';
+import { formatFileSize, getFileExtension } from '../../utils/fileFunctions';
 
 const FileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -53,32 +54,10 @@ const FileUpload = () => {
     setIsFileActive(!isFileActive);
   }
 
-  const getFileExtension = () => {
-    if (selectedFile) {
-      const fileName = selectedFile.name;
-      const extension = fileName.split('.').pop().toUpperCase();
-      return extension;
-    }
-    return null;
-  };
-
-  const formatFileSize = (sizeInBytes) => {
-    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
-    let unitIndex = 0;
-    let fileSize = sizeInBytes;
-
-    while (fileSize >= 1024 && unitIndex < units.length - 1) {
-        fileSize /= 1024;
-        unitIndex++;
-    }
-
-    return `${fileSize.toFixed(2)} ${units[unitIndex]}`;
-  }
-
   return (
     <div className={classNames(styles.container, { [styles.redBorder]: isUploadFailed })}>
       {selectedFile && <div className={styles.fileDetails}>
-        <span className={styles.fileType}>{getFileExtension()}</span>
+        <span className={styles.fileType}>{getFileExtension(selectedFile)}</span>
         <FileOpenOutlinedIcon 
           className={styles.fileIcon} 
           style={isUploadFailed ? {color: 'var(--border-error-solid)'} : {}}
