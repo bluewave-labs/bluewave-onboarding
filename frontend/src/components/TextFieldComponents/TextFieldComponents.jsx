@@ -1,7 +1,5 @@
 import React from 'react';
-import { Box, IconButton, Toolbar } from '@mui/material';
-import { FormatBold, FormatItalic, FormatUnderlined, Code, FormatQuote, Link, 
-         Image, FormatListBulleted, FormatListNumbered } from '@mui/icons-material';
+import { Box } from '@mui/material';
 
 const TextFieldComponents = () => {
   return (
