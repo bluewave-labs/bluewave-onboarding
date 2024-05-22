@@ -48,6 +48,7 @@ function CreateAccountPage() {
   };
 
   return (
+    <body class="login-body"> 
     <div className="login-container">
       <h2 style={{marginBottom: "0px"}}>Create an account</h2>
       <h3>Start your 30-day free trial</h3>
@@ -106,6 +107,7 @@ function CreateAccountPage() {
         Already have an account? <a href="login">Log in</a>
       </div>
     </div>
+    </body>
   );
 }
 
