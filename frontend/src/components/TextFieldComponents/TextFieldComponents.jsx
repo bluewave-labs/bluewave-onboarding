@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Button, Chip, TextField, InputAdornment } from '@mui/material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const TextFieldComponents = () => {
   return (
@@ -7,7 +8,7 @@ const TextFieldComponents = () => {
       <Box sx={{ flex: 1, minWidth: 200 }}>
         
         <TextField
-          label="Website"
+          label = {labelText}
           fullWidth
           margin="normal"
           defaultValue="http://www.untitledui.com"
@@ -31,7 +32,7 @@ const TextFieldComponents = () => {
           error
           helperText="This is an error message."
         />
-        <TextField
+        <TextField 
           label="Email"
           fullWidth
           margin="normal"

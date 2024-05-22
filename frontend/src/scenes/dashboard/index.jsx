@@ -19,16 +19,16 @@ const Dashboard = () => {
     return (
         <>
             <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Popups />
-                <Charts />
-                <EditorDesign />
-                <Logos />
+                {/* <Popups />
+                <Charts /> */}
+                {/* <EditorDesign /> */}
+                {/* <Logos /> */}
                 <TextFieldComponents />
-                <ToolTips />
+                {/* <ToolTips />
 
-                {/* <DatePicker/> */}
+                {/* <DatePicker/> 
                 <HeadingTabs />
-                <DataTable data={demoData} />
+                <DataTable data={demoData} /> */}
             </Box>
         </>
     );
