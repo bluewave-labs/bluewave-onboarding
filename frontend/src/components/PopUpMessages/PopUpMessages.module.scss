@@ -31,7 +31,6 @@
       margin: 0;
       margin-top: 3px;
     }
-
     h3{
       @include text-style(regular);
       color : var(--third-text-color);
@@ -43,7 +42,7 @@
         flex-direction: row;
         margin-top: 0.5rem;
       }
-
+    
       .acceptButton,
       .dismiss{
         border-radius: 8px;
