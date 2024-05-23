@@ -22,7 +22,6 @@ function LeftMenu() {
   return (
     <div className="left-menu">
       <List>
-
         <ListItemButton className="menu-item" style={{backgroundColor: "#F9FAFB"}} onClick={handleHomeClick}>
           <ListItemIcon>
             <HomeOutlinedIcon />
