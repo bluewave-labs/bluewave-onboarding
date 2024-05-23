@@ -1,9 +1,9 @@
 
-import LeftMenu from "../../components/organisms/LeftMenu/LeftMenu";
-import Header from "../organisms/Header/Header";
+import LeftMenu from "../../components/LeftMenu/LeftMenu";
+import Header from "../Header/Header";
 import "./HomePageTemplate.css"
 
-const HomePageTemplate = () => {  
+const HomePageTemplate = ({ children }) => {  
     const user = {
         name: 'John Doe',
         role: 'Administrator',
@@ -13,7 +13,8 @@ const HomePageTemplate = () => {
         <div className="container">
             <Header user={user} />
             <div className="content-container">
-                <LeftMenu className="sidebar"/> 
+                <LeftMenu className="sidebar"/>
+                {children} 
                 {/* some content */}
             </div>
         </div>

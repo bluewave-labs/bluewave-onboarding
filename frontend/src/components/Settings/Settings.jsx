@@ -2,7 +2,7 @@
 
 import {useState, React} from 'react';
 import styles from './Settings.module.scss';
-import Switch from '../../atoms/Switch/Switch'
+import Switch from '../Switch/Switch'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 const Settings = () => {

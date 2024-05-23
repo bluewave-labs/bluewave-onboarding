@@ -7,5 +7,5 @@
 
 .content-container{
     height: 100%;
-    width: min-content;
+    display: flex;
 }

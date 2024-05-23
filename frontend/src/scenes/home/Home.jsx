@@ -1,6 +1,7 @@
 import HomePageTemplate from '../../components/templates/HomePageTemplate';
-import PopUpMessages from '../../components/organisms/PopUpMessages/PopUpMessages';
+import PopUpMessages from '../../components/PopUpMessages/PopUpMessages';
 import "./Home.css"
+import Settings from '../../components/Settings/Settings';
 const Home = () => {
 
     return (
@@ -9,8 +10,9 @@ const Home = () => {
                 <HomePageTemplate>
                     <PopUpMessages/>
                 </HomePageTemplate>
+                
 
-                                    {/* <Box display="flex" justifyContent="space-between" alignItems="center">        
+                    {/* <Box display="flex" justifyContent="space-between" alignItems="center">        
                         <DataTable dasta={demoData} />
                     </Box> */}
             </div>

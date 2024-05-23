@@ -1,4 +1,4 @@
-@use '../../../styles/globals.scss' as *;
+@use '../../styles/globals.scss' as *;
 
 .container{
     border: 1px solid var(--light-border-color) ;
@@ -31,7 +31,7 @@
       margin: 0;
       margin-top: 3px;
     }
-  
+
     h3{
       @include text-style(regular);
       color : var(--third-text-color);
@@ -43,7 +43,7 @@
         flex-direction: row;
         margin-top: 0.5rem;
       }
-    
+
       .acceptButton,
       .dismiss{
         border-radius: 8px;
@@ -53,11 +53,11 @@
         margin: 0;
         padding: 0;
       }
-    
+
       .acceptButton{
         color: var(--main-purple);
       }
-    
+
       .dismiss{
         margin-right: 15px;
         color: var(--third-text-color);
