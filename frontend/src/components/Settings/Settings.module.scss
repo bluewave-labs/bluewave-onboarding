@@ -54,6 +54,9 @@
       padding: 20px;
       background-color: #F8F9F8;
       border-bottom: 1px solid var(--light-border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   
     .settingsContent {
