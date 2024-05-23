@@ -40,13 +40,17 @@
     font-size: 13px;
     font-weight: 600;
     line-height: 20px;
+    color: #344054;
   }
+
   .user-role {
     margin: 0; 
     font-size: 13px;
     font-weight: 400;
     line-height: 20px;
+    color: #344054;
   }
+  
   .logo {
     color: #FF834E;
     font-size: 20px; 
