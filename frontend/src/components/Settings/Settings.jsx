@@ -1,8 +1,7 @@
-// settings.jsx
-
 import {useState, React} from 'react';
 import styles from './Settings.module.scss';
 import Switch from '../Switch/Switch'
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 const Settings = () => {
 
@@ -21,6 +20,7 @@ const Settings = () => {
     <div className={styles.settings}>
     <div className={styles.settingsHeader}>
       <span style={{marginLeft:'5px'}}>Settings</span>
+      <CloseOutlinedIcon style={{color: '#98A2B3', fontSize: '20px'}}/>
       </div>
       <div className={styles.settingsContent}>
         <h3>Main dashboard - first login tour</h3>
