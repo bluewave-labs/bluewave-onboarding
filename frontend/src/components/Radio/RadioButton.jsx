@@ -1,17 +1,17 @@
-import React from 'react'
-import './styles.css'
+import Radio from '@mui/material/Radio';
+import {styled} from '@mui/system';
+import PropTypes from 'prop-types';
 
-const RadioButton = () => {
+export default function MUIRadio({id, size, value, enabled}) {
+    const StyledRadio = styled(Radio)({
+        color: "#D0D5DD",
+        "&.Mui-checked": {
+            color: "#7F56D9"
+        }
+    });
+
     return (
-        <div>
-            <label class="container">
-            <input type="checkbox"/>
-                <span class="checkmark"></span>
-        </label>
-
-            
-            </div>
-    )
+        <StyledRadio id={id} size={size} value={value} disabled={!enabled} />
+    );
 }
 
-export default RadioButton
