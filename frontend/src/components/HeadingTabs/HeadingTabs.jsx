@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Tab, Tabs } from '@mui/material';
+import DataTable from "../Table/Table";
+import { demoData } from '../../data/demoData';
 import './TabStyles.css';
 
 const HeadingTabs = () => {
@@ -10,12 +12,13 @@ const HeadingTabs = () => {
   };
 
   return (
-    <Tabs value={value} onChange={handleChange}>
-      <Tab label="My Details" />
+    <div className='container-tabs'>
+    <Tabs value={value} onChange={handleChange} className='tabs-row'>
+      <Tab label="Directory" />
       <Tab label="My Team" />
-      <Tab label="Departments" />
-      <Tab label="Approvals" />
     </Tabs>
+    <DataTable data={demoData} />
+    </div>
   );
 };
 

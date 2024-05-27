@@ -1,4 +1,6 @@
+import React from 'react';
 import { Box } from "@mui/material";
+import Title from "../../components/Title/Title";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import HeadingTabs from "../../components/Tabs/Tabs";
 import DataTable from "../../components/Table/Table";
@@ -14,8 +16,6 @@ import ToolTips from '../../components/ToolTips/ToolTips';
 
 
 const Dashboard = () => {
-    
-      
     return (
         <>
             <Box display="flex" justifyContent="space-between" alignItems="center">
