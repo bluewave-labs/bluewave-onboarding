@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Popover, Checkbox, FormControlLabel } from '@mui/material';
+import {
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Popover, Checkbox, FormControlLabel
+} from '@mui/material';
+import { Tune, ArrowBackIosNew, ArrowForwardIos } from '@mui/icons-material';
 import './TableStyles.css';
 
 const DataTable = ({ data }) => {
@@ -11,8 +14,8 @@ const DataTable = ({ data }) => {
     role: true,
     team: true,
     hireDate: true,
-    employeeNo: false,        // Changed to false
-    employmentStatus: false,  // Changed to false
+    employeeNo: false,
+    employmentStatus: false,
   });
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -54,10 +57,8 @@ const DataTable = ({ data }) => {
         Company Members 
         <span className="totalEntriesCircle"> {data.length}</span>
       </div>
-      <Button variant="outlined" onClick={handleOpenPopover} className='customize-btn'>
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <path d="M2.25 6L11.25 6M11.25 6C11.25 7.24264 12.2574 8.25 13.5 8.25C14.7426 8.25 15.75 7.24264 15.75 6C15.75 4.75736 14.7426 3.75 13.5 3.75C12.2574 3.75 11.25 4.75736 11.25 6ZM6.75 12L15.75 12M6.75 12C6.75 13.2426 5.74264 14.25 4.5 14.25C3.25736 14.25 2.25 13.2426 2.25 12C2.25 10.7574 3.25736 9.75 4.5 9.75C5.74264 9.75 6.75 10.7574 6.75 12Z" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg> Customize
+      <Button variant="outlined" onClick={handleOpenPopover} className='customize-btn' startIcon={<Tune />}>
+        Customize
       </Button>
       <Popover
         id={id}
@@ -180,9 +181,7 @@ const DataTable = ({ data }) => {
           onClick={() => handleChangePage(page - 1)}
           disabled={page === 0}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M15.8332 10.0001H4.1665M4.1665 10.0001L9.99984 15.8334M4.1665 10.0001L9.99984 4.16675" stroke="#344054" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <ArrowBackIosNew />
           Previous
         </button>
         <div className="paginationNumbers">
@@ -201,9 +200,7 @@ const DataTable = ({ data }) => {
           disabled={page >= pageCount - 1}
         >
           Next
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M4.1665 10.0001H15.8332M15.8332 10.0001L9.99984 4.16675M15.8332 10.0001L9.99984 15.8334" stroke="#344054" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <ArrowForwardIos />
         </button>
       </div>
     </div>

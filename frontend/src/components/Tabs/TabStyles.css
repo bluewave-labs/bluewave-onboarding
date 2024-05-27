@@ -28,7 +28,7 @@ background-color: #7F56D9;
 }
 .tabs-row{
   display: flex;
-width: 889px;
+width: 980px;
 flex-direction: column;
 align-items: flex-start;
 gap: var(--spacing-md, 8px);
