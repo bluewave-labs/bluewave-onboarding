@@ -30,7 +30,7 @@ const PrimaryButton = () => {
                 boxShadow: "none",
                 width: "80px",
                 "&:hover": {
-                    backgroundColor: "black",
+                    backgroundColor: "purple",
                 }
             }}
         >

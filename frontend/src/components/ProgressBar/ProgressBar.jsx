@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import '../ProgressBar/styles.css'
 
-const ProgressBar = ({value = 50}) => {
+const ProgressBar = ({value = 30}) => {
 
-//  const [value, setValue] = useState(0)
-//  useEffect(()=>{
-//     setInterval(()=>{
-//         setValue((val)=> val + 1)
-//     },100)
-//  },[])
 
 const [percent, setPercent] = useState(value)
 useEffect(()=>{
