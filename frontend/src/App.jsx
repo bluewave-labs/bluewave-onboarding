@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./scenes/global/Home";
+import Home from "./scenes/home/Home";
 import LoginPage from "./scenes/login/LoginPage";
 import CreateAccountPage from "./scenes/login/CreateAccountPage";
 import PasswordResetPage from "./scenes/login/PassswordResetPage";
