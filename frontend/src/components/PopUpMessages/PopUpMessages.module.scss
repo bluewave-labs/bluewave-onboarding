@@ -31,7 +31,6 @@
       margin: 0;
       margin-top: 3px;
     }
-  
     h3{
       @include text-style(regular);
       color : var(--third-text-color);
@@ -53,11 +52,11 @@
         margin: 0;
         padding: 0;
       }
-    
+
       .acceptButton{
         color: var(--main-purple);
       }
-    
+
       .dismiss{
         margin-right: 15px;
         color: var(--third-text-color);
