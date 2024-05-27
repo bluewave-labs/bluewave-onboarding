@@ -1,4 +1,5 @@
 import HomePageTemplate from '../../components/templates/HomePageTemplate';
+import Dashboard from '../dashboard';
 import "./Home.css"
 const Home = () => {
 
@@ -6,13 +7,8 @@ const Home = () => {
         <div className="app">
             <div className="content">
                 <HomePageTemplate>
+                    <Dashboard />
                 </HomePageTemplate>
-
-                
-
-                    {/* <Box display="flex" justifyContent="space-between" alignItems="center">        
-                        <DataTable dasta={demoData} />
-                    </Box> */}
             </div>
         </div>
     );

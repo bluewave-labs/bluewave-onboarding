@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './login.css'; 
+import './Login.css'; 
 import GoogleIconSvg from '../../assets/google-icon.svg';
 
 function LoginPage() {
