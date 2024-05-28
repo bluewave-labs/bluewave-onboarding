@@ -1,8 +1,11 @@
-
+const { Popup } = require('../models/Popup');
 
 const popup = async (req, res) =>{
     const { key } = req.query;
     let returnObj =[]
+    // const user = await User.findOne({ where: { email } });
+    // let data = Popup.find({ where: {  }})
+    
     if(key==='A') {
         returnObj =[
             {
