@@ -29,7 +29,9 @@ const ProgressSteps = () => {
                 <h4 style={{color: step1Completed && !step2Completed ? main_purple : ""}}>A few details about your company.</h4>
             </div>
             <div className={styles.step}>
-                {step3Completed ? <CheckCircleIcon className={styles['check-circle-icon']} /> : <TripOriginIcon className={step2Completed ? styles['on-progress'] : styles['future-step']} />}
+                <div className={styles['icon-container']}>
+                    {step3Completed ? <CheckCircleIcon className={styles['check-circle-icon']} /> : <TripOriginIcon className={step2Completed ? styles['on-progress'] : styles['future-step']} />}
+                </div>
                 <h3 style={{color: step2Completed ? main_purple : ""}}>Invite Your Team</h3>
                 <h4 style={{color: step2Completed ? main_purple : ""}}>Start collaborating with your team.</h4>      
             </div>
