@@ -1,11 +1,5 @@
 @import url(../../styles/variables.css);
 
-.login-body {
-  font-family: 'Inter', sans-serif; 
-  background-repeat: no-repeat; 
-  background-image: url('data:image/svg+xml,<svg width="768" height="768" viewBox="0 0 768 768" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="mask0_52_53336" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="768" height="768"><rect width="768" height="768" fill="url(%23paint0_radial_52_53336)"/></mask><g mask="url(%23mask0_52_53336)"><g clip-path="url(%23clip0_52_53336)"><g clip-path="url(%23clip1_52_53336)"><line x1="0.5" x2="0.5" y2="768" stroke="%23EAECF0"/><line x1="48.5" x2="48.5" y2="768" stroke="%23EAECF0"/><line x1="96.5" x2="96.5" y2="768" stroke="%23EAECF0"/><line x1="144.5" x2="144.5" y2="768" stroke="%23EAECF0"/><line x1="192.5" x2="192.5" y2="768" stroke="%23EAECF0"/><line x1="240.5" x2="240.5" y2="768" stroke="%23EAECF0"/><line x1="288.5" x2="288.5" y2="768" stroke="%23EAECF0"/><line x1="336.5" x2="336.5" y2="768" stroke="%23EAECF0"/><line x1="384.5" x2="384.5" y2="768" stroke="%23EAECF0"/><line x1="432.5" x2="432.5" y2="768" stroke="%23EAECF0"/><line x1="480.5" x2="480.5" y2="768" stroke="%23EAECF0"/><line x1="528.5" x2="528.5" y2="768" stroke="%23EAECF0"/><line x1="576.5" x2="576.5" y2="768" stroke="%23EAECF0"/><line x1="624.5" x2="624.5" y2="768" stroke="%23EAECF0"/><line x1="672.5" x2="672.5" y2="768" stroke="%23EAECF0"/><line x1="720.5" x2="720.5" y2="768" stroke="%23EAECF0"/></g><rect x="0.5" y="0.5" width="767" height="767" stroke="%23EAECF0"/><g clip-path="url(%23clip2_52_53336)"><line y1="47.5" x2="768" y2="47.5" stroke="%23EAECF0"/><line y1="95.5" x2="768" y2="95.5" stroke="%23EAECF0"/><line y1="143.5" x2="768" y2="143.5" stroke="%23EAECF0"/><line y1="191.5" x2="768" y2="191.5" stroke="%23EAECF0"/><line y1="239.5" x2="768" y2="239.5" stroke="%23EAECF0"/><line y1="287.5" x2="768" y2="287.5" stroke="%23EAECF0"/><line y1="335.5" x2="768" y2="335.5" stroke="%23EAECF0"/><line y1="383.5" x2="768" y2="383.5" stroke="%23EAECF0"/><line y1="431.5" x2="768" y2="431.5" stroke="%23EAECF0"/><line y1="479.5" x2="768" y2="479.5" stroke="%23EAECF0"/><line y1="527.5" x2="768" y2="527.5" stroke="%23EAECF0"/><line y1="575.5" x2="768" y2="575.5" stroke="%23EAECF0"/><line y1="623.5" x2="768" y2="623.5" stroke="%23EAECF0"/><line y1="671.5" x2="768" y2="671.5" stroke="%23EAECF0"/><line y1="719.5" x2="768" y2="719.5" stroke="%23EAECF0"/><line y1="767.5" x2="768" y2="767.5" stroke="%23EAECF0"/></g><rect x="0.5" y="0.5" width="767" height="767" stroke="%23EAECF0"/></g></g><defs><radialGradient id="paint0_radial_52_53336" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(384 384) rotate(90) scale(384 384)"><stop/><stop offset="1" stop-opacity="0"/></radialGradient><clipPath id="clip0_52_53336"><rect width="768" height="768" fill="white"/></clipPath><clipPath id="clip1_52_53336"><rect width="768" height="768" fill="white"/></clipPath><clipPath id="clip2_52_53336"><rect width="768" height="768" fill="white"/></clipPath></defs></svg>');
-  background-position: center -350px;
-}
 
 .login-container::before {
   content: '';
@@ -30,6 +24,10 @@
   max-width: 360px;
   margin: 0 auto;
   padding: 20px;
+  font-family: 'Inter', sans-serif; 
+  background-repeat: no-repeat; 
+  background-image: url('data:image/svg+xml,<svg width="768" height="768" viewBox="0 0 768 768" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="mask0_52_53336" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="768" height="768"><rect width="768" height="768" fill="url(%23paint0_radial_52_53336)"/></mask><g mask="url(%23mask0_52_53336)"><g clip-path="url(%23clip0_52_53336)"><g clip-path="url(%23clip1_52_53336)"><line x1="0.5" x2="0.5" y2="768" stroke="%23EAECF0"/><line x1="48.5" x2="48.5" y2="768" stroke="%23EAECF0"/><line x1="96.5" x2="96.5" y2="768" stroke="%23EAECF0"/><line x1="144.5" x2="144.5" y2="768" stroke="%23EAECF0"/><line x1="192.5" x2="192.5" y2="768" stroke="%23EAECF0"/><line x1="240.5" x2="240.5" y2="768" stroke="%23EAECF0"/><line x1="288.5" x2="288.5" y2="768" stroke="%23EAECF0"/><line x1="336.5" x2="336.5" y2="768" stroke="%23EAECF0"/><line x1="384.5" x2="384.5" y2="768" stroke="%23EAECF0"/><line x1="432.5" x2="432.5" y2="768" stroke="%23EAECF0"/><line x1="480.5" x2="480.5" y2="768" stroke="%23EAECF0"/><line x1="528.5" x2="528.5" y2="768" stroke="%23EAECF0"/><line x1="576.5" x2="576.5" y2="768" stroke="%23EAECF0"/><line x1="624.5" x2="624.5" y2="768" stroke="%23EAECF0"/><line x1="672.5" x2="672.5" y2="768" stroke="%23EAECF0"/><line x1="720.5" x2="720.5" y2="768" stroke="%23EAECF0"/></g><rect x="0.5" y="0.5" width="767" height="767" stroke="%23EAECF0"/><g clip-path="url(%23clip2_52_53336)"><line y1="47.5" x2="768" y2="47.5" stroke="%23EAECF0"/><line y1="95.5" x2="768" y2="95.5" stroke="%23EAECF0"/><line y1="143.5" x2="768" y2="143.5" stroke="%23EAECF0"/><line y1="191.5" x2="768" y2="191.5" stroke="%23EAECF0"/><line y1="239.5" x2="768" y2="239.5" stroke="%23EAECF0"/><line y1="287.5" x2="768" y2="287.5" stroke="%23EAECF0"/><line y1="335.5" x2="768" y2="335.5" stroke="%23EAECF0"/><line y1="383.5" x2="768" y2="383.5" stroke="%23EAECF0"/><line y1="431.5" x2="768" y2="431.5" stroke="%23EAECF0"/><line y1="479.5" x2="768" y2="479.5" stroke="%23EAECF0"/><line y1="527.5" x2="768" y2="527.5" stroke="%23EAECF0"/><line y1="575.5" x2="768" y2="575.5" stroke="%23EAECF0"/><line y1="623.5" x2="768" y2="623.5" stroke="%23EAECF0"/><line y1="671.5" x2="768" y2="671.5" stroke="%23EAECF0"/><line y1="719.5" x2="768" y2="719.5" stroke="%23EAECF0"/><line y1="767.5" x2="768" y2="767.5" stroke="%23EAECF0"/></g><rect x="0.5" y="0.5" width="767" height="767" stroke="%23EAECF0"/></g></g><defs><radialGradient id="paint0_radial_52_53336" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(384 384) rotate(90) scale(384 384)"><stop/><stop offset="1" stop-opacity="0"/></radialGradient><clipPath id="clip0_52_53336"><rect width="768" height="768" fill="white"/></clipPath><clipPath id="clip1_52_53336"><rect width="768" height="768" fill="white"/></clipPath><clipPath id="clip2_52_53336"><rect width="768" height="768" fill="white"/></clipPath></defs></svg>');
+  background-position: center -350px;
 }
 
 .form-group {
@@ -79,21 +77,6 @@
   cursor: pointer;
   font-size: 13px;
   background-color: var(--main-purple); 
-}
-
-.google-sign-in-button {
-  display: flex;
-  align-items: center; 
-  justify-content: center; 
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 30px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  color: var(--main-text-color);
-  cursor: pointer;
-  font-size: 16px;
-  background-color: #fff;
 }
 
 .sign-up-link {
