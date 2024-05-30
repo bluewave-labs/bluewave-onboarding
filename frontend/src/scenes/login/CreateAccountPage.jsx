@@ -6,9 +6,11 @@ import { signUp } from '../../services/apiServices';
 
 function CreateAccountPage() {
   const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isNameValid, setIsNameValid] = useState(false);
+  const [isSurnameValid, setIsSurnameValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [hasSpecialCharacter, setHasSpecialCharacter] = useState(false);
@@ -17,6 +19,11 @@ function CreateAccountPage() {
   const handleNameChange = (e) => {
     setName(e.target.value);
     setIsNameValid(e.target.value.length > 0);
+  };
+
+  const handleSurnameChange = (e) => {
+    setSurname(e.target.value);
+    setIsSurnameValid(e.target.value.length > 0);
   };
 
   const handleEmailChange = (e) => {
@@ -54,7 +61,7 @@ function CreateAccountPage() {
       return;
     }
 
-    const userData = { name, email, password };
+    const userData = { name, surname, email, password };
 
     try {
       const response = await signUp(userData);
@@ -66,8 +73,8 @@ function CreateAccountPage() {
 
   return (
     <div className="login-container">
-      <h2 style={{marginBottom: "0px"}}>Create an account</h2>
-      <h3>Start your 30-day free trial</h3>
+      <h2>Create an account</h2>
+      {/* <h3>Start your 30-day free trial</h3> */}
       <div className="form-group">
       <div className='check-div'>
       {isNameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
@@ -78,6 +85,18 @@ function CreateAccountPage() {
           value={name}
           onChange={handleNameChange}
           placeholder="Enter your name"
+        />
+      </div>
+      <div className="form-group">
+      <div className='check-div'>
+      {isSurnameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
+        <label>Surname*:</label>  
+        </div>
+        <input
+          type="surname"
+          value={surname}
+          onChange={handleSurnameChange}
+          placeholder="Enter your surname"
         />
       </div>
       <div className="form-group">

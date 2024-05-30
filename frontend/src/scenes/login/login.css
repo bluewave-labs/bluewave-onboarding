@@ -44,10 +44,11 @@
 
 .form-group input[type="email"],
 .form-group input[type="name"],
-.form-group input[type="password"] {
+.form-group input[type="password"],
+.form-group input[type="surname"] {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
+  padding: 8px 12px;
+  border: 1px solid #D0D5DD;
   border-radius: 8px;
   font-size: 13px;
   box-sizing: border-box;
@@ -103,11 +104,6 @@
 }
 
 
-.google-icon{
-  margin-right: 5px;
-}
-
-
 /* For Create an Account Page */
 .password-constraints {
   font-size: 13px;
@@ -126,6 +122,7 @@
 
 .check-div{
   display: flex;
+  margin-bottom: 0.25rem;
 }
 
 .login-container h3{
