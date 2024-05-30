@@ -10,6 +10,8 @@ import Switch from "./components/Switch/Switch";
 import Checkbox from "./components/CheckBox/CheckBox";
 import CheckIcon from "./components/CheckIcons/CheckIcons";
 import MUIRadio from "./components/Radio/RadioButton";
+// import Logo from "./components/Logo/Logo";
+import TestLogo from "./components/Logo/TestLogo";
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
   const isAuthenticated = true;// emulate login
   return (
     <>
+  <Logo /> 
       <Routes>
         <Route path="/" element={isAuthenticated ? <Home /> : <LoginPage />} />   
         <Route path="/login" element={<LoginPage />} />
