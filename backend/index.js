@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const authRoutes = require('./src/routes/auth.routes');
+const userRoutes = require('./src/routes/user.routes');
 const mocks = require('./src/routes/mocks.routes');
 // const tourRoutes = require('./src/routes/tour.routes');
 
@@ -18,6 +19,7 @@ app.use(express.json());
 
 
 app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
 app.use('/mock/', mocks);
 // app.use('/tours', tourRoutes);
 
