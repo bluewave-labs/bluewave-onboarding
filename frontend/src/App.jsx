@@ -7,7 +7,6 @@ import ForgotPasswordPage from "./scenes/login/ForgotPasswordPage";
 import CheckYourEmailPage from "./scenes/login/CheckYourEmailPage";
 import SetNewPasswordPage from "./scenes/login/SetNewPassword";
 import Switch from "./components/Switch/Switch";
-import Checkbox from "./components/CheckBox/CheckBox";
 import CheckIcon from "./components/CheckIcons/CheckIcons";
 import MUIRadio from "./components/Radio/RadioButton";
 
@@ -23,8 +22,7 @@ function App() {
         <Route path="/signup" element={<CreateAccountPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<PasswordResetPage />} />
-        <Route path="checkicon" element={<CheckIcon/>}/>
-        <Route path="/checkbox" element={<MUIRadio/>}/>
+        <Route path="/checkicon" element={<CheckIcon/>} />
       </Routes>    
     </>
   );
