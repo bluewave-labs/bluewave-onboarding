@@ -1,9 +1,0 @@
-{
-      "username": "postgres",
-      "password": "1234",
-      "database": "onboarding_db",
-      "host": "localhost",
-      "port": 5432,
-      "dialect": "postgres"
-    
-}
