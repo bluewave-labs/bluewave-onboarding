@@ -1,23 +1,39 @@
 import React from 'react';
-import { Box, Button, Typography } from '@mui/material';
-import HeadingTabs from "../../components/Tabs/Tabs";
+import PropTypes from 'prop-types';
+import { Box, Typography } from '@mui/material';
+import StyledButton from '../StyledButton/StyledButton';
 import './TitleStyles.css';
 
-const Title = ({ title, buttonText, onButtonClick, children }) => {
+const Title = ({ title, buttonText, onButtonClick, titleStyle, buttonStyle, children }) => {
   return (
     <div className='titleContainer'>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h5" component="div">
+      <Box className="titleHeader">
+        <Typography className='titleBanner' component="div" style={{ ...titleStyle }}>
           {title}
         </Typography>
-        <Button className='add-new' variant="contained" onClick={onButtonClick}>
-          {buttonText}
-        </Button>
+        <StyledButton
+          text={buttonText}
+          onClick={onButtonClick}
+          style={buttonStyle}
+        />
       </Box>
       {children}
-    <HeadingTabs/>
     </div>
   );
+};
+
+Title.propTypes = {
+  title: PropTypes.string.isRequired,
+  buttonText: PropTypes.string.isRequired,
+  onButtonClick: PropTypes.func.isRequired,
+  titleStyle: PropTypes.object,
+  buttonStyle: PropTypes.object,
+  children: PropTypes.node,
+};
+
+Title.defaultProps = {
+  titleStyle: {},
+  buttonStyle: {},
 };
 
 export default Title;
