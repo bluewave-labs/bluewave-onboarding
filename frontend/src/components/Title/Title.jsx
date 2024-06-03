@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
+import HeadingTabs from "../../components/Tabs/Tabs";
 import './TitleStyles.css';
 
 const Title = ({ title, buttonText, onButtonClick, children }) => {
@@ -14,6 +15,7 @@ const Title = ({ title, buttonText, onButtonClick, children }) => {
         </Button>
       </Box>
       {children}
+    <HeadingTabs/>
     </div>
   );
 };
