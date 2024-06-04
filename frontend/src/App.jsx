@@ -20,8 +20,6 @@ function App() {
         <Route path="/signup" element={<CreateAccountPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<PasswordResetPage />} />
-        <Route path="checkicon" element={<CheckIcon/>}/>
-        <Route path="/checkbox" element={<MUIRadio/>}/>
       </Routes>    
     </>
   );

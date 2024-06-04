@@ -51,15 +51,21 @@ const Settings = () => {
         </div>
         <div className={styles.triggeringFrequency}>
           <h4>Triggering Frequency</h4>
-          <select>
-            <option value="just-once">Just Once</option>
-          </select>
+          <div className={styles.freqButtonContainer}>
+            <select>
+              <option value="just-once">Just Once</option>
+            </select>
+            <span/> {/* empty */} 
+          </div>
         </div>
         <div className={styles.theme}>
           <h4>Theme</h4>
-          <select>
-            <option value="default-theme">Default Theme</option>
-          </select>
+          <div className={styles.themeButtonContainer}>
+            <select>
+              <option value="default-theme">Default Theme</option>
+            </select>     
+            <span/> {/* empty */} 
+          </div>
         </div>
       </div>
     </div>
