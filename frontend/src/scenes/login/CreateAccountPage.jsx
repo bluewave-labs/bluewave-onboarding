@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import './Login.css'; 
-import GoogleIconSvg from '../../assets/google-icon.svg';
+import GoogleSignInButton from '../../components/Buttons/GoogleSignInButton/GoogleSignInButton';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { signUp } from '../../services/apiServices';
 
 function CreateAccountPage() {
   const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isNameValid, setIsNameValid] = useState(false);
+  const [isSurnameValid, setIsSurnameValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [hasSpecialCharacter, setHasSpecialCharacter] = useState(false);
@@ -16,6 +19,11 @@ function CreateAccountPage() {
   const handleNameChange = (e) => {
     setName(e.target.value);
     setIsNameValid(e.target.value.length > 0);
+  };
+
+  const handleSurnameChange = (e) => {
+    setSurname(e.target.value);
+    setIsSurnameValid(e.target.value.length > 0);
   };
 
   const handleEmailChange = (e) => {
@@ -47,11 +55,26 @@ function CreateAccountPage() {
     return atLeastEightCharactersCheck(password) && hasSpecialCharacterCheck(password);
   };
 
+  const handleSignUp = async () => {
+    if (!isNameValid || !isEmailValid || !isPasswordValid) {
+      alert('Please fill out the form correctly.');
+      return;
+    }
+
+    const userData = { name, surname, email, password };
+
+    try {
+      const response = await signUp(userData);
+      console.log('Sign up successful:', response);
+    } catch (error) {
+      console.error('Sign up failed:', error);
+    }
+  };
+
   return (
-    <body class="login-body"> 
     <div className="login-container">
-      <h2 style={{marginBottom: "0px"}}>Create an account</h2>
-      <h3>Start your 30-day free trial</h3>
+      <h2>Create an account</h2>
+      {/* <h3>Start your 30-day free trial</h3> */}
       <div className="form-group">
       <div className='check-div'>
       {isNameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
@@ -62,6 +85,18 @@ function CreateAccountPage() {
           value={name}
           onChange={handleNameChange}
           placeholder="Enter your name"
+        />
+      </div>
+      <div className="form-group">
+      <div className='check-div'>
+      {isSurnameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
+        <label>Surname*:</label>  
+        </div>
+        <input
+          type="surname"
+          value={surname}
+          onChange={handleSurnameChange}
+          placeholder="Enter your surname"
         />
       </div>
       <div className="form-group">
@@ -97,17 +132,14 @@ function CreateAccountPage() {
           <CheckCircleIcon style={{ color: hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight:"5px" }} />
           Must contain one special character
         </div>
-      <button className="create-account-button">
+      <button className="create-account-button" onClick={handleSignUp}>
         Get started
       </button>
-      <button className="google-sign-in-button">
-        <img src={GoogleIconSvg} alt="Google Icon" className="google-icon" /> Sign up with Google
-      </button>
+      <GoogleSignInButton/>
       <div className="sign-up-link">
         Already have an account? <a href="login">Log in</a>
       </div>
     </div>
-    </body>
   );
 }
 
