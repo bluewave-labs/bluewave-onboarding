@@ -1,8 +1,7 @@
 @use '../../styles/globals.scss' as *;
 
 .container {
-  width: 35vw;
-  max-width: 400px;
+  max-width: 360px;
   min-height: 60px;
   border: 1px solid var(--light-gray);
   padding: 10px;

@@ -20,6 +20,8 @@
   .buttons{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .changelog,
@@ -42,7 +44,7 @@
 
   .emailInput{
     width: 320px;
-    margin-right: 10px;
+    height: 2rem;
     border: 1px solid var(--light-gray);
   }
 
