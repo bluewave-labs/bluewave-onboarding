@@ -39,4 +39,7 @@ const User = sequelize.define('User', {
   timestamps: false // Disable timestamps
 });
 
+User.sync().then(() => {
+  console.log('User table created');
+});
 module.exports = User;

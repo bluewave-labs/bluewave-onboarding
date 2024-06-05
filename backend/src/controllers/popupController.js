@@ -7,6 +7,7 @@ const Popup = require('../models/Popup');
 class PopupController {
 
     async addPopup(req, res) {
+        const userId = req.user.id;
         // Check if required fields are present and not null
         if (!req.body.popupSize || !req.body.closeButtonAction) {
             return res.status(400).json({ errors: [{ msg: 'popupSize and closeButtonAction are required' }] });
@@ -37,7 +38,9 @@ class PopupController {
             }
         }
         try {
-            const newPopup = await popupService.createPopup(req.body);
+            console.log(userId)
+            const newPopupData = { ...req.body, createdBy: userId }; // Include userId in the data passed to the service
+            const newPopup = await popupService.createPopup(newPopupData);
             res.status(201).json(newPopup);
         } catch (err) {
             console.log(err);

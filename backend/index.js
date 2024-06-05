@@ -19,11 +19,10 @@ app.use(express.json());
 
 const db = require('./config/database');
 
-
 db.authenticate()
   .then(() => console.log('Database connected...'))
   .catch(err => console.log('Error: ' + err))
-  
+
 app.use('/auth', authRoutes);
 app.use('/mock/', mocks);
 app.use('/popup', popup);

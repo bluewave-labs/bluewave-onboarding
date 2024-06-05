@@ -1,12 +1,13 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
+const User = require('./User'); // Adjust the path if necessary
 
 const Popup = sequelize.define('Popup', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      },
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
   closeButtonAction: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -54,13 +55,24 @@ const Popup = sequelize.define('Popup', {
     allowNull: false,
     defaultValue: '#FFFFFF',
   },
-},{
-    tableName: 'popup' 
-  });
-  
-  Popup.sync().then(() => {
-      console.log('Popup table created');
-    });
-  
+  createdBy: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: User,
+      key: 'id'
+    }
+  }
+}, {
+  tableName: 'popup'
+});
+
+// Establishing the association
+Popup.belongsTo(User, { foreignKey: 'createdBy', as: 'creator' });
+
+// Syncing the model
+Popup.sync().then(() => {
+  console.log('Popup table created');
+});
 
 module.exports = Popup;
