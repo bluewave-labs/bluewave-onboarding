@@ -1,32 +1,19 @@
-import React, { Component } from 'react';
+
+import React from 'react';
 import PropTypes from 'prop-types';
-import Logo from "@mui/material";
-import AdbIcon from '@mui/icons-material/Adb';
-import './LogosStyles.css';
+import './LogoStyles.css';
 
-class Logo extends Component {
-  constructor (props){
-    super (props);
-    this.state = {
-      width:"",
-      height:"",
-    };
-  }
- render() {
+const Logo = ({ logo }) => {
   return (
-    <img src={logo.src} alt={logo.alt} className="logoImage" />
-  )
- }
-}
-
-Logo.propTypes = {
-  logo: PropTypes.arrayOf(
-    PropTypes.shape({
-      src: PropTypes.string.isRequired,
-      alt: PropTypes.string.isRequired,
-      className: PropTypes.string
-    })
-  ).isRequired
+    <div className="logo-container">
+        <img
+          src={logo}
+          alt={""}
+          //className={`logo-image ${logo.className}`}
+        />
+     
+    </div>
+  );
 };
-   
-   export default Logo;
+
+export default Logo;

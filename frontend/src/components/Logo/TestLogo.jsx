@@ -1,5 +1,6 @@
 import React from 'react';
 import Logo from './Logo';
+import LogoBW from './../../assets/logo/introflow_logo_bw.svg';
 
 const TestLogo = () => {
   const logo = [];
@@ -7,7 +8,7 @@ const TestLogo = () => {
   return (
     <div>
       <h1>Testing Logo Component</h1>
-      <Logo logo={logo} />
+      <img src={LogoBW}/>
     </div>
   );
 };

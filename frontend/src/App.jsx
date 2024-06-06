@@ -6,6 +6,9 @@ import PasswordResetPage from "./scenes/login/PassswordResetPage";
 import ForgotPasswordPage from "./scenes/login/ForgotPasswordPage";
 import CheckYourEmailPage from "./scenes/login/CheckYourEmailPage";
 import SetNewPasswordPage from "./scenes/login/SetNewPassword";
+import TestLogo from "./components/Logo/TestLogo";
+
+
 
 
 function App() {
@@ -13,7 +16,7 @@ function App() {
   const isAuthenticated = true;// emulate login
   return (
     <>
-  <Logo /> 
+<TestLogo/>
       <Routes>
         <Route path="/" element={isAuthenticated ? <Home /> : <LoginPage />} />   
         <Route path="/login" element={<LoginPage />} />
