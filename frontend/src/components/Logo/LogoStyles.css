@@ -11,7 +11,13 @@
   }
   
   .logoImage {
+<<<<<<< Updated upstream
     width: 75px;
     height: 75px;
+=======
+    width: 150px;
+    height: 120px;
+    color: blue;
+>>>>>>> Stashed changes
   }
   
