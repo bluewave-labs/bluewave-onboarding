@@ -1,4 +1,3 @@
-// controllers/popupController.js
 const popupService = require('../service/popup.service');
 const { badRequest, internalServerError } = require('../errors');
 const Popup = require('../models/Popup');
@@ -8,28 +7,22 @@ class PopupController {
 
     async addPopup(req, res) {
         const userId = req.user.id;
-        // Check if required fields are present and not null
         if (!req.body.popupSize || !req.body.closeButtonAction) {
             return res.status(400).json({ errors: [{ msg: 'popupSize and closeButtonAction are required' }] });
         }
     
-        // Get the column type definition from the model
         const popupSizeColumn = Popup.tableAttributes.popupSize;
     
-        // Check if the provided value matches the column type definition
         if (!popupSizeColumn.validate.isIn[0].includes(req.body.popupSize)) {
             return res.status(400).json({ errors: [{ msg: 'Invalid value for popupSize' }] });
         }
     
-        // Get the column type definition from the model
         const closeButtonActionColumn = Popup.tableAttributes.closeButtonAction;
     
-        // Check if the provided value matches the column type definition
         if (!closeButtonActionColumn.validate.isIn[0].includes(req.body.closeButtonAction)) {
             return res.status(400).json({ errors: [{ msg: 'Invalid value for closeButtonAction' }] });
         }
     
-        // Validate colors using regex
         const colorFields = ['headerBackgroundColor', 'headerColor', 'textColor', 'buttonBackgroundColor', 'buttonTextColor'];
         const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
         for (const field of colorFields) {
@@ -38,8 +31,7 @@ class PopupController {
             }
         }
         try {
-            console.log(userId)
-            const newPopupData = { ...req.body, createdBy: userId }; // Include userId in the data passed to the service
+            const newPopupData = { ...req.body, createdBy: userId };
             const newPopup = await popupService.createPopup(newPopupData);
             res.status(201).json(newPopup);
         } catch (err) {
@@ -56,14 +48,12 @@ class PopupController {
         try {
             const { id } = req.params;
     
-            // Check if id is empty or not a number
             if (isNaN(id) || id.trim() === '') {
                 return res.status(400).json({ errors: [{ msg: 'Invalid id' }] });
             }
     
             const deletionResult = await popupService.deletePopup(id);
 
-            // If deletion was unsuccessful, return a bad request response
             if (!deletionResult) {
                 return res.status(400).json({ errors: [{ msg: 'Popup with the specified id does not exist' }] });
             }
@@ -81,28 +71,22 @@ class PopupController {
         try {
             const { id } = req.params;
     
-            // Check if required fields are present and not null
             if (!req.body.popupSize || !req.body.closeButtonAction) {
                 return res.status(400).json({ errors: [{ msg: 'popupSize and closeButtonAction are required' }] });
             }
     
-            // Get the column type definition from the model for popupSize
             const popupSizeColumn = Popup.tableAttributes.popupSize;
     
-            // Check if the provided value matches the column type definition for popupSize
             if (!popupSizeColumn.validate.isIn[0].includes(req.body.popupSize)) {
                 return res.status(400).json({ errors: [{ msg: 'Invalid value for popupSize' }] });
             }
     
-            // Get the column type definition from the model for closeButtonAction
             const closeButtonActionColumn = Popup.tableAttributes.closeButtonAction;
     
-            // Check if the provided value matches the column type definition for closeButtonAction
             if (!closeButtonActionColumn.validate.isIn[0].includes(req.body.closeButtonAction)) {
                 return res.status(400).json({ errors: [{ msg: 'Invalid value for closeButtonAction' }] });
             }
     
-            // Validate colors using regex
             const colorFields = ['headerBackgroundColor', 'headerColor', 'textColor', 'buttonBackgroundColor', 'buttonTextColor'];
             const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
             for (const field of colorFields) {

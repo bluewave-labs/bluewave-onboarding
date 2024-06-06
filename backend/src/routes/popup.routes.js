@@ -1,4 +1,3 @@
-
 const express = require('express');
 const popupController = require('../controllers/popupController');
 const authenticateJWT = require('../middleware/auth.middleware');

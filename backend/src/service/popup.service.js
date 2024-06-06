@@ -1,4 +1,3 @@
-// services/popupService.js
 const Popup = require('../models/Popup');
 
 class PopupService {

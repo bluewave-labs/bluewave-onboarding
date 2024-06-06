@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
-const User = require('./User'); // Adjust the path if necessary
+const User = require('./User'); 
 
 const Popup = sequelize.define('Popup', {
   id: {
