@@ -1,10 +1,20 @@
 import HomePageTemplate from '../../components/templates/HomePageTemplate';
 import Dashboard from '../dashboard';
+import Logo from '../../components/Logo/Logo';
+import LogoBW from '../../assets/logo/introflow_logo_bw.svg'; 
 import "./Home.css"
-const Home = () => {
 
+const Home = () => {
+    const logo = {
+        src: LogoBW,
+        alt: 'Introflow logo',
+        className: 'logo-item',
+      };
+      console.log('Home logo object:', logo);
+      
     return (
         <div className="app">
+            <Logo logo={logo} /> 
             <div className="content">
                 <HomePageTemplate>
                     <Dashboard />
