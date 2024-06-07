@@ -10,8 +10,8 @@ const Home = () => {
         alt: 'Introflow logo',
         className: 'logo-item',
       };
-      console.log('Home logo object:', logo);
-      
+    
+
     return (
         <div className="app">
             <Logo logo={logo} /> 
