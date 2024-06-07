@@ -6,7 +6,8 @@ import PasswordResetPage from "./scenes/login/PassswordResetPage";
 import ForgotPasswordPage from "./scenes/login/ForgotPasswordPage";
 import CheckYourEmailPage from "./scenes/login/CheckYourEmailPage";
 import SetNewPasswordPage from "./scenes/login/SetNewPassword";
-import TestLogo from "./components/Logo/TestLogo";
+import Logo from "./components/Logo/Logo";
+
 
 
 
@@ -16,7 +17,7 @@ function App() {
   const isAuthenticated = true;// emulate login
   return (
     <>
-<TestLogo/>
+<Logo/>
       <Routes>
         <Route path="/" element={isAuthenticated ? <Home /> : <LoginPage />} />   
         <Route path="/login" element={<LoginPage />} />
@@ -25,6 +26,7 @@ function App() {
         <Route path="/reset-password" element={<PasswordResetPage />} />
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
+        
       </Routes>    
     </>
   );
