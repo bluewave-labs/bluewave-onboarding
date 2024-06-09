@@ -1,4 +1,4 @@
-const { Popup } = require('../models/Popup');
+const User = require('../../sequelize/models/User');
 
 const popup = async (req, res) =>{
     const { key } = req.query;
@@ -45,10 +45,11 @@ const popup = async (req, res) =>{
                 actionButtonText: 'Kapat/Close2',
                 actionButtonColor: '#CCCCCC'
             }
-            
+             
         ];
     }
-
+    let all = await User.findAll();
+    returnObj.all = all;
     res.status(200).json(returnObj);
 }
 const onboard = async (req, res) =>{

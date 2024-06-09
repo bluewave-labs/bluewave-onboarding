@@ -1,7 +1,6 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../config/database');
+const db = require('./index');
 
-const User = sequelize.define('User', {
+const User = db.sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -29,7 +28,7 @@ const User = sequelize.define('User', {
     allowNull: false,
     defaultValue: 'user'
   },
-  createdAt: {
+  created_at: {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: DataTypes.NOW

@@ -1,0 +1,149 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="popup">
+  <div class="popup-header">
+    <h1>Projects</h1>
+    <button class="close-button" aria-label="Close">&times;</button>
+  </div>
+  <div class="popup-body">
+    <p id="content">
+      A project is a single instance of a Wave popup where you can add as many categories and commands. You have already created one, so we are good to go!
+    </p>
+    <div class="indicator">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot active"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+  <div class="popup-footer">
+    <button class="back-button">Back</button>
+    <button class="next-button">Next</button>
+  </div>
+</div>
+
+<style>
+  :root {
+    color-scheme: light dark;
+  }
+
+  .popup {
+    width: 401px;
+    padding: 16px;
+    border: 1px solid #0070f3; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: white;
+  }
+
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 8px;
+  }
+
+  .popup-header h1 {
+    font-size: 20px;
+    margin: 0;
+  }
+
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .popup-body {
+    margin: 16px 0;
+  }
+
+  .popup-body p {
+    font-size: 14px;
+    color: #333;
+  }
+
+  .indicator {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #eaeaea;
+    border-radius: 50%;
+    margin: 0 4px;
+  }
+
+  .dot.active {
+    background-color: #0070f3;
+  }
+
+  .popup-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #eaeaea;
+    padding-top: 8px;
+  }
+
+  .back-button,
+  .next-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .back-button {
+    background-color: white;
+    color: #0070f3;
+    border: 1px solid #0070f3;
+  }
+
+  .next-button {
+    background-color: #7173ec;
+    color: white;
+  }
+</style>
+
+<script>
+  const contents = [
+    "A project is a single instance of a Wave popup where you can add as many categories and commands. You have already created one, so we are good to go!",
+    "Another example content 1",
+    "Another example content 2",
+    "Another example content 3"
+  ];
+
+  let currentContentIndex = 0;
+  const contentElement = document.getElementById('content');
+
+  document.querySelector('.next-button').addEventListener('click', () => {
+    currentContentIndex = (currentContentIndex + 1) % contents.length;
+    contentElement.textContent = contents[currentContentIndex];
+    updateIndicator();
+  });
+
+  document.querySelector('.back-button').addEventListener('click', () => {
+    currentContentIndex = (currentContentIndex - 1 + contents.length) % contents.length;
+    contentElement.textContent = contents[currentContentIndex];
+    updateIndicator();
+  });
+
+  function updateIndicator() {
+    document.querySelectorAll('.dot').forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentContentIndex);
+    });
+  }
+</script>
+  </body>
+</html>
