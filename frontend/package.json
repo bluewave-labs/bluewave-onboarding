@@ -37,6 +37,8 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^15.0.7",
+    "@vitest/coverage-v8": "^1.6.0",
+    "@vitest/ui": "^1.6.0",
     "cypress": "^13.11.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1",
@@ -50,8 +52,9 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "test:cypress": "npx cypress open"
+    "vitest": "vitest",
+    "vitest-UI": "vitest --ui",
+    "vitest:coverage": "vitest run --coverage",
+    "cypress:test": "npx cypress open"
   }
 }
