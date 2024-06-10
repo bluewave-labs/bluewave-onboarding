@@ -1,0 +1,31 @@
+:root {
+    --primary-color: #7f55d9;
+    --secondary-color: rgba(128, 128, 128, 0.9);
+    --error-color: #d82d21;
+    --hover-background-color: rgba(128, 128, 128, 0.1);
+    --active-background-color: white;
+    --active-border-color: rgba(128, 128, 128, 0.1);
+  }
+  
+  .button-primary {
+    color: white;
+    background-color: var(--primary-color);
+    text-transform: none;
+    box-shadow: none;
+    width: 80px;
+  }
+  
+  .button-secondary {
+    color: var(--secondary-color);
+    border-color: rgba(128, 128, 128, 0.2);
+    text-transform: none;
+  }
+  
+  .button-error {
+    color: white;
+    background-color: var(--error-color);
+    text-transform: none;
+    box-shadow: none;
+    width: 80px;
+  }
+  
