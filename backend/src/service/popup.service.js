@@ -1,9 +1,13 @@
-const Popup = require('../models/Popup');
+const db = require("../models");
+const Popup = db.Popup;
 
 class PopupService {
   async getAllPopups() {
-    return await Popup.findAll();
-}
+    return await Popup.findAll({
+      include: [{ model: db.User, as: "creator" }],
+    });
+  }
+
   async createPopup(data) {
     return await Popup.create(data);
   }
@@ -11,21 +15,24 @@ class PopupService {
   async deletePopup(id) {
     const rowsAffected = await Popup.destroy({ where: { id } });
 
-    // If no rows were affected (ID doesn't exist), return false
     if (rowsAffected === 0) {
-        return false;
+      return false;
     }
 
-    // If at least one row was affected, return true
     return true;
-}
+  }
 
   async updatePopup(id, data) {
     const [affectedRows, updatedPopups] = await Popup.update(data, {
       where: { id },
       returning: true,
     });
-    return updatedPopups[0]; // return the updated popup
+
+    if (affectedRows === 0) {
+      return null;
+    }
+
+    return updatedPopups[0];
   }
 }
 

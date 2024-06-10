@@ -1,20 +1,20 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addColumn('Popup', 'createdBy', {
+    await queryInterface.addColumn("Popup", "createdBy", {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'users',
-        key: 'id'
+        model: "users",
+        key: "id",
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn('Popup', 'createdBy');
-  }
+    await queryInterface.removeColumn("Popup", "createdBy");
+  },
 };
