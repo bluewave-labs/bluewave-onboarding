@@ -10,14 +10,9 @@ const Home = () => {
         alt: 'Introflow logo',
         className: 'logo-item',
       };
-    
-
+      
     return (
         <div className="app">
-
-            {/* <Logo logo={logo} />  */}
-
-
             <div className="content">
                 <HomePageTemplate>
                     <Dashboard />
