@@ -1,22 +1,15 @@
+/* LogoStyles.css */
+
 .logo-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  .logo-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .logoImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  border: 16px solid transparent;
+  box-sizing: border-box;
+}
 
-    height: 75px;
-
-    width: 150px;
-    height: 120px;
-    color: blue;
-
-  }
-  
+.logo-image {
+  width: 100%;
+  height: auto;
+}

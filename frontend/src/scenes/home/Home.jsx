@@ -14,7 +14,7 @@ const Home = () => {
 
     return (
         <div className="app">
-            <Logo logo={logo} /> 
+            {/* <Logo logo={logo} />  */}
             <div className="content">
                 <HomePageTemplate>
                     <Dashboard />
