@@ -29,6 +29,58 @@ const TestButton = () => {
         variant="contained"
         className="button-error"
       />
+      <Button
+        text="Primary"
+        onClick={() => handleClick("Disabled Primary")}
+        variant="outlined"
+        className="button-disabled-primary"
+        style={{
+          color: "grey",
+          backgroundColor: "#f3f4f7",
+          textTransform: "none",
+          borderColor: "rgba(128, 128, 128, 0.2)",
+          fontWeight: "600",
+        }}
+        sx={{
+          borderColor: "rgba(128, 128, 128, 0.2)",
+        }}
+      />
+      <Button
+        text="Secondary"
+        onClick={() => handleClick("Disabled Secondary")}
+        variant="outlined"
+        className="button-disabled-secondary"
+        style={{
+          color: "grey",
+          backgroundColor: "white",
+          textTransform: "none",
+          borderColor: "rgba(128, 128, 128, 0.2)",
+          fontWeight: "600",
+        }}
+        sx={{
+          borderColor: "rgba(128, 128, 128, 0.2)",
+        }}
+      />
+      <Button
+        text="Secondary"
+        onClick={() => handleClick("Grey Secondary")}
+        variant="outlined"
+        className="button-grey-secondary"
+        style={{
+          color: "rgba(128, 128, 128, 0.9)",
+          textTransform: "none",
+        }}
+      />
+      <Button
+        text="Secondary"
+        onClick={() => handleClick("Purple Secondary")}
+        variant="outlined"
+        className="button-purple-secondary"
+        style={{
+          color: "rgba(127, 60, 217, 0.7)",
+          textTransform: "none",
+        }}
+      />
     </div>
   );
 };

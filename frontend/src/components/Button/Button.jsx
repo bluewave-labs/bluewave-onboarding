@@ -11,7 +11,16 @@ const Button = ({ text, onClick, variant, className, style, sx }) => {
       className={className}
       onClick={onClick}
       style={style}
-      sx={sx}
+      sx={{
+        ...sx,
+        "&:hover": {
+          backgroundColor: "var(--primary-color-hover)"
+        },
+        "&:active": {
+          borderColor: "var(--active-border-color)",
+          borderRadius: 0
+        }
+      }}
     >
       {text}
     </MuiButton>

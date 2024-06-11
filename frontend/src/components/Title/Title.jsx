@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Typography } from '@mui/material';
-import StyledButton from '../StyledButton/StyledButton';
+import Button from '../Button/Button';
 import './TitleStyles.css';
 
 const Title = ({ title, buttonText, onButtonClick, titleStyle, buttonStyle, children }) => {
@@ -11,7 +11,7 @@ const Title = ({ title, buttonText, onButtonClick, titleStyle, buttonStyle, chil
         <Typography className='titleBanner' component="div" style={{ ...titleStyle }}>
           {title}
         </Typography>
-        <StyledButton
+        <Button
           text={buttonText}
           onClick={onButtonClick}
           style={buttonStyle}
