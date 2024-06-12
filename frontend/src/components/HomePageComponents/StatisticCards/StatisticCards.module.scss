@@ -1,0 +1,45 @@
+.statisticCard {
+    border: 1px solid #EAECF0;
+    border-radius: 12px;
+    padding: 24px;
+    gap:10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-shadow: 0px 1px 2px 0px #1018280D;
+
+
+    .metricName {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        margin-bottom: 13px;
+    }
+  
+    .metricValue {
+        font-size: 36px;
+        font-weight: 600;
+        line-height: 44px;
+        letter-spacing: -0.02em;
+    }
+  
+    .changeRate {
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 20px;
+        color: #475467;    
+        align-items: center;
+        flex-direction: row;
+        display: flex;
+    }
+    .change{
+        align-items: center;
+        display: flex;
+        font-family: Inter;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+    }
+
+  }
+  

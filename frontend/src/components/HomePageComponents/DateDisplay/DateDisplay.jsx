@@ -1,24 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './DateDisplay.module.scss';
 
-// Define the StatisticCard component
-const StatisticCard = ({ metricName, metricValue, changeType }) => {
+
+const DateDisplay = () => {
+  const currentDate = new Date();
+  
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const currentDayOfWeek = daysOfWeek[currentDate.getDay()];
+
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const currentDateFormatted = currentDate.toLocaleDateString(undefined, options);
+
   return (
-    <div className="statistic-card">
-      <div className="metric-name">{metricName}</div>
-      <div className="metric-value">{metricValue}</div>
-      <div className={`change-type ${changeType}`}>
-        {changeType === 'increase' ? '▲' : '▼'}
-      </div>
+    <div className={styles.date}>
+      Today is {currentDayOfWeek}, {currentDateFormatted}
     </div>
   );
 };
 
-// Define propTypes for the component
-StatisticCard.propTypes = {
-  metricName: PropTypes.string.isRequired,
-  metricValue: PropTypes.number.isRequired,
-  changeType: PropTypes.oneOf(['increase', 'decrease']),
-};
+// DateDisplay.propTypes = {
+//   dayOfWeek: PropTypes.string.isRequired,
+//   date: PropTypes.string.isRequired,
+// };
 
-export default StatisticCard;
+export default DateDisplay;
