@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './AvatarStyles.css';
 
 
-const Avatar = ({ src, alt, size, className }) {
+const Avatar = ({ src, alt, size, className }) => {
     const sizeofAvatar = size ? `avatar-${size}` : '';
     return (
         <div className={`avatar-container ${sizeofAvatar} ${className}`}>

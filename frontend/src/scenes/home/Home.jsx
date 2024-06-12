@@ -5,13 +5,7 @@ import LogoBW from '../../assets/logo/introflow_logo_bw.svg';
 import "./Home.css"
 
 const Home = () => {
-    const logo = {
-        src: LogoBW,
-        alt: 'Introflow logo',
-        className: 'logo-item',
-      };
-      
-    return (
+  return (
         <div className="app">
             <div className="content">
                 <HomePageTemplate>
