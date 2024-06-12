@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const jsonErrorMiddleware = require('./src/middleware/jsonErrorMiddleware');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -16,6 +18,8 @@ const app = express();
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(jsonErrorMiddleware);
 
 const db = require('./config/database');
 
