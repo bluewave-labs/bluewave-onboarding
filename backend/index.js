@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const authRoutes = require('./src/routes/auth.routes');
+const userRoutes = require('./src/routes/user.routes');
 const mocks = require('./src/routes/mocks.routes');
 const popup = require('./src/routes/popup.routes');
 // const tourRoutes = require('./src/routes/tour.routes');
@@ -25,6 +26,7 @@ db.authenticate()
   .catch(err => console.log('Error: ' + err))
   
 app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
 app.use('/mock/', mocks);
 app.use('/popup', popup);
 // app.use('/tours', tourRoutes);
