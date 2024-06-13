@@ -17,14 +17,14 @@
 }
 
 .button-secondary.MuiButton-root {
-  color: rgba(128, 128, 128, 0.9);
-  border-color: rgba(128, 128, 128, 0.2);
+  color: #808080E6;
+  border-color: #80808033;
   text-transform: none;
   transition: background-color 0.3s, border-color 0.3s;
 }
 
 .button-secondary.MuiButton-root:hover {
-  background-color: rgba(128, 128, 128, 0.1);
+  background-color: #80808019;
 }
 
 .button-secondary.MuiButton-root:active {
@@ -55,7 +55,7 @@
   color: grey;
   background-color: #f3f4f7;
   text-transform: none;
-  border-color: rgba(128, 128, 128, 0.2);
+  border-color: #80808033;
   font-weight: 600;
   width: 80px;
 }
@@ -64,19 +64,19 @@
   color: grey;
   background-color: white;
   text-transform: none;
-  border-color: rgba(128, 128, 128, 0.2);
+  border-color: #80808033;
   font-weight: 600;
   width: 120px;
 }
 
 .button-grey-secondary.MuiButton-root {
-  color: rgba(128, 128, 128, 0.9);
-  border-color: rgba(128, 128, 128, 0.2);
+  color: #808080E6;
+  border-color: #80808033;
   text-transform: none;
 }
 
 .button-grey-secondary.MuiButton-root:hover {
-  background-color: rgba(128, 128, 128, 0.1);
+  background-color: #80808019;
   border:none;
 }
 
@@ -99,13 +99,13 @@
 }
 
 .button-purple-secondary.MuiButton-root {
-  color: rgba(127, 60, 217, 0.7);
+  color: #7F3CD9B2;
   border-color: var(--main-purple);
   text-transform: none;
 }
 
 .button-purple-secondary.MuiButton-root:hover {
-  background-color: rgba(127, 60, 217, 0.1);
+  background-color: #7F3CD919;
   border-color: var(--main-purple);
 }
 
