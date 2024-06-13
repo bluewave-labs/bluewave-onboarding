@@ -36,8 +36,8 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "users",
-      timestamps: false, // Disable timestamps
+      tableName: "user",
+      timestamps: false, // Disable timestamp
     },
   );
 
