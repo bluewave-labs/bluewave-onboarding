@@ -8,12 +8,13 @@ import CheckYourEmailPage from "./scenes/login/CheckYourEmailPage";
 import SetNewPasswordPage from "./scenes/login/SetNewPassword";
 
 
+
 function App() {
   // const isAuthenticated = useSelector((state) => state.auth.isLoggedIn); // TODO: redux implementation
   const isAuthenticated = true;// emulate login
   return (
     <>
-      <Routes>
+<Routes>
         <Route path="/" element={isAuthenticated ? <Home /> : <LoginPage />} />   
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<CreateAccountPage />} />
@@ -21,6 +22,7 @@ function App() {
         <Route path="/reset-password" element={<PasswordResetPage />} />
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
+        
       </Routes>    
     </>
   );

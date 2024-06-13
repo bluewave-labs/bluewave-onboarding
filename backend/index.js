@@ -6,9 +6,10 @@ const dotenv = require("dotenv");
 // Load environment variables from .env file
 dotenv.config();
 
-const authRoutes = require("./src/routes/auth.routes");
-const mocks = require("./src/routes/mocks.routes");
-const popup = require("./src/routes/popup.routes");
+const authRoutes = require('./src/routes/auth.routes');
+const userRoutes = require('./src/routes/user.routes');
+const mocks = require('./src/routes/mocks.routes');
+const popup = require('./src/routes/popup.routes');
 // const tourRoutes = require('./src/routes/tour.routes');
 
 const app = express();
@@ -29,9 +30,10 @@ sequelize
   .then(() => console.log("Models synced with the database..."))
   .catch((err) => console.log("Error syncing models: " + err));
 
-app.use("/auth", authRoutes);
-app.use("/mock/", mocks);
-app.use("/popup", popup);
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/mock/', mocks);
+app.use('/popup', popup);
 // app.use('/tours', tourRoutes);
 
 app.use((err, req, res, next) => {
