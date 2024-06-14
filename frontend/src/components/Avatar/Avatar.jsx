@@ -7,7 +7,7 @@ const Avatar = ({ src, alt, size, className }) => {
     const sizeofAvatar = size ? `avatar-${size}` : '';
     return (
         <div className={`avatar-container ${sizeofAvatar} ${className}`}>
-        <img src={src} alt={alt} className='avatar-image'/>
+        <img src={src} alt={alt} className="user-picture"/>
         </div>
     );}
 

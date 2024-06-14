@@ -16,8 +16,7 @@ function Header({ user }) {
         <div className="top-banner">
             <div className="logo">BlueWave Onboard</div>
             <div className="user-info">
-                <Avatar src="/vendetta.png" 
-                   alt="User" 
+                <Avatar src="/vendetta.png" alt="User" size=" "
                    className="user-picture" />
                 <div className="user-details">
                     <div className="user-name">{user.name}</div>
