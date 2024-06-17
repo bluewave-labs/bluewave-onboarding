@@ -22,15 +22,6 @@
     margin-right: 20px;
   }
   
-.user-picture {
-    width: 40px; 
-    height: 40px; 
-    border-radius: 50%; 
-    margin-right: 10px; 
-    border: 0.5px solid #000000; 
-    object-fit: cover;
-  }
-  
   
   .user-details {
     display: flex;
