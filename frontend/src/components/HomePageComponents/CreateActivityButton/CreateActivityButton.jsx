@@ -4,11 +4,19 @@ import Button from '@mui/material/Button';
 import WbIncandescentOutlinedIcon from '@mui/icons-material/WbIncandescentOutlined';
 import DirectionsBusFilledOutlinedIcon from '@mui/icons-material/DirectionsBusFilledOutlined';
 
-// Define the CreateActivityButton component
-const CreateActivityButton = ({ placeholder = 'placeholder', onButtonClick = () => {} }) => {
+const CreateActivityButton = ({ placeholder = '', onButtonClick = () => {} }) => {
+ 
+  // Define color constants
+  const iconColor = '#667085';
+  const hoverColor = 'orange';
+  const textColor = '#344054';
+  const borderColor = '#FFD8C7';
+  const buttonBackgroundColor = '#FFFAFA';
+
+  const iconStyles = { color: iconColor, fontSize: '2rem' };
   const icon = placeholder === 'Create a welcome tour' 
-    ? <DirectionsBusFilledOutlinedIcon style={{ color: '#667085', fontSize:'2rem' }} /> 
-    : <WbIncandescentOutlinedIcon style={{ color: '#667085', fontSize:'2rem' }} />;
+    ? <DirectionsBusFilledOutlinedIcon style={iconStyles} /> 
+    : <WbIncandescentOutlinedIcon style={iconStyles} />;
 
   return (
     <Button
@@ -16,10 +24,10 @@ const CreateActivityButton = ({ placeholder = 'placeholder', onButtonClick = () 
       startIcon={icon}
       onClick={onButtonClick}
       sx={{
-        backgroundColor: '#FFFAFA',
-        ':hover': { backgroundColor: 'orange' },
-        color: '#344054',
-        border: '1px solid #FFD8C7',
+        backgroundColor: buttonBackgroundColor,
+        ':hover': { backgroundColor: hoverColor },
+        color: textColor,
+        border: '1px solid ' + borderColor,
         fontSize: '16px',
         fontWeight: 400,
         lineHeight: '24px',
@@ -40,7 +48,6 @@ const CreateActivityButton = ({ placeholder = 'placeholder', onButtonClick = () 
   );
 };
 
-// Define propTypes for the component
 CreateActivityButton.propTypes = {
   placeholder: PropTypes.string,
   onButtonClick: PropTypes.func.isRequired,

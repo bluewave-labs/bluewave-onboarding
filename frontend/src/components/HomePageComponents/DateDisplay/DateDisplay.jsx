@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './DateDisplay.module.scss';
 
 
@@ -19,9 +18,5 @@ const DateDisplay = () => {
   );
 };
 
-// DateDisplay.propTypes = {
-//   dayOfWeek: PropTypes.string.isRequired,
-//   date: PropTypes.string.isRequired,
-// };
 
 export default DateDisplay;
