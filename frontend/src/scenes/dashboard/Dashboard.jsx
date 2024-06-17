@@ -7,10 +7,10 @@ import CreateActivityButtonList from '../../components/HomePageComponents/Create
 
 const Dashboard = ({username}) => {
     const metrics = [
-        { metricName: "Monthly active users", metricValue: 1000, changeRate: "10" },
-        { metricName: "Tour views", metricValue: 5000, changeRate: "5" },
-        { metricName: "Hint views", metricValue: 2000, changeRate: "-20" },
-        { metricName: "Popup Views", metricValue: 3000, changeRate: "15" }
+        { metricName: "Monthly active users", metricValue: 1000, changeRate: 10 },
+        { metricName: "Tour views", metricValue: 5000, changeRate: 5 },
+        { metricName: "Hint views", metricValue: 2000, changeRate: -20},
+        { metricName: "Popup Views", metricValue: 3000, changeRate: 15 }
     ];
 
     const buttons = [
