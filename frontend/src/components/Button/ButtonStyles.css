@@ -1,0 +1,116 @@
+.button-primary.MuiButton-root {
+  color: white;
+  background-color: var(--main-purple);
+  text-transform: none;
+  box-shadow: none;
+  width: 80px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.button-primary.MuiButton-root:hover {
+  background-color: #6f46c9;
+}
+
+.button-primary.MuiButton-root:active {
+  border: 4px solid var(--main-purple);
+  border-radius: 0;
+}
+
+.button-secondary.MuiButton-root {
+  color: #808080E6;
+  border-color: #80808033;
+  text-transform: none;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.button-secondary.MuiButton-root:hover {
+  background-color: #80808019;
+}
+
+.button-secondary.MuiButton-root:active {
+  border: 4px solid #80808033;
+  border-radius: 0;
+  background-color: white;
+}
+
+.button-error.MuiButton-root {
+  color: white;
+  background-color: var(--border-error-solid);
+  text-transform: none;
+  box-shadow: none;
+  width: 80px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.button-error.MuiButton-root:hover {
+  background-color: #b32217;
+}
+
+.button-error.MuiButton-root:active {
+  border: 4px solid #FCCED7;
+  border-radius: 0;
+}
+
+.button-disabled-primary.MuiButton-root {
+  color: grey;
+  background-color: #f3f4f7;
+  text-transform: none;
+  border-color: #80808033;
+  font-weight: 600;
+  width: 80px;
+}
+
+.button-disabled-secondary.MuiButton-root {
+  color: grey;
+  background-color: white;
+  text-transform: none;
+  border-color: #80808033;
+  font-weight: 600;
+  width: 120px;
+}
+
+.button-grey-secondary.MuiButton-root {
+  color: #808080E6;
+  border-color: #80808033;
+  text-transform: none;
+}
+
+.button-grey-secondary.MuiButton-root:hover {
+  background-color: #80808019;
+  border: none;
+}
+
+.button-grey-secondary.MuiButton-root:active {
+  border: 4px solid #80808033;
+  border-radius: 0;
+  background-color: white;
+}
+
+.button-primary-custom.MuiButton-root {
+  color: white;
+  background-color: var(--main-purple);
+  text-transform: none;
+  box-shadow: none;
+  width: 80px;
+}
+
+.button-primary-custom.MuiButton-root:hover {
+  background-color: black;
+}
+
+.button-purple-secondary.MuiButton-root {
+  color: #7F3CD9B2;
+  border-color: var(--main-purple);
+  text-transform: none;
+}
+
+.button-purple-secondary.MuiButton-root:hover {
+  background-color: #7F3CD919;
+  border-color: var(--main-purple);
+}
+
+.button-purple-secondary.MuiButton-root:active {
+  border: 4px solid var(--main-purple);
+  border-radius: 0;
+  background-color: white;
+}
