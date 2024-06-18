@@ -12,7 +12,7 @@
 }
 
 .button-primary.MuiButton-root:active {
-  border: 1px solid var(--main-purple);
+  border: 4px solid var(--main-purple);
   border-radius: 0;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .button-secondary.MuiButton-root:active {
-  border: 1px solid var(--main-purple);
+  border: 4px solid #80808033;
   border-radius: 0;
   background-color: white;
 }
@@ -47,7 +47,7 @@
 }
 
 .button-error.MuiButton-root:active {
-  border: 1px solid var(--main-purple);
+  border: 4px solid #FCCED7;
   border-radius: 0;
 }
 
@@ -77,11 +77,11 @@
 
 .button-grey-secondary.MuiButton-root:hover {
   background-color: #80808019;
-  border:none;
+  border: none;
 }
 
 .button-grey-secondary.MuiButton-root:active {
-  border: 1px solid var(--main-purple);
+  border: 4px solid #80808033;
   border-radius: 0;
   background-color: white;
 }
@@ -110,7 +110,7 @@
 }
 
 .button-purple-secondary.MuiButton-root:active {
-  border: 1px solid var(--main-purple);
+  border: 4px solid var(--main-purple);
   border-radius: 0;
   background-color: white;
 }

@@ -3,24 +3,13 @@ import PropTypes from "prop-types";
 import { Button as MuiButton } from "@mui/material";
 import "./ButtonStyles.css";
 
-const Button = ({ text, onClick, variant, className, style, sx }) => {
+const Button = ({ text, onClick, variant, className }) => {
   return (
     <MuiButton
       disableRipple
       variant={variant}
-      className={className}
+      className={`${className} custom-button`}
       onClick={onClick}
-      style={style}
-      sx={{
-        ...sx,
-        "&:hover": {
-          backgroundColor: "var(--primary-color-hover)"
-        },
-        "&:active": {
-          borderColor: "var(--active-border-color)",
-          borderRadius: 0
-        }
-      }}
     >
       {text}
     </MuiButton>
@@ -32,15 +21,11 @@ Button.propTypes = {
   onClick: PropTypes.func.isRequired,
   variant: PropTypes.oneOf(["text", "outlined", "contained"]),
   className: PropTypes.string,
-  style: PropTypes.object,
-  sx: PropTypes.object,
 };
 
 Button.defaultProps = {
   variant: "contained",
   className: "",
-  style: {},
-  sx: {},
 };
 
 export default Button;
