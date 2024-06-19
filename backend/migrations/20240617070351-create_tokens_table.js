@@ -1,4 +1,3 @@
-// migrations/20240422214220-create_tokens_table.js
 "use strict";
 
 module.exports = {
@@ -23,6 +22,11 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      },
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
