@@ -1,0 +1,25 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  font-size: 16px;
+}
+
+.primary .MuiCheckbox-root {
+  color: var(--main-purple);
+}
+
+.secondary .MuiCheckbox-root {
+  color: #808080E5;
+}
+
+.primary .MuiCheckbox-root.Mui-checked {
+  color: var(--main-purple);
+}
+
+.secondary .MuiCheckbox-root.Mui-checked {
+  color: #808080E5;
+}
