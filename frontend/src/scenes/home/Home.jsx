@@ -1,5 +1,5 @@
 import HomePageTemplate from '../../components/templates/HomePageTemplate';
-import Dashboard from '../dashboard';
+import Dashboard from '../dashboard/Dashboard';
 import "./Home.css"
 
 const Home = () => {
@@ -7,7 +7,7 @@ const Home = () => {
         <div className="app">
             <div className="content">
                 <HomePageTemplate>
-                    <Dashboard />
+                    <Dashboard username={'Gorkem'}/>
                 </HomePageTemplate>
             </div>
         </div>
