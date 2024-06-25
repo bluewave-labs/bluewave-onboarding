@@ -1,17 +1,14 @@
-:root {
-    --avatar-small: 24px;
-    --avatar-medium: 40px;
-    --avatar-large: 48px;
-    --avatar-border-color: #000000;
-  }
-  
-  .avatar-container {
+.avatar-container {
     display: inline-flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
     overflow: hidden;
     box-sizing: border-box; 
+    border-radius: 50%; 
+    margin-right: 10px; 
+    border: 0.5px solid #000000; 
+    object-fit: cover;
   }
   
   .avatar-container.avatar-small {
@@ -36,8 +33,5 @@
   .user-picture {
     width: 40px; 
     height: 40px; 
-    border-radius: 50%; 
-    margin-right: 10px; 
-    border: 0.5px solid #000000; 
-    object-fit: cover;
+    
   }

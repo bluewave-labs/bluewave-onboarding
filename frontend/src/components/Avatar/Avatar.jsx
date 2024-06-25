@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames'
 import './AvatarStyles.css';
 
 
+
 const Avatar = ({ src, alt, size, className }) => {
-    const sizeofAvatar = size ? `avatar-${size}` : '';
+    const sizeofAvatar = classNames('avatar-container',`avatar-${size}`, className);
     return (
-        <div className={`avatar-container ${sizeofAvatar} ${className}`}>
+        <div className={sizeofAvatar}>
         <img src={src} alt={alt} className="user-picture"/>
         </div>
     );}
