@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
+import './CheckboxStyles.css';
 
 const CustomCheckbox = ({
   label,
@@ -31,32 +32,6 @@ const CustomCheckbox = ({
 
   const isIndeterminate = childChecked.some((child) => child !== childChecked[0]);
 
-  const getCheckboxStyle = () => {
-    if (variant === 'primary') {
-      return {
-        color: 'var(--main-purple)',
-        '&.Mui-checked': {
-          color: 'var(--main-purple)',
-        },
-        '&.MuiCheckbox-indeterminate': {
-          color: 'var(--main-purple)',
-        },
-      };
-    }
-    if (variant === 'secondary') {
-      return {
-        color: '#808080E5',
-        '&.Mui-checked': {
-          color: '#808080E5',
-        },
-        '&.MuiCheckbox-indeterminate': {
-          color: '#808080E5',
-        },
-      };
-    }
-    return {};
-  };
-
   return (
     <div>
       <FormControlLabel
@@ -66,8 +41,7 @@ const CustomCheckbox = ({
             onChange={childrenCheckboxes.length > 0 ? handleParentChange : onChange}
             indeterminate={indeterminate || isIndeterminate}
             size={size}
-            sx={getCheckboxStyle()}
-            className={`checkbox ${className}`}
+            className={`checkbox ${variant} ${className}`}
           />
         }
         label={label}
@@ -83,7 +57,7 @@ const CustomCheckbox = ({
                   checked={childChecked[index]}
                   onChange={handleChildChange(index)}
                   size={size}
-                  sx={getCheckboxStyle()}
+                  className={`checkbox ${variant}`}
                 />
               }
               label={childLabel}

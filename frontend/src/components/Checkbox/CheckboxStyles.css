@@ -23,3 +23,11 @@
 .secondary .MuiCheckbox-root.Mui-checked {
   color: #808080E5;
 }
+
+.primary .MuiCheckbox-root.MuiCheckbox-indeterminate {
+  color: var(--main-purple);
+}
+
+.secondary .MuiCheckbox-root.MuiCheckbox-indeterminate {
+  color: #808080E5;
+}
