@@ -1,0 +1,13 @@
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  border: 16px solid transparent;
+  box-sizing: border-box;
+}
+
+.logo-image {
+  width: 100%;
+  height: auto;
+}
