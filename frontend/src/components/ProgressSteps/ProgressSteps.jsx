@@ -25,6 +25,7 @@ const ProgressSteps = ({ stepData }) => {
                     dataLength={stepData.length}
                 />
             ))}
+            <button onClick={() => setStepCompleted(0, true)}>Set Step 2 to True</button>
         </div>
         
     );

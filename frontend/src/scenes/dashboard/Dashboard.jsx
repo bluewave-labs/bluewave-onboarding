@@ -4,8 +4,6 @@ import UserTitle from '../../components/HomePageComponents/UserTitle/UserTitle';
 import styles from "./Dashboard.module.scss"
 import StatisticCardList from '../../components/HomePageComponents/StatisticCardsList/StatisticCardsList';
 import CreateActivityButtonList from '../../components/HomePageComponents/CreateActivityButtonList/CreateActivityButtonList';
-import ProgressSteps from '../../components/ProgressSteps/ProgressSteps';
-import {stepData} from '../../data/stepData';
 
 const Dashboard = ({username}) => {
     const metrics = [
@@ -20,9 +18,6 @@ const Dashboard = ({username}) => {
         { placeholder: "Add a hint to your app" },
         { placeholder: "Create a new banner"}
     ];
-
-
-
     return (
         <>
             <div className={styles.container}>
@@ -35,7 +30,6 @@ const Dashboard = ({username}) => {
                 </div>
                 <CreateActivityButtonList buttons={buttons} />
                 <StatisticCardList metrics={metrics} />
-                <ProgressSteps stepData={stepData}/>
             </div>
 
         </>
