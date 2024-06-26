@@ -1,42 +1,33 @@
 import React, { useState } from 'react';
 import styles from './ProgressSteps.module.scss';
-import { CheckCircle as CheckCircleIcon, TripOrigin as TripOriginIcon } from '@mui/icons-material';
+import Step from './Step';
 
-const ProgressSteps = () => {
-    const [step1Completed, setStep1Completed] = useState(false);
-    const [step2Completed, setStep2Completed] = useState(false);
-    const [step3Completed, setStep3Completed] = useState(false);
+const ProgressSteps = ({ stepData }) => {
+    const initialStates = stepData.map(() => false);
+    const [stepsCompleted, setStepsCompleted] = useState(initialStates);
 
-    const main_purple = 'var(--main-purple)';
-    const light_gray = 'var(--light-gray)';
+    const setStepCompleted = (index, value) => {
+        const newStepsCompleted = [...stepsCompleted];
+        newStepsCompleted[index] = value;
+        setStepsCompleted(newStepsCompleted);
+    };
 
     return (
         <div className={styles.container}>
-            <div className={styles.step}>
-                <div className={styles['icon-container']}>
-                    {step1Completed ? <CheckCircleIcon className={styles['check-circle-icon']} /> : <TripOriginIcon className={styles['on-progress']} />}
-                    <div className={styles.line} style={{ backgroundColor: step1Completed ? main_purple : light_gray }}></div>
-                </div>
-                <h3 style={{color: !step1Completed ? main_purple: ""}}>Your Details</h3>
-                <h4 style={{color: !step1Completed ? main_purple : ""}}>Please provide your name and email.</h4>
-            </div>
-            <div className={styles.step}>
-                <div className={styles['icon-container']}>
-                    {step2Completed ? <CheckCircleIcon className={styles['check-circle-icon']} /> : <TripOriginIcon className={step1Completed ? styles['on-progress'] : styles['future-step']} />}
-                    <div className={styles.line} style={{ backgroundColor: step2Completed ? main_purple : light_gray }}></div>
-                </div>
-                <h3 style={{color: step1Completed && !step2Completed ? main_purple : ""}}>Company Details</h3>
-                <h4 style={{color: step1Completed && !step2Completed ? main_purple : ""}}>A few details about your company.</h4>
-            </div>
-            <div className={styles.step}>
-                <div className={styles['icon-container']}>
-                    {step3Completed ? <CheckCircleIcon className={styles['check-circle-icon']} /> : <TripOriginIcon className={step2Completed ? styles['on-progress'] : styles['future-step']} />}
-                </div>
-                <h3 style={{color: step2Completed ? main_purple : ""}}>Invite Your Team</h3>
-                <h4 style={{color: step2Completed ? main_purple : ""}}>Start collaborating with your team.</h4>      
-            </div>
+            {stepData.map((step, index) => (
+                <Step
+                    key={index}
+                    title={step.title}
+                    explanation={step.explanation}
+                    currentStep={stepsCompleted[index]}
+                    prevStep={index - 1 < 0 ? true : stepsCompleted[index - 1]}
+                    index={index}
+                    dataLength={stepData.length}
+                />
+            ))}
         </div>
+        
     );
-}
+};
 
 export default ProgressSteps;

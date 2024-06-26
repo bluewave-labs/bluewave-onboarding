@@ -1,9 +1,10 @@
 @use '../../styles/globals.scss' as *;
 
   .container{
+    width: 100%;
     display:flex;
     flex-direction:row;
-    justify-content: space-around;
+    justify-content: space-between;
 
     h3{
       font-weight: 600;
@@ -51,10 +52,13 @@
     left: calc(50% + 17px); /* Adjust this value to adjust the position of the line */
     height: 2px;
     background-color: var(--light-gray);
-    width: calc(calc(100vw - 105px) / 3);
+    width: 100%;
     transform: translateY(-50%);
 }
 
 .icon-container {
-    position: relative;
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
