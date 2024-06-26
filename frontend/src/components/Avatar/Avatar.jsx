@@ -5,16 +5,23 @@ import './AvatarStyles.css';
 
 
 const Avatar = ({ src, alt, size, className }) => {
-    const sizeofAvatar = classNames('avatar-container',`avatar-${size}`, className);
-    return (
-        <img src={src} alt={alt} className={sizeofAvatar}/>
-    );}
+   
+    const defaultClasses = classNames(
+        'avatar-container', 
+        {
+            [`avatar-${size}`]: size 
+        },
+        className 
+    );
 
-Avatar.propTypes = {
-    src: PropTypes.string.isRequired,
-    alt: PropTypes.string.isRequired,
-    size: PropTypes.oneOf(['small','medium', 'large']),
-    className: PropTypes.string,
+    return (
+        <img src={src} alt={alt} className={defaultClasses} />
+    );
+}
+
+Avatar.defaultProps = {
+    size: 'medium',
+    className: ''
 };
 
 export default Avatar;

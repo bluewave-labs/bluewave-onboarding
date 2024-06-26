@@ -1,5 +1,5 @@
 .avatar-container {
-  display: inline-flex;
+  display: block;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
