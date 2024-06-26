@@ -3,12 +3,6 @@ import Dashboard from '../dashboard/Dashboard';
 import "./Home.css"
 
 const Home = () => {
-    const logo = {
-        src: LogoBW,
-        alt: 'Introflow logo',
-        className: 'logo-item',
-      };
-      
     return (
         <div className="app">
             <div className="content">
