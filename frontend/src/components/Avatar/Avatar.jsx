@@ -20,7 +20,7 @@ const Avatar = ({ src, alt, size = 'medium', className }) => {
 }
 Avatar.propTypes = {
     src: PropTypes.string.isRequired,
-    alt: PropTypes.string.isRequired,
+    alt: PropTypes.string,
     size: PropTypes.oneOf(['small', 'medium', 'large']),
     className: PropTypes.string, 
 };
