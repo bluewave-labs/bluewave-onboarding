@@ -1,93 +1,90 @@
-import React from 'react';
-import { Box, Button, Chip, TextField, InputAdornment } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import React from "react";
+import { Box, Button, InputAdornment, Tooltip } from "@mui/material";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import Divider from "@mui/material/Divider";
+import CustomTextField from "./CustomTextField";
 
 const TextFieldComponents = () => {
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 4, padding: "50px" }}>
       <Box sx={{ flex: 1, minWidth: 200 }}>
-        
-        <TextField
-          label = {labelText}
-          fullWidth
-          margin="normal"
-          defaultValue="http://www.untitledui.com"
-          InputProps={{
-            startAdornment: <InputAdornment position="start"></InputAdornment>,
-          }}
+        <CustomTextField
+          labelText="Website"
+          startAdornment={
+            <>
+              <InputAdornment position="start">http://</InputAdornment>
+              <Divider sx={{ height: 55, m: 0.5 }} orientation="vertical" />
+            </>
+          }
           helperText="This is a hint text to help user."
+          endAdornment=<Tooltip title="This is a Tooltip" placement="top" arrow>
+            <HelpOutlineIcon />
+          </Tooltip>
         />
-        <TextField
-          label="Email"
-          fullWidth
-          margin="normal"
+
+        <CustomTextField
+          labelText="Email"
+          helperText="This is a hint text to help user."
           defaultValue="olivia@untitledui.com"
-          helperText="This is a hint text to help user."
         />
-        <TextField
-          label="Email"
-          fullWidth
-          margin="normal"
+
+        <CustomTextField
+          labelText="Email"
           defaultValue="olivia@untitledui.com"
           error
           helperText="This is an error message."
+          endAdornment=<ErrorOutlineIcon color="error" />
         />
-        <TextField 
-          label="Email"
-          fullWidth
-          margin="normal"
+
+        <CustomTextField
+          labelText="Email"
           defaultValue="olivia@untitledui.com"
-          helperText="This is a hint text to help user."
+          error
+          helperText="This is an error message."
+          endAdornment=<HelpOutlineIcon />
         />
-        <TextField
-          label="Website"
-          fullWidth
-          margin="normal"
+
+        <CustomTextField
+          labelText="Website"
           defaultValue="www.untitledui.com"
-          InputProps={{
-            startAdornment: <InputAdornment position="start">http://</InputAdornment>,
-            endAdornment: (
-              <InputAdornment position="end">
-                <Button variant="contained" startIcon={<ContentCopyIcon />}>Copy</Button>
-              </InputAdornment>
-            ),
-          }}
           helperText="This is a hint text to help user."
+          endAdornment=<>
+            <HelpOutlineIcon />
+            <Divider sx={{ height: 55, m: 0.5 }} orientation="vertical" />
+            <Button variant="outline" startIcon={<ContentCopyIcon />}>
+              Copy
+            </Button>
+          </>
         />
       </Box>
       <Box sx={{ flex: 1, minWidth: 300 }}>
-        <TextField
-          label="Description"
-          fullWidth
-          margin="normal"
+        <CustomTextField
+          labelText="Description"
           placeholder="Enter a description..."
           helperText="This is a hint text to help user."
+          multiline={true}
+          rows={4}
         />
-        
-        <TextField
-          label="Description"
-          fullWidth
-          margin="normal"
-          placeholder= " "
+        <CustomTextField
+          labelText="Description"
           helperText="This is a hint text to help user."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Box sx={{ display: 'flex', gap: 1 }}>
-                  <Chip label="Design" onDelete={() => {}} />
-                  <Chip label="Software" onDelete={() => {}} />
-                </Box>
-              </InputAdornment>
-            ),
-          }}
+          multiline={true}
+          defaultValue="Marketing"
+          rows={4}
+          chips={[
+            { label: "Design", onDelete: () => {} },
+            { label: "Software", onDelete: () => {} },
+          ]}
         />
-        <TextField
-          label="Description"
-          fullWidth
-          margin="normal"
+        <CustomTextField
+          labelText="Description"
           placeholder="Enter a description..."
-          error
           helperText="This is an error message."
+          multiline={true}
+          rows={4}
+          error
         />
       </Box>
     </Box>
