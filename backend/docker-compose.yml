@@ -1,4 +1,3 @@
-version: "3"
 services:
   onboarding_backend:
     image: onboarding/onboarding:v0
