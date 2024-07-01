@@ -1,0 +1,38 @@
+.product-tour-page {
+    padding: 20px;
+  }
+  
+  .content-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .content-area {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .tour-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .tour-list-item-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .tour-list-item-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .tour-description-text {
+    margin-top: 20px;
+  }
+  

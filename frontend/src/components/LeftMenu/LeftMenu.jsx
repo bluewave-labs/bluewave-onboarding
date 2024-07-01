@@ -18,6 +18,9 @@ function LeftMenu() {
   const handleHomeClick = () => {
     navigate('/');
   };
+  const handleToursClick = () => {
+    navigate('/tours');
+  };
   
   return (
     <div className="left-menu">
@@ -31,7 +34,7 @@ function LeftMenu() {
 
         <ListItemText primary="SERVE A CONTENT" className="title"/>
 
-        <ListItemButton className="menu-item">
+        <ListItemButton className="menu-item" onClick={handleToursClick}>
           <ListItemIcon>
             <DirectionsBusFilledOutlinedIcon />
           </ListItemIcon>
