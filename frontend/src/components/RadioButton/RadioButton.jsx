@@ -1,45 +1,44 @@
 import React from "react";
 import './RadioButtonStyles.css';
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
+import { Radio } from "@mui/material";
 
-
-export default function RadioBox({ type, size, style, enabled, text, changeHandler }) {
-    const [selectedValue, setSelectedValue] = useState(!enabled)
-
-
+const RadioButton = ({
+    id,
+    name,
+    value,
+    label,
+    onChange,
+    buttonSize = 'small',
+    color = 'default',
+    enabled = true,
+}) => {
+    const main_purple = 'var(--main-purple)';
+    const sizeClass = buttonSize ==='large' ? 'radio-large' : 'radio-small';
     return (
-    <>
-        <input
-            type={type}
-            size={size}
-            style={style}
-            disabled={!enabled}
-            onChange={changeHandler}
-        />
-        <label>{text}</label>
-    </>
+        <div className={`radio-button ${sizeClass}`}>
+            <Radio                
+                id={id}                
+                name = {name}
+                value={value}            
+                disabled={!enabled}
+                onChange={onChange}
+                size={buttonSize === 'large' ? 'large' : 'small'}
+                style={{ color: color === 'default' ? main_purple : color }}
+            />
+            { label && <label htmlFor={id}>{label}</label> }
+        </div >
+    );
+};
 
-
-    )
-}
-
-
-
-RadioBox.propTypes = {
-    type: PropTypes.string.isRequired,
-    size: PropTypes.string.isRequired,
-    style: PropTypes.object,
-    enabled: PropTypes.bool,
+RadioButton.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    changeHandler: PropTypes.func
-}
+    enabled: PropTypes.bool,
+    onchange: PropTypes.func,
+    color: PropTypes.string,
+};
 
-
-RadioBox.defaultProps = {
-    type: 'radio',
-    size: 'small',
-    style: {},
-    enabled: true,
-    text: "aaaaaa"
-}
+export default RadioButton;

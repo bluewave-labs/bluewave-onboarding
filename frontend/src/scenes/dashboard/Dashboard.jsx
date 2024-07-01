@@ -4,6 +4,8 @@ import UserTitle from '../../components/HomePageComponents/UserTitle/UserTitle';
 import styles from "./Dashboard.module.scss";
 import StatisticCardList from '../../components/HomePageComponents/StatisticCardsList/StatisticCardsList';
 import CreateActivityButtonList from '../../components/HomePageComponents/CreateActivityButtonList/CreateActivityButtonList';
+import RadioButton from '../../components/RadioButton/RadioButton';
+
 
 const Dashboard = ({ username }) => {
   const metrics = [
@@ -29,9 +31,8 @@ const Dashboard = ({ username }) => {
         <div className={styles.text}>
           Start with a popular onboarding process
         </div>
-        <CreateActivityButtonList buttons={buttons} />
         <StatisticCardList metrics={metrics} />
-        
+        <RadioButton id="testid" name='radio1' value='1' label = 'test label' buttonSize="small"/>
       </div>
     </>
   );
