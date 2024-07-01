@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TourListItem from './TourListItem';
+import TourListItem from './TourListItem/TourListItem';
 
 const TourList = ({ items, onSelectItem }) => {
   return (
