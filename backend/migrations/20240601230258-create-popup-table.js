@@ -1,25 +1,25 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Popup', {
+    await queryInterface.createTable("popup", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
       closeButtonAction: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          isIn: [['no-action', 'open-url', 'close-popup', 'open-url-new-tab']],
+          isIn: [["no-action", "open-url", "close-popup", "open-url-new-tab"]],
         },
       },
       popupSize: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          isIn: [['small', 'medium', 'large']],
+          isIn: [["small", "medium", "large"]],
         },
       },
       url: {
@@ -33,32 +33,32 @@ module.exports = {
       headerBackgroundColor: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: '#FFFFFF',
+        defaultValue: "#FFFFFF",
       },
       headerColor: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: '#FFFFFF',
+        defaultValue: "#FFFFFF",
       },
       textColor: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: '#FFFFFF',
+        defaultValue: "#FFFFFF",
       },
       buttonBackgroundColor: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: '#FFFFFF',
+        defaultValue: "#FFFFFF",
       },
       buttonTextColor: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: '#FFFFFF',
+        defaultValue: "#FFFFFF",
       },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Popup');
-  }
+    await queryInterface.dropTable("popup");
+  },
 };

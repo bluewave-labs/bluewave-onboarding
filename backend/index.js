@@ -12,6 +12,7 @@ const authRoutes = require('./src/routes/auth.routes');
 const userRoutes = require('./src/routes/user.routes');
 const mocks = require('./src/routes/mocks.routes');
 const popup = require('./src/routes/popup.routes');
+const popup_log = require('./src/routes/popup_log.routes');
 // const tourRoutes = require('./src/routes/tour.routes');
 
 const app = express();
@@ -22,22 +23,28 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(jsonErrorMiddleware);
 
-const db = require('./config/database');
+const { sequelize } = require("./src/models");
 
+sequelize
+  .authenticate()
+  .then(() => console.log("Database connected..."))
+  .catch((err) => console.log("Error: " + err));
 
-db.authenticate()
-  .then(() => console.log('Database connected...'))
-  .catch(err => console.log('Error: ' + err))
-  
+sequelize
+  .sync()
+  .then(() => console.log("Models synced with the database..."))
+  .catch((err) => console.log("Error syncing models: " + err));
+
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/mock/', mocks);
 app.use('/popup', popup);
+app.use('/popup_log', popup_log);
 // app.use('/tours', tourRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: 'Internal Server Error' });
+  res.status(500).json({ message: "Internal Server Error" });
 });
 
 const PORT = process.env.PORT || 3000;
