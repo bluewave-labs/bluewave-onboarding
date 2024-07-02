@@ -21,6 +21,14 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      type: {
+        type: Sequelize.STRING(10),
+        allowNull: false,
+      },
+      expiresAt: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

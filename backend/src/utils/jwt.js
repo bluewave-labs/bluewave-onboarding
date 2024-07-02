@@ -1,20 +1,17 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const { JWT_EXPIRES_IN_1H } = require('./constants');
 
-const generateToken = (payload, expiresIn = "1h") => {
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn });
+const generateToken = (payload) => {
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: JWT_EXPIRES_IN_1H });
 };
 
 const verifyToken = (token) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    return decoded;
+    return jwt.verify(token, process.env.JWT_SECRET);
   } catch (error) {
     return null;
   }
 };
 
-module.exports = {
-  generateToken,
-  verifyToken,
-};
+module.exports = { generateToken, verifyToken };
