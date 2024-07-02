@@ -6,9 +6,7 @@ const Home = () => {
     return (
         <div className="app">
             <div className="content">
-                <HomePageTemplate>
-                    <Dashboard username={'Gorkem'}/>
-                </HomePageTemplate>
+                <Dashboard username={'Gorkem'} />
             </div>
         </div>
     );

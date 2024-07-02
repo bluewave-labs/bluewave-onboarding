@@ -34,7 +34,8 @@ const ProductTour = () => {
   };
 
   const tours = [
-    { title: 'Main dashboard - first login tour', timestamp: '10:00 AM', idTour: '184293', text: 'This pops up the first time the user logins to the dashboard.' },
+    { title: 'Main dashboard - first login tour', timestamp: '10:00 AM', idTour: '184293', text: 'This pops up the first time the user logins to the dashboard.',
+         onDelete: ()=>{}, onEdit: ()=>{} },
     // More tours...
   ];
 
