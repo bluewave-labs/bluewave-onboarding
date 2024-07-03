@@ -5,8 +5,7 @@ const Token = db.Token;
 const { generateToken, verifyToken } = require("../utils/jwt");
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-
-const TOKEN_LIFESPAN = 3600 * 1000;
+const { TOKEN_LIFESPAN } = require('../utils/constants');
 
 const register = async (req, res) => {
   try {
