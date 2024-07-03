@@ -3,7 +3,7 @@
   background-color: var(--main-purple);
   text-transform: none;
   box-shadow: none;
-  width: 80px;
+  /* width: 80px; */
   transition: background-color 0.3s, border-color 0.3s;
 }
 
@@ -91,7 +91,7 @@
   background-color: var(--main-purple);
   text-transform: none;
   box-shadow: none;
-  width: 80px;
+  /* width: 80px; */
 }
 
 .button-primary-custom.MuiButton-root:hover {
