@@ -1,15 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  TextField,
-  InputAdornment,
-  Chip,
-  Box,
-  InputLabel,
-} from "@mui/material";
+import { TextField, Chip, Box, InputLabel } from "@mui/material";
+import "./TextFieldStyles.css";
 
 const CustomTextField = ({
-  label,
+  labelText,
   defaultValue,
   helperText,
   error,
@@ -19,13 +14,18 @@ const CustomTextField = ({
   endAdornment,
   placeholder,
   chips,
-  labelText,
+  labelFontWeight,
+  TextFieldWidth,
+  inputHeight,
 }) => {
   return (
-    <Box paddingY={2}>
-      <InputLabel sx={{ fontWeight: "bold" }}>{labelText}</InputLabel>
+    <Box paddingY={1}>
+      <InputLabel className="label" sx={{ fontWeight: labelFontWeight }}>
+        {labelText}
+      </InputLabel>
       <TextField
-        label={label}
+        className="textField"
+        sx={{ width: TextFieldWidth }}
         fullWidth
         margin="normal"
         defaultValue={defaultValue}
@@ -35,20 +35,17 @@ const CustomTextField = ({
         rows={rows}
         helperText={helperText}
         InputProps={{
-          startAdornment: startAdornment && (
-            <InputAdornment position="start">{startAdornment}</InputAdornment>
-          ),
-          endAdornment: endAdornment && (
-            <InputAdornment position="end">{endAdornment}</InputAdornment>
-          ),
-          ...(chips && {
-            startAdornment: (
-              <InputAdornment position="start">
+          startAdornment: startAdornment,
+          endAdornment: endAdornment,
+          ...(chips &&
+            chips.length > 0 && {
+              startAdornment: (
                 <Box
                   sx={{
                     display: "flex",
                     gap: 1,
-                    mt: -9,
+                    mt: -15,
+                    mr: 1,
                   }}
                 >
                   {chips.map((chip, index) => (
@@ -61,9 +58,15 @@ const CustomTextField = ({
                     />
                   ))}
                 </Box>
-              </InputAdornment>
-            ),
-          }),
+              ),
+            }),
+        }}
+        inputProps={{
+          style: {
+            height: inputHeight,
+            paddingTop: 0,
+            paddingBottom: 0,
+          },
         }}
         FormHelperTextProps={{
           sx: { margin: 0, paddingTop: 1 },
@@ -73,8 +76,41 @@ const CustomTextField = ({
   );
 };
 
+// Explanation of the PropTypes used in this file
+/*
+- labelText (string): A label that describes the content of the text field.
+- defaultValue (string): A default value for when the input is still empty.
+- helperText (string): The text that will be displayed as the helper text for the text field.
+- error (bool): A boolean value that determines whether the text field should display an error state.
+- multiline (bool): A boolean value that determines whether the text field should allow multiple lines of text.
+- rows (number): The number of rows that the text field should display when in multiline mode.
+- startAdornment (node): The node that will be displayed as the start adornment for the text field.
+- endAdornment (node): The node that will be displayed as the end adornment for the text field.
+- placeholder (string): The short hint displayed in the input before the user enters a value.
+- chips (array): An array of objects that represent chips to be displayed in the text field.
+- labelFontWeight (number): The font weight of the label text.
+- TextFieldWidth (string): The width of the text field.
+- inputHeight (string): The height of the input field.
+*/
+
+CustomTextField.defaultProps = {
+  labelText: "",
+  defaultValue: "",
+  helperText: "",
+  error: false,
+  multiline: false,
+  rows: 1,
+  chips: [],
+  startAdornment: null,
+  endAdornment: null,
+  placeholder: "",
+  labelFontWeight: 600,
+  TextFieldWidth: "100%",
+  inputHeight: "56px",
+};
+
 CustomTextField.propTypes = {
-  label: PropTypes.string,
+  labelText: PropTypes.string,
   defaultValue: PropTypes.string,
   helperText: PropTypes.string,
   error: PropTypes.bool,
@@ -85,11 +121,13 @@ CustomTextField.propTypes = {
   placeholder: PropTypes.string,
   chips: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      onDelete: PropTypes.func.isRequired,
+      label: PropTypes.string,
+      onDelete: PropTypes.func,
     })
   ),
-  labelText: PropTypes.string,
+  labelFontWeight: PropTypes.number,
+  TextFieldWidth: PropTypes.string,
+  inputHeight: PropTypes.string,
 };
 
 export default CustomTextField;

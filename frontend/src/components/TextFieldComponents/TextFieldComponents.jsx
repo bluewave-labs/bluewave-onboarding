@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, InputAdornment, Tooltip } from "@mui/material";
+import { Box, Button, InputAdornment, Tooltip, Chip } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -12,12 +12,13 @@ const TextFieldComponents = () => {
       <Box sx={{ flex: 1, minWidth: 200 }}>
         <CustomTextField
           labelText="Website"
-          startAdornment={
-            <>
-              <InputAdornment position="start">http://</InputAdornment>
-              <Divider sx={{ height: 55, m: 0.5 }} orientation="vertical" />
-            </>
-          }
+          labelFontWeight={600}
+          inputHeight="34px"
+          TextFieldWidth="320px"
+          startAdornment=<>
+            <InputAdornment position="start">http://</InputAdornment>
+            <Divider sx={{ height: 34, m: 0.5 }} orientation="vertical" />
+          </>
           helperText="This is a hint text to help user."
           endAdornment=<Tooltip title="This is a Tooltip" placement="top" arrow>
             <HelpOutlineIcon />
@@ -26,12 +27,18 @@ const TextFieldComponents = () => {
 
         <CustomTextField
           labelText="Email"
+          labelFontWeight={600}
+          inputHeight="34px"
+          TextFieldWidth="320px"
           helperText="This is a hint text to help user."
           defaultValue="olivia@untitledui.com"
         />
 
         <CustomTextField
           labelText="Email"
+          labelFontWeight={600}
+          inputHeight="34px"
+          TextFieldWidth="320px"
           defaultValue="olivia@untitledui.com"
           error
           helperText="This is an error message."
@@ -40,19 +47,24 @@ const TextFieldComponents = () => {
 
         <CustomTextField
           labelText="Email"
+          labelFontWeight={600}
+          inputHeight="34px"
+          TextFieldWidth="320px"
           defaultValue="olivia@untitledui.com"
-          error
-          helperText="This is an error message."
+          helperText="This is a hint text to help user."
           endAdornment=<HelpOutlineIcon />
         />
 
         <CustomTextField
           labelText="Website"
+          labelFontWeight={400}
+          inputHeight="34px"
+          TextFieldWidth="397px"
           defaultValue="www.untitledui.com"
           helperText="This is a hint text to help user."
           endAdornment=<>
             <HelpOutlineIcon />
-            <Divider sx={{ height: 55, m: 0.5 }} orientation="vertical" />
+            <Divider sx={{ height: 34, m: 0.5 }} orientation="vertical" />
             <Button variant="outline" startIcon={<ContentCopyIcon />}>
               Copy
             </Button>
@@ -62,6 +74,9 @@ const TextFieldComponents = () => {
       <Box sx={{ flex: 1, minWidth: 300 }}>
         <CustomTextField
           labelText="Description"
+          labelFontWeight={600}
+          inputHeight="34px"
+          TextFieldWidth="320px"
           placeholder="Enter a description..."
           helperText="This is a hint text to help user."
           multiline={true}
@@ -69,6 +84,9 @@ const TextFieldComponents = () => {
         />
         <CustomTextField
           labelText="Description"
+          labelFontWeight={600}
+          inputHeight="34px"
+          TextFieldWidth="320px"
           helperText="This is a hint text to help user."
           multiline={true}
           defaultValue="Marketing"
@@ -80,6 +98,9 @@ const TextFieldComponents = () => {
         />
         <CustomTextField
           labelText="Description"
+          labelFontWeight={600}
+          inputHeight="34px"
+          TextFieldWidth="320px"
           placeholder="Enter a description..."
           helperText="This is an error message."
           multiline={true}
