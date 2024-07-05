@@ -14,7 +14,7 @@ export default function CheckIcon({size, outline, color}) {
 
 CheckIcon.propTypes = {
     size: PropTypes.oneOf(['small', 'medium', 'large']),
-    outline: PropTypes.oneOf(true, false),
+    outline: PropTypes.oneOf([true, false]),
     color: PropTypes.oneOf(['#7F56D9', '#475467', '#079455'])
 } 
 
