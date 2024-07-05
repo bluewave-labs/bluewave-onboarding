@@ -1,9 +1,9 @@
 @use '../../styles/globals.scss' as *;
 
   .container{
+    width: 100%;
     display:flex;
     flex-direction:row;
-    justify-content: space-around;
 
     h3{
       font-weight: 600;
@@ -26,35 +26,43 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex-grow: 1;
   }
 
-
-  .check-circle-icon {
-    font-size: 40px !important;
-    color: var(--main-purple);
+.check-circle-icon, 
+.on-progress,
+.future-step {
+  font-size: 40px !important;
+  z-index: 999;
+  background-color: white;
+}
+.check-circle-icon {
+  color: var(--main-purple);
 }
 
 .on-progress {
-    font-size: 40px !important;
     color: var(--main-purple);
     border: 2px solid rgba(var(--main-purple), 0.5);
 }
 
 .future-step {
-    font-size: 40px !important;
     color: var(--light-gray);
 }
 
 .line {
     position: absolute;
     top: 50%;
-    left: calc(50% + 17px); /* Adjust this value to adjust the position of the line */
+    left: calc(50% + 17px); 
     height: 2px;
     background-color: var(--light-gray);
-    width: calc(calc(100vw - 105px) / 3);
+    width: calc(100% - 33px);
     transform: translateY(-50%);
+    z-index: -99;
 }
 
 .icon-container {
-    position: relative;
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
