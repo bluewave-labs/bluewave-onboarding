@@ -1,5 +1,4 @@
 export const list = [
-
     {
         heading: 'Use hints to',
         listItem: ['Help user understand a complex situation',
@@ -31,5 +30,4 @@ export const list = [
         'Announce new changes & updates',
         'Teach them something new']
     }
-
   ]

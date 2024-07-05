@@ -5,7 +5,7 @@ import CheckIcon from "../CheckIcon/CheckIcon";
 import PropTypes from "prop-types";
 import { list } from "../../data/CreateActivityButtonData";
 
-const CreateActivityButton = ({index}) => {
+const CreateActivityButton = ({ index }) => {
   return (
     <div className="bannerStyle">
       <div className="bannerContents">

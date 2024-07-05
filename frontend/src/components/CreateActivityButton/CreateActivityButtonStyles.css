@@ -5,18 +5,21 @@
     height: 100vh;
     flex-direction: column;
 }
+
 .heading{
     color: #344054;
     font-weight: 600;
     margin-bottom: 15px;
     font-size: 16px;
 }
+
 .list{
     display: flex;
     align-items: center;
     gap: 15px;
     padding: 5px;
 }
+
 .listText{
     color: #344054;
     font-weight: 400;
@@ -24,11 +27,13 @@
     margin-bottom: 10px;
     list-style-type: none;
 }
+
 .bannerContents{
     display: flex;
     flex-direction: column;
     align-items: center; 
 }
+
 .button{
     margin-top: 10px;
 }
