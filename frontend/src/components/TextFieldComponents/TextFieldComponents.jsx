@@ -4,11 +4,11 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Divider from "@mui/material/Divider";
-import CustomTextField from "./CustomTextField";
+import CustomTextField from "./CustomTextField/CustomTextField";
 
 const TextFieldComponents = () => {
   return (
-    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 4, padding: "50px" }}>
+    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 9, padding: "50px" }}>
       <Box sx={{ flex: 1, minWidth: 200 }}>
         <CustomTextField
           labelText="Website"
@@ -42,7 +42,9 @@ const TextFieldComponents = () => {
           defaultValue="olivia@untitledui.com"
           error
           helperText="This is an error message."
-          endAdornment=<ErrorOutlineIcon color="error" />
+          endAdornment=<ErrorOutlineIcon
+            style={{ color: "var(--border-error-solid)" }}
+          />
         />
 
         <CustomTextField
