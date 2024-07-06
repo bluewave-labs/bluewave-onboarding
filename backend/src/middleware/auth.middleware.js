@@ -1,25 +1,30 @@
-const jwt = require('jsonwebtoken');
-const { verifyToken } = require('../utils/jwt');
+const { verifyToken } = require("../utils/jwt");
+const db = require("../models");
+const Token = db.Token;
 
-const authenticateJWT = (req, res, next) => {
-  const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ error: 'No token provided' });
-  }
+const authenticateJWT = async (req, res, next) => {
+  const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
+  if (!token) return res.status(401).json({ error: "No token provided" });
 
   try {
     const decoded = verifyToken(token);
+    if (!decoded) return res.status(401).json({ error: "Invalid token" });
+
+    const dbToken = await Token.findOne({ where: { token, userId: decoded.id, type: 'auth' } });
+    if (!dbToken) return res.status(401).json({ error: "Invalid token" });
+
+    const createdAt = new Date(dbToken.createdAt);
+    const expiresAt = new Date(createdAt.getTime() + parseInt(process.env.JWT_EXPIRATION_TIME, 10));
+    if (new Date() > expiresAt) {
+      await dbToken.destroy();
+      return res.status(401).json({ error: "Token has expired" });
+    }
+
     req.user = decoded;
     next();
   } catch (error) {
-    if (error.name === 'TokenExpiredError') {
-      return res.status(401).json({ error: 'Token has expired' });
-    }
-    if (error.name === 'JsonWebTokenError') {
-      return res.status(401).json({ error: 'Invalid token' });
-    }
-    return res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error authenticating token:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 

@@ -1,0 +1,43 @@
+.dropdown-menu {
+    position: absolute;
+    top: calc(8vh + 10px); 
+    right: 3px;
+    min-width: fit-content;
+    z-index: 1;
+}
+
+.dropdown-menu .MuiListItem-root {
+    cursor: pointer;
+}
+
+.dropdown-menu .MuiListItem-root:hover {
+    background-color: #F9FAFB;
+}
+
+.dropdown-item .MuiTypography-root{
+    width: 100%; 
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #344054;
+    display: inline;
+    justify-content: center;
+  }
+
+  .dropdown-item {
+    padding: 4px 12px !important; 
+  }
+
+  .dropdown-list{
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+
+  .dropdown-menu .MuiSvgIcon-root{
+    color:#667085;
+  }
+
+  .dropdown-menu .MuiListItemIcon-root {
+    min-width: 2rem; 
+  }
+

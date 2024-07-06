@@ -1,16 +1,14 @@
+import React from 'react';
 import { Box } from "@mui/material";
-// import { mockTransactions } from "../../data/mockData";
-import Header from "../../components/Header";
+import DataTable from "../../components/DataTable/DataTable";
+import { demoData } from "../../data/demoData";
 
 const Dashboard = () => {
     return (
-        <Box m="20px">
-            {/* HEADER */}
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-            </Box>
-            <Box></Box>
-        </Box>
+     
+        <>
+            {/* <DataTable data={demoData} /> */}
+        </>
     );
 };
 
