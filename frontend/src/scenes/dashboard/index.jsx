@@ -5,6 +5,7 @@ import { demoData } from "../../data/demoData";
 
 const Dashboard = () => {
     return (
+     
         <>
             {/* <DataTable data={demoData} /> */}
         </>

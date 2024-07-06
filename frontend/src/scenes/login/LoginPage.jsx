@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css'; 
-import GoogleSignInButton from '../../components/Buttons/GoogleSignInButton/GoogleSignInButton';
+import GoogleSignInButton from '../../components/Button/GoogleSignInButton/GoogleSignInButton';
 import { login } from '../../services/apiServices';
 
 function LoginPage() {

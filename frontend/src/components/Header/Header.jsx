@@ -21,7 +21,7 @@ function Header({ user }) {
                     <div className="user-role">{user.role}</div>
                 </div>
                 <button className="dropdown-button" onClick={handleDropdownClick}>
-                {isDropdownOpen ? <KeyboardArrowUpIcon /> : <><KeyboardArrowDownOutlinedIcon /><DropdownMenu /></>}
+                {isDropdownOpen ? <>< KeyboardArrowUpIcon/><DropdownMenu /></> : <KeyboardArrowDownOutlinedIcon /> }
                 </button>
             </div>
         </div>
