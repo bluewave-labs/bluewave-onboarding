@@ -3,7 +3,12 @@ import PropTypes from "prop-types";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
 
-export default function CheckIcon({ size, outline, color }) {
+const purple = "#7F56D9"
+const black = '#475467'
+const green = '#079455'
+
+const CheckIcon = ({ size = 'medium', outline = true, color = purple }) => {
+
   return (
     <div>
       {outline ? (
@@ -18,11 +23,8 @@ export default function CheckIcon({ size, outline, color }) {
 CheckIcon.propTypes = {
   size: PropTypes.oneOf(["small", "medium", "large"]),
   outline: PropTypes.oneOf([true, false]),
-  color: PropTypes.oneOf(["#7F56D9", "#475467", "#079455"]),
+  color: PropTypes.oneOf([purple, black, green]),
 };
 
-CheckIcon.defaultProps = {
-  size: "medium",
-  outline: true,
-  color: "#7F56D9",
-};
+
+export default CheckIcon

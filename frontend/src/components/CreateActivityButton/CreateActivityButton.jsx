@@ -5,7 +5,7 @@ import CheckIcon from "../CheckIcon/CheckIcon";
 import PropTypes from "prop-types";
 import { list } from "../../data/CreateActivityButtonData";
 
-export default function CreateActivityButton({ index }){
+const CreateActivityButton = ({ index = 2 }) => {
   return (
     <div className="bannerStyle">
       <div className="bannerContents">
@@ -32,8 +32,5 @@ CreateActivityButton.propTypes = {
   index: PropTypes.oneOf([0, 1, 2, 3, 4])
 } 
 
-CreateActivityButton.defaultProps = {
-  index: 2
-}
-
+export default CreateActivityButton
 
