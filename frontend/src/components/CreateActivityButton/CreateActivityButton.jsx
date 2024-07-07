@@ -1,39 +1,45 @@
-import React from "react";
-import Button from "../Button/Button";
-import "./CreateActivityButtonStyles.css";
-import CheckIcon from "../CheckIcon/CheckIcon";
-import PropTypes from "prop-types";
-import { list } from "../../data/CreateActivityButtonData";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Button from './Button/Button';
+import CheckIcon from '@mui/icons-material/Check'; // or use your checkicon component
+import './CreateActivityButtonStyles.css';
 
-export default function CreateActivityButton({ index }){
+//TODO: For Rusi . Analise the code. Make changes for the props and styles. This is just mockUp how it should be.
+
+const CreateActivityButton = ({ buttonText, onClick, variant, className, icons }) => {
   return (
-    <div className="bannerStyle">
-      <div className="bannerContents">
-          <h2 className="heading">{list[index].heading}</h2>
-          <ul>
-            {list[index].listItem.map((listItem, index) => (
-              <div className="list" key={index}>
-              <CheckIcon size='small' outline= {true} color='#7F56D9'/>
-              <li className="listText" key={index}>
-                {listItem}
-              </li>
-            </div>
-            ))}
-          </ul>
+    <div className="activity-container">
+      <div className="image-placeholder"></div>
+      <div className="activity-icons">
+        {icons && icons.map((item, index) => (
+          <div key={index} className="activity-icons">
+            <CheckIcon>{item.checkIconText}</CheckIcon>
+            <span>{item.label}</span>
+          </div>
+        ))}
       </div>
-      <div className="button">
-        <Button text="Create a banner" className="button-primary-custom buttonStyle" />
-      </div>
+      <Button
+        variant={variant}
+        className={`${className} create-activity-button`}
+        onClick={onClick}
+      >
+        {buttonText}
+      </Button>
     </div>
   );
 };
 
 CreateActivityButton.propTypes = {
-  index: PropTypes.oneOf([0, 1, 2, 3, 4])
-} 
+  buttonText: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  variant: PropTypes.oneOf(['text', 'outlined', 'contained']),
+  className: PropTypes.string,
+  icons: PropTypes.arrayOf(
+    PropTypes.shape({
+      checkIconText: PropTypes.string,
+      label: PropTypes.string,
+    })
+  ),
+};
 
-CreateActivityButton.defaultProps = {
-  index: 2
-}
-
-
+export default CreateActivityButton;
