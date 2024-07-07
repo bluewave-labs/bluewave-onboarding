@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { list } from "../../data/CreateActivityButtonData";
 
 const CreateActivityButton = ({ index = 2 }) => {
+  
   return (
     <div className="bannerStyle">
       <div className="bannerContents">
