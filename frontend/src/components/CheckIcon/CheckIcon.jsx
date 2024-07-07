@@ -2,10 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
+import { purple, black, green } from "../../utils/constants";
 
-const purple = "#7F56D9"
-const black = '#475467'
-const green = '#079455'
 
 const CheckIcon = ({ size = 'medium', outline = true, color = purple }) => {
 

@@ -5,7 +5,9 @@ import CheckIcon from "../CheckIcon/CheckIcon";
 import PropTypes from "prop-types";
 import { list } from "../../data/CreateActivityButtonData";
 
-const CreateActivityButton = ({ index = 2 }) => {
+const [hints, popups, banners, helperLinks, tours] = [0, 1, 2, 3, 4]
+
+const CreateActivityButton = ({ index = banners }) => {
   
   return (
     <div className="bannerStyle">
@@ -30,7 +32,7 @@ const CreateActivityButton = ({ index = 2 }) => {
 };
 
 CreateActivityButton.propTypes = {
-  index: PropTypes.oneOf([0, 1, 2, 3, 4])
+  index: PropTypes.oneOf([hints, popups, banners, helperLinks, tours])
 } 
 
 export default CreateActivityButton
