@@ -3,36 +3,39 @@ import Button from "../Button/Button";
 import "./CreateActivityButtonStyles.css";
 import CheckIcon from "../CheckIcon/CheckIcon";
 import PropTypes from "prop-types";
-import { list } from "../../data/CreateActivityButtonData";
+import { activityData } from "../../data/CreateActivityButtonData";
+import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
+import { purple } from "../../utils/constants";
 
-const [hints, popups, banners, helperLinks, tours] = [0, 1, 2, 3, 4]
-
-const CreateActivityButton = ({ index = banners }) => {
+const CreateActivityButton = ({ type= ACTIVITY_TYPES.HINTS, onClick }) => {
   
+  const { heading, listItem, buttonText } = activityData[type];
+
   return (
     <div className="bannerStyle">
       <div className="bannerContents">
-          <h2 className="heading">{list[index].heading}</h2>
+          <h2 className="heading">{heading}</h2>
           <ul>
-            {list[index].listItem.map((listItem, index) => (
+            {listItem.map((item, index) => (
               <div className="list" key={index}>
-              <CheckIcon size='small' outline= {true} color='#7F56D9'/>
+              <CheckIcon size='small' outline={true} color={purple}/>
               <li className="listText" key={index}>
-                {listItem}
+                {item}
               </li>
             </div>
             ))}
           </ul>
       </div>
       <div className="button">
-        <Button text="Create a banner" className="button-primary-custom buttonStyle" />
+        <Button text={buttonText} className="button-primary-custom buttonStyle" onClick={onClick} />
       </div>
     </div>
   );
 };
 
 CreateActivityButton.propTypes = {
-  index: PropTypes.oneOf([hints, popups, banners, helperLinks, tours])
+  type: PropTypes.oneOf(Object.values(ACTIVITY_TYPES)).isRequired,
+  onClick: PropTypes.func.isRequired,
 } 
 
 export default CreateActivityButton
