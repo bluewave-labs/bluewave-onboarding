@@ -18,6 +18,8 @@
     "react-pro-sidebar": "^1.1.0",
     "react-router-dom": "^6.23.0",
     "react-scripts": "^5.0.1",
+    "vitest": "^2.0.1",
+    "vitex": "^0.0.12",
     "web-vitals": "^2.1.4",
     "yup": "^1.4.0"
   },
