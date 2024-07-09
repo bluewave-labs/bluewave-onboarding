@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 
+
 function App() {
   const [isSidebar, setIsSidebar] = useState(true);
 
@@ -13,7 +14,8 @@ function App() {
           <main className="content">
             {/* <Topbar setIsSidebar={setIsSidebar} /> */}
             <Routes>
-              <Route path="/" element={<Dashboard />} />           
+              <Route path="/" element={<Dashboard />} />  
+                  
             </Routes>
           </main>
     </div>

@@ -1,0 +1,44 @@
+.custom-label-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 4px; 
+  }
+  
+  .custom-label-tag.rounded {
+    border-radius: 16px; 
+  }
+  
+  .custom-label-tag.squared {
+    border-radius: 0px;
+  }
+  
+  .custom-label-tag.orange {
+    background-color: #FFA500;
+    color: #FFFFFF;
+    border-color: #FFA500;
+  }
+  
+  .custom-label-tag.red {
+    background-color: #FF0000;
+    color: #FFFFFF;
+    border-color: #FF0000;
+  }
+  
+  .custom-label-tag.purple {
+    background-color: #800080;
+    color: #FFFFFF;
+    border-color: #800080;
+  }
+  
+  .custom-label-tag.white {
+    background-color: #FFFFFF;
+    color: #000000;
+    border-color: #E0E0E0;
+  }
+  
