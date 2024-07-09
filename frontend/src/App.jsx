@@ -9,7 +9,6 @@ import SetNewPasswordPage from "./scenes/login/SetNewPassword";
 
 
 
-
 function App() {
   // const isAuthenticated = useSelector((state) => state.auth.isLoggedIn); // TODO: redux implementation
   const isAuthenticated = true;// emulate login
@@ -25,7 +24,7 @@ function App() {
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
         
         
-      </Routes>    
+      </Routes>
     </>
   );
 }
