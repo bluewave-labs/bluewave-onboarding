@@ -13,6 +13,7 @@ const TourList = ({ items, onSelectItem }) => {
           onClick={() => onSelectItem(item.idTour)}
           onDelete={item.onDelete}
           onEdit={item.onEdit}
+          checkboxes={item.checkboxes}
         />
       ))}
     </div>

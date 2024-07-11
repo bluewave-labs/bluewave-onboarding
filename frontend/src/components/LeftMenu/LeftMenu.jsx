@@ -19,7 +19,7 @@ function LeftMenu() {
     navigate('/');
   };
   const handleToursClick = () => {
-    navigate('/tours');
+    navigate(-1);
   };
   
   return (

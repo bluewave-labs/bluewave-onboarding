@@ -1,9 +1,10 @@
 .button-primary.MuiButton-root {
   color: white;
   background-color: var(--main-purple);
+  min-width: auto;
+  width: auto;
   text-transform: none;
   box-shadow: none;
-  width: 80px;
   transition: background-color 0.3s, border-color 0.3s;
 }
 
