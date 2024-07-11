@@ -5,6 +5,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import './CheckboxStyles.css';
 
+// label: to specify the text label associated with the checkbox.
+// checked: to determine whether the checkbox is initially checked.
+// onChange: to handle the change event when the checkbox is clicked.
+// variant: to define the checkbox style (e.g., primary, secondary).
+// className: to apply additional CSS classes.
+// style: to apply inline styles.
+
 const CustomCheckbox = ({
   label,
   checked,
