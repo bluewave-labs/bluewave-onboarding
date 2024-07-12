@@ -3,8 +3,7 @@ import Button from "../Button/Button";
 import "./CreateActivityButtonStyles.css";
 import CheckIcon from "../CheckIcon/CheckIcon";
 import PropTypes from "prop-types";
-import { activityData } from "../../data/CreateActivityButtonData";
-import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
+import { activityData, ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
 import '../../styles/variables.css'
 
 const CreateActivityButton = ({ type= ACTIVITY_TYPES.HINTS, onClick }) => {
