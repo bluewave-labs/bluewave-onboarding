@@ -5,12 +5,15 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useNavigate } from 'react-router-dom';
+import { logout } from '../../services/loginServices';
 
 const DropdownMenu = () => {
 
     const navigate = useNavigate();
-    const handleLoginClick = () => {
-      navigate('/login');
+    const handleLogoutClick = async () => {
+        const response = await logout();
+        console.log('Logout successful:', response);
+        navigate('/');
     };
 
     return (
@@ -32,7 +35,7 @@ const DropdownMenu = () => {
                     <ListItemIcon>
                         <LogoutOutlinedIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Logout" onClick={handleLoginClick}/>
+                    <ListItemText primary="Logout" onClick={handleLogoutClick}/>
                 </ListItemButton>
             </List>
         </Paper>

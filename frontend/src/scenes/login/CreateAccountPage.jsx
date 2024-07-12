@@ -2,28 +2,24 @@ import React, { useState } from 'react';
 import './Login.css'; 
 import GoogleSignInButton from '../../components/Button/GoogleSignInButton/GoogleSignInButton';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { signUp } from '../../services/apiServices';
+import { signUp } from '../../services/loginServices';
+import { useNavigate } from 'react-router-dom';
+
 
 function CreateAccountPage() {
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isNameValid, setIsNameValid] = useState(false);
-  const [isSurnameValid, setIsSurnameValid] = useState(false);
+  const [isUsernameValid, setIsNameValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [hasSpecialCharacter, setHasSpecialCharacter] = useState(false);
   const [atLeastEightCharacters, setAtLeastEightCharacters] = useState(false);
+  const navigate = useNavigate();
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
     setIsNameValid(e.target.value.length > 0);
-  };
-
-  const handleSurnameChange = (e) => {
-    setSurname(e.target.value);
-    setIsSurnameValid(e.target.value.length > 0);
   };
 
   const handleEmailChange = (e) => {
@@ -56,16 +52,18 @@ function CreateAccountPage() {
   };
 
   const handleSignUp = async () => {
-    if (!isNameValid || !isEmailValid || !isPasswordValid) {
+    if (!isUsernameValid || !isEmailValid || !isPasswordValid) {
       alert('Please fill out the form correctly.');
       return;
     }
 
-    const userData = { name, surname, email, password };
+    const userData = {username, email, password };
 
     try {
       const response = await signUp(userData);
       console.log('Sign up successful:', response);
+      navigate('/');
+
     } catch (error) {
       console.error('Sign up failed:', error);
     }
@@ -77,28 +75,17 @@ function CreateAccountPage() {
       {/* <h3>Start your 30-day free trial</h3> */}
       <div className="form-group">
       <div className='check-div'>
-      {isNameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
-        <label>Name*:</label>  
+      {isUsernameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
+        <label>Username*:</label>  
         </div>
         <input
           type="name"
-          value={name}
-          onChange={handleNameChange}
-          placeholder="Enter your name"
+          value={username}
+          onChange={handleUsernameChange}
+          placeholder="Enter your username"
         />
       </div>
-      <div className="form-group">
-      <div className='check-div'>
-      {isSurnameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
-        <label>Surname*:</label>  
-        </div>
-        <input
-          type="surname"
-          value={surname}
-          onChange={handleSurnameChange}
-          placeholder="Enter your surname"
-        />
-      </div>
+
       <div className="form-group">
       <div className='check-div'> 
       {isEmailValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
