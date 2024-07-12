@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addColumn("Popup", "createdBy", {
+    await queryInterface.addColumn("popup", "createdBy", {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
@@ -15,6 +15,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn("Popup", "createdBy");
+    await queryInterface.removeColumn("popup", "createdBy");
   },
 };
