@@ -32,7 +32,7 @@ const Dashboard = ({ username }) => {
           Start with a popular onboarding process
         </div>
         <StatisticCardList metrics={metrics} />
-        <RadioButton id="testid" name='radio1' value='1' label = 'test label' buttonSize="small"/>
+        
       </div>
     </>
   );
