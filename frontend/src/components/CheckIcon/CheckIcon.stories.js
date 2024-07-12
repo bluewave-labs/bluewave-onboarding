@@ -1,47 +1,52 @@
+const commonOutlinedProps = {
+    type: 'outline',
+    size: 'medium'
+};
+
+const commonSolidProps = {
+    type: 'solid',
+    size: 'medium'
+}
+
+
 export const PurpleOutline = {
     args: {
-        type: 'outline',
-        size: 'medium',
+        ...commonOutlinedProps,
         color: 'purple'
     }
 };
 
 export const BlackOutline = {
     args: {
-        type: 'outline',
-        size: 'medium',
+        ...commonOutlinedProps,
         color: 'black'
     }
 };
 
 export const GreenOutline = {
     args: {
-        type: 'outline',
-        size: 'medium',
+        ...commonOutlinedProps,
         color: 'green'
     }
 };
 
 export const PurpleSolid = {
     args: {
-        type: 'solid',
-        size: 'medium',
+        ...commonSolidProps,
         color: 'purple'
     }
 };
 
 export const BlackSolid = {
     args: {
-        type: 'solid',
-        size: 'medium',
+        ...commonSolidProps,
         color: 'black'
     }
 };
 
 export const GreenSolid = {
     args: {
-        type: 'solid',
-        size: 'medium',
+        ...commonSolidProps,
         color: 'green'
     }
 };
