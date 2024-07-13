@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 20px;
+  gap: 20px;
+  color: var(--main-text-color);
+  font-size: 13px;
+}
+
+.row {
+  border: 1px solid var(--light-border-color);
+  padding: 10px;
+  border-radius: 5px;
+  width: "100%";
+}
+
+.preview,
+.editor {
+  height: 200px;
+  width: 100%;
+  overflow: auto;
+}
+
+.preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.editor-preview-container {
+  position: relative;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+}

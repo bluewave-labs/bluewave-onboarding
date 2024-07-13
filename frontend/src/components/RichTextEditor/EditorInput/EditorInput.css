@@ -1,0 +1,14 @@
+.MuiTextField-root {
+  width: 100%;
+}
+
+.ql-container.ql-snow {
+  border: none;
+}
+
+.editor {
+  height: 200px;
+  width: 100%;
+  border: none;
+  overflow: auto;
+}
