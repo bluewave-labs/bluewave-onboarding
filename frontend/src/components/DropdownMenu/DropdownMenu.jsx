@@ -13,6 +13,7 @@ const DropdownMenu = () => {
     const handleLogoutClick = async () => {
         const response = await logout();
         console.log('Logout successful:', response);
+        window.location.reload();
         navigate('/');
     };
 

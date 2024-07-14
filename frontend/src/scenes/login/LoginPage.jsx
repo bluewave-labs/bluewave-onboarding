@@ -16,6 +16,7 @@ function LoginPage() {
     try {
       const response = await login(email, password);
       console.log('Login successful:', response);
+      window.location.reload();
       navigate('/');
     } catch (error) {
       setLoginError(true);

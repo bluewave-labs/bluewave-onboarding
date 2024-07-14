@@ -1,6 +1,5 @@
 import {apiClient} from './apiClient';  // Import the existing apiClient
 import axios from 'axios';
-import { useAuth } from './authProvider';
 
 // Create a new instance of apiClient with 'auth' appended to the baseURL
 const authClient = axios.create({
@@ -8,16 +7,12 @@ const authClient = axios.create({
   baseURL: `${apiClient.defaults.baseURL}auth`,
 });
 
-
 // Function to handle login
 export const login = async (email, password) => {
   try {
     const response = await authClient.post('/login', { email, password });
     const token = response.data.token;
     localStorage.setItem('authToken', token);
-
-    const { setIsLoggedIn } = useAuth();
-    setIsLoggedIn(true)
 
     return response.data;
   } catch (error) {
@@ -29,16 +24,12 @@ export const login = async (email, password) => {
 // Function to handle logout
 export const logout = async () => {
   try {
-    await authClient.post('/logout');
+    await apiClient.post('auth/logout');
     localStorage.removeItem('authToken');
-    const { setIsLoggedIn } = useAuth();
-    setIsLoggedIn(false);
     return true;
   } catch (error) {
     console.error('Logout error:', error.response);
     localStorage.removeItem('authToken');
-    const { setIsLoggedIn } = useAuth();
-    setIsLoggedIn(false);
     throw error;
   }
 };

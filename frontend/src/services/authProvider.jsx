@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {apiClient} from './apiClient';
 
 const AuthContext = React.createContext();
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{isLoggedIn, setIsLoggedIn}}>
+        <AuthContext.Provider value={{isLoggedIn}}>
             {children}
         </AuthContext.Provider>
     );
