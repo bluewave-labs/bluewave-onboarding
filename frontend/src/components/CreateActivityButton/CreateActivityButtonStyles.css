@@ -1,3 +1,5 @@
+@import "../../styles/variables.css";
+
 .bannerStyle{
     display: flex;
     justify-content: center;
@@ -7,7 +9,7 @@
 }
 
 .heading{
-    color: #344054;
+    color: var(--main-text-color);
     font-weight: 600;
     margin-bottom: 15px;
     font-size: 16px;
@@ -21,7 +23,7 @@
 }
 
 .listText{
-    color: #344054;
+    color: var(--main-text-color);
     font-weight: 400;
     font-size: 13px;
     margin-bottom: 10px;
