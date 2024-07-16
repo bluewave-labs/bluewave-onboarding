@@ -26,7 +26,7 @@ const CreateActivityButton = ({ type= ACTIVITY_TYPES.HINTS, onClick }) => {
           </ul>
       </div>
       <div className="button">
-        <Button text={buttonText} className="button-primary-custom buttonStyle" onClick={onClick} />
+        <Button text={buttonText} className="button-primary-custom buttonStyle" onClick={onClick} variant='contained' buttonType='primary'/>
       </div>
     </div>
   );
