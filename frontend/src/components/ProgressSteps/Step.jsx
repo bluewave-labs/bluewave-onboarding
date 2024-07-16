@@ -6,7 +6,7 @@ import StepLine from './StepLine';
 
 const main_purple = 'var(--main-purple)';
 
-const Step = ({prevStep=true, currentStep=false, title, explanation, index, dataLength }) => {
+const Step = ({prevStep=true, currentStep=false, title=null, explanation=null, index, dataLength }) => {
   return (
     <div className={styles.step}>
         <div className={styles['icon-container']}>
@@ -22,8 +22,8 @@ const Step = ({prevStep=true, currentStep=false, title, explanation, index, data
 Step.propTypes = {
     prevStep: PropTypes.bool,
     currentStep: PropTypes.bool,
-    title: PropTypes.string.isRequired,     
-    explanation: PropTypes.string.isRequired,
+    title: PropTypes.string,    
+    explanation: PropTypes.string,
     index: PropTypes.number.isRequired,
     dataLength: PropTypes.number.isRequired
   };
