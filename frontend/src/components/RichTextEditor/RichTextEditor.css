@@ -19,7 +19,6 @@
 .editor {
   height: 200px;
   width: 100%;
-  overflow: auto;
 }
 
 .preview {
@@ -28,6 +27,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  overflow: auto;
 }
 
 .editor-preview-container {

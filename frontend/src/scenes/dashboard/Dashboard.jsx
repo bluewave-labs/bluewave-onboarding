@@ -5,6 +5,7 @@ import styles from "./Dashboard.module.scss";
 import StatisticCardList from "../../components/HomePageComponents/StatisticCardsList/StatisticCardsList";
 import CreateActivityButtonList from "../../components/HomePageComponents/CreateActivityButtonList/CreateActivityButtonList";
 import { useNavigate } from "react-router-dom";
+import RichTextEditor from "../../components/RichTextEditor/RichTextEditor";
 
 const Dashboard = ({ username }) => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const Dashboard = ({ username }) => {
   ];
   return (
     <>
-      <div className={styles.container}>
+      {/* <div className={styles.container}>
         <div className={styles.top}>
           <UserTitle userName={username} />
           <DateDisplay />
@@ -44,8 +45,8 @@ const Dashboard = ({ username }) => {
         <div style={{ display: "block", width: "fit-content" }}>
           
         </div>
-      </div>
-      
+      </div> */}
+      <RichTextEditor />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditorInput from "./EditorInput/EditorInput";
 import EditorTabs from "./Tabs/EditorTabs";
 import EditorToolbar from "./Toolbar/EditorToolbar";
@@ -8,7 +8,7 @@ import { Box } from "@mui/material";
 import Proptypes from "prop-types";
 import "./RichTextEditor.css";
 
-const RichTextEditor = ({ width }) => {
+const RichTextEditor = () => {
   const [mode, setMode] = useState("editor");
   const [content, setContent] = useState("");
 
@@ -21,8 +21,19 @@ const RichTextEditor = ({ width }) => {
   // log the editor content in html format
   // console.log(content);
 
+  useEffect(() => {
+    const removePlaceholder = () => {
+      const linkInput = document.querySelector("input");
+      if (linkInput) {
+        linkInput.removeAttribute("placeholder");
+      }
+    };
+
+    setTimeout(removePlaceholder, 1000);
+  }, []);
+
   return (
-    <Box className="container" sx={{ width: width }}>
+    <Box className="container" sx={{ width: "500px" }}>
       <Box className="row">
         <Box
           sx={{
@@ -59,10 +70,6 @@ const RichTextEditor = ({ width }) => {
 
 RichTextEditor.propTypes = {
   width: Proptypes.string,
-};
-
-RichTextEditor.defaultProps = {
-  width: "500px",
 };
 
 export default RichTextEditor;
