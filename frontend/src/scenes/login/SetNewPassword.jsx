@@ -2,13 +2,27 @@ import React, { useState } from 'react';
 import './Login.css'; 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { resetPassword } from '../../services/loginServices';
+import { useNavigate } from 'react-router-dom';
 
-function SetNewPasswordPage() {
+function SetNewPasswordPage({email='asdf@asdf.com'}) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [hasSpecialCharacter, setHasSpecialCharacter] = useState(false);
   const [atLeastEightCharacters, setAtLeastEightCharacters] = useState(false);
+  const navigate = useNavigate();
+
+  const handleResetPassword = async () => {
+    try {
+      const response = await resetPassword({email, password});
+      console.log('Password Reset successful:', response);
+      navigate('/reset-password');
+    } catch (error) {
+      console.error('Password Reset failed:', error);
+    }
+  };
+  
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -70,7 +84,7 @@ function SetNewPasswordPage() {
         <CheckCircleIcon style={{ color: hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight:"5px"}} />
         Must contain one special character
       </div>
-      <button className="sign-in-button" style={{marginTop: "15px"}}>
+      <button className="sign-in-button" style={{marginTop: "15px"}} onClick={handleResetPassword}>
         Reset Password
       </button>
       <button className="back-to-login-button"> <ArrowBackIcon style={{fontSize: "18px", marginRight: "5px"}}/>Back to log in</button>

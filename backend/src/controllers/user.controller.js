@@ -1,5 +1,8 @@
 const { Sequelize } = require("sequelize");
-const User = require("../models/User");
+const { verifyToken } = require("../utils/jwt");
+const db = require("../models");
+const User = db.User
+
 
 const getUsersList = async (req, res) => {
   const { page = 1, limit = 10, search = "" } = req.query;
@@ -30,4 +33,17 @@ const getUsersList = async (req, res) => {
   }
 };
 
-module.exports = { getUsersList };
+
+const getCurrentUser = async (req, res) => {
+  const userId = req.user.id;
+  const user = await User.findOne({ where: { id : userId } });
+  if (user){
+    return res.status(200).json({ user });
+  }
+  else{
+    return res.status(400).json({ error: "User not found" });
+  }
+};
+
+
+module.exports = { getUsersList, getCurrentUser };
