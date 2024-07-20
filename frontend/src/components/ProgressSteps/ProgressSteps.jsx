@@ -2,29 +2,42 @@ import React, { useState } from 'react';
 import styles from './ProgressSteps.module.scss';
 import Step from './Step';
 
-const ProgressSteps = ({ stepData }) => {
-    const initialStates = stepData.map(() => false);
-    const [stepsCompleted, setStepsCompleted] = useState(initialStates);
+const ProgressSteps = ({ stepData, completed=0 }) => {
 
-    const setStepCompleted = (index, value) => {
-        const newStepsCompleted = [...stepsCompleted];
-        newStepsCompleted[index] = value;
-        setStepsCompleted(newStepsCompleted);
-    };
+    let initialStates;
+    if (typeof stepData === 'number') {
+        initialStates = Array(stepData).fill(false);
+    }
+    else{
+        initialStates = stepData.map(() => false);
+    }
+    initialStates = initialStates.map((_, index) => index < completed);
 
     return (
         <div className={styles.container}>
-            {stepData.map((step, index) => (
-                <Step
-                    key={index}
-                    title={step.title}
-                    explanation={step.explanation}
-                    currentStep={stepsCompleted[index]}
-                    prevStep={index - 1 < 0 ? true : stepsCompleted[index - 1]}
-                    index={index}
-                    dataLength={stepData.length}
-                />
-            ))}
+            {typeof stepData === 'number' ? (
+                initialStates.map((_, index) => (
+                    <Step
+                        key={index}
+                        currentStep={initialStates[index]}
+                        prevStep={index - 1 < 0 ? true : initialStates[index - 1]}
+                        index={index}
+                        dataLength={stepData}
+                    />
+                ))
+            ) : (
+                stepData.map((step, index) => (
+                    <Step
+                        key={index}
+                        title={step.title}
+                        explanation={step.explanation}
+                        currentStep={initialStates[index]}
+                        prevStep={index - 1 < 0 ? true : initialStates[index - 1]}
+                        index={index}
+                        dataLength={stepData.length}
+                    />
+                ))
+            )}
         </div>
         
     );

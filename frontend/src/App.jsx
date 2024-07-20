@@ -8,6 +8,7 @@ import CheckYourEmailPage from "./scenes/login/CheckYourEmailPage";
 import SetNewPasswordPage from "./scenes/login/SetNewPassword";
 import Private from "./components/Private";
 import { useAuth } from "./services/authProvider";
+import ProgressStepsMain from "./scenes/progressSteps/ProgressStepsMain";
 
 function App() {
   const { isLoggedIn } = useAuth();
@@ -20,7 +21,8 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<PasswordResetPage />} />
         <Route path="/check-email" element={<CheckYourEmailPage />} />
-        <Route path="/set-new-password" element={<SetNewPasswordPage />} />       
+        <Route path="/set-new-password" element={<SetNewPasswordPage />} />
+        <Route path="/progress-steps" element={<ProgressStepsMain />} />
       </Routes>    
     </>
   );
