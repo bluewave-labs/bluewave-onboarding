@@ -34,6 +34,11 @@
   position: relative;
 }
 
+.editor-label {
+  color: var(--second-text-color);
+  font-weight: 600;
+}
+
 .tabs {
   display: flex;
   gap: 10px;

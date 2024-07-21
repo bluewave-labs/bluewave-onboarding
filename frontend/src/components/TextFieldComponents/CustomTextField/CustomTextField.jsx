@@ -6,7 +6,9 @@ import "./CustomTextFieldStyles.css";
 
 const CustomTextField = ({
   labelText,
+  value,
   defaultValue,
+  onChange,
   helperText,
   error,
   multiline,
@@ -28,6 +30,8 @@ const CustomTextField = ({
         fullWidth
         margin="normal"
         defaultValue={defaultValue}
+        value={value}
+        onChange={onChange}
         placeholder={placeholder}
         error={error}
         multiline={multiline}
@@ -58,6 +62,8 @@ const CustomTextField = ({
 
 CustomTextField.propTypes = {
   labelText: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
   defaultValue: PropTypes.string,
   helperText: PropTypes.string,
   error: PropTypes.bool,
