@@ -14,9 +14,9 @@ const Dashboard = ({ username }) => {
   ];
 
   const buttons = [
-    { placeholder: "Create a welcome tour" },
-    { placeholder: "Add a hint to your app" },
-    { placeholder: "Create a new banner" }
+    { placeholder: "Create a welcome tour", onClick: ()=>{} },
+    { placeholder: "Add a hint to your app", onClick: ()=>{} },
+    { placeholder: "Create a new banner",onClick: ()=>{} }
   ];
 
   return (

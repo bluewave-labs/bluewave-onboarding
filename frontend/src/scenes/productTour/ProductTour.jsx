@@ -35,7 +35,7 @@ const ProductPage = ({ items }) => {
     {
       title: 'Main dashboard - first login tour',
       timestamp: '10:00 AM',
-      idItem: '148935',
+      idItem: '1',
       text: 'This pops up the first time the user logins to the dashboard.'
     },
   ];
