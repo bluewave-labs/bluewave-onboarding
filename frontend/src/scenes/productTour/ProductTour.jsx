@@ -36,7 +36,9 @@ const ProductPage = ({ items }) => {
       title: 'Main dashboard - first login tour',
       timestamp: '10:00 AM',
       idItem: '1',
-      text: 'This pops up the first time the user logins to the dashboard.'
+      text: 'This pops up the first time the user logins to the dashboard.',
+      onDelete: () => { },
+      onEdit: () => { }
     },
   ];
 
