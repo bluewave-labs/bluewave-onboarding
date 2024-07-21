@@ -1,28 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TourListItem from './TourListItem/TourListItem';
+import ListItem from './ListItem/ListItem';
 
-const TourList = ({ items, onSelectItem }) => {
+const List = ({ items, onSelectItem }) => {
   return (
     <div>
       {items.map(item => (
-        <TourListItem
-          key={item.idTour}
+        <ListItem
+          key={item.idItem}
           title={item.title}
-          timestamp={item.timestamp}
-          onClick={() => onSelectItem(item.idTour)}
+          text={item.text}
+          id={item.idItem}
+          onClick={() => onSelectItem(item.idItem)}
           onDelete={item.onDelete}
           onEdit={item.onEdit}
-          checkboxes={item.checkboxes}
         />
       ))}
     </div>
   );
 };
 
-TourList.propTypes = {
+List.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSelectItem: PropTypes.func.isRequired,
 };
 
-export default TourList;
+export default List;
