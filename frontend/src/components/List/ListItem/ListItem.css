@@ -6,7 +6,7 @@
     height: auto;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid transparent; /* Default to no border */
+    border: 1px solid transparent;
     border-radius: 10px;
     background-color: #FAFAFA;
     cursor: pointer;
@@ -14,7 +14,7 @@
   
   .list-item:hover,
   .list-item:focus {
-    border: 1px solid #7F56D9; /* Show border on hover or focus */
+    border: 1px solid #7F56D9;
   }
   
   .list-item-info {

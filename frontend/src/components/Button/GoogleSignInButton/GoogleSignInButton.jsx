@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import GoogleIconSvg from '../../../assets/google-icon.svg';
 import './GoogleSignInButton.css'; 
 
-const GoogleSignInButton = ({ text= 'Sign in with Google', onClick = () => {} }) => {
+const GoogleSignInButton = ({ text='Sign in with Google', onClick = () => {}}) => {
   return (
     <button className="google-sign-in-button" onClick={onClick}>
       <img src={GoogleIconSvg} alt="Google Icon" className="google-icon" />
@@ -16,6 +16,5 @@ GoogleSignInButton.propTypes = {
   text: PropTypes.string,
   onClick: PropTypes.func,
 };
-
 
 export default GoogleSignInButton;

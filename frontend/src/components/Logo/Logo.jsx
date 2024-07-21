@@ -4,7 +4,6 @@ import './LogoStyles.css';
 
 const Logo = ({ logo }) => {
 
-  
 if (!logo || !logo.src) {
     return null;
   }

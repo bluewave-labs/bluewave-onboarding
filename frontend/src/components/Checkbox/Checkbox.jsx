@@ -13,15 +13,15 @@ import './CheckboxStyles.css';
 // style: to apply inline styles.
 
 const CustomCheckbox = ({
-  label,
-  checked,
-  onChange,
-  variant,
-  className,
-  style,
-  size,
-  indeterminate,
-  childrenCheckboxes,
+  label='',
+  checked=false,
+  onChange=() => {},
+  variant='primary',
+  className='',
+  style={},
+  size='medium',
+  indeterminate =false,
+  childrenCheckboxes=[],
 }) => {
   const [childChecked, setChildChecked] = useState(childrenCheckboxes.map(() => false));
 
@@ -77,24 +77,15 @@ const CustomCheckbox = ({
 };
 
 CustomCheckbox.propTypes = {
-  label: PropTypes.string.isRequired,
-  checked: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
+  label: PropTypes.string,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
   variant: PropTypes.oneOf(['primary', 'secondary']),
   className: PropTypes.string,
   style: PropTypes.object,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   indeterminate: PropTypes.bool,
   childrenCheckboxes: PropTypes.arrayOf(PropTypes.string),
-};
-
-CustomCheckbox.defaultProps = {
-  variant: 'primary',
-  className: '',
-  style: {},
-  size: 'medium',
-  indeterminate: false,
-  childrenCheckboxes: [],
 };
 
 export default CustomCheckbox;
