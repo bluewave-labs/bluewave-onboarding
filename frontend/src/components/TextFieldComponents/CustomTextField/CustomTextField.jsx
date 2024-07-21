@@ -56,22 +56,6 @@ const CustomTextField = ({
   );
 };
 
-CustomTextField.defaultProps = {
-  labelText: "",
-  defaultValue: "",
-  helperText: "",
-  error: false,
-  multiline: false,
-  rows: 1,
-  chips: [],
-  startAdornment: null,
-  endAdornment: null,
-  placeholder: "",
-  labelFontWeight: 600,
-  TextFieldWidth: "100%",
-  inputHeight: "56px",
-};
-
 CustomTextField.propTypes = {
   labelText: PropTypes.string,
   defaultValue: PropTypes.string,

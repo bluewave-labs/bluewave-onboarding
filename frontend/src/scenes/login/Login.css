@@ -154,3 +154,11 @@
   align-items: center;
   justify-content: center;
 }
+
+.error-message{
+  color: #D92D20;
+  font-size: 13px;
+  font-weight: 400;  
+  margin-bottom: 1rem;
+  margin-top: 0.25rem;
+}
