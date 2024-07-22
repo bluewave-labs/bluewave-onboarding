@@ -7,7 +7,7 @@ const ContentArea = ({ children }) => {
 };
 
 ContentArea.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
 
 export default ContentArea;

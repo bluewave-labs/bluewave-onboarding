@@ -31,12 +31,12 @@ const ListItem = ({ title, text, id, onClick, onDelete, onEdit }) => {
 };
 
 ListItem.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   text: PropTypes.string,
   id: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+  onDelete: PropTypes.func,
+  onEdit: PropTypes.func,
 };
 
 export default ListItem;

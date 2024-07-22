@@ -21,8 +21,8 @@ const List = ({ items, onSelectItem }) => {
 };
 
 List.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onSelectItem: PropTypes.func.isRequired,
+  items: PropTypes.arrayOf(PropTypes.object),
+  onSelectItem: PropTypes.func,
 };
 
 export default List;

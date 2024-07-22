@@ -6,7 +6,7 @@ const ContentHeader = ({ title }) => {
 };
 
 ContentHeader.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };
 
 export default ContentHeader;

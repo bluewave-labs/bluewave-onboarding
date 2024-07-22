@@ -6,7 +6,7 @@ const TourDescriptionText = ({ description }) => {
 };
 
 TourDescriptionText.propTypes = {
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
 };
 
 export default TourDescriptionText;

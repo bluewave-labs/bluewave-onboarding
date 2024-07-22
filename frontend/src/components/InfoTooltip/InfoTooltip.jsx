@@ -14,7 +14,7 @@ const InfoTooltip = ({ text, title }) => {
 };
 
 InfoTooltip.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   title: PropTypes.string,
 };
 
