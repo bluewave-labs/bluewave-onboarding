@@ -50,20 +50,6 @@ const ProductPage = ({ items }) => {
         <ContentArea>
           <List items={items || demoItems} onSelectItem={handleSelect} />
           <Button text="Create an item" variant="contained" className="button-primary" onClick={handleCreateItem} />
-          {/* CustomCheckbox component */}
-          <div className="checkbox-section">
-            <CustomCheckbox
-              label="Parent Checkbox"
-              childrenCheckboxes={["Child 1", "Child 2"]}
-            />
-            <CustomCheckbox
-              label="Single Checkbox"
-            />
-            <CustomCheckbox
-              label="Indeterminate Checkbox"
-              indeterminate={true}
-            />
-          </div>
           {/* <TourDescriptionText description="A product onboarding tour is a guided walkthrough or tutorial..." />
           <InfoTooltip text="More info here" title="What is a product tour?" /> */}
           <ConfirmationPopup open={isPopupOpen} onConfirm={handleDelete} onCancel={handleClosePopup} />
