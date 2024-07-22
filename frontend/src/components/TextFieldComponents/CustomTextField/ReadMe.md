@@ -7,7 +7,6 @@ The `CustomTextField` component is a customized version of the Material UI `Text
 - **labelText** (string): A label that describes the content of the text field.
 - **value** (string): The value of the input element.
 - **onChange** (func): Callback function that is called when the value of the input changes.
-- **defaultValue** (string): A default value for when the input is still empty.
 - **helperText** (string): The text that will be displayed as the helper text for the text field.
 - **error** (bool): A boolean value that determines whether the text field should display an error state.
 - **multiline** (bool): A boolean value that determines whether the text field should allow multiple lines of text.

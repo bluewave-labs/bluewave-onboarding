@@ -1,28 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { TextField, Chip, Box, InputLabel } from "@mui/material";
+import { TextField, Box, InputLabel } from "@mui/material";
 import ChipAdornment from "../Chips/ChipAdornment";
 import "./CustomTextFieldStyles.css";
 
 const CustomTextField = ({
-  labelText,
-  value,
-  onChange,
-  defaultValue,
-  helperText,
-  error,
-  multiline,
-  rows,
-  startAdornment,
-  endAdornment,
-  placeholder,
-  chips,
-  labelFontWeight,
-  TextFieldWidth,
-  inputHeight,
+  labelText = "",
+  value = "",
+  onChange = () => {},
+  helperText = "",
+  error = false,
+  multiline = false,
+  rows = 1,
+  startAdornment = null,
+  endAdornment = null,
+  placeholder = "",
+  chips = null,
+  labelFontWeight = 600,
+  TextFieldWidth = "320px",
+  inputHeight = "34px",
 }) => {
   return (
-    <Box paddingY={1}>
+    <Box>
       <InputLabel sx={{ fontWeight: labelFontWeight }}>{labelText}</InputLabel>
       <TextField
         className="textField"
@@ -31,7 +30,6 @@ const CustomTextField = ({
         margin="normal"
         value={value}
         onChange={onChange}
-        defaultValue={defaultValue}
         placeholder={placeholder}
         error={error}
         multiline={multiline}
@@ -64,7 +62,6 @@ CustomTextField.propTypes = {
   labelText: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
-  defaultValue: PropTypes.string,
   helperText: PropTypes.string,
   error: PropTypes.bool,
   multiline: PropTypes.bool,
