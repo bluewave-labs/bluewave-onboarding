@@ -5,6 +5,7 @@ import ContentHeader from '../../components/ContentHeader/ContentHeader';
 import ConfirmationPopup from '../../components/ConfirmationPopup/ConfirmationPopup';
 import Button from '../../components/Button/Button';
 import './ProductTourStyles.css';
+import CustomCheckbox from '../../components/Checkbox/Checkbox';
 
 const ProductPage = ({ items }) => {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -35,8 +36,10 @@ const ProductPage = ({ items }) => {
     {
       title: 'Main dashboard - first login tour',
       timestamp: '10:00 AM',
-      idItem: '1',
-      text: 'This pops up the first time the user logins to the dashboard.'
+      idItem: '184293',
+      text: 'This pops up the first time the user logins to the dashboard.',
+      onDelete: () => { },
+      onEdit: () => { }
     },
   ];
 
@@ -47,6 +50,20 @@ const ProductPage = ({ items }) => {
         <ContentArea>
           <List items={items || demoItems} onSelectItem={handleSelect} />
           <Button text="Create an item" variant="contained" className="button-primary" onClick={handleCreateItem} />
+          {/* CustomCheckbox component */}
+          <div className="checkbox-section">
+            <CustomCheckbox
+              label="Parent Checkbox"
+              childrenCheckboxes={["Child 1", "Child 2"]}
+            />
+            <CustomCheckbox
+              label="Single Checkbox"
+            />
+            <CustomCheckbox
+              label="Indeterminate Checkbox"
+              indeterminate={true}
+            />
+          </div>
           {/* <TourDescriptionText description="A product onboarding tour is a guided walkthrough or tutorial..." />
           <InfoTooltip text="More info here" title="What is a product tour?" /> */}
           <ConfirmationPopup open={isPopupOpen} onConfirm={handleDelete} onCancel={handleClosePopup} />
