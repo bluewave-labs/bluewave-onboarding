@@ -41,9 +41,7 @@ const Dashboard = ({ username }) => {
         </div>
         <CreateActivityButtonList buttons={buttons} />
         <StatisticCardList metrics={metrics} />
-        <div style={{ display: "block", width: "fit-content" }}>
-          
-        </div>
+        
       </div>
       
     </>
