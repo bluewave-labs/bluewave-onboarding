@@ -6,7 +6,9 @@ const Home = () => {
     return (
         <div className="app">
             <div className="content">
+                <HomePageTemplate>
                 <Dashboard username={'Gorkem'} />
+                </HomePageTemplate>
             </div>
         </div>
     );

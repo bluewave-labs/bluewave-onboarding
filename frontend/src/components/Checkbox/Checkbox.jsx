@@ -5,12 +5,15 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import './CheckboxStyles.css';
 
-// label: to specify the text label associated with the checkbox.
-// checked: to determine whether the checkbox is initially checked.
-// onChange: to handle the change event when the checkbox is clicked.
-// variant: to define the checkbox style (e.g., primary, secondary).
-// className: to apply additional CSS classes.
-// style: to apply inline styles.
+const getCheckboxStyles = (variant) => ({
+  color: variant === 'primary' ? 'var(--main-purple)' : '#808080E5',
+  '&.Mui-checked': {
+    color: variant === 'primary' ? 'var(--main-purple)' : '#808080E5',
+  },
+  '&.MuiCheckbox-indeterminate': {
+    color: variant === 'primary' ? 'var(--main-purple)' : '#808080E5',
+  },
+});
 
 const CustomCheckbox = ({
   label = '',
@@ -21,29 +24,37 @@ const CustomCheckbox = ({
   style = {},
   size = 'medium',
   indeterminate = false,
-  childrenCheckboxes = []
+  childrenCheckboxes = [],
 }) => {
   const [childChecked, setChildChecked] = useState(childrenCheckboxes.map(() => false));
   const [isChecked, setIsChecked] = useState(checked);
 
-  const handleParentChange = useCallback((event) => {
-    const newChecked = event.target.checked;
-    setChildChecked(childrenCheckboxes.map(() => newChecked));
-    onChange(event);
-  }, [childrenCheckboxes, onChange]);
+  const handleParentChange = useCallback(
+    (event) => {
+      const newChecked = event.target.checked;
+      setChildChecked(childrenCheckboxes.map(() => newChecked));
+      onChange(event);
+    },
+    [childrenCheckboxes, onChange]
+  );
 
-  const handleChildChange = useCallback((index) => (event) => {
-    const newChecked = [...childChecked];
-    newChecked[index] = event.target.checked;
-    setChildChecked(newChecked);
-    onChange(event);
-  }, [childChecked, onChange]);
+  const handleChildChange = useCallback(
+    (index) => (event) => {
+      const newChecked = [...childChecked];
+      newChecked[index] = event.target.checked;
+      setChildChecked(newChecked);
+      onChange(event);
+    },
+    [childChecked, onChange]
+  );
 
   const handleChange = (event) => {
     setIsChecked(event.target.checked);
   };
 
   const isIndeterminate = childChecked.some((child) => child !== childChecked[0]);
+
+  const sx = getCheckboxStyles(variant);
 
   return (
     <div>
@@ -54,15 +65,7 @@ const CustomCheckbox = ({
             onChange={childrenCheckboxes.length > 0 ? handleParentChange : handleChange}
             indeterminate={indeterminate || isIndeterminate}
             size={size}
-            sx={{
-              color: variant === 'primary' ? 'var(--main-purple)' : '#808080E5',
-              '&.Mui-checked': {
-                color: variant === 'primary' ? 'var(--main-purple)' : '#808080E5',
-              },
-              '&.MuiCheckbox-indeterminate': {
-                color: variant === 'primary' ? 'var(--main-purple)' : '#808080E5',
-              },
-            }}
+            sx={sx}
             className={`checkbox ${variant} ${className}`}
           />
         }
@@ -79,15 +82,7 @@ const CustomCheckbox = ({
                   checked={childChecked[index]}
                   onChange={handleChildChange(index)}
                   size={size}
-                  sx={{
-                    color: variant === 'primary' ? 'var(--main-purple)' : '#808080E5',
-                    '&.Mui-checked': {
-                      color: variant === 'primary' ? 'var(--main-purple)' : '#808080E5',
-                    },
-                    '&.MuiCheckbox-indeterminate': {
-                      color: variant === 'primary' ? 'var(--main-purple)' : '#808080E5',
-                    },
-                  }}
+                  sx={sx}
                 />
               }
               label={childLabel}
