@@ -5,11 +5,13 @@ import "./Home.css"
 const Home = () => {
     return (
         <div className="app">
-            <div className="content">
-                <Dashboard username={'Gorkem'} />
-            </div>
+          <div className="content">
+            <HomePageTemplate>
+              <Dashboard username={"Gorkem"} />
+            </HomePageTemplate>
+          </div>
         </div>
-    );
+      );
 };
 
 export default Home;
