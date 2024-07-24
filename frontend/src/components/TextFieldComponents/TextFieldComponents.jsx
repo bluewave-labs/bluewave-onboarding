@@ -1,93 +1,121 @@
-import React from 'react';
-import { Box, Button, Chip, TextField, InputAdornment } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import React, { useState } from "react";
+import { Box, Button, InputAdornment, Tooltip, Chip } from "@mui/material";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import Divider from "@mui/material/Divider";
+import CustomTextField from "./CustomTextField/CustomTextField";
+import "./TextFieldComponents.css";
 
 const TextFieldComponents = () => {
+  const [values, setValues] = useState({
+    website: "www.untitledui.com",
+    website1: "www.untitledui.com",
+    email: "olivia@untitledui.com",
+    email1: "olivia@untitledui.com",
+    email2: "olivia@untitledui.com",
+    description: "",
+    description1: "Marketing",
+    description2: "",
+  });
+
+  const handleChange = (name) => (e) => {
+    setValues({ ...values, [name]: e.target.value });
+  };
+
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-      <Box sx={{ flex: 1, minWidth: 200 }}>
-        
-        <TextField
-          label = {labelText}
-          fullWidth
-          margin="normal"
-          defaultValue="http://www.untitledui.com"
-          InputProps={{
-            startAdornment: <InputAdornment position="start"></InputAdornment>,
-          }}
+    <Box className="textField-container">
+      <Box className="textField-section-left" sx={{ minWidth: 200 }}>
+        <CustomTextField
+          labelText="Website"
+          value={values.website}
+          onChange={handleChange("website")}
+          startAdornment=<>
+            <InputAdornment position="start">http://</InputAdornment>
+            <Divider sx={{ height: 34, m: 0.5 }} orientation="vertical" />
+          </>
+          helperText="This is a hint text to help user."
+          endAdornment=<Tooltip title="This is a Tooltip" placement="top" arrow>
+            <HelpOutlineIcon />
+          </Tooltip>
+        />
+
+        <CustomTextField
+          labelText="Email"
+          value={values.email}
+          onChange={handleChange("email")}
           helperText="This is a hint text to help user."
         />
-        <TextField
-          label="Email"
-          fullWidth
-          margin="normal"
-          defaultValue="olivia@untitledui.com"
-          helperText="This is a hint text to help user."
-        />
-        <TextField
-          label="Email"
-          fullWidth
-          margin="normal"
-          defaultValue="olivia@untitledui.com"
+
+        <CustomTextField
+          labelText="Email"
+          value={values.email1}
+          onChange={handleChange("email1")}
           error
           helperText="This is an error message."
+          endAdornment=<ErrorOutlineIcon
+            style={{ color: "var(--border-error-solid)" }}
+          />
         />
-        <TextField 
-          label="Email"
-          fullWidth
-          margin="normal"
-          defaultValue="olivia@untitledui.com"
+
+        <CustomTextField
+          labelText="Email"
+          value={values.email2}
+          onChange={handleChange("email2")}
           helperText="This is a hint text to help user."
+          endAdornment=<HelpOutlineIcon />
         />
-        <TextField
-          label="Website"
-          fullWidth
-          margin="normal"
-          defaultValue="www.untitledui.com"
-          InputProps={{
-            startAdornment: <InputAdornment position="start">http://</InputAdornment>,
-            endAdornment: (
-              <InputAdornment position="end">
-                <Button variant="contained" startIcon={<ContentCopyIcon />}>Copy</Button>
-              </InputAdornment>
-            ),
-          }}
+
+        <CustomTextField
+          labelText="Website"
+          labelFontWeight={400}
+          TextFieldWidth="397px"
+          value={values.website1}
+          onChange={handleChange("website1")}
           helperText="This is a hint text to help user."
+          endAdornment=<>
+            <HelpOutlineIcon />
+            <Divider sx={{ height: 34, m: 0.5 }} orientation="vertical" />
+            <Button variant="outline" startIcon={<ContentCopyIcon />}>
+              Copy
+            </Button>
+          </>
         />
       </Box>
-      <Box sx={{ flex: 1, minWidth: 300 }}>
-        <TextField
-          label="Description"
-          fullWidth
-          margin="normal"
+
+      <Box className="textField-section-right" sx={{ minWidth: 300 }}>
+        <CustomTextField
+          labelText="Description"
+          value={values.description}
+          onChange={handleChange("description")}
           placeholder="Enter a description..."
           helperText="This is a hint text to help user."
+          multiline={true}
+          rows={4}
         />
-        
-        <TextField
-          label="Description"
-          fullWidth
-          margin="normal"
-          placeholder= " "
+
+        <CustomTextField
+          labelText="Description"
           helperText="This is a hint text to help user."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Box sx={{ display: 'flex', gap: 1 }}>
-                  <Chip label="Design" onDelete={() => {}} />
-                  <Chip label="Software" onDelete={() => {}} />
-                </Box>
-              </InputAdornment>
-            ),
-          }}
+          multiline={true}
+          value={values.description1}
+          onChange={handleChange("description1")}
+          rows={4}
+          chips={[
+            { label: "Design", onDelete: () => {} },
+            { label: "Software", onDelete: () => {} },
+          ]}
         />
-        <TextField
-          label="Description"
-          fullWidth
-          margin="normal"
+
+        <CustomTextField
+          labelText="Description"
+          value={values.description2}
+          onChange={handleChange("description2")}
           placeholder="Enter a description..."
-          error
           helperText="This is an error message."
+          multiline={true}
+          rows={4}
+          error
         />
       </Box>
     </Box>
