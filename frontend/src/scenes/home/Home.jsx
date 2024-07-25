@@ -1,6 +1,6 @@
-import HomePageTemplate from '../../components/templates/HomePageTemplate';
-import Dashboard from '../dashboard/Dashboard';
-import "./Home.css"
+import HomePageTemplate from "../../components/templates/HomePageTemplate";
+import Dashboard from "../dashboard/Dashboard";
+import "./Home.css";
 
 const Home = () => {
     return (
