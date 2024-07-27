@@ -1,0 +1,35 @@
+language: "en-US"
+early_access: false
+
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    drafts: false
+    comment_on_pr: true
+    short_review: true
+
+chat:
+  auto_reply: true
+
+rules:
+  - name: "Node.js Backend"
+    path: "backend/**/*.js"
+    commands:
+      - "@coderabbitai generate unit testing code for this file"
+      - "@coderabbitai provide a short code recommendation with example"
+
+  - name: "React Frontend"
+    path: "frontend/**/*.jsx"
+    commands:
+      - "@coderabbitai generate unit testing code for this file"
+      - "@coderabbitai provide a short code recommendation with example"
+
+notifications:
+  email: true
+  slack: false
