@@ -23,7 +23,6 @@ function App() {
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
-        <Route path="/tours" element={<ProductTour />} />
       </Routes>    
     </>
   );
