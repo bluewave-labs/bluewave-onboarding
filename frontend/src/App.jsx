@@ -9,7 +9,6 @@ import SetNewPasswordPage from "./scenes/login/SetNewPassword";
 import Private from "./components/Private";
 import { useAuth } from "./services/authProvider";
 import ProgressStepsMain from "./scenes/progressSteps/ProgressStepsMain";
-import ProductTour from "./scenes/productTour/ProductTour";
 
 function App() {
   const { isLoggedIn } = useAuth();
