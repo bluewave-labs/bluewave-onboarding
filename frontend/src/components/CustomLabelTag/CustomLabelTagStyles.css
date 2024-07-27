@@ -1,0 +1,81 @@
+.label {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 4px;
+  }
+  
+  .label-orange {
+    background-color: #fff3e0;
+    color: #ef6c00;
+    border: 1px solid #ef6c00;
+  }
+  
+  .label-gray {
+    background-color: #eceff1;
+    color: #37474f;
+    border: 1px solid #cfd8dc;
+  }
+  
+  .label-purple {
+    background-color: #f3e5f5;
+    color: #8e24aa;
+    border: 1px solid #ce93d8;
+  }
+  
+  .label-green {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #81c784;
+  }
+  
+  .label-seen {
+    background-color: #eceff1;
+    color: #37474f;
+    border: 1px solid #cfd8dc;
+    display: flex;
+    align-items: center;
+  }
+  
+  .label-seen .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #37474f;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+  
+  .label-waiting {
+    background-color: #ffebee;
+    color: #d32f2f;
+    border: 1px solid #ef9a9a;
+    display: flex;
+    align-items: center;
+  }
+  
+  .label-waiting .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #d32f2f;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+  
+  .label-new {
+    background-color: #fff3e0;
+    color: #ff9800;
+    border: 1px solid #ffb74d;
+    display: flex;
+    align-items: center;
+  }
+  
+  .label-new .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ff9800;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+  
