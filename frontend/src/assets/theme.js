@@ -5,15 +5,15 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: 'white',
-          color: '#344054',
+          backgroundColor: "white",
+          color: "#344054",
         },
       },
     },
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          width: '250px',
+          width: "250px",
           flexShrink: 0,
           zIndex: 1200,
         },
@@ -21,9 +21,8 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Inter',
+    fontFamily: "Inter",
   },
-
 });
 
 export default theme;

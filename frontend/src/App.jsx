@@ -6,24 +6,24 @@ import PasswordResetPage from "./scenes/login/PassswordResetPage";
 import ForgotPasswordPage from "./scenes/login/ForgotPasswordPage";
 import CheckYourEmailPage from "./scenes/login/CheckYourEmailPage";
 import SetNewPasswordPage from "./scenes/login/SetNewPassword";
-
-
+import Private from "./components/Private";
+import { useAuth } from "./services/authProvider";
+import ProgressStepsMain from "./scenes/progressSteps/ProgressStepsMain";
 
 
 function App() {
-  // const isAuthenticated = useSelector((state) => state.auth.isLoggedIn); // TODO: redux implementation
-  const isAuthenticated = true;// emulate login
+  const { isLoggedIn } = useAuth();
   return (
     <>
-<Routes>
-        <Route path="/" element={isAuthenticated ? <Home /> : <LoginPage />} />   
-        <Route path="/login" element={<LoginPage />} />
+      <Routes>
+        <Route path="/" element={isLoggedIn ? <Private Component={Home} /> : <LoginPage />} />   
+        {/* <Route path="/home" element={<Private Component={Home} />} /> */}
         <Route path="/signup" element={<CreateAccountPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<PasswordResetPage />} />
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
-        
+        <Route path="/progress-steps" element={<ProgressStepsMain />} />
       </Routes>    
     </>
   );
