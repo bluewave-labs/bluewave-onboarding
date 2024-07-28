@@ -62,6 +62,7 @@ CustomTextField.propTypes = {
   labelText: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  defaultValue: PropTypes.string,
   helperText: PropTypes.string,
   error: PropTypes.bool,
   multiline: PropTypes.bool,
