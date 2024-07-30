@@ -32,38 +32,27 @@
   border: 1px solid #a5d6a7;
 }
 
-.label-seen {
-  border: 1px solid var(--light-border-color);
-}
-
-.label-seen .dot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--main-text-color);
-  border-radius: 50%;
-  margin-right: 4px;
-}
-
-.label-waiting {
-  border: 1px solid var(--light-border-color);
-}
-
-.label-waiting .dot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--border-error-solid);
-  border-radius: 50%;
-  margin-right: 4px;
-}
-
+.label-seen,
+.label-waiting,
 .label-new {
   border: 1px solid var(--light-border-color);
 }
 
-.label-new .dot {
+.dot {
   width: 8px;
   height: 8px;
-  background-color: #ff9800;
   border-radius: 50%;
   margin-right: 4px;
+}
+
+.label-seen .dot {
+  background-color: var(--main-text-color);
+}
+
+.label-waiting .dot {
+  background-color: var(--border-error-solid);
+}
+
+.label-new .dot {
+  background-color: #ff9800;
 }

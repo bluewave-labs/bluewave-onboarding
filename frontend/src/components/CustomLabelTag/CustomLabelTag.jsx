@@ -27,7 +27,7 @@ const CustomLabelTag = ({
 };
 
 CustomLabelTag.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   backgroundColor: validateBackgroundColor,
   textColor: PropTypes.string,
   className: PropTypes.string,

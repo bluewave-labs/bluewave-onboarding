@@ -44,16 +44,6 @@ const Dashboard = ({ username }) => {
         <StatisticCardList metrics={metrics} />
         
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px', margin: '160px' }}>
-        <CustomLabelTag text="Label" backgroundColor="orange" />
-        <CustomLabelTag text="Label" backgroundColor="gray" />
-        <CustomLabelTag text="Label" backgroundColor="purple" />
-        <CustomLabelTag text="Label" backgroundColor="green" />
-        <CustomLabelTag text="Seen" backgroundColor="seen" />
-        <CustomLabelTag text="Waiting" backgroundColor="waiting" />
-        <CustomLabelTag text="New" backgroundColor="new" />
-      </div>
-      
     </>
   );
 };
