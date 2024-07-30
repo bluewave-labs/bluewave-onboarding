@@ -5,6 +5,7 @@ import styles from "./Dashboard.module.scss";
 import StatisticCardList from "../../components/HomePageComponents/StatisticCardsList/StatisticCardsList";
 import CreateActivityButtonList from "../../components/HomePageComponents/CreateActivityButtonList/CreateActivityButtonList";
 import { useNavigate } from "react-router-dom";
+import CustomLabelTag from "../../components/CustomLabelTag/CustomLabelTag";
 
 const Dashboard = ({ username }) => {
   const navigate = useNavigate();
@@ -42,6 +43,15 @@ const Dashboard = ({ username }) => {
         <CreateActivityButtonList buttons={buttons} />
         <StatisticCardList metrics={metrics} />
         
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px', margin: '160px' }}>
+        <CustomLabelTag text="Label" backgroundColor="orange" />
+        <CustomLabelTag text="Label" backgroundColor="gray" />
+        <CustomLabelTag text="Label" backgroundColor="purple" />
+        <CustomLabelTag text="Label" backgroundColor="green" />
+        <CustomLabelTag text="Seen" backgroundColor="seen" />
+        <CustomLabelTag text="Waiting" backgroundColor="waiting" />
+        <CustomLabelTag text="New" backgroundColor="new" />
       </div>
       
     </>

@@ -15,8 +15,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={isLoggedIn ? <Private Component={Home} /> : <LoginPage />} />   
+        {/* <Route path="/" element={isLoggedIn ? <Private Component={Home} /> : <LoginPage />} />    */}
         {/* <Route path="/home" element={<Private Component={Home} />} /> */}
+        <Route path="/" element={<Home />} />
         <Route path="/signup" element={<CreateAccountPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<PasswordResetPage />} />
