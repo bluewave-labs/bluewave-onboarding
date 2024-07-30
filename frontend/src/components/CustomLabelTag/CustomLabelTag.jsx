@@ -17,9 +17,13 @@ const CustomLabelTag = ({
   className = '' 
 }) => {
   const labelClass = `label label-${backgroundColor} ${className}`;
+  
+  const style = {
+    color: textColor,
+  };
 
   return (
-    <span className={labelClass} style={{ color: textColor }}>
+    <span className={labelClass} style={style}>
       {['seen', 'waiting', 'new'].includes(backgroundColor) && <span className="dot"></span>}
       {text}
     </span>
