@@ -4,7 +4,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './DropdownList.css'
 
-const DropdownList = ({actions = []}) => {
+const DropdownList = ({actions = ['Example', 'Second Example']}) => {
+
   return (
     <div className='dropdown'>
     <Select
