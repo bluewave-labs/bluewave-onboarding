@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IconButton } from '@mui/material';
+import { IconButton, useTheme } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CircleIcon from '@mui/icons-material/Circle';
 import './ListItem.css';
 
 const ListItem = ({ title, text, id, onClick, onDelete, onEdit }) => {
+  const theme = useTheme();
+
   return (
     <div className="list-item" onClick={onClick}>
       <div className="list-item-info">
         <div className="list-item-header">
           <div className="list-item-icon-container">
-            <CircleIcon className="list-item-icon" />
-            <div className="list-item-dot"></div>
+            <CircleIcon className="list-item-icon" style={{ fill: theme.palette.primary.main }} />
+            <div className="list-item-dot" style={{ backgroundColor: theme.palette.background.default }}></div>
           </div>
           <h4>{title}</h4>
         </div>
