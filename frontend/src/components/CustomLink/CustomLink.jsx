@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from '@material-ui/core/Link';
+import Link from '@mui/material/Link';
 import './CustomLinkStyles.css';
 
 const CustomLink = ({

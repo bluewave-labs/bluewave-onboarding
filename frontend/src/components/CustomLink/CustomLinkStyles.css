@@ -1,5 +1,5 @@
 .custom-link {
-    color: inherit;
+    color: black !important;
     text-decoration: none;
   }
   
@@ -14,11 +14,15 @@
     left: 0;
     bottom: -2px;
     width: 100%;
-    border-bottom: 1px dashed currentColor;
+    border-bottom: 1px dashed var(--main-purple);
     transition: border-bottom 0.3s ease-in-out;
   }
   
+  .custom-link.tertiary:hover {
+    background-color: #F1F2FF;
+  }
+  
   .custom-link.tertiary:hover::after {
-    border-bottom: 1px solid currentColor;
+    border-bottom: 1px solid var(--main-purple);
   }
   
