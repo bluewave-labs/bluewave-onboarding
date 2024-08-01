@@ -5,7 +5,6 @@ import "./ButtonStyles.css";
 
 const Button = ({ text='', onClick= () => {}, variant="contained", sx=null, disabled=false, buttonType='primary'}) => {
   const classname = 'button ' + buttonType;
-    console.log(classname)
     return (
     <MuiButton
       disableRipple
