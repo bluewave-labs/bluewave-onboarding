@@ -2,7 +2,7 @@ import { React } from 'react';
 import CustomTextField from '../TextFieldComponents/CustomTextField/CustomTextField';
 import CircleIcon from '@mui/icons-material/Circle';
 
-const ColorTextField = ({onChange, value = null}) => {
+const ColorTextField = ({onChange  = () => null, value = null}) => {
     return (
         <>
         <CustomTextField
