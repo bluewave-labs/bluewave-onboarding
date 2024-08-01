@@ -11,20 +11,20 @@
         height: 100%;
         width: 100%;
         background-color: white;
-        box-shadow: 0px 8px 8px -4px #10182808;
-        box-shadow: 0px 20px 24px -4px #10182814;
+        box-shadow: 0px 8px 8px -4px var(--shadow-one);
+        box-shadow: 0px 20px 24px -4px var(--shadow-two);
 
         .header {
             font-size: 20px;
             font-weight: bold;
             padding: 20px;
-            background-color: #F8F9F8;
+            background-color: var(--header-background);
             border-bottom: 1px solid var(--light-border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-    
+
         .content {
             padding: 15px 25px;
         }
@@ -32,19 +32,21 @@
 
 
 
-    .leftRightContent{
+    .leftRightContent {
         display: flex;
     }
+
     .buttons {
         display: flex;
         border-bottom: 1px solid var(--border-secondary, #EAECF0);
         margin-top: 1rem;
     }
-    .optionButtons{
+
+    .optionButtons {
         display: flex;
         justify-content: flex-end;
         margin-top: 2rem;
-        gap:1rem;
+        gap: 1rem;
     }
 
 
