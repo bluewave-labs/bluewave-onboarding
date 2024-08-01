@@ -2,6 +2,7 @@ import { React } from 'react';
 import styles from './BannerLeftApperance.module.scss';
 import CustomTextField from '../../TextFieldComponents/CustomTextField/CustomTextField';
 import CircleIcon from '@mui/icons-material/Circle';
+import ColorTextField from '../../ColorTextField/ColorTextField';
 
 const BannerLeftAppearance = ({ backgroundColor, setBackgroundColor, fontColor, setFontColor }) => {
     const handleFontColor = (event) => {
@@ -24,23 +25,17 @@ const BannerLeftAppearance = ({ backgroundColor, setBackgroundColor, fontColor, 
         <div className={styles.container}>
             <h2>Background Color</h2>
             <div className={styles.color}>
-                <CustomTextField
-                    TextFieldWidth="100%"
+                <ColorTextField
                     value={backgroundColor}
                     onChange={handleBackgroundColor}
-                    placeholder="Enter a background color"
                 />
-                <CircleIcon style={{ fontSize: '24px', color: backgroundColor }} />
             </div>
             <h2>Font Color</h2>
             <div className={styles.color}>
-                <CustomTextField
-                    TextFieldWidth="100%"
+                <ColorTextField
                     value={fontColor}
                     onChange={handleFontColor}
-                    placeholder="Enter a font color"
                 />
-                <CircleIcon style={{ fontSize: '24px', color: fontColor }} />
             </div>
         </div>
     );
