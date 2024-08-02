@@ -3,7 +3,10 @@
   align-items: center;
   cursor: pointer;
 }
-
+.checkbox .MuiCheckbox-root {
+  border: none; 
+  outline: none;
+}
 .checkbox-label {
   font-size: 16px;
 }
