@@ -10,6 +10,11 @@ import Private from "./components/Private";
 import { useAuth } from "./services/authProvider";
 import ProgressStepsMain from "./scenes/progressSteps/ProgressStepsMain";
 import BannerPage from "./scenes/bannerPage/BannerPage";
+import BannerDefaultPage from "./scenes/bannerPage/BannerDefaultPage";
+import LinksDefaultPage from "./scenes/links/LinksDefaultPage";
+import ToursDefaultPage from "./scenes/tours/ToursDefaultPage";
+import PopupDefaultPage from "./scenes/popup/PopupDefaultPage";
+import HintDefaultPage from "./scenes/hints/HintDefaultPage";
 
 function App() {
   // const { isLoggedIn } = useAuth(); //commented out for testing
@@ -27,7 +32,12 @@ function App() {
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
-        <Route path="/banner" element={<BannerPage />} />
+        <Route path="/banner/create" element={<BannerPage />} />
+        <Route path="/banner" element={<BannerDefaultPage />} />
+        <Route path="/popup" element={<PopupDefaultPage />} />
+        <Route path="/link" element={<LinksDefaultPage />} />
+        <Route path="/tour" element={<ToursDefaultPage />} />
+        <Route path="/hint" element={<HintDefaultPage />} />
       </Routes>    
     </>
   );
