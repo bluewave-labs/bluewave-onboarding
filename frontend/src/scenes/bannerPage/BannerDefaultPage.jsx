@@ -2,8 +2,10 @@ import CreateActivityButton from "../../components/CreateActivityButton/CreateAc
 import HomePageTemplate from "../../components/templates/HomePageTemplate"
 import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
 import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
+import { useNavigate } from 'react-router-dom';
 
 const BannerDefaultPage = () => {
+    const navigate = useNavigate();
     const style = {
         "display": "flex",
         "flex-direction": "column",
@@ -17,7 +19,7 @@ const BannerDefaultPage = () => {
         <HomePageTemplate>
             <div style={style}>
                 <ParagraphCSS />
-                <CreateActivityButton type={ACTIVITY_TYPES.BANNERS} />
+                <CreateActivityButton type={ACTIVITY_TYPES.BANNERS}  onClick={() => navigate('/banner/create')}/>
             </div>
 
         </HomePageTemplate>

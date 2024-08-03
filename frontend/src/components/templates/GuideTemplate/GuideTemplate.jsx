@@ -48,9 +48,11 @@ const GuideTemplate = ({ title = '', handleButtonClick = () => null, activeButto
 
 GuideTemplate.propTypes = {
     title: PropTypes.string,
+    handleButtonClick: PropTypes.func,
+    activeButton: PropTypes.number,
     leftContent: PropTypes.func,
-    leftAppereance: PropTypes.func,
     rightContent: PropTypes.func,
+    leftAppearance: PropTypes.func,
 };
 
 export default GuideTemplate;

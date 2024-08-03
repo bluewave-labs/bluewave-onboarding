@@ -19,10 +19,11 @@ const CustomTextField = ({
   labelFontWeight = 600,
   TextFieldWidth = "320px",
   inputHeight = "34px",
+  style
 }) => {
   return (
-    <>
-      <InputLabel sx={{ fontWeight: labelFontWeight }}>{labelText}</InputLabel>
+    <div style={style}>
+      <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
       <TextField
         className="textField"
         sx={{ width: TextFieldWidth }}
@@ -54,7 +55,7 @@ const CustomTextField = ({
           sx: { margin: 0, paddingTop: 1 },
         }}
       />
-    </>
+    </div>
   );
 };
 

@@ -5,14 +5,12 @@ import "./EditorInput.css";
 
 const EditorInput = ({ value, onChange, modules }) => {
   return (
-    <>
-      <ReactQuill
-        className="editor"
-        value={value}
-        onChange={onChange}
-        modules={modules}
-      />
-    </>
+    <ReactQuill
+      className="editor"
+      value={value}
+      onChange={onChange}
+      modules={modules}
+    />
   );
 };
 
