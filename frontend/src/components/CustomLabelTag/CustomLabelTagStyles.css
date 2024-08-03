@@ -21,7 +21,7 @@
 }
 
 .label-purple {
-  background-color: #f3e5f5;
+  background-color: var(--light-purple);
   color: var(--main-purple);
   border: 1px solid #ce93d8;
 }

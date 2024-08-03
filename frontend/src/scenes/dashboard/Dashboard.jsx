@@ -5,7 +5,6 @@ import styles from "./Dashboard.module.scss";
 import StatisticCardList from "../../components/HomePageComponents/StatisticCardsList/StatisticCardsList";
 import CreateActivityButtonList from "../../components/HomePageComponents/CreateActivityButtonList/CreateActivityButtonList";
 import { useNavigate } from "react-router-dom";
-import CustomLabelTag from "../../components/CustomLabelTag/CustomLabelTag";
 
 const Dashboard = ({ username }) => {
   const navigate = useNavigate();
