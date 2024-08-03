@@ -37,7 +37,7 @@ const CreatePopupPage = () => {
     return (
         <div >
             <HomePageTemplate>
-                <GuideTemplate title='New banner'
+                <GuideTemplate title='New Popup'
                     activeButton={activeButton}
                     handleButtonClick={handleButtonClick}
                     rightContent={() =>
