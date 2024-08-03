@@ -14,5 +14,8 @@
 }
 .MuiMenuItem-root.Mui-selected {
     background-color: #F9FAFB !important;
+    border-radius: 8px !important;
 }
-
+.MuiMenuItem-root{
+    margin: 0px 5px !important;
+}
