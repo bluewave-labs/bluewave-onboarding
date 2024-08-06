@@ -8,17 +8,17 @@ import PopupContent from '../../components/PopupPageComponents/PopupContent/Popu
 const CreatePopupPage = () => {
     const [activeButton, setActiveButton] = useState(0);
 
-    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#');
-    const [headerColor, setHeaderColor] = useState('#');
-    const [textColor, setTextColor] = useState('#');
-    const [buttonBackgroundColor, setButtonBackgroundColor] = useState('#');
-    const [buttonTextColor, setButtonTextColor] = useState('#');
+    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#F8F9F8');
+    const [headerColor, setHeaderColor] = useState('#101828');
+    const [textColor, setTextColor] = useState('#344054');
+    const [buttonBackgroundColor, setButtonBackgroundColor] = useState('#7F56D9');
+    const [buttonTextColor, setButtonTextColor] = useState('#FFFFFF');
 
     const [header, setHeader] = useState('');
     const [content, setContent] = useState('');
 
     const [actionButtonUrl, setActionButtonUrl] = useState("https://");
-    const [actionButtonText, setActionButtonText] = useState("");
+    const [actionButtonText, setActionButtonText] = useState("Take me to subscription page");
 
 
     const stateList = [

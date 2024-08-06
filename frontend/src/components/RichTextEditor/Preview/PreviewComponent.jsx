@@ -13,6 +13,7 @@ const PreviewComponent = ({ header,
   textColor,
   buttonBackgroundColor,
   buttonTextColor }) => {
+
   return (
     <>
       <div className="preview-container">
@@ -29,7 +30,7 @@ const PreviewComponent = ({ header,
         <div className="preview-button-container">
           {previewBtnText && (
             <Button 
-              sx={{
+              style={{
                 backgroundColor: buttonBackgroundColor,
                 color: buttonTextColor,
                 margin: '1rem'
