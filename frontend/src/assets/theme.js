@@ -1,6 +1,14 @@
 import { createTheme } from "@mui/material";
 
 const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#7f56d9",
+    },
+    background: {
+      default: "#FFFFFF",
+    },
+  },
   components: {
     MuiAppBar: {
       styleOverrides: {

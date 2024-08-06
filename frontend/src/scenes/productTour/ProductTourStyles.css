@@ -1,0 +1,9 @@
+.product-page-container {
+  padding: 3%;
+}
+
+.product-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
