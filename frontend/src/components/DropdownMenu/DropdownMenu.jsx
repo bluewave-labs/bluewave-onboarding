@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { logout } from '../../services/loginServices';
 
 const DropdownMenu = () => {
-
     const navigate = useNavigate();
+
     const handleLogoutClick = async () => {
         const response = await logout();
         console.log('Logout successful:', response);
@@ -17,30 +17,24 @@ const DropdownMenu = () => {
         navigate('/');
     };
 
+    const menuItems = [
+        { text: 'Profile', icon: <Person2OutlinedIcon /> },
+        { text: 'Settings', icon: <SettingsOutlinedIcon /> },
+        { text: 'Logout', icon: <LogoutOutlinedIcon />, onClick: handleLogoutClick },
+    ];
+
     return (
         <Paper className="dropdown-menu" elevation={3}>
-            <List className='dropdown-list'>
-                <ListItemButton className="dropdown-item">
-                    <ListItemIcon>
-                        <Person2OutlinedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Profile" />
-                </ListItemButton>
-                <ListItemButton className="dropdown-item">
-                    <ListItemIcon>
-                        <SettingsOutlinedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Settings" />
-                </ListItemButton>
-                <ListItemButton className="dropdown-item">
-                    <ListItemIcon>
-                        <LogoutOutlinedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Logout" onClick={handleLogoutClick}/>
-                </ListItemButton>
+            <List className="dropdown-list">
+                {menuItems.map(({ text, icon, onClick }, index) => (
+                    <ListItemButton key={index} className="dropdown-item" onClick={onClick}>
+                        <ListItemIcon>{icon}</ListItemIcon>
+                        <ListItemText primary={text} />
+                    </ListItemButton>
+                ))}
             </List>
         </Paper>
     );
-}
+};
 
 export default DropdownMenu;
