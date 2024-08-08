@@ -14,8 +14,7 @@ jobs:
     strategy:
       matrix:
         node-version: [22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+        
     steps:
     - uses: actions/checkout@v4
 
@@ -27,11 +26,21 @@ jobs:
 
     - name: Install dependencies for backend
       working-directory: ./backend
-      run: npm install
+      run: |
+        if [ -f package-lock.json ]; then
+          npm ci
+        else
+          npm install
+        fi
 
     - name: Install dependencies for frontend
       working-directory: ./frontend
-      run: npm install
+      run: |
+        if [ -f package-lock.json ]; then
+          npm ci
+        else
+          npm install
+        fi
 
     - name: Build backend
       working-directory: ./backend
