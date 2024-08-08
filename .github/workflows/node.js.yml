@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         node-version: [22.x]
-
+        
     steps:
     - uses: actions/checkout@v4
 
@@ -50,6 +50,7 @@ jobs:
       working-directory: ./frontend
       run: npm run build --if-present
 
+    # Uncomment the following lines to run tests
     # - name: Run tests for backend
     #   working-directory: ./backend
     #   run: npm test
