@@ -1,8 +1,8 @@
 @use '../../styles/globals.scss' as *;
 
 .settings {
-    box-shadow: 0px 8px 8px -4px #10182808;
-    box-shadow: 0px 20px 24px -4px #10182814;
+    box-shadow: 0px 8px 8px -4px var(--shadow-one);
+    box-shadow: 0px 20px 24px -4px var(--shadow-two);
     border: 1px solid #D0D5DD;
     max-width: 460px;
 
@@ -47,7 +47,7 @@
       font-size: 20px;
       font-weight: bold;
       padding: 20px;
-      background-color: #F8F9F8;
+      background-color: var(--header-background);
       border-bottom: 1px solid var(--light-border-color);
       display: flex;
       justify-content: space-between;

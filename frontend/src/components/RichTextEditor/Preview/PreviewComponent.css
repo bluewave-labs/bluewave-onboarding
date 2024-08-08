@@ -1,0 +1,18 @@
+.preview-container {
+  padding: 1rem;
+  border: 1px solid var(--light-border-color);
+  border-radius: 6px;
+  margin-top: 1rem;
+  overflow: auto;
+}
+
+.preview-button {
+  background-color: var(--main-purple) !important;
+  text-transform: none !important;
+}
+
+.preview-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5rem;
+}

@@ -1,75 +1,67 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import EditorInput from "./EditorInput/EditorInput";
 import EditorTabs from "./Tabs/EditorTabs";
 import EditorToolbar from "./Toolbar/EditorToolbar";
-import DOMPurify from "dompurify";
 import "react-quill/dist/quill.snow.css";
 import { Box } from "@mui/material";
-import Proptypes from "prop-types";
 import "./RichTextEditor.css";
+import CustomTextField from "../TextFieldComponents/CustomTextField/CustomTextField";
+import PreviewComponent from "./Preview/PreviewComponent";
 
-const RichTextEditor = () => {
+const RichTextEditor = ({ previewBtnText }) => {
   const [mode, setMode] = useState("editor");
   const [content, setContent] = useState("");
+  const [header, setHeader] = useState("");
 
   const modules = {
     toolbar: {
       container: "#toolbar",
     },
+    clipboard: {
+      matchVisual: false,
+    },
   };
-
-  // log the editor content in html format
-  // console.log(content);
-
-  useEffect(() => {
-    const removePlaceholder = () => {
-      const linkInput = document.querySelector("input");
-      if (linkInput) {
-        linkInput.removeAttribute("placeholder");
-      }
-    };
-
-    setTimeout(removePlaceholder, 1000);
-  }, []);
 
   return (
     <Box className="container" sx={{ width: "500px" }}>
-      <Box className="row">
-        <Box
-          sx={{
-            opacity: mode === "editor" ? 1 : 0.5,
-            pointerEvents: mode === "editor" ? "all" : "none",
-          }}
-        >
-          <EditorToolbar mode={mode} />
-        </Box>
-        <Box className="editor-preview-container">
-          <Box>
-            <EditorInput
-              className="editor"
-              mode={mode}
-              value={content}
-              onChange={setContent}
-              modules={modules}
-            />
-          </Box>
-          <Box
-            className="preview"
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
-            style={{
-              opacity: mode === "preview" ? "1" : "0",
-              zIndex: mode === "preview" ? "1" : "-1",
+      {mode === "editor" ? (
+        <>
+          <CustomTextField
+            labelText="Header"
+            labelFontWeight={600}
+            inputHeight="40px"
+            value={header}
+            onChange={(event) => {
+              setHeader(event.target.value);
             }}
           />
-        </Box>
-      </Box>
+          <div className="editor-label">
+            <label>Content</label>
+          </div>
+          <Box className="row">
+            <Box>
+              <EditorToolbar mode={mode} />
+            </Box>
+            <Box className="editor-container">
+              <EditorInput
+                className="editor"
+                value={content}
+                onChange={setContent}
+                modules={modules}
+              />
+            </Box>
+          </Box>
+        </>
+      ) : (
+        <PreviewComponent
+          header={header}
+          content={content}
+          previewBtnText={previewBtnText}
+        />
+      )}
       <EditorTabs className="tabs" mode={mode} setMode={setMode} />
     </Box>
   );
-};
-
-RichTextEditor.propTypes = {
-  width: Proptypes.string,
 };
 
 export default RichTextEditor;
