@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import DateDisplay from "../../components/HomePageComponents/DateDisplay/DateDisplay";
 import UserTitle from "../../components/HomePageComponents/UserTitle/UserTitle";
 import styles from "./Dashboard.module.scss";
@@ -43,7 +43,6 @@ const Dashboard = ({ username }) => {
         <StatisticCardList metrics={metrics} />
         
       </div>
-      
     </>
   );
 };

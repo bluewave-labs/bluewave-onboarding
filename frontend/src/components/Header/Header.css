@@ -8,8 +8,8 @@
     height: 8vh;
     top: 0; 
     left: 0; 
-    box-shadow: 0px 3px 3px -3px #10182808;
-    box-shadow: 0px 4px 24px -4px #10182814;
+    box-shadow: 0px 3px 3px -3px var(--shadow-one);
+    box-shadow: 0px 4px 24px -4px var(--shadow-two);
 
   }
   
