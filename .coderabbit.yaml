@@ -7,8 +7,10 @@ reviews:
   high_level_summary: false
   poem: false
   review_status: false
+
   auto_review:
     enabled: true
     drafts: false
 chat:
   auto_reply: false
+
