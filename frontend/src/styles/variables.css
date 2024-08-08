@@ -2,7 +2,8 @@
     --main-text-color: #344054; 
     --second-text-color: #667085; 
     --third-text-color: #475467;
-    --main-purple: #7f56d9; 
+    --main-purple: #7f56d9;
+    --light-purple: #f3e5f5; 
     --light-gray: #EAECF0;
     --light-border-color: #D0D5DD;
     --border-error-solid: #D92D20;
@@ -14,4 +15,12 @@
     --shadow-one: #10182808;
     --shadow-two: #10182814;
     --header-background: #F8F9F8;
+
+    /* Custom label tag component */
+    --label-orange-bg: #fff3e0;
+    --label-orange-color: #ef6c00;
+    --label-orange-border: #ef6c00;
+    --label-green-bg: #e8f5e9;
+    --label-green-border: #a5d6a7;
+    --label-new-dot: #ff9800;
 }
