@@ -68,6 +68,16 @@ export const resetPassword = async (userData) => {
   }
 };
 
+export const getCurrentUser = async ()=> {
+  try {
+    const response = await apiClient.get('users/current-user');
+    return response.data.user;
+  } catch (error) {
+    console.error('Get user error:', error.response);
+    return {'username': 'John Doe', 'role': 'visitor'}
+  }
+};
+
 export default authClient;
 
 

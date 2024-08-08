@@ -18,7 +18,7 @@ function Header({ user }) {
         <div className="user-info">
             <Avatar src="/vendetta.png" alt="User" size="medium"/>
                 <div className="user-details">
-                    <div className="user-name">{user.name}</div>
+                    <div className="user-name">{user.username}</div>
                     <div className="user-role">{user.role}</div>
                 </div>
                 <button className="dropdown-button" onClick={handleDropdownClick}>
