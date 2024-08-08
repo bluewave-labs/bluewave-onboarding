@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  gap: 20px;
+  color: var(--main-text-color);
+  font-size: 13px;
+}
+
+.row {
+  border: 1px solid var(--light-border-color);
+  padding: 10px;
+  border-radius: 5px;
+  width: "100%";
+}
+
+.editor-label {
+  color: var(--second-text-color);
+  font-weight: 600;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+}

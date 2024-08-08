@@ -6,24 +6,38 @@ import PasswordResetPage from "./scenes/login/PassswordResetPage";
 import ForgotPasswordPage from "./scenes/login/ForgotPasswordPage";
 import CheckYourEmailPage from "./scenes/login/CheckYourEmailPage";
 import SetNewPasswordPage from "./scenes/login/SetNewPassword";
+import Private from "./components/Private";
+import { useAuth } from "./services/authProvider";
 import ProgressStepsMain from "./scenes/progressSteps/ProgressStepsMain";
-
+import BannerPage from "./scenes/bannerPage/BannerPage";
+import BannerDefaultPage from "./scenes/bannerPage/BannerDefaultPage";
+import LinksDefaultPage from "./scenes/links/LinksDefaultPage";
+import ToursDefaultPage from "./scenes/tours/ToursDefaultPage";
+import PopupDefaultPage from "./scenes/popup/PopupDefaultPage";
+import HintDefaultPage from "./scenes/hints/HintDefaultPage";
 
 function App() {
-  // const isAuthenticated = useSelector((state) => state.auth.isLoggedIn); // TODO: redux implementation
-  const isAuthenticated = true;// emulate login
+  // const { isLoggedIn } = useAuth(); //commented out for testing
+  const isLoggedIn = true;
   return (
     <>
-<Routes>
-        <Route path="/" element={isAuthenticated ? <Home /> : <LoginPage />} />   
-        <Route path="/login" element={<LoginPage />} />
+      <Routes>
+
+        {/* <Route path="/" element={isLoggedIn ? <Private Component={Home} /> : <LoginPage />} />           commented out for testing */} 
+        {/* <Route path="/home" element={<Private Component={Home} />} /> */}
+        <Route path="/" element={isLoggedIn ? <Home/> : <LoginPage />} />        
         <Route path="/signup" element={<CreateAccountPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<PasswordResetPage />} />
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
-      
+        <Route path="/banner/create" element={<BannerPage />} />
+        <Route path="/banner" element={<BannerDefaultPage />} />
+        <Route path="/popup" element={<PopupDefaultPage />} />
+        <Route path="/link" element={<LinksDefaultPage />} />
+        <Route path="/tour" element={<ToursDefaultPage />} />
+        <Route path="/hint" element={<HintDefaultPage />} />
       </Routes>    
     </>
   );

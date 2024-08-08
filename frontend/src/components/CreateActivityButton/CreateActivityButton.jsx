@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { activityData, ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
 
 
-const CreateActivityButton = ({ type= ACTIVITY_TYPES.HINTS, onClick }) => {
+const CreateActivityButton = ({ type = ACTIVITY_TYPES.HINTS, onClick }) => {
   
   const { heading, listItem, buttonText } = activityData[type];
 
