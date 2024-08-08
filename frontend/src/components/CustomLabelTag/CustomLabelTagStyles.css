@@ -1,17 +1,18 @@
 .label {
   display: inline-flex;
   align-items: center;
-  padding: 4px 12px;
-  border-radius: 5px;
-  font-size: 14px;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.3125rem;
+  font-size: 0.875rem;
   font-weight: bold;
-  margin: 8px 0;
+  margin: 0.5rem 0;
+  box-sizing: border-box;
 }
 
 .label-orange {
-  background-color: #fff3e0;
-  color: #ef6c00;
-  border: 1px solid #ef6c00;
+  background-color: var(--label-orange-bg);
+  color: var(--label-orange-color);
+  border: 1px solid var(--label-orange-border);
 }
 
 .label-gray {
@@ -23,13 +24,13 @@
 .label-purple {
   background-color: var(--light-purple);
   color: var(--main-purple);
-  border: 1px solid #ce93d8;
+  border: 1px solid var(--main-purple);
 }
 
 .label-green {
-  background-color: #e8f5e9;
+  background-color: var(--label-green-bg);
   color: var(--checkIcon-green);
-  border: 1px solid #a5d6a7;
+  border: 1px solid var(--label-green-border);
 }
 
 .label-seen,
@@ -39,10 +40,10 @@
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 0.5rem;
+  height: 0.5rem;
   border-radius: 50%;
-  margin-right: 4px;
+  margin-right: 0.25rem;
 }
 
 .label-seen .dot {
@@ -54,5 +55,12 @@
 }
 
 .label-new .dot {
-  background-color: #ff9800;
+  background-color: var(--label-new-dot);
+}
+
+@media (max-width: 768px) {
+  .label {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
 }
