@@ -9,9 +9,10 @@
         @include text-style(regular);
         margin-top: 1.5rem;
     }
-    .color{
-        display: flex;
-        align-items: center;
+    h3{
+        @include text-style(regular);
     }
-
+    .radioContent{
+        display: flex;
+    }
 }

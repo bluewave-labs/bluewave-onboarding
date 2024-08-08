@@ -12,6 +12,7 @@ const BannerPage = () => {
     const [activeButton, setActiveButton] = useState(0);
     const [isTopPosition, setIsTopPosition] = useState(true);
     const [bannerText, setBannerText] = useState('');
+    const [url, setUrl] = useState('');
 
     const handleButtonClick = (index) => {
         setActiveButton(index);
@@ -34,6 +35,8 @@ const BannerPage = () => {
                     leftContent={() =>
                         <BannerLeftContent
                             setIsTopPosition={setIsTopPosition}
+                            url={url}
+                            setUrl={setUrl}
                         />}
                     leftAppearance={() => (
                         <BannerLeftAppearance

@@ -1,7 +1,6 @@
 import styles from './BannerPreview.module.scss'
 import { React } from 'react';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import { TextField } from '@mui/material';
 
 const BannerPreview = ({ bannerText = '',
     setBannerText = () => null,
