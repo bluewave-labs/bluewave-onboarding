@@ -1,0 +1,20 @@
+input{
+    accent-color: #7F56D9;
+}
+
+input:active{
+    accent-color: #7F56D9;
+    outline: 5px solid #9E77ED3D;
+    border-radius: 5px;
+}
+.radio-small {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.radio-large {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+}
