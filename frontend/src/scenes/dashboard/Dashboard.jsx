@@ -43,7 +43,6 @@ const Dashboard = ({ username }) => {
         <StatisticCardList metrics={metrics} />
         
       </div>
-      
     </>
   );
 };
