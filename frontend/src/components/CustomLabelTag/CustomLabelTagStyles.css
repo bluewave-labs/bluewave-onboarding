@@ -1,0 +1,66 @@
+.label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.3125rem;
+  font-size: 0.875rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  box-sizing: border-box;
+}
+
+.label-orange {
+  background-color: var(--label-orange-bg);
+  color: var(--label-orange-color);
+  border: 1px solid var(--label-orange-border);
+}
+
+.label-gray {
+  background-color: var(--light-gray);
+  color: var(--main-text-color);
+  border: 1px solid var(--light-border-color);
+}
+
+.label-purple {
+  background-color: var(--light-purple);
+  color: var(--main-purple);
+  border: 1px solid var(--main-purple);
+}
+
+.label-green {
+  background-color: var(--label-green-bg);
+  color: var(--checkIcon-green);
+  border: 1px solid var(--label-green-border);
+}
+
+.label-seen,
+.label-waiting,
+.label-new {
+  border: 1px solid var(--light-border-color);
+}
+
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  margin-right: 0.25rem;
+}
+
+.label-seen .dot {
+  background-color: var(--main-text-color);
+}
+
+.label-waiting .dot {
+  background-color: var(--border-error-solid);
+}
+
+.label-new .dot {
+  background-color: var(--label-new-dot);
+}
+
+@media (max-width: 768px) {
+  .label {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+}

@@ -1,0 +1,100 @@
+
+.button.MuiButton-root{
+  border-radius: 4px;
+  text-transform: none;
+  box-shadow: none;
+}
+
+/* .primary */
+.primary.MuiButton-root {
+  color: white;
+  background-color: var(--main-purple);
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.primary.MuiButton-root:hover {
+  background-color: #6f46c9;
+}
+
+.primary.MuiButton-root:active {
+  outline: 4px solid #e4dcf6;
+  box-shadow: 0px 0px 0px 4px #9E77ED3D;
+  box-shadow: 0px 1px 2px 0px #1018280D;
+}
+
+
+/* .error */
+.error.MuiButton-root {
+  color: white;
+  background-color: var(--border-error-solid);
+  box-shadow: none;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.error.MuiButton-root:hover {
+  background-color: #b32217;
+}
+
+.error.MuiButton-root:active {
+  outline: 4px solid #FCCED7;
+  box-shadow: 0px 0px 0px 4px #FCCED7;
+  box-shadow: 0px 1px 2px 0px #1018280D;
+}
+
+
+/* .disabled-primary */
+.primary.MuiButton-root:disabled {
+  color: grey;
+  background-color: #f3f4f7;
+  border-color: #80808033;
+  font-weight: 600;
+}
+
+/* .secondary-disabled */
+.secondary.MuiButton-root:disabled {
+  color: grey;
+  background-color: white;
+  border-color: #80808033;
+  font-weight: 600;
+}
+
+
+/* .secondary-purple */
+.secondary-purple.MuiButton-root {
+  color: #7F3CD9B2;
+  border-color: var(--main-purple);
+  background-color: white;
+  border: 1px solid var(--light-border-color)
+}
+
+.secondary-purple.MuiButton-root:hover {
+  background-color: #7F3CD919;
+  border-color: var(--main-purple);
+}
+
+.secondary-purple.MuiButton-root:active {
+  outline: 4px solid #D6BBFB;
+  background-color: white;
+  box-shadow: 0px 0px 0px 4px #9E77ED3D;
+  box-shadow: 0px 1px 2px 0px #1018280D;  
+}
+
+/* .secondary-grey */
+.secondary-grey.MuiButton-root {
+  color: #808080E6;
+  border-color: #80808033;
+  background-color: white;
+  border: 1px solid var(--light-border-color)
+}
+
+.secondary-grey.MuiButton-root:hover {
+  background-color: #F9FAFB;
+  box-shadow: none;
+}
+
+.secondary-grey.MuiButton-root:active {
+  outline: 4px solid #80808033;
+  box-shadow: 0px 0px 0px 4px #98A2B324;
+  background-color: white;
+  box-shadow: 0px 1px 2px 0px #1018280D;
+}

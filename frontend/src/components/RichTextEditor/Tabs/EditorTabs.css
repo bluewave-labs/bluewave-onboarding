@@ -1,0 +1,18 @@
+.editor-tabs {
+  border: 1px solid var(--light-border-color);
+  border-radius: 5px;
+  width: fit-content;
+}
+
+.tab[aria-selected="true"] {
+  background-color: var(--main-purple);
+  color: white !important;
+}
+
+.tab{
+  text-transform: none !important;
+  font-size: 13px!important;
+  font-weight: 400!important;
+  line-height: 20px!important;
+  padding: 0 !important;
+}

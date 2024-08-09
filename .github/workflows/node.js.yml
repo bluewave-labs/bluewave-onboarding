@@ -2,64 +2,60 @@ name: Node.js CI
 
 on:
   push:
-    branches: 
-      - "develop"
+    branches: ["develop", "master"]
   pull_request:
-    branches: 
-      - "develop"
+    branches: ["develop", "master"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [22.x]
-        
+
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
-    - name: Install dependencies for backend
-      working-directory: ./backend
-      run: |
-        if [ -f package-lock.json ]; then
-          npm ci
-        else
-          npm install
-        fi
+      - name: Install dependencies for backend
+        working-directory: ./backend
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
-    - name: Install dependencies for frontend
-      working-directory: ./frontend
-      run: |
-        if [ -f package-lock.json ]; then
-          npm ci
-        else
-          npm install
-        fi
+      - name: Install dependencies for frontend
+        working-directory: ./frontend
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
-    - name: Build backend
-      working-directory: ./backend
-      run: npm run build --if-present
+      - name: Build backend
+        working-directory: ./backend
+        run: npm run build --if-present
 
-    - name: Build frontend
-      working-directory: ./frontend
-      run: npm run build --if-present
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build --if-present
 
-    # Uncomment the following lines to run tests
-    # - name: Run tests for backend
-    #   working-directory: ./backend
-    #   run: npm test
+      # Uncomment the following lines to run tests
+      # - name: Run tests for backend
+      #   working-directory: ./backend
+      #   run: npm test
 
-    - name: Run tests for frontend
-      working-directory: ./frontend
-      run: npm test
+      - name: Run tests for frontend
+        working-directory: ./frontend
+        run: npm test
 
-    - name: Run Docker container
-      run: docker-compose up --build -d
+      - name: Run Docker container
+        run: docker-compose up --build -d

@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  color: var(--main-text-color);
+  font-size: 13px;
+  height: auto;
+}
+
+.row {
+  border: 1px solid var(--light-border-color);
+  padding: 10px 0;
+  border-radius: 5px;
+  width: "100%";
+}
+
+.editor-label {
+  color: var(--second-text-color);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}

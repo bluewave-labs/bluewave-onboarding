@@ -1,0 +1,164 @@
+@import url(../../styles/variables.css);
+
+
+.login-container::before {
+  content: '';
+  display: block;
+  background-repeat: no-repeat; 
+  margin-top: 78px;
+  width: 48px; 
+  height: 48px; 
+  margin-left: 50%;
+    transform: translateX(-50%);
+  background-image: url('data:image/svg+xml,<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(%23clip0_263_2239)"><path d="M0 24C0 18.4202 0 15.6303 0.613335 13.3413C2.27774 7.1296 7.1296 2.27774 13.3413 0.613335C15.6303 0 18.4202 0 24 0V0C29.5798 0 32.3697 0 34.6587 0.613335C40.8704 2.27774 45.7223 7.1296 47.3867 13.3413C48 15.6303 48 18.4202 48 24V24C48 29.5798 48 32.3697 47.3867 34.6587C45.7223 40.8704 40.8704 45.7223 34.6587 47.3867C32.3697 48 29.5798 48 24 48V48C18.4202 48 15.6303 48 13.3413 47.3867C7.1296 45.7223 2.27774 40.8704 0.613335 34.6587C0 32.3697 0 29.5798 0 24V24Z" fill="white"/><path d="M0 24C0 18.4202 0 15.6303 0.613335 13.3413C2.27774 7.1296 7.1296 2.27774 13.3413 0.613335C15.6303 0 18.4202 0 24 0V0C29.5798 0 32.3697 0 34.6587 0.613335C40.8704 2.27774 45.7223 7.1296 47.3867 13.3413C48 15.6303 48 18.4202 48 24V24C48 29.5798 48 32.3697 47.3867 34.6587C45.7223 40.8704 40.8704 45.7223 34.6587 47.3867C32.3697 48 29.5798 48 24 48V48C18.4202 48 15.6303 48 13.3413 47.3867C7.1296 45.7223 2.27774 40.8704 0.613335 34.6587C0 32.3697 0 29.5798 0 24V24Z" fill="url(%23paint0_linear_263_2239)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M23.9997 3.0584C12.4339 3.0584 3.05791 12.4343 3.05791 24.0001C3.05791 35.566 12.4339 44.9419 23.9997 44.9419C35.5655 44.9419 44.9414 35.566 44.9414 24.0001C44.9414 12.4343 35.5655 3.0584 23.9997 3.0584ZM2.94141 24.0001C2.94141 12.37 12.3695 2.94189 23.9997 2.94189C35.6298 2.94189 45.0579 12.37 45.0579 24.0001C45.0579 35.6303 35.6298 45.0584 23.9997 45.0584C12.3695 45.0584 2.94141 35.6303 2.94141 24.0001Z" fill="%23D0D5DD"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24 18.117C20.7506 18.117 18.1165 20.7511 18.1165 24.0005C18.1165 27.2499 20.7506 29.884 24 29.884C27.2494 29.884 29.8835 27.2499 29.8835 24.0005C29.8835 20.7511 27.2494 18.117 24 18.117ZM18 24.0005C18 20.6868 20.6863 18.0005 24 18.0005C27.3137 18.0005 30 20.6868 30 24.0005C30 27.3142 27.3137 30.0005 24 30.0005C20.6863 30.0005 18 27.3142 18 24.0005Z" fill="%23D0D5DD"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24.0002 19.9803C21.7803 19.9803 19.9808 21.7798 19.9808 23.9997C19.9808 26.2196 21.7803 28.0191 24.0002 28.0191C26.22 28.0191 28.0196 26.2196 28.0196 23.9997C28.0196 21.7798 26.22 19.9803 24.0002 19.9803ZM19.8643 23.9997C19.8643 21.7155 21.716 19.8638 24.0002 19.8638C26.2844 19.8638 28.1361 21.7155 28.1361 23.9997C28.1361 26.2839 26.2844 28.1356 24.0002 28.1356C21.716 28.1356 19.8643 26.2839 19.8643 23.9997Z" fill="%23D0D5DD"/><path d="M23.9414 0H24.0579V48H23.9414V0Z" fill="%23D0D5DD"/><path d="M48 23.9414L48 24.0579L-5.09259e-09 24.0579L0 23.9414L48 23.9414Z" fill="%23D0D5DD"/><path d="M39.9033 0H40.0198V48H39.9033V0Z" fill="%23D0D5DD"/><path d="M15.9609 0H16.0774V48H15.9609V0Z" fill="%23D0D5DD"/><path d="M31.9229 0H32.0394V48H31.9229V0Z" fill="%23D0D5DD"/><path d="M7.98047 0H8.09697V48H7.98047V0Z" fill="%23D0D5DD"/><path d="M48 39.9023L48 40.0188L-5.09259e-09 40.0188L0 39.9023L48 39.9023Z" fill="%23D0D5DD"/><path d="M48 15.9609L48 16.0774L-5.09259e-09 16.0774L0 15.9609L48 15.9609Z" fill="%23D0D5DD"/><path d="M48 31.9219L48 32.0384L-5.09259e-09 32.0384L0 31.9219L48 31.9219Z" fill="%23D0D5DD"/><path d="M48 7.98047L48 8.09697L-5.09259e-09 8.09697L0 7.98047L48 7.98047Z" fill="%23D0D5DD"/><g filter="url(%23filter0_dd_263_2239)"><circle cx="24" cy="24" r="12" fill="url(%23paint1_linear_263_2239)"/></g><g filter="url(%23filter1_b_263_2239)"><path d="M0 24H48V24C48 29.5798 48 32.3697 47.3867 34.6587C45.7223 40.8704 40.8704 45.7223 34.6587 47.3867C32.3697 48 29.5798 48 24 48V48C18.4202 48 15.6303 48 13.3413 47.3867C7.1296 45.7223 2.27774 40.8704 0.613335 34.6587C0 32.3697 0 29.5798 0 24V24Z" fill="white" fill-opacity="0.2"/></g></g><path d="M24 47.85C18.4105 47.85 15.6452 47.8487 13.3801 47.2418C7.22019 45.5912 2.40876 40.7798 0.758224 34.6199C0.151288 32.3548 0.15 29.5895 0.15 24C0.15 18.4105 0.151288 15.6452 0.758224 13.3801C2.40876 7.22019 7.22019 2.40876 13.3801 0.758224C15.6452 0.151288 18.4105 0.15 24 0.15C29.5895 0.15 32.3548 0.151288 34.6199 0.758224C40.7798 2.40876 45.5912 7.22019 47.2418 13.3801C47.8487 15.6452 47.85 18.4105 47.85 24C47.85 29.5895 47.8487 32.3548 47.2418 34.6199C45.5912 40.7798 40.7798 45.5912 34.6199 47.2418C32.3548 47.8487 29.5895 47.85 24 47.85Z" stroke="%23D0D5DD" stroke-width="0.3"/><defs><filter id="filter0_dd_263_2239" x="7.5" y="9" width="33" height="33" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/><feOffset dy="1.5"/><feGaussianBlur stdDeviation="1.5"/><feColorMatrix type="matrix" values="0 0 0 0 0.0627451 0 0 0 0 0.0941176 0 0 0 0 0.156863 0 0 0 0.06 0"/><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_263_2239"/><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/><feOffset dy="1.5"/><feGaussianBlur stdDeviation="2.25"/><feColorMatrix type="matrix" values="0 0 0 0 0.0627451 0 0 0 0 0.0941176 0 0 0 0 0.156863 0 0 0 0.1 0"/><feBlend mode="normal" in2="effect1_dropShadow_263_2239" result="effect2_dropShadow_263_2239"/><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_263_2239" result="shape"/></filter><filter id="filter1_b_263_2239" x="-7.5" y="16.5" width="63" height="39" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feGaussianBlur in="BackgroundImageFix" stdDeviation="3.75"/><feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_263_2239"/><feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_263_2239" result="shape"/></filter><linearGradient id="paint0_linear_263_2239" x1="24" y1="0" x2="24" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1" stop-color="%23D0D5DD"/></linearGradient><linearGradient id="paint1_linear_263_2239" x1="18" y1="36" x2="30" y2="12" gradientUnits="userSpaceOnUse"><stop stop-color="%2353389E"/><stop offset="1" stop-color="%236941C6"/></linearGradient><clipPath id="clip0_263_2239"><path d="M0 24C0 18.4202 0 15.6303 0.613335 13.3413C2.27774 7.1296 7.1296 2.27774 13.3413 0.613335C15.6303 0 18.4202 0 24 0V0C29.5798 0 32.3697 0 34.6587 0.613335C40.8704 2.27774 45.7223 7.1296 47.3867 13.3413C48 15.6303 48 18.4202 48 24V24C48 29.5798 48 32.3697 47.3867 34.6587C45.7223 40.8704 40.8704 45.7223 34.6587 47.3867C32.3697 48 29.5798 48 24 48V48C18.4202 48 15.6303 48 13.3413 47.3867C7.1296 45.7223 2.27774 40.8704 0.613335 34.6587C0 32.3697 0 29.5798 0 24V24Z" fill="white"/></clipPath></defs></svg>')
+}
+
+.form-group-2{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.login-container {
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Inter', sans-serif; 
+  background-repeat: no-repeat; 
+  background-image: url('data:image/svg+xml,<svg width="768" height="768" viewBox="0 0 768 768" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="mask0_52_53336" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="768" height="768"><rect width="768" height="768" fill="url(%23paint0_radial_52_53336)"/></mask><g mask="url(%23mask0_52_53336)"><g clip-path="url(%23clip0_52_53336)"><g clip-path="url(%23clip1_52_53336)"><line x1="0.5" x2="0.5" y2="768" stroke="%23EAECF0"/><line x1="48.5" x2="48.5" y2="768" stroke="%23EAECF0"/><line x1="96.5" x2="96.5" y2="768" stroke="%23EAECF0"/><line x1="144.5" x2="144.5" y2="768" stroke="%23EAECF0"/><line x1="192.5" x2="192.5" y2="768" stroke="%23EAECF0"/><line x1="240.5" x2="240.5" y2="768" stroke="%23EAECF0"/><line x1="288.5" x2="288.5" y2="768" stroke="%23EAECF0"/><line x1="336.5" x2="336.5" y2="768" stroke="%23EAECF0"/><line x1="384.5" x2="384.5" y2="768" stroke="%23EAECF0"/><line x1="432.5" x2="432.5" y2="768" stroke="%23EAECF0"/><line x1="480.5" x2="480.5" y2="768" stroke="%23EAECF0"/><line x1="528.5" x2="528.5" y2="768" stroke="%23EAECF0"/><line x1="576.5" x2="576.5" y2="768" stroke="%23EAECF0"/><line x1="624.5" x2="624.5" y2="768" stroke="%23EAECF0"/><line x1="672.5" x2="672.5" y2="768" stroke="%23EAECF0"/><line x1="720.5" x2="720.5" y2="768" stroke="%23EAECF0"/></g><rect x="0.5" y="0.5" width="767" height="767" stroke="%23EAECF0"/><g clip-path="url(%23clip2_52_53336)"><line y1="47.5" x2="768" y2="47.5" stroke="%23EAECF0"/><line y1="95.5" x2="768" y2="95.5" stroke="%23EAECF0"/><line y1="143.5" x2="768" y2="143.5" stroke="%23EAECF0"/><line y1="191.5" x2="768" y2="191.5" stroke="%23EAECF0"/><line y1="239.5" x2="768" y2="239.5" stroke="%23EAECF0"/><line y1="287.5" x2="768" y2="287.5" stroke="%23EAECF0"/><line y1="335.5" x2="768" y2="335.5" stroke="%23EAECF0"/><line y1="383.5" x2="768" y2="383.5" stroke="%23EAECF0"/><line y1="431.5" x2="768" y2="431.5" stroke="%23EAECF0"/><line y1="479.5" x2="768" y2="479.5" stroke="%23EAECF0"/><line y1="527.5" x2="768" y2="527.5" stroke="%23EAECF0"/><line y1="575.5" x2="768" y2="575.5" stroke="%23EAECF0"/><line y1="623.5" x2="768" y2="623.5" stroke="%23EAECF0"/><line y1="671.5" x2="768" y2="671.5" stroke="%23EAECF0"/><line y1="719.5" x2="768" y2="719.5" stroke="%23EAECF0"/><line y1="767.5" x2="768" y2="767.5" stroke="%23EAECF0"/></g><rect x="0.5" y="0.5" width="767" height="767" stroke="%23EAECF0"/></g></g><defs><radialGradient id="paint0_radial_52_53336" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(384 384) rotate(90) scale(384 384)"><stop/><stop offset="1" stop-opacity="0"/></radialGradient><clipPath id="clip0_52_53336"><rect width="768" height="768" fill="white"/></clipPath><clipPath id="clip1_52_53336"><rect width="768" height="768" fill="white"/></clipPath><clipPath id="clip2_52_53336"><rect width="768" height="768" fill="white"/></clipPath></defs></svg>');
+  background-position: center -350px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
+  color: var(--main-text-color); 
+  font-weight: 500;
+}
+
+.form-group input[type="email"],
+.form-group input[type="name"],
+.form-group input[type="password"],
+.form-group input[type="surname"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #D0D5DD;
+  border-radius: 8px;
+  font-size: 13px;
+  box-sizing: border-box;
+  color: var(--second-text-color); 
+  ::placeholder {
+    color: var(--second-text-color); 
+  }
+}
+
+.form-group input[type="checkbox"],
+.form-group a {
+  font-size: 13px;
+  color: var(--main-purple); 
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.create-account-button,
+.sign-in-button{
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  background-color: var(--main-purple); 
+}
+
+.sign-up-link {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 450;
+  color: var(--second-text-color);
+}
+
+.sign-up-link a {
+  color: var(--main-purple);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-container h2 {
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 38px;
+}
+
+
+/* For Create an Account Page */
+.password-constraints {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  color: var(--second-text-color);
+  margin-bottom: 7px;
+}
+.password-constraints .MuiSvgIcon-root {
+  color: var(--main-text-color); 
+}
+
+.create-account-button{
+  margin-top: 20px;
+}
+
+.check-div{
+  display: flex;
+  margin-bottom: 0.25rem;
+}
+
+.login-container h3{
+  /* font-size: 16px; */
+  color: var(--second-text-color);
+  text-align: center;
+  /* font-weight: 500; */
+  margin-bottom: 30px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+
+/* Forgot Password CSS */
+
+.back-to-login-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  color: var(--second-text-color);
+  cursor: pointer;
+  font-size: 13px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-message{
+  color: #D92D20;
+  font-size: 13px;
+  font-weight: 400;  
+  margin-bottom: 1rem;
+  margin-top: 0.25rem;
+}

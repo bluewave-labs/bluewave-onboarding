@@ -1,0 +1,32 @@
+@import url(variables.css);
+
+$base-font-size: 16px; // Default browser font-size is 16px
+
+@mixin text-style($type, $font-weight: regular) {
+
+        color: var(--main-text-color);
+        @if $type == header-text {
+            font-size: 16px;
+            line-height: 24px;
+        }
+        @else {
+            @if $type == informative {
+                font-size: 11px;
+                line-height: 11px;
+            }
+            @else{
+                font-size: 13px;
+                line-height: 13px;        
+            }
+    
+        @if $font-weight == semibold {
+            font-weight: 600; 
+        } @else {
+            font-weight: 400; 
+        }
+    }
+}
+
+@function px-to-rem($size) {
+    @return $size / $base-font-size * 1rem;
+}
