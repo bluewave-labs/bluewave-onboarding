@@ -4,128 +4,131 @@ import GoogleSignInButton from '../../components/Button/GoogleSignInButton/Googl
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { signUp } from '../../services/loginServices';
 import { useNavigate } from 'react-router-dom';
-import CustomLink from '../../components/CustomLink/CustomLink';
-
 
 function CreateAccountPage() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isUsernameValid, setIsNameValid] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
-  const [hasSpecialCharacter, setHasSpecialCharacter] = useState(false);
-  const [atLeastEightCharacters, setAtLeastEightCharacters] = useState(false);
+  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [validation, setValidation] = useState({ isUsernameValid: false, isEmailValid: false, isPasswordValid: false });
+  const [passwordChecks, setPasswordChecks] = useState({ hasSpecialCharacter: false, atLeastEightCharacters: false });
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-    setIsNameValid(e.target.value.length > 0);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    switch (name) {
+      case 'username':
+        setValidation((prev) => ({ ...prev, isUsernameValid: value.length > 0 }));
+        break;
+      case 'email':
+        setValidation((prev) => ({ ...prev, isEmailValid: validateEmail(value) }));
+        break;
+      case 'password':
+        const hasSpecialCharacter = /[!@#$%^&*-_]/.test(value);
+        const atLeastEightCharacters = value.length >= 8;
+        setPasswordChecks({ hasSpecialCharacter, atLeastEightCharacters });
+        setValidation((prev) => ({
+          ...prev,
+          isPasswordValid: hasSpecialCharacter && atLeastEightCharacters
+        }));
+        break;
+      default:
+        break;
+    }
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    setIsEmailValid(validateEmail(e.target.value));
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    setHasSpecialCharacter(hasSpecialCharacterCheck(e.target.value));
-    setAtLeastEightCharacters(atLeastEightCharactersCheck(e.target.value));
-    setIsPasswordValid(validatePassword(e.target.value));
-  };
-
-  const hasSpecialCharacterCheck = (password) => {
-    const regex = /[!@#$%^&*-_]/;
-    return regex.test(password);
-  };
-
-  const atLeastEightCharactersCheck = (password) => {
-    return password.length >= 8;
-  };
-
-  const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  const validatePassword = (password) => {
-    return atLeastEightCharactersCheck(password) && hasSpecialCharacterCheck(password);
-  };
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSignUp = async () => {
+    const { isUsernameValid, isEmailValid, isPasswordValid } = validation;
     if (!isUsernameValid || !isEmailValid || !isPasswordValid) {
       alert('Please fill out the form correctly.');
       return;
     }
 
-    const userData = {username, email, password };
+    const userData = { username: formData.username, email: formData.email, password: formData.password };
 
     try {
-      const response = await signUp(userData);
+      const response = await signUp(formData);
       console.log('Sign up successful:', response);
       navigate('/');
-
     } catch (error) {
-      console.error('Sign up failed:', error);
+      if (error.response && error.response.data) {
+        if (error.response.data.error === 'User already exists') {
+          setError('User already exists');
+        } else {
+          setError('An error occurred. Please try again.');
+        }
+      } else {
+        setError('An error occurred. Please check your network connection and try again.');
+      }
     }
   };
 
   return (
     <div className="login-container">
       <h2>Create an account</h2>
-      {/* <h3>Start your 30-day free trial</h3> */}
       <div className="form-group">
-      <div className='check-div'>
-      {isUsernameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
-        <label>Username*:</label>  
+        <div className='check-div'>
+          {validation.isUsernameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
+          <label htmlFor="username">Username*:</label>
         </div>
         <input
+          id="username"
           type="name"
-          value={username}
-          onChange={handleUsernameChange}
+          name="username"
+          value={formData.username}
+          onChange={handleInputChange}
           placeholder="Enter your username"
         />
+        {error && <div className="error-message">{error}</div>}
       </div>
 
       <div className="form-group">
-      <div className='check-div'> 
-      {isEmailValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
-        <label>Email*:</label>     
+        <div className='check-div'>
+          {validation.isEmailValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
+          <label htmlFor="email">Email*:</label>
         </div>
         <input
+          id="email"
           type="email"
-          value={email}
-          onChange={handleEmailChange}
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
           placeholder="Enter your email"
         />
       </div>
+
       <div className="form-group">
-      <div className='check-div'>
-      {isPasswordValid && <CheckCircleIcon style={{ color: 'green' , fontSize: '20px'}} />}
-        <label>Password*:</label>
-        </div>    
+        <div className='check-div'>
+          {validation.isPasswordValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
+          <label htmlFor="password">Password*:</label>
+        </div>
         <input
+          id="password"
           type="password"
-          value={password}
-          onChange={handlePasswordChange}
+          name="password"
+          value={formData.password}
+          onChange={handleInputChange}
           placeholder="Create your password"
         />
-
       </div>
-        <div className="password-constraints">
-          <CheckCircleIcon style={{ color: atLeastEightCharacters ? 'green' : '#D0D5DD', fontSize: '20px' , marginRight:"5px"}} />
-          Must be at least 8 characters
-        </div>
-        <div className="password-constraints">
-          <CheckCircleIcon style={{ color: hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight:"5px" }} />
-          Must contain one special character
-        </div>
+
+      <div className="password-constraints">
+        <CheckCircleIcon style={{ color: passwordChecks.atLeastEightCharacters ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: '5px' }} />
+        Must be at least 8 characters
+      </div>
+      <div className="password-constraints">
+        <CheckCircleIcon style={{ color: passwordChecks.hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: '5px' }} />
+        Must contain one special character
+      </div>
+
       <button className="create-account-button" onClick={handleSignUp}>
         Get started
       </button>
-      <GoogleSignInButton/>
+      <GoogleSignInButton />
       <div className="sign-up-link">
-        Already have an account? <CustomLink text="Log in" url="login" />
+        Already have an account? <a href="/">Log in</a>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { TextField, Box, InputLabel } from "@mui/material";
+import { TextField, InputLabel } from "@mui/material";
 import ChipAdornment from "../Chips/ChipAdornment";
 import "./CustomTextFieldStyles.css";
 
@@ -19,10 +19,11 @@ const CustomTextField = ({
   labelFontWeight = 600,
   TextFieldWidth = "320px",
   inputHeight = "34px",
+  style
 }) => {
   return (
-    <Box>
-      <InputLabel sx={{ fontWeight: labelFontWeight }}>{labelText}</InputLabel>
+    <div style={style}>
+      <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
       <TextField
         className="textField"
         sx={{ width: TextFieldWidth }}
@@ -54,7 +55,7 @@ const CustomTextField = ({
           sx: { margin: 0, paddingTop: 1 },
         }}
       />
-    </Box>
+    </div>
   );
 };
 
