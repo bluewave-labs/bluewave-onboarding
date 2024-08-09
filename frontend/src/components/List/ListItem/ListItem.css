@@ -5,10 +5,10 @@
   width: 758px;
   height: 78px;
   padding: 10px;
-  border: 1px solid #F7C6D9;
+  border: 1px solid var(--grey-border);
   border-radius: 10px;
-  background-color: #FAFAFA;
   cursor: pointer;
+  margin-bottom: 30px;
 }
 
 .list-item:hover,
