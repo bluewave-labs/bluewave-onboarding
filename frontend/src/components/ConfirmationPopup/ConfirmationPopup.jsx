@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 
 const ConfirmationPopup = ({ open, onConfirm, onCancel }) => {
