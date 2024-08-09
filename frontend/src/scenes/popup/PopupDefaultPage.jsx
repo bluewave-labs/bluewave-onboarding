@@ -2,13 +2,14 @@ import CreateActivityButton from "../../components/CreateActivityButton/CreateAc
 import HomePageTemplate from "../../components/templates/HomePageTemplate"
 import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
 import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
+import { useNavigate } from 'react-router-dom';
 
 const PopupDefaultPage = () => {
+    const navigate = useNavigate();
     const style = {
         "display": "flex",
         "flex-direction": "column",
         "width": "100%",
-        "height": "100%",
         "justify-content": "center",
         "align-items": "center",
     }
@@ -16,7 +17,7 @@ const PopupDefaultPage = () => {
         <HomePageTemplate>
             <div style={style}>
                 <ParagraphCSS />
-                <CreateActivityButton type={ACTIVITY_TYPES.POPUPS} />
+                <CreateActivityButton type={ACTIVITY_TYPES.POPUPS} onClick={() => navigate('/popup/create')}/>
             </div>
 
         </HomePageTemplate>

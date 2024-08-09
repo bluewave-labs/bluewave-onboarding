@@ -15,17 +15,18 @@ import LinksDefaultPage from "./scenes/links/LinksDefaultPage";
 import ToursDefaultPage from "./scenes/tours/ToursDefaultPage";
 import PopupDefaultPage from "./scenes/popup/PopupDefaultPage";
 import HintDefaultPage from "./scenes/hints/HintDefaultPage";
+import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 
 function App() {
-  // const { isLoggedIn } = useAuth(); //commented out for testing
-  const isLoggedIn = true;
+  const { isLoggedIn } = useAuth(); //commented out for testing
+  // const isLoggedIn = true;
   return (
     <>
       <Routes>
-
-        {/* <Route path="/" element={isLoggedIn ? <Private Component={Home} /> : <LoginPage />} />           commented out for testing */} 
-        {/* <Route path="/home" element={<Private Component={Home} />} /> */}
+        <Route path="/" element={isLoggedIn ? <Private Component={Home} /> : <LoginPage />} />
+        <Route path="/home" element={<Private Component={Home} />} />
         <Route path="/" element={isLoggedIn ? <Home/> : <LoginPage />} />        
+        <Route path="/login" element={<LoginPage />} />        
         <Route path="/signup" element={<CreateAccountPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<PasswordResetPage />} />
@@ -33,6 +34,7 @@ function App() {
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
         <Route path="/banner/create" element={<BannerPage />} />
+        <Route path="/popup/create" element={<CreatePopupPage />} />
         <Route path="/banner" element={<BannerDefaultPage />} />
         <Route path="/popup" element={<PopupDefaultPage />} />
         <Route path="/link" element={<LinksDefaultPage />} />
