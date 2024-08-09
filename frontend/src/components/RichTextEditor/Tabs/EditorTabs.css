@@ -9,6 +9,10 @@
   color: white !important;
 }
 
-.tab {
+.tab{
   text-transform: none !important;
+  font-size: 13px!important;
+  font-weight: 400!important;
+  line-height: 20px!important;
+  padding: 0 !important;
 }
