@@ -2,9 +2,11 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: 
+      - "develop"
   pull_request:
-    branches: [ "master" ]
+    branches: 
+      - "develop"
 
 jobs:
   build:
@@ -55,9 +57,9 @@ jobs:
     #   working-directory: ./backend
     #   run: npm test
 
-    # - name: Run tests for frontend
-    #   working-directory: ./frontend
-    #   run: npm test
+    - name: Run tests for frontend
+      working-directory: ./frontend
+      run: npm test
 
     - name: Run Docker container
       run: docker-compose up --build -d
