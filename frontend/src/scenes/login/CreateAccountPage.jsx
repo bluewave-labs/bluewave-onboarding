@@ -4,6 +4,7 @@ import GoogleSignInButton from '../../components/Button/GoogleSignInButton/Googl
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { signUp } from '../../services/loginServices';
 import { useNavigate } from 'react-router-dom';
+import CustomLink from '../../components/CustomLink/CustomLink';
 
 
 function CreateAccountPage() {
@@ -124,7 +125,7 @@ function CreateAccountPage() {
       </button>
       <GoogleSignInButton/>
       <div className="sign-up-link">
-        Already have an account? <a href="login">Log in</a>
+        Already have an account? <CustomLink text="Log in" url="login" />
       </div>
     </div>
   );
