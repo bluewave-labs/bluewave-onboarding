@@ -5,7 +5,6 @@ import styles from "./Dashboard.module.scss";
 import StatisticCardList from "../../components/HomePageComponents/StatisticCardsList/StatisticCardsList";
 import CreateActivityButtonList from "../../components/HomePageComponents/CreateActivityButtonList/CreateActivityButtonList";
 import { useNavigate } from "react-router-dom";
-import CustomLink from "../../components/CustomLink/CustomLink";
 
 const Dashboard = ({ username }) => {
   const navigate = useNavigate();
@@ -45,18 +44,6 @@ const Dashboard = ({ username }) => {
         
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px', margin: '160px' }}>
-      <CustomLink
-        text="A tertiary link with dashed lines"
-        url="https://example.com"
-        className="tertiary"
-        underline="none"
-      />
-      <CustomLink
-        text="Hovered tertiary link"
-        url="https://example.com"
-        className="tertiary"
-        underline="none"
-      />
     </div>
     </>
   );
