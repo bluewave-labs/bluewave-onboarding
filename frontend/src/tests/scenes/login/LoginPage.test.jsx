@@ -1,40 +1,55 @@
-import { describe, it, expect } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
-import LoginPage from "../../../scenes/login/LoginPage";
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { BrowserRouter as Router } from 'react-router-dom';
+import LoginPage from '../../../scenes/login/LoginPage';
+import * as loginServices from '../../../services/loginServices';
 
-describe("LoginPage", () => {
-  it("should render the login form with email and password inputs", () => {
-    render(<LoginPage />);
-    const emailInput = screen.getByLabelText(/email:/i);
-    const passwordInput = screen.getByLabelText(/password:/i);
-    expect(emailInput).toBeDefined();
-    expect(passwordInput).toBeDefined();
+vi.mock('../../../services/loginServices');
+
+describe('LoginPage', () => {
+  it('renders the login page', () => {
+    render(
+      <Router>
+        <LoginPage />
+      </Router>
+    );
+
+    expect(screen.getByText('Log in to your account')).not.toBeNull();
+    expect(screen.getByLabelText('Email:')).not.toBeNull();
+    expect(screen.getByLabelText('Password:')).not.toBeNull();
+    expect(screen.getByText("Don't have an account?")).not.toBeNull();
   });
 
-  it("should allow the user to enter an email", () => {
-    render(<LoginPage />);
-    const emailInput = screen.getByLabelText(/email:/i);
-    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
-    expect(emailInput.value).toBe("test@example.com");
+  it('handles login success', async () => {
+    loginServices.login.mockResolvedValueOnce({ data: { success: true } });
+
+    render(
+      <Router>
+        <LoginPage />
+      </Router>
+    );
+
+    fireEvent.change(screen.getByLabelText('Email:'), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByLabelText('Password:'), { target: { value: 'password' } });
+    fireEvent.click(screen.getByText('Sign in'));
+
+    expect(loginServices.login).toHaveBeenCalledWith('test@example.com', 'password');
+    // Add more assertions as needed
   });
 
-  it("should allow the user to enter a password", () => {
-    render(<LoginPage />);
-    const passwordInput = screen.getByLabelText(/password:/i);
-    fireEvent.change(passwordInput, { target: { value: "password" } });
-    expect(passwordInput.value).toBe("password");
-  });
+  it('handles login failure', async () => {
+    loginServices.login.mockRejectedValueOnce({ response: { data: { error: 'Invalid credentials' } } });
 
-  it("should toggle the remember me checkbox", () => {
-    render(<LoginPage />);
-    const rememberMeCheckbox = screen.getByLabelText(/remember for 30 days/i);
-    fireEvent.click(rememberMeCheckbox);
-    expect(rememberMeCheckbox.checked).toBe(true);
-  });
+    render(
+      <Router>
+        <LoginPage />
+      </Router>
+    );
 
-  it("should have a sign-in button", () => {
-    render(<LoginPage />);
-    const signInButton = screen.getByRole("button", { name: "Sign in" });
-    expect(signInButton).toBeDefined();
+    fireEvent.change(screen.getByLabelText('Email:'), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByLabelText('Password:'), { target: { value: 'wrongpassword' } });
+    fireEvent.click(screen.getByText('Sign in'));
+
+    expect(await screen.findByText('Invalid credentials')).not.toBeNull();
   });
 });
