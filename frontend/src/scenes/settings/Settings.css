@@ -1,0 +1,6 @@
+.settings{
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    margin: 30px 30px;
+}
