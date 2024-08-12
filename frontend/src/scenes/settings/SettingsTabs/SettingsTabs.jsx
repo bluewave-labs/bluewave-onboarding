@@ -15,6 +15,7 @@ export default function SettingsTabs() {
   };
 
   return (
+    <div className="settings">
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -29,5 +30,6 @@ export default function SettingsTabs() {
         <TabPanel value="3">Item Three</TabPanel>
       </TabContext>
     </Box>
+    </div>
   );
 }
