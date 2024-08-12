@@ -4,11 +4,8 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import './SettingsTabs.css'
 import ProfileTab from './ProfileTab/ProfileTab';
-
-
-const tabLabel = ['Profile', 'Password', 'Team']
+import './SettingsTabs.css'
 
 export default function SettingsTabs() {
   const [value, setValue] = useState('1');

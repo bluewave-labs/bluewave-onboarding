@@ -3,10 +3,14 @@ import Avatar from "../../../../components/Avatar/Avatar";
 import "./ProfileTab.css";
 
 const ProfileTab = () => {
+
+    const submitHandler = (e) => {
+        e.preventDefault()
+    }
   return (
     <div>
       <div>
-        <form className="form">
+        <form className="form" onSubmit={submitHandler}>
           <div className="first-name-element">
             <label htmlFor="first-name" className="label">
               First Name
