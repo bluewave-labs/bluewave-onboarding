@@ -1,7 +1,6 @@
-import {apiClient} from './apiClient';  // Import the existing apiClient
+import {apiClient} from './apiClient'; 
 import axios from 'axios';
 
-// Create a new instance of apiClient with 'auth' appended to the baseURL
 const authClient = axios.create({
   ...apiClient.defaults,
   baseURL: `${apiClient.defaults.baseURL}auth`,

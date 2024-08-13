@@ -9,7 +9,7 @@ const validatePosition = (value) => {
 };
 
 const validateCloseButtonAction = (value) => {
-  const validActions = ["no-action", "open-url", "open-url-new-tab"];
+  const validActions = ["no action", "open url", "open url in a new tab"];
   return validActions.includes(value);
 };
 
