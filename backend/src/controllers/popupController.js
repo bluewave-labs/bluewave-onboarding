@@ -9,12 +9,7 @@ const validatePopupSize = (value) => {
 };
 
 const validateCloseButtonAction = (value) => {
-  const validActions = [
-    "no-action",
-    "open-url",
-    "close-popup",
-    "open-url-new-tab",
-  ];
+  const validActions = ["no action", "open url", "close the popup", "open url in a new tab"];
   return validActions.includes(value);
 };
 

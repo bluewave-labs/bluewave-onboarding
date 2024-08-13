@@ -4,15 +4,21 @@ import DropdownList from '../../DropdownList/DropdownList';
 import { Radio } from "@mui/material";
 import CustomTextField from '../../TextFieldComponents/CustomTextField/CustomTextField';
 
-const BannerLeftContent = ({ setIsTopPosition, url, setUrl }) => {
+const BannerLeftContent = ({ setIsTopPosition, url, setUrl, setButtonAction }) => {
     const handleSetUrl = (event) => {
         setUrl(event.target.value);
+      };
+      const handleActionChange = (newAction) => {
+        setButtonAction(newAction);
       };
 
     return (
         <div className={styles.container}>
             <h2>Action</h2>
-            <DropdownList actions={['No action', 'Open a URL', 'Open a URL in a new page']} />
+            <DropdownList 
+                actions={['No action', 'Open a URL', 'Open a URL in a new page']} 
+                onActionChange={handleActionChange}
+            />
             <h2>Position</h2>
             <div className={styles.radioContent}>
                 <Radio onClick={() => setIsTopPosition(true)} />

@@ -4,19 +4,43 @@ import BannerLeftContent from '../../components/BannerPageComponents/BannerLeftC
 import BannerLeftAppearance from '../../components/BannerPageComponents/BannerLeftAppearance/BannerLeftApperance';
 import { React, useState } from 'react';
 import BannerPreview from '../../components/BannerPageComponents/BannerPreview/BannerPreview';
+import { addBanner } from '../../services/bannerServices';
+import { useNavigate } from 'react-router-dom';
 
 const BannerPage = () => {
-
-    const [backgroundColor, setBackgroundColor] = useState("#");
-    const [fontColor, setFontColor] = useState("#");
+    const navigate = useNavigate();
+    const [backgroundColor, setBackgroundColor] = useState("#F9F5FF");
+    const [fontColor, setFontColor] = useState("#344054");
     const [activeButton, setActiveButton] = useState(0);
     const [isTopPosition, setIsTopPosition] = useState(true);
     const [bannerText, setBannerText] = useState('');
     const [url, setUrl] = useState('');
+    const [buttonAction, setButtonAction] = useState('No action');
 
     const handleButtonClick = (index) => {
         setActiveButton(index);
     };
+
+    const onSave = async () => {
+        const bannerData = { 
+            backgroundColor:backgroundColor,
+            fontColor:fontColor,
+            url:url,
+            position: isTopPosition ? 'top' : 'bottom',
+            closeButtonAction:buttonAction.toLowerCase()
+        };
+        try {
+          const response = await addBanner(bannerData);
+          console.log('Add banner successful:', response);
+          navigate('/banner');
+        } catch (error) {
+          if (error.response && error.response.data) {
+            console.error('An error occurred:', error.response.data.errors[0].msg);
+          } else {
+            console.log('An error occurred. Please check your network connection and try again.');
+          }
+        }
+    }
 
     return (
         <div >
@@ -24,6 +48,7 @@ const BannerPage = () => {
                 <GuideTemplate title='New banner'
                     activeButton={activeButton}
                     handleButtonClick={handleButtonClick}
+                    onSave={onSave}
                     rightContent={() =>
                         <BannerPreview
                             backgroundColor={backgroundColor}
@@ -37,6 +62,7 @@ const BannerPage = () => {
                             setIsTopPosition={setIsTopPosition}
                             url={url}
                             setUrl={setUrl}
+                            setButtonAction={setButtonAction}
                         />}
                     leftAppearance={() => (
                         <BannerLeftAppearance

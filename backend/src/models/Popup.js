@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isIn: [["no-action", "open-url", "close-popup", "open-url-new-tab"]],
+          isIn: [["no action", "open url", "open url in a new tab"]],
         },
       },
       popupSize: {
