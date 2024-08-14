@@ -1,4 +1,4 @@
-import HomePageTemplate from "../../components/templates/HomePageTemplate";
+import HomePageTemplate from "../../templates/HomePageTemplate";
 import Dashboard from "../dashboard/Dashboard";
 import "./Home.css";
 import React, { useEffect, useState } from 'react';

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import LeftMenu from "../../components/LeftMenu/LeftMenu";
-import Header from "../Header/Header";
+import LeftMenu from "../components/LeftMenu/LeftMenu";
+import Header from "../components/Header/Header";
 import "./HomePageTemplate.css";
-import { getCurrentUser } from '../../services/loginServices';
+import { getCurrentUser } from '../services/loginServices';
 
 const HomePageTemplate = ({ children, user: initialUser }) => {
   const [user, setUser] = useState(initialUser);

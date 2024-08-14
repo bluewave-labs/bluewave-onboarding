@@ -47,8 +47,6 @@ function CreateAccountPage() {
       return;
     }
 
-    const userData = { username: formData.username, email: formData.email, password: formData.password };
-
     try {
       const response = await signUp(formData);
       console.log('Sign up successful:', response);
