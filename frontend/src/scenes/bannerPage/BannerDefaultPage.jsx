@@ -1,5 +1,5 @@
 import CreateActivityButton from "../../components/Button/CreateActivityButton/CreateActivityButton"
-import HomePageTemplate from "../../templates/HomePageTemplate"
+import HomePageTemplate from "../../templates/HomePageTemplate/HomePageTemplate"
 import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
 import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
 import { useNavigate } from 'react-router-dom';

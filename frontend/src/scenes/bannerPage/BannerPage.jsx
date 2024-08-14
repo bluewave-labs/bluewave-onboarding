@@ -1,4 +1,4 @@
-import HomePageTemplate from '../../templates/HomePageTemplate';
+import HomePageTemplate from '../../templates/HomePageTemplate/HomePageTemplate';
 import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
 import BannerLeftContent from '../../components/BannerPageComponents/BannerLeftContent/BannerLeftContent';
 import BannerLeftAppearance from '../../components/BannerPageComponents/BannerLeftAppearance/BannerLeftApperance';

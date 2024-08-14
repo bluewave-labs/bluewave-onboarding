@@ -1,4 +1,4 @@
-import HomePageTemplate from '../../templates/HomePageTemplate';
+import HomePageTemplate from '../../templates/HomePageTemplate/HomePageTemplate';
 import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
 import { React, useState } from 'react';
 import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
