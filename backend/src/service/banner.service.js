@@ -8,6 +8,15 @@ class BannerService {
     });
   }
 
+  async getBanners(userId) {
+    return await Banner.findAll({
+      where: {
+        createdBy: userId
+      },
+      include: [{ model: db.User, as: "creator" }],
+    });
+  }
+
   async createBanner(data) {
     return await Banner.create(data);
   }

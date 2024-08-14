@@ -22,9 +22,6 @@
 
 .tour-info-container {
   flex: 1;
-}
-
-.tour-info-box {
   padding: 16px;
   border-radius: 8px;
   border: 1px solid var(--grey-border);
@@ -38,8 +35,4 @@
 .tour-info-box p {
   margin-bottom: 0;
   color: #6b7280;
-}
-
-.create-tour-button {
-  padding: 8px 16px;
 }

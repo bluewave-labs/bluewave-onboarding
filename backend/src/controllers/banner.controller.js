@@ -161,6 +161,19 @@ class BannerController {
       res.status(statusCode).json(payload);
     }
   }
+  async getBanners(req, res) {
+    try {
+      const userId = req.user.id;
+      const banners = await bannerService.getBanners(userId);
+      res.status(200).json(banners);
+    } catch (err) {
+      const { statusCode, payload } = internalServerError(
+        "GET\_BANNERS_ERROR",
+        err.message,
+      );
+      res.status(statusCode).json(payload);
+    }
+  }
 }
 
 module.exports = new BannerController();
