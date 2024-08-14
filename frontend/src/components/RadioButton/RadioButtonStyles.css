@@ -1,12 +1,18 @@
-input{
-    accent-color: #7F56D9;
+.radio-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }
 
-input:active{
-    accent-color: #7F56D9;
-    outline: 5px solid #9E77ED3D;
+input {
+    accent-color: var(--main-purple);
+}
+
+input:active {
+    outline: 5px solid var(--light-border-color);
     border-radius: 5px;
 }
+
 .radio-small {
     width: 16px;
     height: 16px;
@@ -17,4 +23,17 @@ input:active{
     width: 20px;
     height: 20px;
     border-radius: 6px;
+}
+
+.radio-primary input {
+    accent-color: var(--main-purple);
+}
+
+.radio-secondary input {
+    accent-color: var(--light-gray);
+}
+
+label {
+    color: var(--main-text-color);
+    margin-left: 8px;
 }

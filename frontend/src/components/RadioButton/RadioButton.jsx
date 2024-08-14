@@ -1,7 +1,7 @@
 import React from "react";
-import './RadioButtonStyles.css';
 import PropTypes from "prop-types";
 import { Radio } from "@mui/material";
+import './RadioButtonStyles.css';
 
 const RadioButton = ({
     id,
@@ -10,35 +10,37 @@ const RadioButton = ({
     label,
     onChange,
     buttonSize = 'small',
-    color = 'default',
+    color = 'var(--main-purple)',
+    checked = false,
     enabled = true,
 }) => {
-    const main_purple = 'var(--main-purple)';
-    const sizeClass = buttonSize ==='large' ? 'radio-large' : 'radio-small';
+    const sizeClass = buttonSize === 'large' ? 'radio-large' : 'radio-small';
     return (
-        <div className={`radio-button ${sizeClass}`}>
+        <div className={`radio-button ${sizeClass}`} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Radio                
                 id={id}                
-                name = {name}
+                name={name}
                 value={value}            
                 disabled={!enabled}
                 onChange={onChange}
                 size={buttonSize === 'large' ? 'large' : 'small'}
-                style={{ color: color === 'default' ? main_purple : color }}
+                style={{ color: color }}
+                checked={checked}
             />
-            { label && <label htmlFor={id}>{label}</label> }
-        </div >
+            {label && <label htmlFor={id} style={{ cursor: 'pointer' }}>{label}</label>}
+        </div>
     );
 };
 
 RadioButton.propTypes = {
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    id: PropTypes.string,
+    name: PropTypes.string,
+    value: PropTypes.string,
+    label: PropTypes.string,
     enabled: PropTypes.bool,
-    onchange: PropTypes.func,
+    onChange: PropTypes.func,
     color: PropTypes.string,
+    checked: PropTypes.bool,
 };
 
 export default RadioButton;
