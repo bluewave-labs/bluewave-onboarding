@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './Header.css'; 
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import DropdownMenu from './DropdownMenu/DropdownMenu';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import Avatar from '../Avatar/Avatar'; 
+import Avatar from './Avatar/Avatar'; 
 
 function Header({ user }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);

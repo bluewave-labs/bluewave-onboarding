@@ -1,5 +1,5 @@
-import HomePageTemplate from '../../components/templates/HomePageTemplate';
-import GuideTemplate from '../../components/templates/GuideTemplate/GuideTemplate';
+import HomePageTemplate from '../../templates/HomePageTemplate/HomePageTemplate';
+import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
 import BannerLeftContent from '../../components/BannerPageComponents/BannerLeftContent/BannerLeftContent';
 import BannerLeftAppearance from '../../components/BannerPageComponents/BannerLeftAppearance/BannerLeftApperance';
 import { React, useState } from 'react';

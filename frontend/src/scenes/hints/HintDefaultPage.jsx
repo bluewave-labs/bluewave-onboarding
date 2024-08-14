@@ -1,5 +1,5 @@
-import CreateActivityButton from "../../components/CreateActivityButton/CreateActivityButton"
-import HomePageTemplate from "../../components/templates/HomePageTemplate"
+import CreateActivityButton from "../../components/Button/CreateActivityButton/CreateActivityButton"
+import HomePageTemplate from "../../templates/HomePageTemplate/HomePageTemplate"
 import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
 import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
 
