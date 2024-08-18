@@ -4,6 +4,7 @@ import GoogleSignInButton from '../../components/Button/GoogleSignInButton/Googl
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { signUp } from '../../services/loginServices';
 import { useNavigate } from 'react-router-dom';
+import CustomLink from '../../components/CustomLink/CustomLink';
 
 function CreateAccountPage() {
   const [formData, setFormData] = useState({ username: '', email: '', password: '' });
@@ -45,8 +46,6 @@ function CreateAccountPage() {
       alert('Please fill out the form correctly.');
       return;
     }
-
-    const userData = { username: formData.username, email: formData.email, password: formData.password };
 
     try {
       const response = await signUp(formData);
@@ -128,7 +127,7 @@ function CreateAccountPage() {
       </button>
       <GoogleSignInButton />
       <div className="sign-up-link">
-        Already have an account? <a href="/">Log in</a>
+        Already have an account? <CustomLink text="Log in" url="/" />
       </div>
     </div>
   );

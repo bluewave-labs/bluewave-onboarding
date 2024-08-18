@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Typography } from '@mui/material';
-import Button from '../Button/Button';
+import Button from '../../Button/Button';
 import './TitleStyles.css';
 
 const Title = ({ title, buttonText, onButtonClick, titleStyle, buttonStyle, children }) => {

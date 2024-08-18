@@ -5,7 +5,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../../services/loginServices';
+import { logout } from '../../../services/loginServices';
 
 const DropdownMenu = () => {
     const navigate = useNavigate();
