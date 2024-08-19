@@ -18,14 +18,14 @@ import HintDefaultPage from "./scenes/hints/HintDefaultPage";
 import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 
 function App() {
-  // const { isLoggedIn } = useAuth(); //commented out for testing
-  const isLoggedIn = true;
+  const { isLoggedIn } = useAuth(); //commented out for testing
+  // const isLoggedIn = true;
   return (
     <>
       <Routes>
-        {/* <Route path="/" element={isLoggedIn ? <Private Component={Home} /> : <LoginPage />} /> */}
+        <Route path="/" element={isLoggedIn ? <Private Component={Home} /> : <LoginPage />} />
         {/* <Route path="/home" element={<Private Component={Home} />} /> */}
-        <Route path="/" element={isLoggedIn ? <Home/> : <LoginPage />} />        
+        {/* <Route path="/" element={isLoggedIn ? <Home/> : <LoginPage />} />         */}
         <Route path="/login" element={<LoginPage />} />        
         <Route path="/signup" element={<CreateAccountPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import List from '../../components/List/List';
+import List from '../../components/TourComponents/List/List';
 import ContentArea from '../../components/TourComponents/ContentArea/ContentArea';
 import ContentHeader from '../../components/TourComponents/ContentHeader/ContentHeader';
 import ConfirmationPopup from '../../components/TourComponents/ConfirmationPopup/ConfirmationPopup';

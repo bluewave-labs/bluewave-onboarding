@@ -54,6 +54,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: "#FFFFFF",
       },
+      header: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
+      },
+      content: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
+      },
       createdBy: {
         type: DataTypes.INTEGER,
         allowNull: false,

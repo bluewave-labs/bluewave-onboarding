@@ -10,3 +10,14 @@ export const addBanner = async (bannerData) => {
     throw error;
   }
 };
+
+export const getBanners = async () => {
+  try {
+    const response = await apiClient.get('/banner/banners');
+    console.log(response)
+    return response.data;
+  } catch (error) {
+    console.error('Get Banners error:', error);
+    throw error;
+  }
+};
