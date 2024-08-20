@@ -5,7 +5,7 @@ import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
 import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
 import { useNavigate } from 'react-router-dom';
 import GuideMainPageTemplate from "../../templates/GuideMainPageTemplate/GuideMainPageTemplate";
-import { getPopups } from "../../services/popupServices"; // Assuming you have a service like this
+import { getPopups } from "../../services/popupServices"; 
 import { ACTIVITY_TYPES_INFO } from '../../data/GuideMainPageData';
 
 const PopupDefaultPage = () => {
