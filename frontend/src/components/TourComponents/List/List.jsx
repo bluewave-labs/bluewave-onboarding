@@ -4,7 +4,7 @@ import ListItem from './ListItem/ListItem';
 
 const List = ({ items, onSelectItem }) => {
   return (
-    <div>
+    <>
       {items.map(item => (
         <ListItem
           key={item.idItem}
@@ -16,7 +16,7 @@ const List = ({ items, onSelectItem }) => {
           onEdit={item.onEdit}
         />
       ))}
-    </div>
+    </>
   );
 };
 
