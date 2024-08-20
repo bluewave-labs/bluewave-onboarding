@@ -5,9 +5,9 @@ import ContentHeader from '../../components/TourComponents/ContentHeader/Content
 import ConfirmationPopup from '../../components/TourComponents/ConfirmationPopup/ConfirmationPopup';
 import Button from '../../components/Button/Button';
 import './GuideMainPageTemplate.css';
-import { ACTIVITY_TYPES_INFO, activityInfoData} from '../../data/GuideMainPageData';
+import { ACTIVITY_TYPES_INFO, activityInfoData } from '../../data/GuideMainPageData';
 
-const GuideMainPageTemplate = ({items, handleSelect, handleDelete, isPopupOpen, handleClosePopup, type, onClick }) => {
+const GuideMainPageTemplate = ({ items, handleSelect, handleDelete, isPopupOpen, handleClosePopup, type, onClick }) => {
 
   const { heading, paragraph, buttonText, title } = activityInfoData[type];
 
@@ -15,7 +15,7 @@ const GuideMainPageTemplate = ({items, handleSelect, handleDelete, isPopupOpen, 
     <div className="product-page-container">
       <div className="product-page-header">
         <ContentHeader title={title} />
-        <Button text={buttonText} onClick={onClick}/>
+        <Button text={buttonText} onClick={onClick} />
       </div>
       <div className="product-page">
         <ContentArea className="content-area">
@@ -23,7 +23,7 @@ const GuideMainPageTemplate = ({items, handleSelect, handleDelete, isPopupOpen, 
         </ContentArea>
         <div className="tour-info-container">
           <h4>{heading}</h4>
-          <p>{paragraph}</p>
+          <p dangerouslySetInnerHTML={{ __html: paragraph.replace(/\n/g, '</p><p>') }}></p>
         </div>
       </div>
       <ConfirmationPopup open={isPopupOpen} onConfirm={handleDelete} onCancel={handleClosePopup} />

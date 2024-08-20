@@ -2,8 +2,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 758px;
-  height: 78px;
   padding: 10px;
   border: 1px solid var(--grey-border);
   border-radius: 10px;
