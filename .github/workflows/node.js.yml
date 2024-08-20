@@ -20,7 +20,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          
+      # Cache backend dependencies
+      - name: Cache backend dependencies
+        uses: actions/cache@v3
+        with:
+          path: ./backend/node_modules
+          key: backend-node-modules-${{ matrix.node-version }}-${{ hashFiles('backend/package-lock.json') }}
+          restore-keys: |
+            backend-node-modules-${{ matrix.node-version }}-
+
+      # Cache frontend dependencies
+      - name: Cache frontend dependencies
+        uses: actions/cache@v3
+        with:
+          path: ./frontend/node_modules
+          key: frontend-node-modules-${{ matrix.node-version }}-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: |
+            frontend-node-modules-${{ matrix.node-version }}-
 
       - name: Install dependencies for backend
         working-directory: ./backend
