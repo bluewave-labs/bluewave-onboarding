@@ -33,10 +33,10 @@ function App() {
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
-        <Route path="/banner/create" element={<BannerPage />} />
-        <Route path="/popup/create" element={<CreatePopupPage />} />
-        <Route path="/banner" element={<BannerDefaultPage />} />
-        <Route path="/popup" element={<PopupDefaultPage />} />
+        <Route path="/banner/create" element={<Private Component={BannerPage} />} />
+        <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
+        <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
+        <Route path="/popup" element={<Private Component={PopupDefaultPage }/>} />
         <Route path="/link" element={<LinksDefaultPage />} />
         <Route path="/tour" element={<ToursDefaultPage />} />
         <Route path="/hint" element={<HintDefaultPage />} />
