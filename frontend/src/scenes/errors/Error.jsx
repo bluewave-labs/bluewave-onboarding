@@ -2,10 +2,8 @@ import React from 'react'
 import PropTypes from "prop-types";
 import styles from './Error.module.scss';
 import Button from '../../components/Button/Button';
-import { useNavigate } from 'react-router';
 
-export const ErrorComponent = ({ text, navigateUrl }) => {
-  const navigate = useNavigate()
+export const ErrorComponent = ({ text, errorAction }) => {
   const errorButtonStyle = {
     borderRadius: '8px',
     marginTop: '58px',
@@ -22,7 +20,7 @@ export const ErrorComponent = ({ text, navigateUrl }) => {
        </div>
        <Button 
         style={errorButtonStyle}
-        onClick={() => navigate(navigateUrl)}
+        onClick={errorAction}
         text='Go to the main dashboard' 
       />
     </div>
@@ -31,5 +29,5 @@ export const ErrorComponent = ({ text, navigateUrl }) => {
 
 ErrorComponent.propTypes = {
   text: PropTypes.string,
-  navigateUrl: PropTypes.string
+  errorAction: PropTypes.func,
 }
