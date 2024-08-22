@@ -4,6 +4,7 @@ import CustomTextField from "../../TextFieldComponents/CustomTextField/CustomTex
 import "./HintLeftContent.css";
 
 const HintLeftContent = ({ setLeftContentFormData, formData }) => {
+  
   const handleChange = (name) => (e) => {
     setLeftContentFormData({ ...formData, [name]: e.target.value });
   };

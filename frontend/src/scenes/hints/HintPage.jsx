@@ -1,86 +1,79 @@
-import React, { useState } from "react";
-import HomePageTemplate from "../../components/templates/HomePageTemplate";
-import GuideTemplate from "../../components/templates/GuideTemplate/GuideTemplate";
-import RichTextEditor from "../../components/RichTextEditor/RichTextEditor";
-import HintLeftContent from "../../components/HintPageComponents/HintLeftContent/HintLeftContent";
-import HintLeftAppearance from "../../components/HintPageComponents/HintLeftAppearance/HintLeftAppearance";
+import React from "react";
+import Button from "../../components/Button/Button";
+import List from "../../components/List/List";
+import HomePageTemplate from "../../templates/HomePageTemplate/HomePageTemplate";
+import HintDefaultPage from "./HintDefaultPage";
+import "./HintPage.css";
+import { useNavigate } from "react-router-dom";
+
+const hintsData = [
+  {
+    idItem: 184293,
+    title: "Main dashboard - feature hint",
+    text: "This pops up the first time a user logs in to the dashboard.",
+  },
+  {
+    idItem: 194294,
+    title: "Main dashboard - password hint",
+    text: "This pops up the first time a user logs in to the dashboard.",
+  },
+];
 
 const HintPage = () => {
-  const [activeButton, setActiveButton] = useState(0);
-  const [leftContentFormData, setLeftContentFormData] = useState({
-    actionButtonUrl: "https//",
-    actionButtonText: "",
-    targetElement: ".element",
-  });
-
-  const handleButtonClick = (index) => {
-    setActiveButton(index);
-  };
-
-  const [headerBackgroundColor, setHeaderBackgroundColor] = useState("#F8F9F8");
-  const [headerColor, setHeaderColor] = useState("#101828");
-  const [textColor, setTextColor] = useState("#344054");
-  const [buttonBackgroundColor, setButtonBackgroundColor] = useState("#7F56D9");
-  const [buttonTextColor, setButtonTextColor] = useState("#FFFFFF");
-
-  const stateList = [
-    {
-      stateName: "Header Background Color",
-      state: headerBackgroundColor,
-      setState: setHeaderBackgroundColor,
-    },
-    {
-      stateName: "Header Color",
-      state: headerColor,
-      setState: setHeaderColor,
-    },
-    { stateName: "Text Color", state: textColor, setState: setTextColor },
-    {
-      stateName: "Button Background Color",
-      state: buttonBackgroundColor,
-      setState: setButtonBackgroundColor,
-    },
-    {
-      stateName: "Button Text Color",
-      state: buttonTextColor,
-      setState: setButtonTextColor,
-    },
-  ];
-
-  return (
-    <div>
+  const navigate = useNavigate();
+  if (hintsData.length === 0) {
+    return <HintDefaultPage />;
+  } else {
+    return (
       <HomePageTemplate>
-        <GuideTemplate
-          title="New Hint"
-          activeButton={activeButton}
-          handleButtonClick={handleButtonClick}
-          rightContent={() => (
-            <RichTextEditor
-              previewBtnText={leftContentFormData.actionButtonText}
-              headerBackgroundColor={headerBackgroundColor}
-              headerColor={headerColor}
-              textColor={textColor}
-              buttonBackgroundColor={buttonBackgroundColor}
-              buttonTextColor={buttonTextColor}
-              sx={{
-                width: "100%",
-                maxWidth: "700px",
-                marginLeft: "2.5rem",
-                marginTop: "1rem",
-              }}
-            />
-          )}
-          leftContent={() => (
-            <HintLeftContent
-              formData={leftContentFormData}
-              setLeftContentFormData={setLeftContentFormData}
-            />
-          )}
-          leftAppearance={() => <HintLeftAppearance data={stateList} />}
-        />
+        <div className="hint-page-container">
+          <div className="hint-page-left-section">
+            <div className="hint-page-header">
+              <h2 className="hint-page-title">All Hints</h2>
+            </div>
+            <div className="hint-page-items" style={{ marginTop: "16px" }}>
+              <List items={hintsData} onSelectItem={() => {}} />
+            </div>
+          </div>
+          <div className="hint-page-right-section">
+            <div className="hint-right-content">
+              <div className="hint-button">
+                <Button
+                  style={{ height: "34px", width: "172px" }}
+                  text="Create a new hint"
+                  variant="contained"
+                  onClick={() => navigate("/hint-default")}
+                />
+              </div>
+              <div className="hint-info">
+                <h2 className="hint-info-title">What is a hint?</h2>
+                <div className="hint-info-content">
+                  <p>
+                    Hints are like friendly reminders in an app, giving tips
+                    without stopping what you are doing. They show up at small
+                    bubbles near buttons or menus, guiding you on how to use
+                    things.
+                  </p>
+                  <p>
+                    One good thing about hints is they help you use the app
+                    better by giving tips when you need them. For example, they
+                    can show clear instructions when you're trying something
+                    new, so you don't get stuck or confused.
+                  </p>
+                  <p>
+                    Hints work for everyone, from beginners to experts. They
+                    give basic tips for people just starting out and clever
+                    tricks for those who know the app well. This makes the app
+                    easier for everyone to use.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </HomePageTemplate>
-    </div>
-  );
+    );
+  }
 };
 
 export default HintPage;

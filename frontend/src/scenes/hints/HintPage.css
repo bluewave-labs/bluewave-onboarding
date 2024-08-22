@@ -1,0 +1,37 @@
+.hint-page-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 20px;
+  width: 100%;
+  padding: 2% 3%;
+}
+
+.hint-page-title {
+  margin: 0;
+  height: 34px;
+}
+
+.hint-button,
+.hint-page-right-section {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hint-info-title,
+.hint-page-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--main-purple);
+}
+
+.hint-right-content {
+  width: 292px;
+  height: 510px;
+}
+
+.hint-info {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--grey-border);
+}
