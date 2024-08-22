@@ -28,46 +28,36 @@ const HintPage = () => {
       <HomePageTemplate>
         <div className="hint-page-container">
           <div className="hint-page-left-section">
-            <div className="hint-page-header">
-              <h2 className="hint-page-title">All Hints</h2>
-            </div>
-            <div className="hint-page-items" style={{ marginTop: "16px" }}>
-              <List items={hintsData} onSelectItem={() => {}} />
-            </div>
+            <h2 className="hint-page-title" style={{ marginBottom: "16px" }}>All Hints</h2>
+            <List items={hintsData} onSelectItem={() => { }} />
           </div>
-          <div className="hint-page-right-section">
-            <div className="hint-right-content">
-              <div className="hint-button">
-                <Button
-                  style={{ height: "34px", width: "172px" }}
-                  text="Create a new hint"
-                  variant="contained"
-                  onClick={() => navigate("/hint-default")}
-                />
-              </div>
-              <div className="hint-info">
-                <h2 className="hint-info-title">What is a hint?</h2>
-                <div className="hint-info-content">
-                  <p>
-                    Hints are like friendly reminders in an app, giving tips
-                    without stopping what you are doing. They show up at small
-                    bubbles near buttons or menus, guiding you on how to use
-                    things.
-                  </p>
-                  <p>
-                    One good thing about hints is they help you use the app
-                    better by giving tips when you need them. For example, they
-                    can show clear instructions when you're trying something
-                    new, so you don't get stuck or confused.
-                  </p>
-                  <p>
-                    Hints work for everyone, from beginners to experts. They
-                    give basic tips for people just starting out and clever
-                    tricks for those who know the app well. This makes the app
-                    easier for everyone to use.
-                  </p>
-                </div>
-              </div>
+          <div className="hint-right-content">
+            <Button
+              style={{ height: "34px", width: "172px" }}
+              text="Create a new hint"
+              variant="contained"
+              onClick={() => navigate("/hint-default")}
+            />
+            <div className="hint-info">
+              <h2 className="hint-info-title">What is a hint?</h2>
+              <p>
+                Hints are like friendly reminders in an app, giving tips
+                without stopping what you are doing. They show up at small
+                bubbles near buttons or menus, guiding you on how to use
+                things.
+              </p>
+              <p>
+                One good thing about hints is they help you use the app
+                better by giving tips when you need them. For example, they
+                can show clear instructions when you're trying something
+                new, so you don't get stuck or confused.
+              </p>
+              <p>
+                Hints work for everyone, from beginners to experts. They
+                give basic tips for people just starting out and clever
+                tricks for those who know the app well. This makes the app
+                easier for everyone to use.
+              </p>
             </div>
           </div>
         </div>
