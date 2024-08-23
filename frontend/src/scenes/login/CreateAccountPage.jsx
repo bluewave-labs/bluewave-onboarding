@@ -50,7 +50,7 @@ function CreateAccountPage() {
     try {
       const response = await signUp(formData);
       console.log('Sign up successful:', response);
-      navigate('/');
+      navigate('/home');
     } catch (error) {
       if (error.response && error.response.data) {
         if (error.response.data.error === 'User already exists') {
