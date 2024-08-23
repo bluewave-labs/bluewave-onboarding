@@ -21,3 +21,33 @@ export const getBanners = async () => {
     throw error;
   }
 };
+
+export const getBannerById = async (bannerId) => {
+  try {
+    const response = await apiClient.get(`/banner/get_banner/${bannerId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Get Banner by ID (${bannerId}) error:`, error);
+    throw error;
+  }
+};
+
+export const editBanner = async (bannerId, bannerData) => {
+  try {
+    const response = await apiClient.put(`/banner/edit_banner/${bannerId}`, bannerData);
+    return response.data;
+  } catch (error) {
+    console.error(`Edit Banner error for ID (${bannerId}):`, error);
+    throw error;
+  }
+};
+
+export const deleteBanner = async (bannerId) => {
+  try {
+    const response = await apiClient.delete(`/banner/delete_banner/${bannerId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Delete Banner error for ID (${bannerId}):`, error);
+    throw error;
+  }
+};

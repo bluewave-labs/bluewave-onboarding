@@ -43,6 +43,16 @@ class BannerService {
 
     return updatedBanners[0];
   }
+
+  async getBannerById(bannerId) {
+    try {
+      return await Banner.findOne({
+        where: { id: bannerId },
+      });
+    } catch (error) {
+      throw new Error("Error retrieving banner by ID");
+    }
+  }
 }
 
 module.exports = new BannerService();
