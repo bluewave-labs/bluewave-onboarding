@@ -60,7 +60,7 @@ const PopupDefaultPage = () => {
         title: `Popup ${popups.id}`,
         text: popups.header,
         onDelete: () => console.log(`Delete banner ${popups.id}`), // Placeholder for delete function
-        onEdit: () => console.log(`Edit banner ${popups.id}`),     // Placeholder for edit function
+        onEdit: () => navigate('/popup/create', {state:{isEdit:true, id: popups.id}}), 
       }));
 
 

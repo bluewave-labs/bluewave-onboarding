@@ -20,3 +20,23 @@ export const getPopups= async () => {
     throw error;
   }
 };
+
+export const getPopupById = async (popupId) => {
+  try {
+    const response = await apiClient.get(`/popup/get_popup/${popupId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Get Popup by ID (${popupId}) error:`, error);
+    throw error;
+  }
+};
+
+export const editPopup = async (popupId, popupData) => {
+  try {
+    const response = await apiClient.put(`/popup/edit_popup/${popupId}`, popupData);
+    return response.data;
+  } catch (error) {
+    console.error(`Edit Popup error for ID (${popupId}):`, error);
+    throw error;
+  }
+};
