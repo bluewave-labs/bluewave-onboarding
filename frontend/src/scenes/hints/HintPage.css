@@ -11,12 +11,6 @@
   height: 34px;
 }
 
-.hint-button,
-.hint-page-right-section {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .hint-info-title,
 .hint-page-title {
   font-weight: 600;
@@ -27,6 +21,9 @@
 .hint-right-content {
   width: 292px;
   height: 510px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
 }
 
 .hint-info {
