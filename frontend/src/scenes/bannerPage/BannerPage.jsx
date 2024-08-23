@@ -27,7 +27,8 @@ const BannerPage = () => {
             fontColor:fontColor,
             url:url,
             position: isTopPosition ? 'top' : 'bottom',
-            closeButtonAction:buttonAction.toLowerCase()
+            closeButtonAction:buttonAction.toLowerCase(),
+            bannerText: bannerText
         };
         try {
           const response = await addBanner(bannerData);

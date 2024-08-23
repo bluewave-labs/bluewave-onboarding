@@ -37,7 +37,7 @@ const ListItem = ({ title, text, id, onClick, onDelete, onEdit }) => {
 ListItem.propTypes = {
   title: PropTypes.string,
   text: PropTypes.string,
-  id: PropTypes.string,
+  id: PropTypes.number,
   onClick: PropTypes.func,
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,

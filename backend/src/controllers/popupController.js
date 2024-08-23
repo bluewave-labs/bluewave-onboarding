@@ -184,6 +184,20 @@ class PopupController {
       res.status(statusCode).json(payload);
     }
   }
+
+  async getPopups(req, res) {
+    try {
+      const userId = req.user.id;
+      const popups = await popupService.getPopups(userId);
+      res.status(200).json(popups);
+    } catch (err) {
+      const { statusCode, payload } = internalServerError(
+        "GET_POPUPS_ERROR",
+        err.message,
+      );
+      res.status(statusCode).json(payload);
+    }
+  }
 }
 
 module.exports = new PopupController();
