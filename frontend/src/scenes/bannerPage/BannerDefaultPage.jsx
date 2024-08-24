@@ -7,30 +7,28 @@ import { useNavigate } from 'react-router-dom';
 import GuideMainPageTemplate from "../../templates/GuideMainPageTemplate/GuideMainPageTemplate";
 import { getBanners } from "../../services/bannerServices";
 import { ACTIVITY_TYPES_INFO } from '../../data/GuideMainPageData';
+import { deleteBanner } from '../../services/bannerServices';
 
 const BannerDefaultPage = () => {
     const navigate = useNavigate();
     const [banners, setBanners] = useState([]);
-    const [selectedItem, setSelectedItem] = useState(null);
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const [bannerToDelete, setBannerToDelete] = useState();
+    const [bannerDeleted, setBannerDeleted] = useState(false);
 
-    const handleSelect = (idItem) => {
-        setSelectedItem(idItem);
-    };
-
-    const handleDelete = () => {
+    const handleDelete = async () => {
+        await deleteBanner(bannerToDelete)
         setPopupOpen(false);
+        setBannerDeleted(prevState => !prevState);
     };
 
-    const handleOpenPopup = () => {
+    const handleOpenPopup = (id) => {
+        setBannerToDelete(id)
         setPopupOpen(true);
     };
 
     const handleClosePopup = () => {
         setPopupOpen(false);
-    };
-
-    const handleCreateItem = () => {
     };
 
     const navigateToCreate = () => {navigate('/banner/create')}
@@ -46,7 +44,7 @@ const BannerDefaultPage = () => {
         };
 
         fetchBanners();
-    }, []);
+    }, [bannerDeleted]);
 
     const style = {
         display: "flex",
@@ -60,8 +58,8 @@ const BannerDefaultPage = () => {
         idItem: banners.id,
         title: `Banner ${banners.id}`,
         text: banners.bannerText,
-        onDelete: () => console.log(`Delete banner ${banners.id}`), // Placeholder for delete function
-        onEdit: () => console.log(`Edit banner ${banners.id}`),     // Placeholder for edit function
+        onDelete: () => handleOpenPopup(banners.id), 
+        onEdit: () => navigate('/banner/create', {state:{isEdit:true, id: banners.id}}),
       }));
 
     return (
@@ -73,7 +71,6 @@ const BannerDefaultPage = () => {
                 </div>
             ) : (
                 <GuideMainPageTemplate items={items}
-                    handleSelect={handleSelect}
                     handleDelete={handleDelete}
                     isPopupOpen={isPopupOpen}
                     handleClosePopup={handleClosePopup} 
