@@ -198,6 +198,34 @@ class PopupController {
       res.status(statusCode).json(payload);
     }
   }
+
+  async getPopupById(req, res) {
+    try {
+      const { id } = req.params;
+
+      if (isNaN(id) || id.trim() === "") {
+        return res.status(400).json({ errors: [{ msg: "Invalid popup ID" }] });
+      }
+
+      const popup = await popupService.getPopupById(id);
+
+      if (!popup) {
+        return res
+          .status(404)
+          .json({ errors: [{ msg: "Popup not found" }] });
+      }
+
+      res.status(200).json(popup);
+    } catch (err) {
+      const { statusCode, payload } = internalServerError(
+        "GET_POPUP_BY_ID_ERROR",
+        err.message,
+      );
+      res.status(statusCode).json(payload);
+    }
+  }
+
+  
 }
 
 module.exports = new PopupController();

@@ -43,6 +43,17 @@ class PopupService {
 
     return updatedPopups[0];
   }
+
+  async getPopupById(popupId) {
+    try {
+      return await Popup.findOne({
+        where: { id: popupId },
+        include: [{ model: db.User, as: "creator" }],
+      });
+    } catch (error) {
+      throw new Error("Error retrieving popup by ID");
+    }
+  }
 }
 
 module.exports = new PopupService();
