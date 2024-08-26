@@ -40,8 +40,6 @@ services:
       - NODE_ENV=production
     command: >
       bash -c "npm run build && npm run preview"
-    networks:
-      - bluewave-onboarding
 
 volumes:
   pgdata:
