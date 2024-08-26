@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../../components/Button/Button";
-import List from "../../components/List/List";
+import List from "../../components/TourComponents/List/List";
 import HomePageTemplate from "../../templates/HomePageTemplate/HomePageTemplate";
 import HintDefaultPage from "./HintDefaultPage";
 import "./HintPage.css";
