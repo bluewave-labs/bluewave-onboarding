@@ -1,62 +1,86 @@
-import { describe, it, expect } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
-import CustomTextField from "../../../components/TextFieldComponents/CustomTextField";
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import CustomTextField from '../../../components/TextFieldComponents/CustomTextField/CustomTextField';
 
-describe("CustomTextField", () => {
-  it("should render the text field with the provided label", () => {
-    render(<CustomTextField label="Test Label" />);
-    const textField = screen.getByLabelText(/test label/i);
-    expect(textField).toBeDefined();
+describe('CustomTextField', () => {
+  it('renders the CustomTextField with default props', () => {
+    render(<CustomTextField labelText="Test Label" />);
+
+    expect(screen.getByText('Test Label')).not.toBeNull();
+    expect(screen.getByRole('textbox')).not.toBeNull();
   });
 
-  it("should render the helper text when provided", () => {
-    render(<CustomTextField label="Test Label" helperText="Help text" />);
-    const helperText = screen.getByText(/help text/i);
-    expect(helperText).toBeDefined();
+  it('displays the correct value', () => {
+    render(<CustomTextField labelText="Test Label" value="Test Value" />);
+
+    expect(screen.getByDisplayValue('Test Value')).not.toBeNull();
   });
 
-  it("should show an error message when error prop is true", () => {
+  it('calls onChange when the input value changes', () => {
+    const handleChange = vi.fn();
+    render(<CustomTextField labelText="Test Label" onChange={handleChange} />);
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'New Value' } });
+    expect(handleChange).toHaveBeenCalledWith(expect.any(Object));
+  });
+
+  it('displays helper text when provided', () => {
+    render(<CustomTextField labelText="Test Label" helperText="Helper Text" />);
+
+    expect(screen.getByText('Helper Text')).not.toBeNull();
+  });
+
+  it('renders with multiline and rows props', () => {
+    render(<CustomTextField labelText="Test Label" multiline={true} rows={4} />);
+
+    expect(screen.getByRole('textbox').getAttribute('rows')).toBe('4');
+  });
+
+  it('renders with startAdornment and endAdornment', () => {
     render(
       <CustomTextField
-        label="Test Label"
-        error
-        helperText="This is an error message"
+        labelText="Test Label"
+        startAdornment={<div>Start</div>}
+        endAdornment={<div>End</div>}
       />
     );
-    const errorMessage = screen.getByText(/This is an error message/i);
-    expect(errorMessage).toBeDefined();
-    const styles = getComputedStyle(errorMessage);
-    expect(styles.color).toBe("rgb(211, 47, 47)");
+
+    expect(screen.getByText('Start')).not.toBeNull();
+    expect(screen.getByText('End')).not.toBeNull();
   });
 
-  it("should render start adornment when provided", () => {
-    render(<CustomTextField label="Test Label" startAdornment="http://" />);
-    const startAdornment = screen.getByText(/http:\/\//i);
-    expect(startAdornment).toBeDefined();
+  it('renders with chips', () => {
+    const chips = [{ label: 'Chip 1' }, { label: 'Chip 2' }];
+    render(<CustomTextField labelText="Test Label" chips={chips} />);
+
+    expect(screen.getByText('Chip 1')).not.toBeNull();
+    expect(screen.getByText('Chip 2')).not.toBeNull();
   });
 
-  it("should render end adornment when provided", () => {
-    render(
-      <CustomTextField
-        label="Test Label"
-        endAdornment={<button>Copy</button>}
-      />
-    );
-    const endAdornment = screen.getByText(/copy/i);
-    expect(endAdornment).toBeDefined();
+  // Additional tests
+  it('renders with a placeholder', () => {
+    render(<CustomTextField labelText="Test Label" placeholder="Enter text here" />);
+
+    expect(screen.getByPlaceholderText('Enter text here')).not.toBeNull();
   });
 
-  it("should render chips when provided", () => {
-    const chips = [{ label: "Design", onDelete: () => {} }];
-    render(<CustomTextField label="Test Label" chips={chips} />);
-    const chip = screen.getByText(/design/i);
-    expect(chip).toBeDefined();
+  it('renders with custom input height', () => {
+    render(<CustomTextField labelText="Test Label" inputHeight="50px" />);
+
+    expect(screen.getByRole('textbox').style.height).toBe('50px');
   });
 
-  it("should allow the user to enter text", () => {
-    render(<CustomTextField label="Test Label" />);
-    const textField = screen.getByLabelText(/test label/i);
-    fireEvent.change(textField, { target: { value: "User input" } });
-    expect(textField.value).toBe("User input");
+  it('renders with custom label font weight', () => {
+    render(<CustomTextField labelText="Test Label" labelFontWeight={700} />);
+
+    const label = screen.getByText('Test Label');
+    expect(window.getComputedStyle(label).fontWeight).toBe('700');
+  });
+
+  it('renders with no chips when chips prop is empty', () => {
+    render(<CustomTextField labelText="Test Label" chips={[]} />);
+
+    expect(screen.queryByText('Chip 1')).toBeNull();
+    expect(screen.queryByText('Chip 2')).toBeNull();
   });
 });

@@ -1,52 +1,74 @@
-const commonOutlinedProps = {
-    type: 'outline',
-    size: 'medium'
+import CheckIcon from './CheckIcon';
+
+//Storybook display settings
+export default {
+    title: 'Visuals/CheckIcon',
+    component: CheckIcon,
+    argTypes: {
+        type: {
+            options: ['outline', 'solid'],
+            control: { type: 'radio' }
+        },
+        size: {
+            options: ['small', 'medium', 'large'],
+            control: { type: 'radio' }
+        },
+        color: {
+            options: ['purple', 'black', 'green'],
+            control: { type: 'radio' }
+        }
+    },
+    parameters: {
+        layout: "centered"
+    },
+    tags: ["autodocs"]
 };
 
-const commonSolidProps = {
-    type: 'solid',
-    size: 'medium'
-}
-
-
+//Stories for each Check circle type
 export const PurpleOutline = {
     args: {
-        ...commonOutlinedProps,
+        type: 'outline',
+        size: 'medium',
         color: 'purple'
     }
 };
 
 export const BlackOutline = {
     args: {
-        ...commonOutlinedProps,
+        type: 'outline',
+        size: 'medium',
         color: 'black'
     }
 };
 
 export const GreenOutline = {
     args: {
-        ...commonOutlinedProps,
+        type: 'outline',
+        size: 'medium',
         color: 'green'
     }
 };
 
 export const PurpleSolid = {
     args: {
-        ...commonSolidProps,
+        type: 'solid',
+        size: 'medium',
         color: 'purple'
     }
 };
 
 export const BlackSolid = {
     args: {
-        ...commonSolidProps,
+        type: 'solid',
+        size: 'medium',
         color: 'black'
     }
 };
 
 export const GreenSolid = {
     args: {
-        ...commonSolidProps,
+        type: 'solid',
+        size: 'medium',
         color: 'green'
     }
 };

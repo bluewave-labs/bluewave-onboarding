@@ -7,7 +7,8 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "prod": "NODE_ENV=production node index.js"
+    "prod": "NODE_ENV=production node index.js",
+    "build": "echo 'No build script defined'"
   },
   "keywords": [],
   "author": "",
