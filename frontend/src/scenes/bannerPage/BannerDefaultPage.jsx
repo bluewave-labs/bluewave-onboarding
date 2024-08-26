@@ -18,7 +18,7 @@ const BannerDefaultPage = () => {
 
     return (
         <DefaultPageTemplate
-            fetchItems={getBanners}
+            getItems={getBanners}
             deleteItem={deleteBanner}
             navigateToCreate={navigateToCreate}
             itemType={ACTIVITY_TYPES_INFO.BANNERS}

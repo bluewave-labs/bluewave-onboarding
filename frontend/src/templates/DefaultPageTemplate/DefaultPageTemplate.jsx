@@ -5,7 +5,7 @@ import ParagraphCSS from '../../components/ParagraphCSS/ParagraphCSS';
 import GuideMainPageTemplate from '../GuideMainPageTemplate/GuideMainPageTemplate';
 import CreateActivityButton from '../../components/Button/CreateActivityButton/CreateActivityButton';
 
-const DefaultPageTemplate = ({ fetchItems, deleteItem, navigateToCreate, itemType, itemTypeInfo, getItemDetails }) => {
+const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType, itemTypeInfo, getItemDetails }) => {
     const [items, setItems] = useState([]);
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState();
@@ -29,7 +29,7 @@ const DefaultPageTemplate = ({ fetchItems, deleteItem, navigateToCreate, itemTyp
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await fetchItems();
+                const data = await getItems();
                 setItems(data);
             } catch (error) {
                 console.error(`Failed to fetch ${itemType.toLowerCase()}s:`, error);
@@ -75,7 +75,7 @@ const DefaultPageTemplate = ({ fetchItems, deleteItem, navigateToCreate, itemTyp
 };
 
 DefaultPageTemplate.propTypes = {
-    fetchItems: PropTypes.func.isRequired, 
+    getItems: PropTypes.func.isRequired, 
     deleteItem: PropTypes.func.isRequired, 
     navigateToCreate: PropTypes.func.isRequired, 
     itemType: PropTypes.string.isRequired, 

@@ -4,7 +4,7 @@ The `DefaultPageTemplate` component is a reusable template for list pages that m
 
 ## Props
 
-- **`fetchItems` (function, required):** Fetches the list of items.
+- **`getItems` (function, required):** Fetches the list of items.
 - **`deleteItem` (function, required):** Deletes a selected item by ID.
 - **`navigateToCreate` (function, required):** Handles navigation to the creation or editing page.
 - **`itemType` (string, required):** Defines the type of item (e.g., "banners", "popups").
@@ -26,7 +26,7 @@ const BannerDefaultPage = () => {
 
     return (
         <DefaultPageTemplate
-            fetchItems={getBanners}
+            getItems={getBanners}
             deleteItem={deleteBanner}
             navigateToCreate={navigateToCreate}
             itemType={ACTIVITY_TYPES_INFO.BANNERS}
