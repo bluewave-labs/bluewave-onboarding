@@ -15,6 +15,8 @@ import LinksDefaultPage from "./scenes/links/LinksDefaultPage";
 import ToursDefaultPage from "./scenes/tours/ToursDefaultPage";
 import PopupDefaultPage from "./scenes/popup/PopupDefaultPage";
 import HintDefaultPage from "./scenes/hints/HintDefaultPage";
+import CreateHintPage from "./scenes/hints/CreateHintPage";
+import HintPage from "./scenes/hints/HintPage";
 import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 
 function App() {
@@ -23,10 +25,13 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={isLoggedIn ? <Private Component={Home} /> : <LoginPage />} />
+        <Route
+          path="/"
+          element={isLoggedIn ? <Private Component={Home} /> : <LoginPage />}
+        />
         {/* <Route path="/home" element={<Private Component={Home} />} /> */}
         {/* <Route path="/" element={isLoggedIn ? <Home/> : <LoginPage />} />         */}
-        <Route path="/login" element={<LoginPage />} />        
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<CreateAccountPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<PasswordResetPage />} />
@@ -39,8 +44,10 @@ function App() {
         <Route path="/popup" element={<Private Component={PopupDefaultPage }/>} />
         <Route path="/link" element={<LinksDefaultPage />} />
         <Route path="/tour" element={<ToursDefaultPage />} />
-        <Route path="/hint" element={<HintDefaultPage />} />
-      </Routes>    
+        <Route path="/hint-default" element={<HintDefaultPage />} />
+        <Route path="/hint/create" element={<CreateHintPage />} />
+        <Route path="/hint" element={<HintPage />} />
+      </Routes>
     </>
   );
 }

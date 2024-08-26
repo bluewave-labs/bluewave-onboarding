@@ -1,7 +1,7 @@
 import { React } from 'react';
 import PropTypes from 'prop-types';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import styles from './GuideTemplate.module.scss';
+//import styles from './GuideTemplate.module.scss';
 import classNames from 'classnames';
 import Button from '../../Button/Button';
 import { useNavigate } from 'react-router-dom';
