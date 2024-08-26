@@ -18,21 +18,30 @@ const RadioButton = ({
     
 }) => {
     const sizeClass = buttonSize === 'large' ? 'radio-large' : 'radio-small';
+    
+    const handleChange = (event) => {
+        if (checked) {
+            onChange({ target: { name, value: '' } });
+        } else {
+            onChange(event);
+        }
+    };
+
     return (
-        <div className={`radio-button ${sizeClass}`} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div className={`radio-button ${sizeClass}`}>
             <Radio                
                 id={id}                
                 name={name}
                 value={value}            
                 disabled={!enabled}
-                onChange={onChange}
+                onChange={handleChange}
                 size={buttonSize === 'large' ? 'large' : 'small'}
                 style={{ color: color }}
                 checked={checked}
                 onclick={onclick}
                 sx={sx}
             />
-            {label && <label htmlFor={id} style={{ cursor: 'pointer' }}>{label}</label>}
+            {label && <label htmlFor={id}>{label}</label>}
         </div>
     );
 };
