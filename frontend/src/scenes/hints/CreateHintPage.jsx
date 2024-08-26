@@ -4,6 +4,7 @@ import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import RichTextEditor from "../../components/RichTextEditor/RichTextEditor";
 import HintLeftContent from "../../components/HintPageComponents/HintLeftContent/HintLeftContent";
 import HintLeftAppearance from "../../components/HintPageComponents/HintLeftAppearance/HintLeftAppearance";
+import { useNavigate } from "react-router";
 
 const HintPage = () => {
   const [activeButton, setActiveButton] = useState(0);
@@ -16,6 +17,8 @@ const HintPage = () => {
   const handleButtonClick = (index) => {
     setActiveButton(index);
   };
+
+  const navigate = useNavigate();
 
   const [headerBackgroundColor, setHeaderBackgroundColor] = useState("#F8F9F8");
   const [headerColor, setHeaderColor] = useState("#101828");
@@ -54,6 +57,7 @@ const HintPage = () => {
           title="New Hint"
           activeButton={activeButton}
           handleButtonClick={handleButtonClick}
+          handleCloseIconClick={() => navigate("/hint")}
           rightContent={() => (
             <RichTextEditor
               previewBtnText={leftContentFormData.actionButtonText}

@@ -16,7 +16,6 @@ import ToursDefaultPage from "./scenes/tours/ToursDefaultPage";
 import PopupDefaultPage from "./scenes/popup/PopupDefaultPage";
 import HintDefaultPage from "./scenes/hints/HintDefaultPage";
 import CreateHintPage from "./scenes/hints/CreateHintPage";
-import HintPage from "./scenes/hints/HintPage";
 import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 
 function App() {
@@ -44,9 +43,8 @@ function App() {
         <Route path="/popup" element={<Private Component={PopupDefaultPage }/>} />
         <Route path="/link" element={<LinksDefaultPage />} />
         <Route path="/tour" element={<ToursDefaultPage />} />
-        <Route path="/hint-default" element={<HintDefaultPage />} />
+        <Route path="/hint" element={<HintDefaultPage />} />
         <Route path="/hint/create" element={<CreateHintPage />} />
-        <Route path="/hint" element={<HintPage />} />
       </Routes>
     </>
   );
