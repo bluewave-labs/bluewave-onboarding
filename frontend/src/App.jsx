@@ -17,7 +17,6 @@ import PopupDefaultPage from "./scenes/popup/PopupDefaultPage";
 import HintDefaultPage from "./scenes/hints/HintDefaultPage";
 import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 
-
 function App() {
   // const { isLoggedIn } = useAuth(); //commented out for testing
   const isLoggedIn = true;
