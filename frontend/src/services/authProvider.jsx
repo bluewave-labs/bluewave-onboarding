@@ -32,8 +32,12 @@ export const AuthProvider = ({ children }) => {
         fetchUser();
     }, []);
 
+    const login = () => {
+        setIsLoggedIn(true);
+    };
+
     return (
-        <AuthContext.Provider value={{isLoggedIn}}>
+        <AuthContext.Provider value={{isLoggedIn, login}}>
             {children}
         </AuthContext.Provider>
     );
