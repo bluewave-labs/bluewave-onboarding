@@ -9,12 +9,7 @@ const validatePopupSize = (value) => {
 };
 
 const validateCloseButtonAction = (value) => {
-  const validActions = [
-    "no-action",
-    "open-url",
-    "close-popup",
-    "open-url-new-tab",
-  ];
+  const validActions = ["no action", "open url", "open url in a new tab"];
   return validActions.includes(value);
 };
 
@@ -184,6 +179,20 @@ class PopupController {
     } catch (err) {
       const { statusCode, payload } = internalServerError(
         "GET_ALL_POPUPS_ERROR",
+        err.message,
+      );
+      res.status(statusCode).json(payload);
+    }
+  }
+
+  async getPopups(req, res) {
+    try {
+      const userId = req.user.id;
+      const popups = await popupService.getPopups(userId);
+      res.status(200).json(popups);
+    } catch (err) {
+      const { statusCode, payload } = internalServerError(
+        "GET_POPUPS_ERROR",
         err.message,
       );
       res.status(statusCode).json(payload);

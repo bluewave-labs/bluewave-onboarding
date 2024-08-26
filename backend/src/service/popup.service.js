@@ -8,6 +8,15 @@ class PopupService {
     });
   }
 
+  async getPopups(userId) {
+    return await Popup.findAll({
+      where: {
+        createdBy: userId
+      },
+      include: [{ model: db.User, as: "creator" }],
+    });
+  }
+
   async createPopup(data) {
     return await Popup.create(data);
   }

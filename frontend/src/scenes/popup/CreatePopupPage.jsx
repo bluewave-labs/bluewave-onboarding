@@ -1,11 +1,14 @@
-import HomePageTemplate from '../../components/templates/HomePageTemplate';
-import GuideTemplate from '../../components/templates/GuideTemplate/GuideTemplate';
+import HomePageTemplate from '../../templates/HomePageTemplate/HomePageTemplate';
+import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
 import { React, useState } from 'react';
 import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
 import PopupAppearance from '../../components/PopupPageComponents/PopupAppearance/PopupAppearance';
 import PopupContent from '../../components/PopupPageComponents/PopupContent/PopupContent';
+import { addPopup } from '../../services/popupServices';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePopupPage = () => {
+    const navigate = useNavigate();
     const [activeButton, setActiveButton] = useState(0);
 
     const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#F8F9F8');
@@ -19,6 +22,8 @@ const CreatePopupPage = () => {
 
     const [actionButtonUrl, setActionButtonUrl] = useState("https://");
     const [actionButtonText, setActionButtonText] = useState("Take me to subscription page");
+    const [buttonAction, setButtonAction] = useState('No action');
+    const [popupSize, setPopupSize] = useState('Small');
 
 
     const stateList = [
@@ -28,6 +33,34 @@ const CreatePopupPage = () => {
         { stateName: 'Button Background Color', state: buttonBackgroundColor, setState: setButtonBackgroundColor },
         { stateName: 'Button Text Color', state: buttonTextColor, setState: setButtonTextColor },
     ];
+
+    const onSave = async () => {
+        const popupData = { 
+            popupSize: popupSize.toLowerCase(),
+            url: actionButtonUrl,
+            actionButtonText: actionButtonText,
+            headerBackgroundColor: headerBackgroundColor,
+            headerColor: headerColor,
+            textColor: textColor,
+            buttonBackgroundColor: buttonBackgroundColor,
+            buttonTextColor: buttonTextColor,
+            closeButtonAction:buttonAction.toLowerCase(),
+            header:header,
+            content:content
+        };
+        console.log(popupData)
+        try {
+          const response = await addPopup(popupData);
+          console.log('Add popup successful:', response);
+          navigate('/popup');
+        } catch (error) {
+          if (error.response && error.response.data) {
+            console.error('An error occurred:', error.response.data.errors[0].msg);
+          } else {
+            console.log('An error occurred. Please check your network connection and try again.');
+          }
+        }
+    }
 
 
     const handleButtonClick = (index) => {
@@ -40,6 +73,7 @@ const CreatePopupPage = () => {
                 <GuideTemplate title='New Popup'
                     activeButton={activeButton}
                     handleButtonClick={handleButtonClick}
+                    onSave={onSave}
                     rightContent={() =>
                         <RichTextEditor
                             header={header}
@@ -60,11 +94,12 @@ const CreatePopupPage = () => {
                             setActionButtonText={setActionButtonText}
                             setActionButtonUrl={setActionButtonUrl}
                             actionButtonText={actionButtonText}
-
+                            setButtonAction={setButtonAction}
                         />}
                     leftAppearance={() => (
                         <PopupAppearance
                             data={stateList}
+                            setPopupSize={setPopupSize}
                         />
                     )} />
 

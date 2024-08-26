@@ -9,12 +9,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
         h2{
             @include text-style(header-text, semibold);
             margin: 1.5rem;
         }
-
-        width: 100%;
     }
     h3{
         @include text-style(regular);
