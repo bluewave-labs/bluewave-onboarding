@@ -1,0 +1,18 @@
+.hint-appearance-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.hint-state-name {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.hint-appearance-color {
+  display: flex;
+  align-items: center;
+}
