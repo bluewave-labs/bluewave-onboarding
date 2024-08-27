@@ -7,22 +7,28 @@ import { useNavigate } from 'react-router-dom';
 import GuideMainPageTemplate from "../../templates/GuideMainPageTemplate/GuideMainPageTemplate";
 import { getPopups } from "../../services/popupServices"; 
 import { ACTIVITY_TYPES_INFO } from '../../data/GuideMainPageData';
+import { deletePopup } from '../../services/popupServices';
 
 const PopupDefaultPage = () => {
     const navigate = useNavigate();
     const [popups, setPopups] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const [popupToDelete, setPopupToDelete] = useState();
+    const [popupDeleted, setPopupDeleted] = useState(false);
 
     const handleSelect = (idItem) => {
         setSelectedItem(idItem);
     };
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
+        await deletePopup(popupToDelete)
         setPopupOpen(false);
+        setPopupDeleted(prevState => !prevState);
     };
 
-    const handleOpenPopup = () => {
+    const handleOpenPopup = (id) => {
+        setPopupToDelete(id)
         setPopupOpen(true);
     };
 
@@ -45,7 +51,7 @@ const PopupDefaultPage = () => {
         };
 
         fetchPopups();
-    }, []);
+    }, [popupDeleted]);
 
     const style = {
         display: "flex",
@@ -59,8 +65,8 @@ const PopupDefaultPage = () => {
         idItem: popups.id,
         title: `Popup ${popups.id}`,
         text: popups.header,
-        onDelete: () => console.log(`Delete banner ${popups.id}`), // Placeholder for delete function
-        onEdit: () => console.log(`Edit banner ${popups.id}`),     // Placeholder for edit function
+        onDelete: () => handleOpenPopup(popups.id), // Placeholder for delete function
+        onEdit: () => navigate('/popup/create', {state:{isEdit:true, id: popups.id}}), 
       }));
 
 
