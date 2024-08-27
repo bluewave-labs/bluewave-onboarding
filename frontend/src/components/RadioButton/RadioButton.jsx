@@ -9,10 +9,13 @@ const RadioButton = ({
     value,
     label,
     onChange,
+    onclick,
+    sx,
     buttonSize = 'small',
     color = 'var(--main-purple)',
     checked = false,
     enabled = true,
+    
 }) => {
     const sizeClass = buttonSize === 'large' ? 'radio-large' : 'radio-small';
     
@@ -35,6 +38,8 @@ const RadioButton = ({
                 size={buttonSize === 'large' ? 'large' : 'small'}
                 style={{ color: color }}
                 checked={checked}
+                onclick={onclick}
+                sx={sx}
             />
             {label && <label htmlFor={id}>{label}</label>}
         </div>

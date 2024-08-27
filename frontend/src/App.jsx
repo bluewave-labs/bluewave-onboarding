@@ -20,17 +20,17 @@ import HintPage from "./scenes/hints/HintPage";
 import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 
 function App() {
-  const { isLoggedIn } = useAuth(); //commented out for testing
-  // const isLoggedIn = true;
+  // const { isLoggedIn } = useAuth(); //commented out for testing
+  const isLoggedIn = true;
   return (
     <>
       <Routes>
-        <Route
+        {/* <Route
           path="/"
           element={isLoggedIn ? <Private Component={Home} /> : <LoginPage />}
-        />
+        /> */}
         {/* <Route path="/home" element={<Private Component={Home} />} /> */}
-        {/* <Route path="/" element={isLoggedIn ? <Home/> : <LoginPage />} />         */}
+        <Route path="/" element={<Home/>} />        
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<CreateAccountPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -38,7 +38,7 @@ function App() {
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
-        <Route path="/banner/create" element={<Private Component={BannerPage} />} />
+        <Route path="/banner/create" element={<BannerPage />} />
         <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
         <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
         <Route path="/popup" element={<Private Component={PopupDefaultPage }/>} />

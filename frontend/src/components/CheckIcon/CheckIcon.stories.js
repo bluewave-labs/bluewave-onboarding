@@ -1,4 +1,4 @@
-import CheckIcon from "./CheckIcon";
+import CheckIcon from './CheckIcon';
 
 //Storybook display settings
 export default {
