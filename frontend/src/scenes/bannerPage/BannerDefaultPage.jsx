@@ -1,28 +1,31 @@
-import CreateActivityButton from "../../components/CreateActivityButton/CreateActivityButton"
-import HomePageTemplate from "../../components/templates/HomePageTemplate"
-import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
-import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
+import React from 'react';
+import DefaultPageTemplate from '../../templates/DefaultPageTemplate/DefaultPageTemplate';
+import { getBanners, deleteBanner } from '../../services/bannerServices';
 import { useNavigate } from 'react-router-dom';
+import { ACTIVITY_TYPES_INFO } from '../../data/GuideMainPageData';
 
 const BannerDefaultPage = () => {
     const navigate = useNavigate();
-    const style = {
-        "display": "flex",
-        "flex-direction": "column",
-        "width": "100%",
-        "justify-content": "center",
-        "align-items": "center",
-    }
-    
+
+    const getBannerDetails = (banner) => ({
+        title: `Banner ${banner.id}`,
+        text: banner.bannerText,
+    });
+
+    const navigateToCreate = (state) => {
+        navigate('/banner/create', state);
+    };
+
     return (
-        <HomePageTemplate>
-            <div style={style}>
-                <ParagraphCSS />
-                <CreateActivityButton type={ACTIVITY_TYPES.BANNERS}  onClick={() => navigate('/banner/create')}/>
-            </div>
+        <DefaultPageTemplate
+            getItems={getBanners}
+            deleteItem={deleteBanner}
+            navigateToCreate={navigateToCreate}
+            itemType={ACTIVITY_TYPES_INFO.BANNERS}
+            itemTypeInfo={ACTIVITY_TYPES_INFO.BANNERS}
+            getItemDetails={getBannerDetails}
+        />
+    );
+};
 
-        </HomePageTemplate>
-    )
-}
-
-export default BannerDefaultPage
+export default BannerDefaultPage;

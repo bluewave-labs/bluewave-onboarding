@@ -3,7 +3,10 @@ import styles from './PopupAppearance.module.scss';
 import ColorTextField from '../../ColorTextField/ColorTextField';
 import DropdownList from '../../DropdownList/DropdownList';
 
-const PopupAppearance = ({ data = [] }) => {
+const PopupAppearance = ({ data = [], setPopupSize }) => {
+    const handleActionChange = (newAction) => {
+        setPopupSize(newAction);
+      };
     return (
         <div className={styles.container}>
             {data.map(({ stateName, state, setState }) => (
@@ -17,8 +20,10 @@ const PopupAppearance = ({ data = [] }) => {
                     </div>
                 </div>
             ))}
-            <h2 style={{marginBottom:'1rem'}}>Popup Size</h2>
-            <DropdownList actions={['Small', 'Medium', 'Large']} />
+            <h2 style={{ marginBottom: '1rem' }}>Popup Size</h2>
+            <DropdownList
+                actions={['Small', 'Medium', 'Large']}
+                onActionChange={handleActionChange} />
         </div>
     );
 };
