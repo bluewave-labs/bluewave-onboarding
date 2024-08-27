@@ -3,6 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { BrowserRouter as Router } from 'react-router-dom';
 import CreateAccountPage from '../../../scenes/login/CreateAccountPage';
 import { signUp } from '../../../services/loginServices';
+import { AuthProvider } from '../../../services/authProvider'; // Import your AuthProvider
 
 vi.mock('../../../services/loginServices', () => ({
   signUp: vi.fn(),
@@ -12,7 +13,9 @@ describe('CreateAccountPage', () => {
   it('renders the create account page', () => {
     render(
       <Router>
-        <CreateAccountPage />
+        <AuthProvider> {/* Wrap with AuthProvider */}
+          <CreateAccountPage />
+        </AuthProvider>
       </Router>
     );
 
@@ -26,7 +29,9 @@ describe('CreateAccountPage', () => {
   it('validates username input', () => {
     render(
       <Router>
-        <CreateAccountPage />
+        <AuthProvider>
+          <CreateAccountPage />
+        </AuthProvider>
       </Router>
     );
 
@@ -39,7 +44,9 @@ describe('CreateAccountPage', () => {
   it('validates email input', () => {
     render(
       <Router>
-        <CreateAccountPage />
+        <AuthProvider>
+          <CreateAccountPage />
+        </AuthProvider>
       </Router>
     );
 
@@ -52,7 +59,9 @@ describe('CreateAccountPage', () => {
   it('validates password input', () => {
     render(
       <Router>
-        <CreateAccountPage />
+        <AuthProvider>
+          <CreateAccountPage />
+        </AuthProvider>
       </Router>
     );
 
@@ -67,7 +76,9 @@ describe('CreateAccountPage', () => {
 
     render(
       <Router>
-        <CreateAccountPage />
+        <AuthProvider>
+          <CreateAccountPage />
+        </AuthProvider>
       </Router>
     );
 
@@ -92,7 +103,9 @@ describe('CreateAccountPage', () => {
 
     render(
       <Router>
-        <CreateAccountPage />
+        <AuthProvider>
+          <CreateAccountPage />
+        </AuthProvider>
       </Router>
     );
 
@@ -120,7 +133,9 @@ describe('CreateAccountPage', () => {
 
     render(
       <Router>
-        <CreateAccountPage />
+        <AuthProvider>
+          <CreateAccountPage />
+        </AuthProvider>
       </Router>
     );
 
@@ -143,7 +158,9 @@ describe('CreateAccountPage', () => {
 
     render(
       <Router>
-        <CreateAccountPage />
+        <AuthProvider>
+          <CreateAccountPage />
+        </AuthProvider>
       </Router>
     );
 
