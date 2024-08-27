@@ -17,7 +17,7 @@ const CreateActivityButton = ({ type = ACTIVITY_TYPES.HINTS, onClick }) => {
           <ul>
             {listItem.map((item, index) => (
               <div className="list" key={index}>
-              <CheckIcon size='small' outline={true} color='var(--main-purple)'/>
+              <CheckIcon size='small' outline={true} color='purple'/>
               <li className="listText" key={index}>
                 {item}
               </li>

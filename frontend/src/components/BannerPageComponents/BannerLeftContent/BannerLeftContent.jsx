@@ -16,7 +16,7 @@ const BannerLeftContent = ({ setIsTopPosition, url, setUrl, setButtonAction }) =
         <div className={styles.container}>
             <h2>Action</h2>
             <DropdownList 
-                actions={['No action', 'Open a URL', 'Open a URL in a new page']} 
+                actions={['No action', 'Open URL', 'Open URL in a new tab']} 
                 onActionChange={handleActionChange}
             />
             <h2>Position</h2>
