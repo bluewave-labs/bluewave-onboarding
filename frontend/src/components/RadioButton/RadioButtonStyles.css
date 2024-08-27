@@ -1,9 +1,9 @@
 .radio-button {
     display: flex;
     align-items: center;
-    gap: 8px;
     cursor: pointer;
     white-space: nowrap;
+    margin-bottom: 10px;
 }
 
 input {
