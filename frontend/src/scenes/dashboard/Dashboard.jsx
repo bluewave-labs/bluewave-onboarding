@@ -9,24 +9,23 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = ({ username }) => {
   const navigate = useNavigate();
   const metrics = [
-    { metricName: "Monthly active users", metricValue: 1000, changeRate: 10 },
-    { metricName: "Tour views", metricValue: 5000, changeRate: 5 },
+    { metricName: "Popup views", metricValue: 5000, changeRate: 5 },
     { metricName: "Hint views", metricValue: 2000, changeRate: -20 },
-    { metricName: "Popup Views", metricValue: 3000, changeRate: 15 },
+    { metricName: "Banner Views", metricValue: 3000, changeRate: 15 },
   ];
 
   const buttons = [
     {
-      placeholder: "Create a welcome tour",
-      onClick: () => navigate("/welcome-tour-route"),
+      placeholder: "Create a popup",
+      onClick: () => navigate("/popup/create"),
     },
     {
       placeholder: "Add a hint to your app",
-      onClick: () => navigate("/hint-route"),
+      onClick: () => navigate("/hint/create"),
     },
     {
       placeholder: "Create a new banner",
-      onClick: () => navigate("/new-banner-route"),
+      onClick: () => navigate("/banner/create"),
     },
   ];
   return (

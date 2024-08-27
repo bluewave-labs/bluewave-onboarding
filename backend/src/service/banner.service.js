@@ -8,6 +8,15 @@ class BannerService {
     });
   }
 
+  async getBanners(userId) {
+    return await Banner.findAll({
+      where: {
+        createdBy: userId
+      },
+      include: [{ model: db.User, as: "creator" }],
+    });
+  }
+
   async createBanner(data) {
     return await Banner.create(data);
   }
@@ -33,6 +42,16 @@ class BannerService {
     }
 
     return updatedBanners[0];
+  }
+
+  async getBannerById(bannerId) {
+    try {
+      return await Banner.findOne({
+        where: { id: bannerId },
+      });
+    } catch (error) {
+      throw new Error("Error retrieving banner by ID");
+    }
   }
 }
 

@@ -1,5 +1,6 @@
 import {apiClient} from './apiClient'; 
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const authClient = axios.create({
   ...apiClient.defaults,
@@ -70,7 +71,12 @@ export const resetPassword = async (userData) => {
 export const getCurrentUser = async ()=> {
   try {
     const response = await apiClient.get('users/current-user');
-    return response.data.user;
+    const user = response.data.user;
+
+    Cookies.set('username', user.username);
+    Cookies.set('role', user.role);
+
+    return user;
   } catch (error) {
     console.error('Get user error:', error.response);
     return {'username': 'John Doe', 'role': 'visitor'}

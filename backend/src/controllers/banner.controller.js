@@ -161,6 +161,44 @@ class BannerController {
       res.status(statusCode).json(payload);
     }
   }
+  async getBanners(req, res) {
+    try {
+      const userId = req.user.id;
+      const banners = await bannerService.getBanners(userId);
+      res.status(200).json(banners);
+    } catch (err) {
+      const { statusCode, payload } = internalServerError(
+        "GET\_BANNERS_ERROR",
+        err.message,
+      );
+      res.status(statusCode).json(payload);
+    }
+  }
+
+  async getBannerById(req, res) {
+    try {
+      const { id } = req.params;
+
+      if (isNaN(id) || id.trim() === "") {
+        return res.status(400).json({ errors: [{ msg: "Invalid id" }] });
+      }
+
+      const banner = await bannerService.getBannerById(id);
+
+      if (!banner) {
+        return res.status(404).json({ errors: [{ msg: "Banner not found" }] });
+      }
+
+      res.status(200).json(banner);
+    } catch (err) {
+      const { statusCode, payload } = internalServerError(
+        "GET_BANNER_BY_ID_ERROR",
+        err.message,
+      );
+      res.status(statusCode).json(payload);
+    }
+  }
+
 }
 
 module.exports = new BannerController();
