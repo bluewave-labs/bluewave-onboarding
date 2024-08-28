@@ -1,4 +1,4 @@
-import { validateHexColor, isHexColor } from '../utils/guideHelpers';
+const { validateHexColor } = require('../utils/guideHelpers');
 
 module.exports = (sequelize, DataTypes) => {
   const Popup = sequelize.define(
