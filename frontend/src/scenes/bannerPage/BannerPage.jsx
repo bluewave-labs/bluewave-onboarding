@@ -93,6 +93,7 @@ const BannerPage = () => {
                     leftContent={() =>
                         <BannerLeftContent
                             setIsTopPosition={setIsTopPosition}
+                            isTopPosition={isTopPosition}
                             url={url}
                             setUrl={setUrl}
                             setButtonAction={setButtonAction}
