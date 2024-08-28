@@ -96,6 +96,7 @@ const BannerPage = () => {
                             url={url}
                             setUrl={setUrl}
                             setButtonAction={setButtonAction}
+                            buttonAction={buttonAction}
                         />}
                     leftAppearance={() => (
                         <BannerLeftAppearance

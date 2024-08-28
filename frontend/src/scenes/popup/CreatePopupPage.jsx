@@ -134,6 +134,7 @@ const CreatePopupPage = () => {
                             setActionButtonUrl={setActionButtonUrl}
                             actionButtonText={actionButtonText}
                             setButtonAction={setButtonAction}
+                            buttonAction={buttonAction}
                         />}
                     leftAppearance={() => (
                         <PopupAppearance
