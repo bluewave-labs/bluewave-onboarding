@@ -4,8 +4,8 @@ import DropdownList from '../../DropdownList/DropdownList';
 import CustomTextField from '../../TextFieldComponents/CustomTextField/CustomTextField';
 import RadioButton from '../../RadioButton/RadioButton';
 
-const BannerLeftContent = ({ setIsTopPosition, url, setUrl, setButtonAction }) => {
-    const [position, setPosition] = useState('top');
+const BannerLeftContent = ({ setIsTopPosition, url, setUrl, setButtonAction, isTopPosition }) => {
+
     const handleSetUrl = (event) => {
         setUrl(event.target.value);
     };
@@ -15,8 +15,7 @@ const BannerLeftContent = ({ setIsTopPosition, url, setUrl, setButtonAction }) =
     };
 
     const handlePositionChange = (newPosition) => {
-        setPosition(newPosition);
-        setIsTopPosition(newPosition === 'top');
+        setIsTopPosition(newPosition);
     };
 
     return (
@@ -29,26 +28,20 @@ const BannerLeftContent = ({ setIsTopPosition, url, setUrl, setButtonAction }) =
             <h2>Position</h2>
             <div className={styles.radioContent}>
                 <RadioButton
-                    id="top-centered-position"
-                    name="position"
-                    value="top-centered"
                     label="Top (centered)"
-                    checked={position === 'top'}
-                    onChange={() => handlePositionChange('top')}
+                    checked={isTopPosition}
+                    onChange={() => handlePositionChange(true)}
                 />
             </div>
             <div className={styles.radioContent}>
                 <RadioButton
-                    id="bottom-centered-position"
-                    name="position"
-                    value="bottom-centered"
                     label="Bottom (centered)"
-                    checked={position === 'bottom'}
-                    onChange={() => handlePositionChange('bottom')}
+                    checked={!isTopPosition}
+                    onChange={() => handlePositionChange(false)}
                 />
             </div>
 
-            <h2 style={{ marginBottom: 0 }}>URL</h2>
+            <h2 style={{ marginBottom: 0, marginTop:'1.2rem'}}>URL</h2>
             <CustomTextField
                 TextFieldWidth="241px"
                 value={url}

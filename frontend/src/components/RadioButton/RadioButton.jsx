@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Radio } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import './RadioButtonStyles.css';
+
 const CustomRadioIcon = styled('span')({
     borderRadius: '50%',
     width: 16,
@@ -28,13 +29,11 @@ function RadioButton({
     value, 
     label, 
     onChange, 
-    onclick, 
-    buttonSize = 'small', 
-    color = 'var(--main-purple)', 
+    onClick, 
+    size = 'small', 
     checked = false, 
     enabled = true 
 }) {
-  const sizeClass = buttonSize === 'large' ? 'radio-large' : 'radio-small';
 
   const handleChange = (event) => {
     if (checked) {
@@ -45,18 +44,19 @@ function RadioButton({
   };
 
   return (
-    <div className={`radio-button ${sizeClass}`}>
+    <div className={`radio-button`}>
       <Radio
         id={id}
         name={name}
         value={value}
         disabled={!enabled}
         onChange={handleChange}
-        size={buttonSize === 'large' ? 'large' : 'small'}
+        size={size}
         checkedIcon={<CustomRadioCheckedIcon />}
         icon={<CustomRadioIcon />}
         checked={checked}
-        onClick={onclick}
+        onClick={onClick}
+        sx={{padding:'0'}}
       />
       {label && <label htmlFor={id}>{label}</label>}
     </div>
