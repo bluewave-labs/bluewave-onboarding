@@ -1,5 +1,6 @@
 const popupService = require("../service/popup.service");
 const { internalServerError } = require("../utils/errors");
+const { isValidHexColor } = require("../utils/guideHelpers");
 const db = require("../models");
 const Popup = db.Popup;
 
@@ -11,11 +12,6 @@ const validatePopupSize = (value) => {
 const validateCloseButtonAction = (value) => {
   const validActions = ["no action", "open url", "open url in a new tab"];
   return validActions.includes(value);
-};
-
-const validateColorCode = (value) => {
-  const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-  return colorRegex.test(value);
 };
 
 class PopupController {
@@ -58,7 +54,7 @@ class PopupController {
       buttonTextColor,
     };
     for (const [field, value] of Object.entries(colorFields)) {
-      if (value && !validateColorCode(value)) {
+      if (value && !isValidHexColor(value)) {
         return res
           .status(400)
           .json({
@@ -150,9 +146,9 @@ class PopupController {
         "buttonBackgroundColor",
         "buttonTextColor",
       ];
-      const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+      
       for (const field of colorFields) {
-        if (req.body[field] && !colorRegex.test(req.body[field])) {
+        if (req.body[field] && !isValidHexColor(req.body[field])) {
           return res
             .status(400)
             .json({

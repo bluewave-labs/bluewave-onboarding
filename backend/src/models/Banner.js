@@ -1,3 +1,5 @@
+const { validateHexColor } = require('../utils/guideHelpers');
+
 module.exports = (sequelize, DataTypes) => {
     const Banner = sequelize.define('Banner', {
         closeButtonAction: {
@@ -22,11 +24,21 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             defaultValue: "#FFFFFF",
+            validate: {
+              isHexColor(value) {
+                  validateHexColor(value, 'fontColor');
+              },
+            },
           },
           backgroundColor: {
             type: DataTypes.STRING,
             allowNull: false,
             defaultValue: "#FFFFFF",
+            validate: {
+              isHexColor(value) {
+                  validateHexColor(value, 'backgroundColor');
+              },
+            },
           },
           bannerText: {
             type: DataTypes.STRING,
