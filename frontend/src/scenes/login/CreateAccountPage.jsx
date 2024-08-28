@@ -51,7 +51,6 @@ function CreateAccountPage() {
 
     try {
       const response = await signUp(formData);
-      console.log('Sign up successful:', response);
       login(); 
       navigate('/');
     } catch (error) {
