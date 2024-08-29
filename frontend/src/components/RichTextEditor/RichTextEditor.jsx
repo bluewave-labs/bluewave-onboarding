@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import EditorInput from "./EditorInput/EditorInput";
 import EditorTabs from "./Tabs/EditorTabs";
 import EditorToolbar from "./Toolbar/EditorToolbar";
-import "react-quill/dist/quill.snow.css";
+import "react-quill-new/dist/quill.snow.css";
 import { Box } from "@mui/material";
 import "./RichTextEditor.css";
 import CustomTextField from "../TextFieldComponents/CustomTextField/CustomTextField";
