@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { IconButton, useTheme } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SettingsIcon from '@mui/icons-material/Settings';
+import EditIcon from '@mui/icons-material/Edit';
 import CircleIcon from '@mui/icons-material/Circle';
 import './ListItem.css';
 
@@ -24,7 +24,7 @@ const ListItem = ({ title, text, id, onClick, onDelete, onEdit }) => {
       </div>
       <div className="list-item-actions">
         <IconButton onClick={onEdit}>
-          <SettingsIcon />
+          <EditIcon />
         </IconButton>
         <IconButton onClick={onDelete}>
           <DeleteIcon />
