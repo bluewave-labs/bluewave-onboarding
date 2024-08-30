@@ -11,8 +11,8 @@ describe('ErrorComponent', () => {
     
     render(<ErrorComponent text={errorMessage} errorAction={mockErrorAction} />);
     
-    expect(screen.getByText('We cannot find this page')).toBeInTheDocument();
-    expect(screen.getByText(errorMessage)).toBeInTheDocument();
+    expect(screen.getByText('We cannot find this page')).not.toBeNull()
+    expect(screen.getByText(errorMessage)).not.toBeNull()
   });
 
   it('calls errorAction when button is clicked', () => {
@@ -30,10 +30,10 @@ describe('ErrorComponent', () => {
     
     const button = screen.getByRole('button');
     
-    expect(button).toHaveStyle('border-radius: 8px');
-    expect(button).toHaveStyle('margin-top: 58px');
-    expect(button).toHaveStyle('font-size: 13px');
-    expect(button).toHaveStyle('line-height: 24px');
-    expect(button).toHaveStyle('padding: 5px 27px');
+    expect(button.style.borderRadius).toBe('8px');
+    expect(button.style.marginTop).toBe('58px');
+    expect(button.style.fontSize).toBe('13px');
+    expect(button.style.lineHeight).toBe('24px');
+    expect(button.style.padding).toBe('5px 27px');
   });
 });
