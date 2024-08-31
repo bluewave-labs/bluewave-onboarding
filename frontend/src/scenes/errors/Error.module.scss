@@ -1,0 +1,35 @@
+.errorContainer {
+  background-color: var(--background-color);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+
+    .infoHeader {
+      font-weight: 600;
+      color: var(--main-text-color);
+      font-size: 16px;
+      line-height: 30px;
+    }
+
+    .infoText {
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 23px;
+    }
+  }
+
+  .navigateButton {
+    margin-top: 58px;
+    border-radius: 8px;
+  }
+}

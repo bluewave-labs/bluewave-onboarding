@@ -18,6 +18,8 @@ import HintDefaultPage from "./scenes/hints/HintDefaultPage";
 import CreateHintPage from "./scenes/hints/CreateHintPage";
 import HintPage from "./scenes/hints/HintPage";
 import CreatePopupPage from "./scenes/popup/CreatePopupPage";
+import { Error404 } from "./scenes/errors/404";
+import { Error403 } from "./scenes/errors/403";
 
 function App() {
   const { isLoggedIn } = useAuth(); //commented out for testing
@@ -47,7 +49,9 @@ function App() {
         <Route path="/hint-default" element={<HintDefaultPage />} />
         <Route path="/hint/create" element={<CreateHintPage />} />
         <Route path="/hint" element={<HintPage />} />
-      </Routes>
+        <Route path="/403" element={<Error403 />} />
+        <Route path="*" element={<Error404 />} />
+      </Routes>    
     </>
   );
 }
