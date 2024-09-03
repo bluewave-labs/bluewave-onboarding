@@ -17,6 +17,8 @@ import PopupDefaultPage from "./scenes/popup/PopupDefaultPage";
 import HintDefaultPage from "./scenes/hints/HintDefaultPage";
 import CreateHintPage from "./scenes/hints/CreateHintPage";
 import CreatePopupPage from "./scenes/popup/CreatePopupPage";
+import { Error404 } from "./scenes/errors/404";
+import { Error403 } from "./scenes/errors/403";
 
 function App() {
   const { isLoggedIn } = useAuth(); //commented out for testing
@@ -45,7 +47,9 @@ function App() {
         <Route path="/tour" element={<ToursDefaultPage />} />
         <Route path="/hint" element={<HintDefaultPage />} />
         <Route path="/hint/create" element={<CreateHintPage />} />
-      </Routes>
+        <Route path="/403" element={<Error403 />} />
+        <Route path="*" element={<Error404 />} />
+      </Routes>    
     </>
   );
 }
