@@ -4,8 +4,7 @@ import DropdownList from '../../DropdownList/DropdownList';
 import CustomTextField from '../../TextFieldComponents/CustomTextField/CustomTextField';
 import RadioButton from '../../RadioButton/RadioButton';
 
-const BannerLeftContent = ({ setIsTopPosition, url, setUrl, setButtonAction, isTopPosition }) => {
-
+const BannerLeftContent = ({ setIsTopPosition, url, setUrl, setButtonAction, isTopPosition, buttonAction }) => {
     const handleSetUrl = (event) => {
         setUrl(event.target.value);
     };
@@ -24,6 +23,7 @@ const BannerLeftContent = ({ setIsTopPosition, url, setUrl, setButtonAction, isT
             <DropdownList
                 actions={['No action', 'Open URL', 'Open URL in a new tab']}
                 onActionChange={handleActionChange}
+                selectedActionString={buttonAction}
             />
             <h2>Position</h2>
             <div className={styles.radioContent}>
