@@ -5,6 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { signUp } from '../../services/loginServices';
 import { useNavigate } from 'react-router-dom';
 import CustomLink from '../../components/CustomLink/CustomLink';
+import { useAuth } from '../../services/authProvider';
 
 function CreateAccountPage() {
   const [formData, setFormData] = useState({ username: '', email: '', password: '' });
@@ -12,6 +13,7 @@ function CreateAccountPage() {
   const [passwordChecks, setPasswordChecks] = useState({ hasSpecialCharacter: false, atLeastEightCharacters: false });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -49,7 +51,7 @@ function CreateAccountPage() {
 
     try {
       const response = await signUp(formData);
-      console.log('Sign up successful:', response);
+      login(); 
       navigate('/');
     } catch (error) {
       if (error.response && error.response.data) {
