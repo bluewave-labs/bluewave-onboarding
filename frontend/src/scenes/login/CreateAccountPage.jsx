@@ -6,8 +6,8 @@ import { signUp } from '../../services/loginServices';
 import { useNavigate } from 'react-router-dom';
 
 function CreateAccountPage() {
-  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
-  const [validation, setValidation] = useState({ isUsernameValid: false, isEmailValid: false, isPasswordValid: false });
+  const [formData, setFormData] = useState({ name: '', surname: '', email: '', password: '' });
+  const [validation, setValidation] = useState({ isNameValid: false, isSurnameValid: false, isEmailValid: false, isPasswordValid: false });
   const [passwordChecks, setPasswordChecks] = useState({ hasSpecialCharacter: false, atLeastEightCharacters: false });
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -17,8 +17,11 @@ function CreateAccountPage() {
     setFormData({ ...formData, [name]: value });
 
     switch (name) {
-      case 'username':
-        setValidation((prev) => ({ ...prev, isUsernameValid: value.length > 0 }));
+      case 'name':
+        setValidation((prev) => ({ ...prev, isNameValid: value.length > 0 && !value.includes(" ") }));
+        break;
+      case 'surname':
+        setValidation((prev) => ({ ...prev, isSurnameValid: value.length > 0 && !value.includes(" ") }));
         break;
       case 'email':
         setValidation((prev) => ({ ...prev, isEmailValid: validateEmail(value) }));
@@ -40,16 +43,17 @@ function CreateAccountPage() {
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSignUp = async () => {
-    const { isUsernameValid, isEmailValid, isPasswordValid } = validation;
-    if (!isUsernameValid || !isEmailValid || !isPasswordValid) {
+    const { surname } = formData;
+    const { isNameValid, isSurnameValid, isEmailValid, isPasswordValid } = validation;
+    if (!isNameValid || (surname && !isSurnameValid) || !isEmailValid || !isPasswordValid) {
       alert('Please fill out the form correctly.');
       return;
     }
 
-    const userData = { username: formData.username, email: formData.email, password: formData.password };
+    const userData = { username: formData.name + " " + formData.surname, email: formData.email, password: formData.password };
 
     try {
-      const response = await signUp(formData);
+      const response = await signUp(userData);
       console.log('Sign up successful:', response);
       navigate('/');
     } catch (error) {
@@ -70,18 +74,33 @@ function CreateAccountPage() {
       <h2>Create an account</h2>
       <div className="form-group">
         <div className='check-div'>
-          {validation.isUsernameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
-          <label htmlFor="username">Username*:</label>
+          {validation.isNameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
+          <label htmlFor="name">Name*:</label>
         </div>
         <input
-          id="username"
+          id="name"
           type="name"
-          name="username"
-          value={formData.username}
+          name="name"
+          value={formData.name}
           onChange={handleInputChange}
-          placeholder="Enter your username"
+          placeholder="Enter your name"
         />
         {error && <div className="error-message">{error}</div>}
+      </div>
+
+      <div className="form-group">
+        <div className='check-div'>
+          {validation.isSurnameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
+          <label htmlFor="surname">Surname:</label>
+        </div>
+        <input
+          id="surname"
+          type="name"
+          name="surname"
+          value={formData.surname}
+          onChange={handleInputChange}
+          placeholder="Enter your surname"
+        />
       </div>
 
       <div className="form-group">
