@@ -21,7 +21,7 @@ function CreateAccountPage() {
         setValidation((prev) => ({ ...prev, isNameValid: value.length > 0 && !value.includes(" ") }));
         break;
       case 'surname':
-        setValidation((prev) => ({ ...prev, isSurnameValid: value.length > 0 && !value.includes(" ") }));
+        setValidation((prev) => ({ ...prev, isSurnameValid: value.length > 0 }));
         break;
       case 'email':
         setValidation((prev) => ({ ...prev, isEmailValid: validateEmail(value) }));
@@ -45,7 +45,7 @@ function CreateAccountPage() {
   const handleSignUp = async () => {
     const { name, surname, email, password } = formData;
     const { isNameValid, isSurnameValid, isEmailValid, isPasswordValid } = validation;
-    
+
     if (!isNameValid || (surname && !isSurnameValid) || !isEmailValid || !isPasswordValid) {
       alert('Please fill out the form correctly.');
       return;
