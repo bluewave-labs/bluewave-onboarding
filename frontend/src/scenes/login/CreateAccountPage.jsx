@@ -43,14 +43,16 @@ function CreateAccountPage() {
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSignUp = async () => {
-    const { surname } = formData;
+    const { name, surname, email, password } = formData;
     const { isNameValid, isSurnameValid, isEmailValid, isPasswordValid } = validation;
+    
     if (!isNameValid || (surname && !isSurnameValid) || !isEmailValid || !isPasswordValid) {
       alert('Please fill out the form correctly.');
       return;
     }
 
-    const userData = { username: formData.name + " " + formData.surname, email: formData.email, password: formData.password };
+    const username = surname ? (name + " " + surname) : name;
+    const userData = { username: username, email: email, password: password };
 
     try {
       const response = await signUp(userData);
