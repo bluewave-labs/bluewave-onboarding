@@ -54,8 +54,8 @@ function CreateAccountPage() {
       navigate('/');
     } catch (error) {
       if (error.response && error.response.data) {
-        if (error.response.data.error === 'Email already exists') {
-          setError('Email already exists');
+        if (error.response.data.error === 'User already exists') {
+          setError('User already exists');
         } else {
           setError('An error occurred. Please try again.');
         }
@@ -81,6 +81,7 @@ function CreateAccountPage() {
           onChange={handleInputChange}
           placeholder="Enter your username"
         />
+        {error && <div className="error-message">{error}</div>}
       </div>
 
       <div className="form-group">
@@ -96,7 +97,6 @@ function CreateAccountPage() {
           onChange={handleInputChange}
           placeholder="Enter your email"
         />
-        {error && <div className="error-message">{error}</div>}
       </div>
 
       <div className="form-group">
