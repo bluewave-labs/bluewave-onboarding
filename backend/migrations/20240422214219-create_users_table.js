@@ -15,6 +15,7 @@ module.exports = {
       },
       surname: {
         type: Sequelize.STRING(50),
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING(100),
