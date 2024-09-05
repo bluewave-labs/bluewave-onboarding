@@ -23,8 +23,6 @@ const DropdownList = ({
       }
       return actions[selectedActionIndex] || "";
     };
-    console.log(getInitialSelectedAction())
-    console.log('asd')
     setSelectedAction(getInitialSelectedAction());
   }, [selectedActionString, actions, selectedActionIndex]);
 
