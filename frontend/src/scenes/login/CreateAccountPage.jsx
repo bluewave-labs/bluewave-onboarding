@@ -47,15 +47,14 @@ function CreateAccountPage() {
 
   const handleSignUp = async () => {
     const { name, surname, email, password } = formData;
-    const { isUsernameValid, isEmailValid, isPasswordValid } = validation;
+    const { isNameValid, isSurnameValid, isEmailValid, isPasswordValid } = validation;
 
-    if (!isUsernameValid || (surname && !isSurnameValid) || !isEmailValid || !isPasswordValid) {
+    if (!isNameValid || (surname && !isSurnameValid) || !isEmailValid || !isPasswordValid) {
       alert('Please fill out the form correctly.');
       return;
     }
 
-    const username = surname ? (name + " " + surname) : name;
-    const userData = { username: username, email: email, password: password };
+    const userData = { name: name, surname: surname, email: email, password: password };
 
     try {
       const response = await signUp(userData);

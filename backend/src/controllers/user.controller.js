@@ -11,9 +11,18 @@ const getUsersList = async (req, res) => {
 
     const { rows: users, count: totalUsers } = await User.findAndCountAll({
       where: {
-        username: {
-          [Sequelize.Op.like]: `%${search}%`,
-        },
+        [Sequelize.Op.or]: [
+          {
+            name: {
+              [Sequelize.Op.like]: `%${search}%`,
+            },
+          },
+          {
+            surname: {
+              [Sequelize.Op.like]: `%${search}%`,
+            },
+          },
+        ],
       },
       limit: parseInt(limit),
       offset: parseInt(offset),
@@ -37,8 +46,8 @@ const getCurrentUser = async (req, res) => {
   const userId = req.user.id;
   const user = await User.findOne({ where: { id : userId } });
   if (user){
-    const { username, email, role } = user;
-    return res.status(200).json({ user: { username, email, role } });
+    const { name, surname, email, role } = user;
+    return res.status(200).json({ user: { name, surname, email, role } });
   }
   else{
     return res.status(400).json({ error: "User not found" });
