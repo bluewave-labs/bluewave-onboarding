@@ -84,7 +84,6 @@ const CreatePopupPage = () => {
             header: header,
             content: content
         };
-        console.log(popupData)
         try {
             const response = location.state?.isEdit
             ? await editPopup(location.state?.id, popupData)
