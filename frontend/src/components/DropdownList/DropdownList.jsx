@@ -16,15 +16,15 @@ const DropdownList = ({
   useEffect(() => {
     const getInitialSelectedAction = () => {
       if (selectedActionString) {
-        const lowerCaseSelectedActionString = selectedActionString.toLowerCase();
         const index = actions.findIndex(action =>
-          action.toLowerCase() === lowerCaseSelectedActionString
+          action.toLowerCase() === selectedActionString.toLowerCase()
         );
         return index !== -1 ? actions[index] : actions[0] || "";
       }
       return actions[selectedActionIndex] || "";
     };
-
+    console.log(getInitialSelectedAction())
+    console.log('asd')
     setSelectedAction(getInitialSelectedAction());
   }, [selectedActionString, actions, selectedActionIndex]);
 
@@ -32,7 +32,7 @@ const DropdownList = ({
     if (onActionChange) {
       onActionChange(selectedAction);
     }
-  }, []);
+  }, [selectedAction]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;
