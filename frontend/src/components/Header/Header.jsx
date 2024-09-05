@@ -17,7 +17,7 @@ function Header({ }) {
     useEffect(() => {
         const fetchUser = async () => {
             const userData = await getCurrentUser();
-            const fullName = userData.surname ? userData.name + " " + user.surname : user.name;
+            const fullName = userData.surname ? userData.name + " " + userData.surname : userData.name;
             setUser({ fullName, role: userData.role });
         };
         fetchUser();

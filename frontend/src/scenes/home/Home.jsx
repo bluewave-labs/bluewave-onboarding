@@ -12,8 +12,7 @@ const Home = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const user = await getCurrentUser();
-      const fullName = user.surname ? user.name + " " + user.surname : user.name;
-      setFullName(fullName);
+      setFullName(user.surname ? user.name + " " + user.surname : user.name);
     };
     fetchUser();
   }, [fullName]);
