@@ -72,7 +72,7 @@ export const getCurrentUser = async ()=> {
   try {
     const response = await apiClient.get('users/current-user');
     const user = response.data.user;
-    const fullName = user.surname ? user.name + " " + user.surname : user.name;
+    const fullName = user.name + " " + user.surname;
 
     Cookies.set('fullName', fullName);
     Cookies.set('role', user.role);
