@@ -8,6 +8,7 @@ import GuideMainPageTemplate from "../../templates/GuideMainPageTemplate/GuideMa
 import { getPopups } from "../../services/popupServices"; 
 import { ACTIVITY_TYPES_INFO } from '../../data/GuideMainPageData';
 import { deletePopup } from '../../services/popupServices';
+import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 
 const PopupDefaultPage = () => {
     const navigate = useNavigate();
@@ -25,6 +26,7 @@ const PopupDefaultPage = () => {
         await deletePopup(popupToDelete)
         setPopupOpen(false);
         setPopupDeleted(prevState => !prevState);
+        toastEmitter.emit(TOAST_EMITTER_KEY, 'This popup is removed')
     };
 
     const handleOpenPopup = (id) => {

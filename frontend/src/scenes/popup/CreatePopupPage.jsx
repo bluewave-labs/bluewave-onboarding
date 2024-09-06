@@ -6,6 +6,7 @@ import PopupAppearance from '../../components/PopupPageComponents/PopupAppearanc
 import PopupContent from '../../components/PopupPageComponents/PopupContent/PopupContent';
 import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
 import { useNavigate, useLocation } from 'react-router-dom';
+import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 
 
 const CreatePopupPage = () => {
@@ -84,13 +85,14 @@ const CreatePopupPage = () => {
             header: header,
             content: content
         };
-        console.log(popupData)
         try {
             const response = location.state?.isEdit
             ? await editPopup(location.state?.id, popupData)
             : await addPopup(popupData);
             
-            console.log('Add popup successful:', response);
+            const toastMessage = location.state?.isEdit ? 'You edited this popup' : 'This popup is removed'
+
+            toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
             navigate('/popup');
         } catch (error) {
             if (error.response && error.response.data) {
