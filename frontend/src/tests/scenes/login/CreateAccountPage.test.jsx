@@ -93,10 +93,10 @@ describe('CreateAccountPage', () => {
     // Add more assertions as needed
   });
 
-  it('handles sign up failure with user already exists error', async () => {
+  it('handles sign up failure with email already exists error', async () => {
     signUp.mockRejectedValueOnce({
       response: {
-        data: { error: 'User already exists' },
+        data: { error: 'Email already exists' },
         status: 400,
       },
     });
@@ -117,7 +117,7 @@ describe('CreateAccountPage', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('User already exists')).to.exist;
+      expect(screen.getByText('Email already exists')).to.exist;
     });
 
     expect(signUp).toHaveBeenCalledWith({ username: 'testuser', email: 'test@example.com', password: 'Password1!' });
