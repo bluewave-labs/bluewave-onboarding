@@ -21,23 +21,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Copy files via SSH to DigitalOcean Droplet
+      - name: Set up SSH
         env:
-          DO_USERNAME: ${{ secrets.DO_USERNAME }}
-          DO_PASSWORD: ${{ secrets.DO_PASSWORD }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           mkdir -p ~/.ssh
-          echo "$DO_PASSWORD" | sshpass ssh -o StrictHostKeyChecking=no $DO_USERNAME << EOF
-          scp -r ./build $DO_USERNAME:/path/to/deploy
-          EOF
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
 
-      - name: Restart Docker containers on the droplet
+      - name: Deploy to DigitalOcean Droplet
         env:
           DO_USERNAME: ${{ secrets.DO_USERNAME }}
-          DO_PASSWORD: ${{ secrets.DO_PASSWORD }}
         run: |
-          echo "$DO_PASSWORD" | sshpass ssh -o StrictHostKeyChecking=no $DO_USERNAME << EOF
-          cd /path/to/deploy
-          docker-compose down
-          docker-compose up -d
+          ssh -o StrictHostKeyChecking=no $DO_USERNAME << EOF
+          su - docker_app -c "cd ~/bluewave-onboarding && git pull && docker compose down && docker compose build && docker compose up -d"
           EOF
