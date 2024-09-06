@@ -1,0 +1,43 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Copy files via SSH to DigitalOcean Droplet
+        env:
+          DO_USERNAME: ${{ secrets.DO_USERNAME }}
+          DO_PASSWORD: ${{ secrets.DO_PASSWORD }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DO_PASSWORD" | sshpass ssh -o StrictHostKeyChecking=no $DO_USERNAME << EOF
+          scp -r ./build $DO_USERNAME:/path/to/deploy
+          EOF
+
+      - name: Restart Docker containers on the droplet
+        env:
+          DO_USERNAME: ${{ secrets.DO_USERNAME }}
+          DO_PASSWORD: ${{ secrets.DO_PASSWORD }}
+        run: |
+          echo "$DO_PASSWORD" | sshpass ssh -o StrictHostKeyChecking=no $DO_USERNAME << EOF
+          cd /path/to/deploy
+          docker-compose down
+          docker-compose up -d
+          EOF
