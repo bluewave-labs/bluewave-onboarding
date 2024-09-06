@@ -21,7 +21,7 @@ function CreateAccountPage() {
 
     switch (name) {
       case 'name':
-        setValidation((prev) => ({ ...prev, isNameValid: value.length > 0 && !value.includes(" ") }));
+        setValidation((prev) => ({ ...prev, isNameValid: value.length > 0 }));
         break;
       case 'surname':
         setValidation((prev) => ({ ...prev, isSurnameValid: value.length > 0 }));
@@ -105,7 +105,6 @@ function CreateAccountPage() {
           onChange={handleInputChange}
           placeholder="Enter your surname"
         />
-        {error && <div className="error-message">{error}</div>}
       </div>
 
       <div className="form-group">
