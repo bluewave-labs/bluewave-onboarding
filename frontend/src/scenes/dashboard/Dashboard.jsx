@@ -6,7 +6,7 @@ import StatisticCardList from "../../components/HomePageComponents/StatisticCard
 import CreateActivityButtonList from "../../components/HomePageComponents/CreateActivityButtonList/CreateActivityButtonList";
 import { useNavigate } from "react-router-dom";
 
-const Dashboard = ({ username }) => {
+const Dashboard = ({ fullName }) => {
   const navigate = useNavigate();
   const metrics = [
     { metricName: "Popup views", metricValue: 5000, changeRate: 5 },
@@ -32,7 +32,7 @@ const Dashboard = ({ username }) => {
     <>
       <div className={styles.container}>
         <div className={styles.top}>
-          <UserTitle userName={username} />
+          <UserTitle fullName={fullName} />
           <DateDisplay />
         </div>
         <div className={styles.text}>
