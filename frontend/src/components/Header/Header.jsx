@@ -8,16 +8,17 @@ import { getCurrentUser } from '../../services/loginServices';
 import Cookies from 'js-cookie';
 
 function Header({ }) {
-    const initialUsername = Cookies.get('username') || 'username';
+    const initialFullName = Cookies.get('fullName') || 'John Doe';
     const initialRole = Cookies.get('role') || 'role';
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [user, setUser] = useState({ username: initialUsername, role: initialRole });
+    const [user, setUser] = useState({ fullName: initialFullName, role: initialRole });
 
     useEffect(() => {
         const fetchUser = async () => {
             const userData = await getCurrentUser();
-            setUser(userData);
+            const fullName = userData.surname ? userData.name + " " + userData.surname : userData.name;
+            setUser({ fullName, role: userData.role });
         };
         fetchUser();
     }, [user]);
@@ -33,7 +34,7 @@ function Header({ }) {
             <div className="user-info">
                 <Avatar src="/vendetta.png" alt="User" size="medium" />
                 <div className="user-details">
-                    <div className="user-name">{user.username}</div>
+                    <div className="user-name">{user.fullName}</div>
                     <div className="user-role">{user.role}</div>
                 </div>
                 <button className="dropdown-button" onClick={handleDropdownClick}>

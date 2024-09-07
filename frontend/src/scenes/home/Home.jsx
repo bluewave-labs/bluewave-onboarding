@@ -6,22 +6,22 @@ import { getCurrentUser } from '../../services/loginServices';
 import Cookies from 'js-cookie';
 
 const Home = () => {
-  const initialUsername = Cookies.get('username') || 'username';
-  const [username, setUsername] = useState(initialUsername);
+  const initialFullName = Cookies.get('fullName') || 'John Doe';
+  const [fullName, setFullName] = useState(initialFullName);
 
   useEffect(() => {
     const fetchUser = async () => {
       const user = await getCurrentUser();
-      setUsername(user.username);
+      setFullName(user.surname ? user.name + " " + user.surname : user.name);
     };
     fetchUser();
-  }, [username]);
+  }, [fullName]);
 
   return (
     <div className="app">
       <div className="content">
         <HomePageTemplate>
-          <Dashboard username={username} />
+          <Dashboard fullName={fullName} />
         </HomePageTemplate>
       </div>
     </div>
