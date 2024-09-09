@@ -90,7 +90,7 @@ const CreatePopupPage = () => {
             ? await editPopup(location.state?.id, popupData)
             : await addPopup(popupData);
             
-            const toastMessage = location.state?.isEdit ? 'You edited this popup' : 'This popup is removed'
+            const toastMessage = location.state?.isEdit ? 'You edited this popup' : 'New popup Saved'
 
             toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
             navigate('/popup');
