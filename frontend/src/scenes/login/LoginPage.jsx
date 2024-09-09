@@ -3,6 +3,8 @@ import './Login.css';
 import GoogleSignInButton from '../../components/Button/GoogleSignInButton/GoogleSignInButton';
 import { login } from '../../services/loginServices';
 import { useNavigate } from 'react-router-dom';
+import CustomLink from '../../components/CustomLink/CustomLink';
+import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -15,9 +17,9 @@ function LoginPage() {
   const handleLogin = async () => {
     try {
       const response = await login(email, password);
-      console.log('Login successful:', response);
-      window.location.reload();
-      navigate('/');
+      toastEmitter.emit(TOAST_EMITTER_KEY, `Login successfull`)
+      window.location.reload(); // TODO: should remove reload func
+      navigate('/home');
     } catch (error) {
       setLoginError(true);
       setErrorMessage(error.response.data.error);
@@ -56,7 +58,7 @@ function LoginPage() {
             />
             Remember for 30 days
           </label>
-          <a href="/forgot-password">Forgot Password</a>
+          <CustomLink text="Forgot Password" url="/forgot-password" />
         </div>
       </div>
       <button className="sign-in-button" onClick={handleLogin}>
@@ -64,7 +66,7 @@ function LoginPage() {
       </button>
       <GoogleSignInButton/>
       <div className="sign-up-link">
-        Don't have an account? <a href="/signup">Sign up</a>
+        Don't have an account? <CustomLink text="Sign up" url="/signup" />
       </div>
     </div>
   );

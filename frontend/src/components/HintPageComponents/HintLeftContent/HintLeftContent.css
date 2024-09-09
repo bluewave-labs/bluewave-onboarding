@@ -1,0 +1,14 @@
+.left-content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    gap: 5;
+    color: var(--main-text-color);
+}
+
+.hint-label {
+    font-weight: 400;
+    font-size: 13px;
+    margin-top: 1.5rem;
+}
