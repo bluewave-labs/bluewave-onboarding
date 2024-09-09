@@ -1,19 +1,19 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
-const jsonErrorMiddleware = require('./src/middleware/jsonErrorMiddleware');
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
+const jsonErrorMiddleware = require("./src/middleware/jsonErrorMiddleware");
 
 // Load environment variables from .env file
 dotenv.config();
 
-const authRoutes = require('./src/routes/auth.routes');
-const userRoutes = require('./src/routes/user.routes');
-const mocks = require('./src/routes/mocks.routes');
-const popup = require('./src/routes/popup.routes');
-const popup_log = require('./src/routes/popup_log.routes');
-// const tourRoutes = require('./src/routes/tour.routes');
+const authRoutes = require("./src/routes/auth.routes");
+const userRoutes = require("./src/routes/user.routes");
+const mocks = require("./src/routes/mocks.routes");
+const popup = require("./src/routes/popup.routes");
+const popup_log = require("./src/routes/popup_log.routes");
+const tourRoutes = require("./src/routes/tour.routes");
 
 const app = express();
 
@@ -31,16 +31,16 @@ sequelize
   .catch((err) => console.log("Error: " + err));
 
 sequelize
-  .sync({force:true})
+  .sync({ force: true })
   .then(() => console.log("Models synced with the database..."))
   .catch((err) => console.log("Error syncing models: " + err));
 
-app.use('/auth', authRoutes);
-app.use('/users', userRoutes);
-app.use('/mock/', mocks);
-app.use('/popup', popup);
-app.use('/popup_log', popup_log);
-// app.use('/tours', tourRoutes);
+app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/mock/", mocks);
+app.use("/popup", popup);
+app.use("/popup_log", popup_log);
+app.use("/tours", tourRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
