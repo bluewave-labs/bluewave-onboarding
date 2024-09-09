@@ -4,6 +4,7 @@ import HomePageTemplate from '../HomePageTemplate/HomePageTemplate';
 import ParagraphCSS from '../../components/ParagraphCSS/ParagraphCSS';
 import GuideMainPageTemplate from '../GuideMainPageTemplate/GuideMainPageTemplate';
 import CreateActivityButton from '../../components/Button/CreateActivityButton/CreateActivityButton';
+import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 
 const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType, itemTypeInfo, getItemDetails }) => {
     const [items, setItems] = useState([]);
@@ -15,6 +16,7 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
         await deleteItem(itemToDelete);
         setPopupOpen(false);
         setItemDeleted(prevState => !prevState);
+        toastEmitter.emit(TOAST_EMITTER_KEY, 'This banner is removed');
     };
 
     const handleOpenPopup = (id) => {

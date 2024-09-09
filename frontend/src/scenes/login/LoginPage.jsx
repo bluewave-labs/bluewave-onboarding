@@ -4,6 +4,7 @@ import GoogleSignInButton from '../../components/Button/GoogleSignInButton/Googl
 import { login } from '../../services/loginServices';
 import { useNavigate } from 'react-router-dom';
 import CustomLink from '../../components/CustomLink/CustomLink';
+import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -16,9 +17,9 @@ function LoginPage() {
   const handleLogin = async () => {
     try {
       const response = await login(email, password);
-      console.log('Login successful:', response);
-      window.location.reload();
-      navigate('/');
+      toastEmitter.emit(TOAST_EMITTER_KEY, `Login successfull`)
+      window.location.reload(); // TODO: should remove reload func
+      navigate('/home');
     } catch (error) {
       setLoginError(true);
       setErrorMessage(error.response.data.error);
