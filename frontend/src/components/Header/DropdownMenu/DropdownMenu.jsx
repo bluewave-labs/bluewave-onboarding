@@ -7,14 +7,16 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../../services/loginServices';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../../utils/toastEmitter';
+import { useAuth } from '../../../services/authProvider';
 
 const DropdownMenu = () => {
     const navigate = useNavigate();
+    const { logoutAuth } = useAuth();
 
     const handleLogoutClick = async () => {
         await logout();
+        logoutAuth();
         toastEmitter.emit(TOAST_EMITTER_KEY, 'Logout successfull');
-        window.location.reload(); // TODO: should remove reload func
         navigate('/');
     };
 
