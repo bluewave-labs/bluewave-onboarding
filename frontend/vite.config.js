@@ -7,6 +7,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    include: ['src/tests/**/*.test.jsx']
-  },
+    include: ['src/tests/**/*.test.jsx'],
+    css: {
+      modules: {
+          classNameStrategy: 'non-scoped'
+      }
+    }
+  }
 });
