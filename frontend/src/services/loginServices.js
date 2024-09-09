@@ -1,11 +1,14 @@
 import {apiClient} from './apiClient'; 
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useAuth } from './authProvider';
 
 const authClient = axios.create({
   ...apiClient.defaults,
   baseURL: `${apiClient.defaults.baseURL}auth`,
 });
+
+const { loginAuth, logoutAuth } = useAuth();
 
 // Function to handle login
 export const login = async (email, password) => {
@@ -13,7 +16,7 @@ export const login = async (email, password) => {
     const response = await authClient.post('/login', { email, password });
     const token = response.data.token;
     localStorage.setItem('authToken', token);
-
+    loginAuth();
     return response.data;
   } catch (error) {
     console.error('Login error:', error.response);
@@ -26,6 +29,7 @@ export const logout = async () => {
   try {
     await apiClient.post('auth/logout');
     localStorage.removeItem('authToken');
+    logoutAuth();
     return true;
   } catch (error) {
     console.error('Logout error:', error.response);
@@ -40,6 +44,7 @@ export const signUp = async (userData) => {
     const response = await authClient.post('/register', userData);
     const token = response.data.token;
     localStorage.setItem('authToken', token);
+    loginAuth();
     return response.data;
   } catch (error) {
     console.error('Sign up error:', error.response);
