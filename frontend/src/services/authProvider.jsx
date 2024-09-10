@@ -32,12 +32,16 @@ export const AuthProvider = ({ children }) => {
         fetchUser();
     }, []);
 
-    const login = () => {
+    const loginAuth = () => {
         setIsLoggedIn(true);
     };
 
+    const logoutAuth = () => {
+        setIsLoggedIn(false);
+    };
+
     return (
-        <AuthContext.Provider value={{isLoggedIn, login}}>
+        <AuthContext.Provider value={{isLoggedIn, loginAuth, logoutAuth}}>
             {children}
         </AuthContext.Provider>
     );
