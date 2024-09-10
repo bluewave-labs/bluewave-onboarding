@@ -56,7 +56,7 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
     }));
 
     return (
-        <HomePageTemplate>
+        <>
             {items.length === 0 ? (
                 <div style={style}>
                     <ParagraphCSS />
@@ -72,7 +72,7 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
                     onClick={navigateToCreate}
                 />
             )}
-        </HomePageTemplate>
+        </>
     );
 };
 
