@@ -30,25 +30,12 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           eval $(ssh-agent -s)
-          if [ -n "$SSH_PASSPHRASE" ]; then
-            echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
-          else
-            ssh-add ~/.ssh/id_rsa
-          fi
-
-      - name: Add SSH Host Key
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H 67.207.80.78 >> ~/.ssh/known_hosts
+          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
 
       - name: Deploy to DigitalOcean Droplet
         env:
           DO_USERNAME: ${{ secrets.DO_USERNAME }}
         run: |
-          ssh -v -T -o StrictHostKeyChecking=no $DO_USERNAME << EOF
-          cd ~/bluewave-onboarding
-          git pull
-          docker compose down
-          docker compose build
-          docker compose up -d
+          ssh -T -o StrictHostKeyChecking=no $DO_USERNAME << EOF
+          cd ~/bluewave-onboarding && git pull && docker compose down && docker compose build && docker compose up -d
           EOF
