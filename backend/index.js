@@ -12,7 +12,7 @@ const authRoutes = require('./src/routes/auth.routes');
 const userRoutes = require('./src/routes/user.routes');
 const mocks = require('./src/routes/mocks.routes');
 const popup = require('./src/routes/popup.routes');
-const popup_log = require('./src/routes/popup_log.routes');
+const popup_log = require('./src/routes/popuplog.routes');
 const banner = require('./src/routes/banner.routes');
 // const tourRoutes = require('./src/routes/tour.routes');
 
