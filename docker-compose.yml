@@ -35,10 +35,11 @@ services:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - "3001:3001"
+      - "4173:4173"
     environment:
-      - NODE_ENV=${NODE_ENV}
+      - NODE_ENV=production
     command: >
-      bash -c "if [ \"$$NODE_ENV\" = \"production\" ] ; then npm run build && npm run preview ; fi"
+      bash -c "npm run build && npm run preview"
+
 volumes:
   pgdata:
