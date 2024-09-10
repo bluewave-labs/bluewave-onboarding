@@ -8,7 +8,7 @@ const HintLeftAppearance = ({ data = [] }) => {
       {data.map(({ stateName, state, setState }) => (
         <div key={stateName}>
           <h2 className="hint-state-name">{stateName}</h2>
-          <div className="hint-appearance-color">
+          <div className="hint-appearance-color" style={{width: "241px"}}>
             <ColorTextField value={state} onChange={setState} />
           </div>
         </div>

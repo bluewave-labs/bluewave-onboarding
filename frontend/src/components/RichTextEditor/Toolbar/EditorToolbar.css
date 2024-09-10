@@ -1,36 +1,14 @@
-#toolbar {
+.toolbar-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-.ql-toolbar.ql-snow {
-  border: none;
+.toolbar-container button {
+  color:  var(--second-text-color);
 }
 
-.ql-stroke {
-  stroke: var(--second-text-color) !important;
-}
-
-.ql-active .ql-stroke {
-  stroke: var(--main-purple) !important;
-}
-
-button:hover .ql-stroke {
-  stroke: var(--main-purple) !important;
-}
-
-.ql-snow .ql-picker {
-  color: var(--second-text-color) !important;
-}
-
-.ql-snow.ql-toolbar .ql-picker-label:hover {
-  color: var(--main-purple) !important;
-}
-
-.ql-snow.ql-toolbar .ql-picker-label.ql-active {
-  color: var(--main-purple) !important;
-}
-
-.ql-toolbar .ql-picker-item:hover {
-  color: var(--main-purple) !important;
+.toolbar-container button[disabled] {
+  color: var(--light-border-color);
 }
