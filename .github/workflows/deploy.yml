@@ -21,45 +21,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Set up SSH with passphrase
+      - name: Set up SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
         run: |
-          # Ensure the .ssh directory exists
           mkdir -p ~/.ssh
-      
-          # Save the SSH private key to the id_rsa file and check if it's written correctly
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-      
-          # Verify if the private key file exists and check its content
-          if [ ! -f ~/.ssh/id_rsa ]; then
-            echo "Error: ~/.ssh/id_rsa does not exist."
-            exit 1
-          fi
-      
-          # Check if the file is empty
-          if [ ! -s ~/.ssh/id_rsa ]; then
-            echo "Error: ~/.ssh/id_rsa is empty."
-            exit 1
-          fi
-      
-          echo "SSH private key file has been created and is not empty."
-      
-          # Start the SSH agent
           eval $(ssh-agent -s)
-      
-          # Install expect to handle passphrase input
-          sudo apt-get update && sudo apt-get install -y expect
-      
-          # Use expect to enter the passphrase for ssh-add
-          expect -c "
-          spawn ssh-add ~/.ssh/id_rsa
-          expect \"Enter passphrase for ~/.ssh/id_rsa:\"
-          send \"$SSH_PASSPHRASE\r\"
-          expect eof
-          "
+          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
 
 
       - name: Deploy to DigitalOcean Droplet
