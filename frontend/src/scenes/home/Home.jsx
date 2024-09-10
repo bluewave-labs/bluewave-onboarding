@@ -15,7 +15,7 @@ const Home = () => {
       setFullName(user.surname ? user.name + " " + user.surname : user.name);
     };
     fetchUser();
-  }, [fullName]);
+  }, []);
 
   return (
     <div className="app">

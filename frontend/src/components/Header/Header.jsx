@@ -21,7 +21,7 @@ function Header({ }) {
             setUser({ fullName, role: userData.role });
         };
         fetchUser();
-    }, [user]);
+    }, []);
 
 
     const handleDropdownClick = () => {
