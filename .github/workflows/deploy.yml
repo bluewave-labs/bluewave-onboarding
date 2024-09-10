@@ -29,12 +29,14 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          eval $(ssh-agent -s)
-          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
+          # eval $(ssh-agent -s)
+          # echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
 
 
       - name: Deploy to DigitalOcean Droplet
         env:
           DO_USERNAME: ${{ secrets.DO_USERNAME }}
         run: |
-          ssh -o StrictHostKeyChecking=no $DO_USERNAME "echo 'SSH connection successful'"
+          ssh -o StrictHostKeyChecking=no $DO_USERNAME << EOF
+          cd ~/bluewave-onboarding && git pull && docker compose down && docker compose build && docker compose up -d
+          EOF
