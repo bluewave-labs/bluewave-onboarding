@@ -36,6 +36,6 @@ jobs:
         env:
           DO_USERNAME: ${{ secrets.DO_USERNAME }}
         run: |
-          ssh -T -o StrictHostKeyChecking=no $DO_USERNAME@your_droplet_ip << EOF
+          ssh -T -o StrictHostKeyChecking=no $DO_USERNAME << EOF
           cd ~/bluewave-onboarding && git pull && docker compose down && docker compose build && docker compose up -d
           EOF
