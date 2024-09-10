@@ -29,8 +29,14 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          # eval $(ssh-agent -s)
-          # echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
+          eval $(ssh-agent -s)
+          sudo apt-get install -y expect
+          expect -c "
+          spawn ssh-add ~/.ssh/id_rsa
+          expect \"Enter passphrase for ~/.ssh/id_rsa:\"
+          send \"$SSH_PASSPHRASE\r\"
+          expect eof
+          "
 
       - name: Deploy to DigitalOcean Droplet
         env:
