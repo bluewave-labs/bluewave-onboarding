@@ -5,6 +5,7 @@ import { login } from '../../services/loginServices';
 import { useNavigate } from 'react-router-dom';
 import CustomLink from '../../components/CustomLink/CustomLink';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+import { useAuth } from '../../services/authProvider';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -13,13 +14,14 @@ function LoginPage() {
   const [loginError, setLoginError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const { loginAuth } = useAuth();
 
   const handleLogin = async () => {
     try {
-      const response = await login(email, password);
+      await login(email, password);
       toastEmitter.emit(TOAST_EMITTER_KEY, `Login successfull`)
-      window.location.reload(); // TODO: should remove reload func
-      navigate('/home');
+      loginAuth();
+      navigate('/');
     } catch (error) {
       setLoginError(true);
       setErrorMessage(error.response.data.error);
