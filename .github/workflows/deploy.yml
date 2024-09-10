@@ -26,11 +26,28 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
         run: |
+          # Ensure the .ssh directory exists
           mkdir -p ~/.ssh
+      
+          # Save the SSH private key to the id_rsa file
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      
+          # Ensure the private key has correct permissions
           chmod 600 ~/.ssh/id_rsa
+      
+          # Start the SSH agent
           eval $(ssh-agent -s)
-          sudo apt-get install -y expect
+      
+          # Verify that the private key file exists and contains valid data
+          if [ ! -s ~/.ssh/id_rsa ]; then
+            echo "Error: ~/.ssh/id_rsa does not exist or is empty"
+            exit 1
+          fi
+      
+          # Install expect to handle passphrase entry
+          sudo apt-get update && sudo apt-get install -y expect
+      
+          # Use expect to enter the passphrase for ssh-add
           expect -c "
           spawn ssh-add ~/.ssh/id_rsa
           expect \"Enter passphrase for ~/.ssh/id_rsa:\"
