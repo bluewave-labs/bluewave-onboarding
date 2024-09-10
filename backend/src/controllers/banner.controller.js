@@ -1,5 +1,6 @@
 const bannerService = require("../service/banner.service.js");
 const { internalServerError } = require("../utils/errors");
+const { isValidHexColor } = require("../utils/guideHelpers");
 const db = require("../models");
 const Banner = db.Banner;
 
@@ -11,11 +12,6 @@ const validatePosition = (value) => {
 const validateCloseButtonAction = (value) => {
   const validActions = ["no action", "open url", "open url in a new tab"];
   return validActions.includes(value);
-};
-
-const validateColorCode = (value) => {
-  const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-  return colorRegex.test(value);
 };
 
 class BannerController {
@@ -41,7 +37,7 @@ class BannerController {
 
     const colorFields = { fontColor, backgroundColor };
     for (const [field, value] of Object.entries(colorFields)) {
-      if (value && !validateColorCode(value)) {
+      if (value && !isValidHexColor(value)) {
         return res
           .status(400)
           .json({
@@ -127,9 +123,8 @@ class BannerController {
       }
 
       const colorFields = ["fontColor", "backgroundColor"];
-      const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
       for (const field of colorFields) {
-        if (req.body[field] && !colorRegex.test(req.body[field])) {
+        if (req.body[field] && !isValidHexColor(req.body[field])) {
           return res
             .status(400)
             .json({
@@ -174,6 +169,31 @@ class BannerController {
       res.status(statusCode).json(payload);
     }
   }
+
+  async getBannerById(req, res) {
+    try {
+      const { id } = req.params;
+
+      if (isNaN(id) || id.trim() === "") {
+        return res.status(400).json({ errors: [{ msg: "Invalid id" }] });
+      }
+
+      const banner = await bannerService.getBannerById(id);
+
+      if (!banner) {
+        return res.status(404).json({ errors: [{ msg: "Banner not found" }] });
+      }
+
+      res.status(200).json(banner);
+    } catch (err) {
+      const { statusCode, payload } = internalServerError(
+        "GET_BANNER_BY_ID_ERROR",
+        err.message,
+      );
+      res.status(statusCode).json(payload);
+    }
+  }
+
 }
 
 module.exports = new BannerController();

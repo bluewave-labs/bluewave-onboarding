@@ -5,9 +5,9 @@ import ContentHeader from '../../components/TourComponents/ContentHeader/Content
 import ConfirmationPopup from '../../components/TourComponents/ConfirmationPopup/ConfirmationPopup';
 import Button from '../../components/Button/Button';
 import './GuideMainPageTemplate.css';
-import { ACTIVITY_TYPES_INFO, activityInfoData } from '../../data/GuideMainPageData';
+import { activityInfoData } from '../../data/GuideMainPageData';
 
-const GuideMainPageTemplate = ({ items, handleSelect, handleDelete, isPopupOpen, handleClosePopup, type, onClick }) => {
+const GuideMainPageTemplate = ({ items, handleDelete, isPopupOpen, handleClosePopup, type, onClick }) => {
 
   const { heading, paragraph, buttonText, title } = activityInfoData[type];
 
@@ -19,7 +19,7 @@ const GuideMainPageTemplate = ({ items, handleSelect, handleDelete, isPopupOpen,
       </div>
       <div className="product-page">
         <ContentArea className="content-area">
-          <List items={items} onSelectItem={handleSelect} />
+          <List items={items} />
         </ContentArea>
         <div className="tour-info-container">
           <h4>{heading}</h4>

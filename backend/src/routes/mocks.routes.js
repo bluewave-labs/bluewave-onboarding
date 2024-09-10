@@ -1,5 +1,5 @@
 const express = require("express");
-const { popup, onboard } = require("./../controllers/popup.controller");
+const { popup, onboard } = require("./../controllers/onboarding.controller");
 
 const router = express.Router();
 router.get("/popup", popup);

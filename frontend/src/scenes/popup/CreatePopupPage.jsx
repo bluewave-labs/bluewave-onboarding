@@ -1,14 +1,18 @@
 import HomePageTemplate from '../../templates/HomePageTemplate/HomePageTemplate';
 import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
 import PopupAppearance from '../../components/PopupPageComponents/PopupAppearance/PopupAppearance';
 import PopupContent from '../../components/PopupPageComponents/PopupContent/PopupContent';
-import { addPopup } from '../../services/popupServices';
-import { useNavigate } from 'react-router-dom';
+import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
+import { useNavigate, useLocation } from 'react-router-dom';
+import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+
 
 const CreatePopupPage = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+
     const [activeButton, setActiveButton] = useState(0);
 
     const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#F8F9F8');
@@ -34,8 +38,41 @@ const CreatePopupPage = () => {
         { stateName: 'Button Text Color', state: buttonTextColor, setState: setButtonTextColor },
     ];
 
+    useEffect(() => {
+        if (location.state?.isEdit) {
+            const fetchPopupData = async () => {
+                try {
+                    const popupData = await getPopupById(location.state.id);
+
+                    // Update the state with the fetched data
+                    setHeaderBackgroundColor(popupData.headerBackgroundColor || '#F8F9F8');
+                    setHeaderColor(popupData.headerColor || '#101828');
+                    setTextColor(popupData.textColor || '#344054');
+                    setButtonBackgroundColor(popupData.buttonBackgroundColor || '#7F56D9');
+                    setButtonTextColor(popupData.buttonTextColor || '#FFFFFF');
+                    setHeader(popupData.header || '');
+                    setContent(popupData.content || '');
+                    setActionButtonUrl(popupData.url || 'https://');
+                    setActionButtonText(popupData.actionButtonText || 'Take me to subscription page');
+                    setButtonAction(popupData.closeButtonAction || 'No action');
+                    setPopupSize(popupData.popupSize || 'Small');
+
+                    console.log('Get popup successful:', response);
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.error('An error occurred:', error.response.data.errors[0].msg);
+                    } else {
+                        console.log('An error occurred. Please check your network connection and try again.');
+                    }
+                }
+            };
+
+            fetchPopupData();
+        }
+    }, []);
+
     const onSave = async () => {
-        const popupData = { 
+        const popupData = {
             popupSize: popupSize.toLowerCase(),
             url: actionButtonUrl,
             actionButtonText: actionButtonText,
@@ -44,21 +81,25 @@ const CreatePopupPage = () => {
             textColor: textColor,
             buttonBackgroundColor: buttonBackgroundColor,
             buttonTextColor: buttonTextColor,
-            closeButtonAction:buttonAction.toLowerCase(),
-            header:header,
-            content:content
+            closeButtonAction: buttonAction.toLowerCase(),
+            header: header,
+            content: content
         };
-        console.log(popupData)
         try {
-          const response = await addPopup(popupData);
-          console.log('Add popup successful:', response);
-          navigate('/popup');
+            const response = location.state?.isEdit
+            ? await editPopup(location.state?.id, popupData)
+            : await addPopup(popupData);
+            
+            const toastMessage = location.state?.isEdit ? 'You edited this popup' : 'New popup Saved'
+
+            toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
+            navigate('/popup');
         } catch (error) {
-          if (error.response && error.response.data) {
-            console.error('An error occurred:', error.response.data.errors[0].msg);
-          } else {
-            console.log('An error occurred. Please check your network connection and try again.');
-          }
+            if (error.response && error.response.data) {
+                console.error('An error occurred:', error.response.data.errors[0].msg);
+            } else {
+                console.log('An error occurred. Please check your network connection and try again.');
+            }
         }
     }
 
@@ -86,7 +127,7 @@ const CreatePopupPage = () => {
                             textColor={textColor}
                             buttonBackgroundColor={buttonBackgroundColor}
                             buttonTextColor={buttonTextColor}
-                            sx={{width: "100%", maxWidth: '700px' , marginLeft: '2.5rem', marginTop: '1rem'}}
+                            sx={{ width: "100%", maxWidth: '700px', marginLeft: '2.5rem', marginTop: '1rem' }}
                         />}
                     leftContent={() =>
                         <PopupContent
@@ -95,6 +136,7 @@ const CreatePopupPage = () => {
                             setActionButtonUrl={setActionButtonUrl}
                             actionButtonText={actionButtonText}
                             setButtonAction={setButtonAction}
+                            buttonAction={buttonAction}
                         />}
                     leftAppearance={() => (
                         <PopupAppearance
