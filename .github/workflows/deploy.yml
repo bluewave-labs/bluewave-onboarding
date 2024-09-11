@@ -28,10 +28,10 @@ jobs:
           KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           eval $(ssh-agent -s)
-          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa <<< "$SSH_PASSPHRASE"
+          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
           echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
           ssh-add -l  # List added keys for debugging
 
