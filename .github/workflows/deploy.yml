@@ -36,7 +36,8 @@ jobs:
       - name: Deploy to DigitalOcean Droplet
         env:
           DO_USERNAME: ${{ secrets.DO_USERNAME }}
+          DO_IP_ADDRESS: ${{ secrets.DO_IP_ADDRESS }}
         run: |
-          ssh -T -o StrictHostKeyChecking=no $DO_USERNAME << EOF
+          ssh -T -o StrictHostKeyChecking=no $DO_USERNAME@$DO_IP_ADDRESS << EOF
           cd ~/bluewave-onboarding && git pull && docker compose down && docker compose build && docker compose up -d
           EOF
