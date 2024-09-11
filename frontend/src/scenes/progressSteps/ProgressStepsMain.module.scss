@@ -10,6 +10,8 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
+
+        
         h2{
             @include text-style(header-text, semibold);
             margin: 1.5rem;
@@ -38,8 +40,6 @@
         color:  #D0D5DD;
         padding-left: 0.5rem;
       }
-      
-      
 
     .buttons{
         display: flex;            
