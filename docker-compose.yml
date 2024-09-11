@@ -21,7 +21,7 @@ services:
           echo 'Database already exists';
         fi
         npx sequelize-cli db:migrate;
-      fi
+      fi;
       if [ \"$$NODE_ENV\" = \"production\" ]; then
         npm run prod;
       elif [ \"$$NODE_ENV\" = \"staging\" ]; then
