@@ -40,6 +40,6 @@ jobs:
           DO_USERNAME: ${{ secrets.DO_USERNAME }}
           DO_IP_ADDRESS: ${{ secrets.DO_IP_ADDRESS }}
         run: |
-          ssh -oBatchMode=yes -v -T $DO_USERNAME@$DO_IP_ADDRESS << EOF
+          ssh -v -T $DO_USERNAME@$DO_IP_ADDRESS << EOF
           cd ~/bluewave-onboarding && git pull && docker compose down && docker compose build && docker compose up -d
           EOF
