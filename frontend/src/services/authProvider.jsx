@@ -9,6 +9,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -20,6 +21,9 @@ export const AuthProvider = ({ children }) => {
                 }
                 const response = await apiClient.get('/users/current-user');
                 if (response.status === 200 && response.data.user) {
+                    const userData = response.data.user;
+                    const fullName = userData.surname ? userData.name + " " + userData.surname : userData.name;
+                    setUserInfo({ fullName, role: userData.role });
                     setIsLoggedIn(true);
                 }
                 else{
@@ -41,7 +45,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{isLoggedIn, loginAuth, logoutAuth}}>
+        <AuthContext.Provider value={{isLoggedIn, loginAuth, logoutAuth, userInfo}}>
             {children}
         </AuthContext.Provider>
     );
