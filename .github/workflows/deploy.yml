@@ -23,14 +23,15 @@ jobs:
 
       - name: Set up SSH
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_NEW }}
+          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE_NEW }}
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa_new
+          chmod 600 ~/.ssh/id_rsa_new
           eval $(ssh-agent -s)
-          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
+          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa_new
+          ssh-add -l  # List added keys for debugging
 
       - name: Deploy to DigitalOcean Droplet
         env:
