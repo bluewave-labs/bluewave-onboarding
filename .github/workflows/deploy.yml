@@ -31,7 +31,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa.pem   # Use id_rsa.pem
           chmod 600 ~/.ssh/id_rsa.pem                   # Adjust file permissions
           eval $(ssh-agent -s)
-          ssh-add ~/.ssh/id_rsa.pem                     # No passphrase needed
+          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa.pem  # Use id_rsa.pem with ssh-add
           echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
           ssh-add -l  # List added keys for debugging
 
