@@ -1,5 +1,5 @@
 const express = require("express");
-const popupController = require("../controllers/popupController");
+const popupController = require("../controllers/popup.controller");
 const authenticateJWT = require("../middleware/auth.middleware");
 
 const router = express.Router();

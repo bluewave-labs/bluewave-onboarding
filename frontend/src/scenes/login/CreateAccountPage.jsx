@@ -13,7 +13,7 @@ function CreateAccountPage() {
   const [passwordChecks, setPasswordChecks] = useState({ hasSpecialCharacter: false, atLeastEightCharacters: false });
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { loginAuth } = useAuth();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,8 +57,8 @@ function CreateAccountPage() {
     const userData = { name: name, surname: surname, email: email, password: password };
 
     try {
-      const response = await signUp(userData);
-      login(); 
+      await signUp(userData);
+      loginAuth();
       navigate('/');
     } catch (error) {
       if (error.response && error.response.data) {
