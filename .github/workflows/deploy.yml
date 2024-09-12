@@ -29,18 +29,10 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          
-          # Start SSH agent
-          eval "$(ssh-agent -s)"
-
-          # Add the private key without prompting for a passphrase
-          ssh-add ~/.ssh/id_rsa || true
-          
-          # Set known hosts
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_rsa  # No passphrase required
           echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
-
-          # List added keys for debugging
-          ssh-add -l
+          ssh-add -l  # List added keys for debugging
 
       - name: Deploy to DigitalOcean Droplet
         env:
