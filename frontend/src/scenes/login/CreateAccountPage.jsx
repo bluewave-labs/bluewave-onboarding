@@ -3,17 +3,18 @@ import './Login.css';
 import GoogleSignInButton from '../../components/Button/GoogleSignInButton/GoogleSignInButton';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { signUp } from '../../services/loginServices';
-import { useNavigate } from 'react-router-dom';
 import CustomLink from '../../components/CustomLink/CustomLink';
+import { handleAuthSuccess } from '../../utils/loginHelper';
 import { useAuth } from '../../services/authProvider';
+import { useNavigate } from 'react-router-dom'; 
 
 function CreateAccountPage() {
   const [formData, setFormData] = useState({ name: '', surname: '', email: '', password: '' });
   const [validation, setValidation] = useState({ isNameValid: false, isSurnameValid: false, isEmailValid: false, isPasswordValid: false });
   const [passwordChecks, setPasswordChecks] = useState({ hasSpecialCharacter: false, atLeastEightCharacters: false });
   const [error, setError] = useState('');
+  const { loginAuth } = useAuth();
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -58,8 +59,7 @@ function CreateAccountPage() {
 
     try {
       const response = await signUp(userData);
-      login(); 
-      navigate('/');
+      handleAuthSuccess(response, loginAuth, navigate)
     } catch (error) {
       if (error.response && error.response.data) {
         if (error.response.data.error === 'Email already exists') {
@@ -68,6 +68,7 @@ function CreateAccountPage() {
           setError('An error occurred. Please try again.');
         }
       } else {
+        console.log(error)
         setError('An error occurred. Please check your network connection and try again.');
       }
     }
