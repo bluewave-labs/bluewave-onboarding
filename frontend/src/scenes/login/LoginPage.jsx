@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import './Login.css'; 
+import './Login.css';
 import GoogleSignInButton from '../../components/Button/GoogleSignInButton/GoogleSignInButton';
 import { login } from '../../services/loginServices';
-import { useNavigate } from 'react-router-dom';
 import CustomLink from '../../components/CustomLink/CustomLink';
-import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+import { handleAuthSuccess } from '../../utils/loginHelper';
 import { useAuth } from '../../services/authProvider';
+
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -13,15 +13,12 @@ function LoginPage() {
   const [rememberMe, setRememberMe] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
   const { loginAuth } = useAuth();
 
   const handleLogin = async () => {
     try {
-      await login(email, password);
-      toastEmitter.emit(TOAST_EMITTER_KEY, `Login successfull`)
-      loginAuth();
-      navigate('/');
+      const response = await login(email, password);
+      handleAuthSuccess(response, loginAuth)
     } catch (error) {
       setLoginError(true);
       setErrorMessage(error.response.data.error);
@@ -52,7 +49,7 @@ function LoginPage() {
       </div>
       <div className="form-group">
         <div className='form-group-2'>
-        <label>
+          <label>
             <input
               type="checkbox"
               checked={rememberMe}
@@ -66,7 +63,7 @@ function LoginPage() {
       <button className="sign-in-button" onClick={handleLogin}>
         Sign in
       </button>
-      <GoogleSignInButton/>
+      <GoogleSignInButton />
       <div className="sign-up-link">
         Don't have an account? <CustomLink text="Sign up" url="/signup" />
       </div>

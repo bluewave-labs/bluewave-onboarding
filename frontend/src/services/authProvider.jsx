@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import {apiClient} from './apiClient';
+import React, { useEffect, useContext, useReducer } from 'react';
+import { apiClient } from './apiClient';
 
 const AuthContext = React.createContext();
 
@@ -7,45 +7,65 @@ export const useAuth = () => {
     return useContext(AuthContext);
 };
 
+const authReducer = (state, action) => {
+    switch (action.type) {
+        case 'LOGIN':
+            return { ...state, isLoggedIn: true };
+        case 'LOGOUT':
+            return { ...state, isLoggedIn: false, userInfo: null };
+        case 'SET_USER_INFO':
+            return { ...state, userInfo: action.payload };
+        case 'LOGIN_AND_SET_USER_INFO':
+            return { isLoggedIn: true, userInfo: action.payload };
+        default:
+            return state;
+    }
+};
+
 export const AuthProvider = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userInfo, setUserInfo] = useState(null);
+    const [state, dispatch] = useReducer(authReducer, { isLoggedIn: false, userInfo: null });
 
     useEffect(() => {
         const fetchUser = async () => {
             try {
                 const authToken = localStorage.getItem('authToken');
                 if (!authToken) {
-                    setIsLoggedIn(false);
+                    dispatch({ type: 'LOGOUT' });
                     return;
                 }
                 const response = await apiClient.get('/users/current-user');
                 if (response.status === 200 && response.data.user) {
-                    const userData = response.data.user;
-                    const fullName = userData.surname ? userData.name + " " + userData.surname : userData.name;
-                    setUserInfo({ fullName, role: userData.role });
-                    setIsLoggedIn(true);
-                }
-                else{
-                    setIsLoggedIn(false);
+                    if (state.userInfo) {
+                        dispatch({ type: 'LOGIN' });
+                    } else {
+                        const userData = response.data.user;
+                        const fullName = userData.surname ? `${userData.name} ${userData.surname}` : userData.name;
+                        const payload = { fullName, role: userData.role };
+                        dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload });
+                    }
+                } else {
+                    dispatch({ type: 'LOGOUT' });
+
                 }
             } catch (error) {
                 localStorage.removeItem('authToken');
-            }      
+                dispatch({ type: 'LOGOUT' });
+            }
         };
+
         fetchUser();
     }, []);
 
-    const loginAuth = () => {
-        setIsLoggedIn(true);
+    const loginAuth = (userInfo) => {
+        dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload: userInfo });
     };
 
     const logoutAuth = () => {
-        setIsLoggedIn(false);
+        dispatch({ type: 'LOGOUT' });
     };
 
     return (
-        <AuthContext.Provider value={{isLoggedIn, loginAuth, logoutAuth, userInfo}}>
+        <AuthContext.Provider value={{ isLoggedIn: state.isLoggedIn, loginAuth, logoutAuth, userInfo: state.userInfo }}>
             {children}
         </AuthContext.Provider>
     );
