@@ -4,8 +4,29 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./DropdownList.css";
 
-const DropdownList = ({ actions = [], onActionChange }) => {
-  const [selectedAction, setSelectedAction] = useState(actions[0] || "");
+const DropdownList = ({
+  actions = [],
+  onActionChange,
+  selectedActionIndex = 0,
+  selectedActionString = ""
+}) => {
+
+  const [selectedAction, setSelectedAction] = useState('');
+
+  useEffect(() => {
+    const getInitialSelectedAction = () => {
+      if (selectedActionString) {
+        const lowerCaseSelectedActionString = selectedActionString.toLowerCase();
+        const index = actions.findIndex(action =>
+          action.toLowerCase() === lowerCaseSelectedActionString
+        );
+        return index !== -1 ? actions[index] : actions[0] || "";
+      }
+      return actions[selectedActionIndex] || "";
+    };
+
+    setSelectedAction(getInitialSelectedAction());
+  }, [selectedActionString, actions, selectedActionIndex]);
 
   useEffect(() => {
     if (onActionChange) {
@@ -28,11 +49,17 @@ const DropdownList = ({ actions = [], onActionChange }) => {
         onChange={handleChange}
         className="select"
       >
-        {actions.map((action, index) => (
-          <MenuItem key={index} className="menuItem" value={action}>
-            {action}
+        {actions.length > 0 ? (
+          actions.map((action, index) => (
+            <MenuItem key={index} className="menuItem" value={action}>
+              {action}
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem value="" disabled className="menuItem">
+            No Actions Available
           </MenuItem>
-        ))}
+        )}
       </Select>
     </div>
   );
@@ -40,7 +67,9 @@ const DropdownList = ({ actions = [], onActionChange }) => {
 
 DropdownList.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.string),
-  onActionChange: PropTypes.func, // Function to handle action change
+  onActionChange: PropTypes.func,
+  selectedActionIndex: PropTypes.number, // Index for the selected action
+  selectedActionString: PropTypes.string, // String for the selected action
 };
 
 export default DropdownList;

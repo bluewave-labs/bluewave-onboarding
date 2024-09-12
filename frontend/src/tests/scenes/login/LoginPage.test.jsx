@@ -3,6 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { BrowserRouter as Router } from 'react-router-dom';
 import LoginPage from '../../../scenes/login/LoginPage';
 import * as loginServices from '../../../services/loginServices';
+import { AuthProvider } from '../../../services/authProvider'; // Import your AuthProvider
 
 vi.mock('../../../services/loginServices');
 
@@ -10,7 +11,9 @@ describe('LoginPage', () => {
   it('renders the login page', () => {
     render(
       <Router>
-        <LoginPage />
+        <AuthProvider> 
+          <LoginPage />
+        </AuthProvider>
       </Router>
     );
 
@@ -25,7 +28,9 @@ describe('LoginPage', () => {
 
     render(
       <Router>
-        <LoginPage />
+        <AuthProvider> 
+          <LoginPage />
+        </AuthProvider>
       </Router>
     );
 
@@ -42,7 +47,9 @@ describe('LoginPage', () => {
 
     render(
       <Router>
-        <LoginPage />
+        <AuthProvider> 
+          <LoginPage />
+        </AuthProvider>
       </Router>
     );
 
