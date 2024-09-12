@@ -5,7 +5,7 @@ import { login } from '../../services/loginServices';
 import CustomLink from '../../components/CustomLink/CustomLink';
 import { handleAuthSuccess } from '../../utils/loginHelper';
 import { useAuth } from '../../services/authProvider';
-
+import { useNavigate } from 'react-router-dom'; 
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -14,14 +14,21 @@ function LoginPage() {
   const [loginError, setLoginError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const { loginAuth } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
       const response = await login(email, password);
-      handleAuthSuccess(response, loginAuth)
+      handleAuthSuccess(response, loginAuth, navigate)
     } catch (error) {
       setLoginError(true);
-      setErrorMessage(error.response.data.error);
+      if (error.response?.data?.error){
+        setErrorMessage(error.response.data.error);
+      }
+      else{
+        setErrorMessage('An error occurred. Please try again.');
+        console.log(error)
+      }
     }
   };
 
