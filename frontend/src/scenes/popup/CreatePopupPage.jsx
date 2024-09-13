@@ -87,9 +87,9 @@ const CreatePopupPage = () => {
         };
         try {
             const response = location.state?.isEdit
-            ? await editPopup(location.state?.id, popupData)
-            : await addPopup(popupData);
-            
+                ? await editPopup(location.state?.id, popupData)
+                : await addPopup(popupData);
+
             const toastMessage = location.state?.isEdit ? 'You edited this popup' : 'New popup Saved'
 
             toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
@@ -109,44 +109,39 @@ const CreatePopupPage = () => {
     };
 
     return (
-        <div >
-            <HomePageTemplate>
-                <GuideTemplate title='New Popup'
-                    activeButton={activeButton}
-                    handleButtonClick={handleButtonClick}
-                    onSave={onSave}
-                    rightContent={() =>
-                        <RichTextEditor
-                            header={header}
-                            content={content}
-                            setHeader={setHeader}
-                            setContent={setContent}
-                            previewBtnText={actionButtonText}
-                            headerBackgroundColor={headerBackgroundColor}
-                            headerColor={headerColor}
-                            textColor={textColor}
-                            buttonBackgroundColor={buttonBackgroundColor}
-                            buttonTextColor={buttonTextColor}
-                            sx={{ width: "100%", maxWidth: '700px', marginLeft: '2.5rem', marginTop: '1rem' }}
-                        />}
-                    leftContent={() =>
-                        <PopupContent
-                            actionButtonUrl={actionButtonUrl}
-                            setActionButtonText={setActionButtonText}
-                            setActionButtonUrl={setActionButtonUrl}
-                            actionButtonText={actionButtonText}
-                            setButtonAction={setButtonAction}
-                            buttonAction={buttonAction}
-                        />}
-                    leftAppearance={() => (
-                        <PopupAppearance
-                            data={stateList}
-                            setPopupSize={setPopupSize}
-                        />
-                    )} />
-
-            </HomePageTemplate>
-        </div>
+        <GuideTemplate title='New Popup'
+            activeButton={activeButton}
+            handleButtonClick={handleButtonClick}
+            onSave={onSave}
+            rightContent={() =>
+                <RichTextEditor
+                    header={header}
+                    content={content}
+                    setHeader={setHeader}
+                    setContent={setContent}
+                    previewBtnText={actionButtonText}
+                    headerBackgroundColor={headerBackgroundColor}
+                    headerColor={headerColor}
+                    textColor={textColor}
+                    buttonBackgroundColor={buttonBackgroundColor}
+                    buttonTextColor={buttonTextColor}
+                    sx={{ width: "100%", maxWidth: '700px', marginLeft: '2.5rem', marginTop: '1rem' }}
+                />}
+            leftContent={() =>
+                <PopupContent
+                    actionButtonUrl={actionButtonUrl}
+                    setActionButtonText={setActionButtonText}
+                    setActionButtonUrl={setActionButtonUrl}
+                    actionButtonText={actionButtonText}
+                    setButtonAction={setButtonAction}
+                    buttonAction={buttonAction}
+                />}
+            leftAppearance={() => (
+                <PopupAppearance
+                    data={stateList}
+                    setPopupSize={setPopupSize}
+                />
+            )} />
     );
 };
 
