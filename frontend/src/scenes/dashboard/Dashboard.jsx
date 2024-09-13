@@ -29,7 +29,7 @@ const Dashboard = ({ fullName }) => {
     },
   ];
   return (
-    <>
+
       <div className={styles.container}>
         <div className={styles.top}>
           <UserTitle fullName={fullName} />
@@ -40,9 +40,7 @@ const Dashboard = ({ fullName }) => {
         </div>
         <CreateActivityButtonList buttons={buttons} />
         <StatisticCardList metrics={metrics} />
-        
       </div>
-    </>
   );
 };
 
