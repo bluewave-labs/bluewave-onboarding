@@ -44,7 +44,7 @@ describe('CreatePopupPage component', () => {
       );
     });
 
-    const saveButton = await waitFor(() => screen.getByRole('button', { name: /Save/i }), { timeout: 3000 });
+    const saveButton = await waitFor(() => screen.getByRole('button', { name: /Save/i }));
     fireEvent.click(saveButton);
     expect(mockAddPopup).toHaveBeenCalledTimes(1);
   });
@@ -76,7 +76,7 @@ describe('CreatePopupPage component', () => {
     });
 
     // Wait for the "Save" button to appear in the DOM
-    const saveButton = await waitFor(() => screen.getByRole('button', { name: /Save/i }), { timeout: 3000 });
+    const saveButton = await waitFor(() => screen.getByRole('button', { name: /Save/i }));
 
     // Trigger the Save button click
     fireEvent.click(saveButton);
