@@ -1,4 +1,3 @@
-import HomePageTemplate from '../../templates/HomePageTemplate/HomePageTemplate';
 import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
 import { React, useState, useEffect } from 'react';
 import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
@@ -57,12 +56,12 @@ const CreatePopupPage = () => {
                     setButtonAction(popupData.closeButtonAction || 'No action');
                     setPopupSize(popupData.popupSize || 'Small');
 
-                    console.log('Get popup successful:', response);
+                    console.log('Get popup successful:', popupData);
                 } catch (error) {
                     if (error.response && error.response.data) {
-                        console.error('An error occurred:', error.response.data.errors[0].msg);
+                        toastEmitter.emit(TOAST_EMITTER_KEY, 'An error occurred: ' + error.response.data.errors[0].msg)
                     } else {
-                        console.log('An error occurred. Please check your network connection and try again.');
+                        toastEmitter.emit(TOAST_EMITTER_KEY, 'An error occurred. Please check your network connection and try again.')
                     }
                 }
             };
@@ -96,9 +95,9 @@ const CreatePopupPage = () => {
             navigate('/popup');
         } catch (error) {
             if (error.response && error.response.data) {
-                console.error('An error occurred:', error.response.data.errors[0].msg);
+                toastEmitter.emit(TOAST_EMITTER_KEY, 'An error occurred: ' + error.response.data.errors[0].msg)
             } else {
-                console.log('An error occurred. Please check your network connection and try again.');
+                toastEmitter.emit(TOAST_EMITTER_KEY, 'An error occurred. Please check your network connection and try again.')
             }
         }
     }
