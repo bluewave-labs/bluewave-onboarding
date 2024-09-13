@@ -1,6 +1,4 @@
-import HomePageTemplate from "../../templates/HomePageTemplate/HomePageTemplate";
 import Dashboard from "../dashboard/Dashboard";
-import "./Home.css";
 import React, { useEffect, useState } from 'react';
 import { getCurrentUser } from '../../services/loginServices';
 import Cookies from 'js-cookie';
@@ -18,13 +16,7 @@ const Home = () => {
   }, [fullName]);
 
   return (
-    <div className="app">
-      <div className="content">
-        <HomePageTemplate>
-          <Dashboard fullName={fullName} />
-        </HomePageTemplate>
-      </div>
-    </div>
+    <Dashboard fullName={fullName} />
   );
 };
 
