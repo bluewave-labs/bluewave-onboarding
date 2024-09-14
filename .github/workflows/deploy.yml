@@ -13,32 +13,48 @@ jobs:
         node-version: [22.x]
 
     steps:
+      # Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Set up the Node.js environment with the specified version
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
+      # Set up SSH for remote access using the new passphrase and private key
       - name: Set up SSH
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY_NEW: ${{ secrets.SSH_PRIVATE_KEY_NEW }}
+          SSH_PASSPHRASE_NEW: ${{ secrets.SSH_PASSPHRASE_NEW }}
           KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          echo "$SSH_PRIVATE_KEY_NEW" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           eval $(ssh-agent -s)
-          ssh-add ~/.ssh/id_rsa  # No passphrase required
+          # Add SSH private key with the passphrase
+          echo "$SSH_PASSPHRASE_NEW" | ssh-add ~/.ssh/id_rsa
           echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
-          ssh-add -l  # List added keys for debugging
 
-      - name: Deploy to DigitalOcean Droplet
-        env:
-          DO_USERNAME: ${{ secrets.DO_USERNAME }}
-          DO_IP_ADDRESS: ${{ secrets.DO_IP_ADDRESS }}
+      # Configure SSH for easier access
+      - name: Configure SSH for easier access
         run: |
-          ssh -v -T $DO_USERNAME@$DO_IP_ADDRESS << EOF
-          cd ~/bluewave-onboarding && git pull && docker compose down && docker compose build && docker compose up -d
+          echo "Host staging-server" >> ~/.ssh/config
+          echo "  HostName ${{ secrets.DO_IP_ADDRESS }}" >> ~/.ssh/config
+          echo "  User ${{ secrets.DO_USERNAME }}" >> ~/.ssh/config
+          echo "  IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
+          echo "  StrictHostKeyChecking yes" >> ~/.ssh/config
+
+      # Deploy to DigitalOcean Droplet via SSH
+      - name: Deploy to DigitalOcean Droplet
+        run: |
+          ssh staging-server << 'EOF'
+            set -e  # Exit immediately if a command exits with a non-zero status
+            cd ~/bluewave-onboarding
+            git pull
+            docker compose down
+            docker compose build
+            docker compose up -d
           EOF
