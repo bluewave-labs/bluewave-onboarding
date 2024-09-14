@@ -15,6 +15,8 @@ services:
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
       - JWT_SECRET=${JWT_SECRET}
+      - EMAIL=${EMAIL}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
     command: >
       bash -c "npx sequelize-cli db:migrate || (npx sequelize-cli db:create && npx sequelize-cli db:migrate) && if [ \"$$NODE_ENV\" = \"production\" ] ; then npm run prod ; elif [ \"$$NODE_ENV\" = \"staging\" ] ; then npm run staging ; else npm run dev ; fi"
   db:
