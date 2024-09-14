@@ -34,3 +34,42 @@ const ToursDefaultPage = () => {
 };
 
 export default ToursDefaultPage;
+
+
+
+
+
+
+
+// import React from 'react';
+// import DefaultPageTemplate from '../../templates/DefaultPageTemplate/DefaultPageTemplate';
+// // import { getTours, deleteTour } from '../../services/tourServices';
+// import { useNavigate } from 'react-router-dom';
+// import { ACTIVITY_TYPES_INFO } from '../../data/GuideMainPageData';
+
+// const TourDefaultPage = () => {
+//     const navigate = useNavigate();
+
+//     // const getTourDetails = (tour) => ({
+//     //     title: `Tour ${tour.id}`,
+//     //     text: tour.name,
+//     // });
+
+//     const navigateToCreate = (state) => {
+//         navigate('/tour/create', state);
+//     };
+
+//     return (
+//         <DefaultPageTemplate
+//             getItems={getTours}
+//             deleteItem={deleteTour}
+//             navigateToCreate={navigateToCreate}
+//             itemType={ACTIVITY_TYPES_INFO.BANNERS}
+//             itemTypeInfo={ACTIVITY_TYPES_INFO.BANNERS}
+//             getItemDetails={getTourDetails}
+//         />
+//     );
+// };
+
+// export default TourDefaultPage;
+
