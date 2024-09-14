@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import CreateActivityButton from "../../components/Button/CreateActivityButton/CreateActivityButton";
-import HomePageTemplate from "../../templates/HomePageTemplate/HomePageTemplate";
 import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
 import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
 import TourPage from './ProductTour';
@@ -21,7 +20,7 @@ const ToursDefaultPage = () => {
     };
 
     return (
-        <HomePageTemplate>
+        <>
             {showTourPage ? (
                 <TourPage items={[]} />
             ) : (
@@ -30,7 +29,7 @@ const ToursDefaultPage = () => {
                     <CreateActivityButton type={ACTIVITY_TYPES.TOURS} onClick={handleButtonClick} />
                 </div>
             )}
-        </HomePageTemplate>
+        </>
     );
 };
 

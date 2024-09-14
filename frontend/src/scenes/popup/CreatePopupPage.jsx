@@ -1,4 +1,3 @@
-import HomePageTemplate from '../../templates/HomePageTemplate/HomePageTemplate';
 import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
 import { React, useState, useEffect } from 'react';
 import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
@@ -57,12 +56,12 @@ const CreatePopupPage = () => {
                     setButtonAction(popupData.closeButtonAction || 'No action');
                     setPopupSize(popupData.popupSize || 'Small');
 
-                    console.log('Get popup successful:', response);
+                    console.log('Get popup successful:', popupData);
                 } catch (error) {
                     if (error.response && error.response.data) {
-                        console.error('An error occurred:', error.response.data.errors[0].msg);
+                        toastEmitter.emit(TOAST_EMITTER_KEY, 'An error occurred: ' + error.response.data.errors[0].msg)
                     } else {
-                        console.log('An error occurred. Please check your network connection and try again.');
+                        toastEmitter.emit(TOAST_EMITTER_KEY, 'An error occurred. Please check your network connection and try again.')
                     }
                 }
             };
@@ -87,18 +86,18 @@ const CreatePopupPage = () => {
         };
         try {
             const response = location.state?.isEdit
-            ? await editPopup(location.state?.id, popupData)
-            : await addPopup(popupData);
-            
+                ? await editPopup(location.state?.id, popupData)
+                : await addPopup(popupData);
+
             const toastMessage = location.state?.isEdit ? 'You edited this popup' : 'New popup Saved'
 
             toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
             navigate('/popup');
         } catch (error) {
             if (error.response && error.response.data) {
-                console.error('An error occurred:', error.response.data.errors[0].msg);
+                toastEmitter.emit(TOAST_EMITTER_KEY, 'An error occurred: ' + error.response.data.errors[0].msg)
             } else {
-                console.log('An error occurred. Please check your network connection and try again.');
+                toastEmitter.emit(TOAST_EMITTER_KEY, 'An error occurred. Please check your network connection and try again.')
             }
         }
     }
@@ -109,44 +108,39 @@ const CreatePopupPage = () => {
     };
 
     return (
-        <div >
-            <HomePageTemplate>
-                <GuideTemplate title='New Popup'
-                    activeButton={activeButton}
-                    handleButtonClick={handleButtonClick}
-                    onSave={onSave}
-                    rightContent={() =>
-                        <RichTextEditor
-                            header={header}
-                            content={content}
-                            setHeader={setHeader}
-                            setContent={setContent}
-                            previewBtnText={actionButtonText}
-                            headerBackgroundColor={headerBackgroundColor}
-                            headerColor={headerColor}
-                            textColor={textColor}
-                            buttonBackgroundColor={buttonBackgroundColor}
-                            buttonTextColor={buttonTextColor}
-                            sx={{ width: "100%", maxWidth: '700px', marginLeft: '2.5rem', marginTop: '1rem' }}
-                        />}
-                    leftContent={() =>
-                        <PopupContent
-                            actionButtonUrl={actionButtonUrl}
-                            setActionButtonText={setActionButtonText}
-                            setActionButtonUrl={setActionButtonUrl}
-                            actionButtonText={actionButtonText}
-                            setButtonAction={setButtonAction}
-                            buttonAction={buttonAction}
-                        />}
-                    leftAppearance={() => (
-                        <PopupAppearance
-                            data={stateList}
-                            setPopupSize={setPopupSize}
-                        />
-                    )} />
-
-            </HomePageTemplate>
-        </div>
+        <GuideTemplate title='New Popup'
+            activeButton={activeButton}
+            handleButtonClick={handleButtonClick}
+            onSave={onSave}
+            rightContent={() =>
+                <RichTextEditor
+                    header={header}
+                    content={content}
+                    setHeader={setHeader}
+                    setContent={setContent}
+                    previewBtnText={actionButtonText}
+                    headerBackgroundColor={headerBackgroundColor}
+                    headerColor={headerColor}
+                    textColor={textColor}
+                    buttonBackgroundColor={buttonBackgroundColor}
+                    buttonTextColor={buttonTextColor}
+                    sx={{ width: "100%", maxWidth: '700px', marginLeft: '2.5rem', marginTop: '1rem' }}
+                />}
+            leftContent={() =>
+                <PopupContent
+                    actionButtonUrl={actionButtonUrl}
+                    setActionButtonText={setActionButtonText}
+                    setActionButtonUrl={setActionButtonUrl}
+                    actionButtonText={actionButtonText}
+                    setButtonAction={setButtonAction}
+                    buttonAction={buttonAction}
+                />}
+            leftAppearance={() => (
+                <PopupAppearance
+                    data={stateList}
+                    setPopupSize={setPopupSize}
+                />
+            )} />
     );
 };
 

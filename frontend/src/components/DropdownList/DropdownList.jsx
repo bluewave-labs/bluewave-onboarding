@@ -32,7 +32,7 @@ const DropdownList = ({
     if (onActionChange) {
       onActionChange(selectedAction);
     }
-  }, []);
+  }, [selectedAction]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;
