@@ -6,7 +6,7 @@ const Home = () => {
   const {userInfo} = useAuth();
 
   return (
-    <Dashboard fullName={fullName} />
+    <Dashboard fullName={userInfo.fullName} />
   );
 };
 
