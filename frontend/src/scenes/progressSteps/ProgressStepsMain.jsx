@@ -18,8 +18,11 @@ const ProgressStepsMain = () => {
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-            addMember(emailInput); 
-            setEmailInput('')
+            if (emailInput != '') {
+                addMember(emailInput);
+                setEmailInput('')
+            }
+
         }
     };
 
@@ -64,7 +67,7 @@ const ProgressStepsMain = () => {
                 <div className={styles.stepOne}>
                     <div className={styles.invite}>
                         <CheckboxHRM style={{ marginRight: '1rem' }} />
-                        <h4 style={{marginTop: '4px'}}>Invite team members</h4>
+                        <h4 style={{ marginTop: '4px' }}>Invite team members</h4>
                     </div>
 
                     <div className={styles.teamMembers}>
