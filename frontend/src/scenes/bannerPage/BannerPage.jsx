@@ -6,6 +6,7 @@ import { React, useState, useEffect } from 'react';
 import BannerPreview from '../../components/BannerPageComponents/BannerPreview/BannerPreview';
 import { addBanner, getBannerById, editBanner } from '../../services/bannerServices';
 import { useNavigate, useLocation } from 'react-router-dom';
+import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 
 const BannerPage = () => {
     const navigate = useNavigate();
@@ -62,9 +63,10 @@ const BannerPage = () => {
         };
         try {
             const response = location.state?.isEdit
-            ? await editBanner(location.state?.id, bannerData)
-            : await addBanner(bannerData);
-            console.log('Add banner successful:', response);
+                ? await editBanner(location.state?.id, bannerData)
+                : await addBanner(bannerData);
+            const toastMessage = location.state?.isEdit ? 'You edited this banner' : 'New banner saved'
+            toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
             navigate('/banner');
         } catch (error) {
             if (error.response && error.response.data) {
@@ -76,39 +78,36 @@ const BannerPage = () => {
     }
 
     return (
-        <div >
-            <HomePageTemplate>
-                <GuideTemplate title='New banner'
-                    activeButton={activeButton}
-                    handleButtonClick={handleButtonClick}
-                    onSave={onSave}
-                    rightContent={() =>
-                        <BannerPreview
-                            backgroundColor={backgroundColor}
-                            color={fontColor}
-                            isTopPosition={isTopPosition}
-                            bannerText={bannerText}
-                            setBannerText={setBannerText}
-                        />}
-                    leftContent={() =>
-                        <BannerLeftContent
-                            setIsTopPosition={setIsTopPosition}
-                            isTopPosition={isTopPosition}
-                            url={url}
-                            setUrl={setUrl}
-                            setButtonAction={setButtonAction}
-                            buttonAction={buttonAction}
-                        />}
-                    leftAppearance={() => (
-                        <BannerLeftAppearance
-                            backgroundColor={backgroundColor}
-                            setBackgroundColor={setBackgroundColor}
-                            fontColor={fontColor}
-                            setFontColor={setFontColor}
-                        />
-                    )} />
-            </HomePageTemplate>
-        </div>
+
+        <GuideTemplate title='New banner'
+            activeButton={activeButton}
+            handleButtonClick={handleButtonClick}
+            onSave={onSave}
+            rightContent={() =>
+                <BannerPreview
+                    backgroundColor={backgroundColor}
+                    color={fontColor}
+                    isTopPosition={isTopPosition}
+                    bannerText={bannerText}
+                    setBannerText={setBannerText}
+                />}
+            leftContent={() =>
+                <BannerLeftContent
+                    setIsTopPosition={setIsTopPosition}
+                    isTopPosition={isTopPosition}
+                    url={url}
+                    setUrl={setUrl}
+                    setButtonAction={setButtonAction}
+                    buttonAction={buttonAction}
+                />}
+            leftAppearance={() => (
+                <BannerLeftAppearance
+                    backgroundColor={backgroundColor}
+                    setBackgroundColor={setBackgroundColor}
+                    fontColor={fontColor}
+                    setFontColor={setFontColor}
+                />
+            )} />
     );
 };
 

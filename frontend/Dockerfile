@@ -8,6 +8,10 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 5173
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 
-CMD if [ "$$NODE_ENV" = "production" ] ; then npm run build && npm run preview ; else npm run dev ; fi
+RUN npm run build
+
+EXPOSE 4173
+
+CMD ["npm", "run", "preview"]

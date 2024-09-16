@@ -1,7 +1,6 @@
 import { React } from 'react';
 import CustomTextField from '../TextFieldComponents/CustomTextField/CustomTextField';
 import CircleIcon from '@mui/icons-material/Circle';
-import PropTypes from 'prop-types';
 
 const ColorTextField = ({onChange  = () => null, value = null}) => {
     const handleColor = (event) => {

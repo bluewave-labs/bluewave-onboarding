@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import CreateActivityButton from "../../components/Button/CreateActivityButton/CreateActivityButton";
-import HomePageTemplate from "../../templates/HomePageTemplate/HomePageTemplate";
 import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
 import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +7,7 @@ import GuideMainPageTemplate from "../../templates/GuideMainPageTemplate/GuideMa
 import { getPopups } from "../../services/popupServices"; 
 import { ACTIVITY_TYPES_INFO } from '../../data/GuideMainPageData';
 import { deletePopup } from '../../services/popupServices';
+import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 
 const PopupDefaultPage = () => {
     const navigate = useNavigate();
@@ -25,6 +25,7 @@ const PopupDefaultPage = () => {
         await deletePopup(popupToDelete)
         setPopupOpen(false);
         setPopupDeleted(prevState => !prevState);
+        toastEmitter.emit(TOAST_EMITTER_KEY, 'This popup is removed')
     };
 
     const handleOpenPopup = (id) => {
@@ -71,7 +72,7 @@ const PopupDefaultPage = () => {
 
 
     return (
-        <HomePageTemplate>
+        <>
             {popups.length === 0 ? (
                 <div style={style}>
                     <ParagraphCSS />
@@ -86,7 +87,7 @@ const PopupDefaultPage = () => {
                     type={ACTIVITY_TYPES_INFO.POPUPS} 
                     onClick={navigateToCreate}/>
             )}
-        </HomePageTemplate>
+        </>
     );
 }
 
