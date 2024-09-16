@@ -54,5 +54,28 @@ const getCurrentUser = async (req, res) => {
   }
 };
 
+const updateUserDetails = async (req, res) => {
+	const userId = req.user.id;
+  const inputs = req.body;
+  try {
+    const user = await User.findByPk(userId);
+    if(!user) {
+      return res.status(400).json({ error: "User not found" });
+    }
+    await user.update({
+      ...(inputs.name && { name: inputs.name }),
+      ...(inputs.surname && { surname: inputs.surname }),
+      ...(inputs.email && { email: inputs.email }),
+    })
 
-module.exports = { getUsersList, getCurrentUser };
+    const updatedUser = await User.findByPk(userId);
+    const { name, surname, email, role } = updatedUser;
+
+    return res.status(200).json({ name, surname, email, role });
+  } catch (err) {
+    return res.status(500).json({ error: "Internal Server Error" })
+  }
+}
+
+
+module.exports = { getUsersList, getCurrentUser, updateUserDetails };
