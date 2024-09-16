@@ -7,6 +7,6 @@ const router = express.Router();
 router.get("/users-list", getUsersList);
 router.get("/current-user", authenticateJWT, getCurrentUser);
 
-router.post("/update", updateUserDetails);
+router.post("/update", authenticateJWT, updateUserDetails);
 
 module.exports = router;

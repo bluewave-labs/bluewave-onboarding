@@ -55,7 +55,7 @@ const getCurrentUser = async (req, res) => {
 };
 
 const updateUserDetails = async (req, res) => {
-	const userId = req.user.id;
+  const userId = req.user.id;
   const inputs = req.body;
   try {
     const user = await User.findByPk(userId);
@@ -71,7 +71,7 @@ const updateUserDetails = async (req, res) => {
     const updatedUser = await User.findByPk(userId);
     const { name, surname, email, role } = updatedUser;
 
-    return res.status(200).json({ name, surname, email, role });
+    return res.status(200).json({ user: { name, surname, email, role} });
   } catch (err) {
     return res.status(500).json({ error: "Internal Server Error" })
   }
