@@ -1,0 +1,17 @@
+
+.tableHeader{
+    background-color: rgba(250, 250, 250, 1);
+}
+.heading{
+    color: rgba(102, 112, 133, 1) !important;
+    font-size: 12px !important;
+}
+.nameCol{
+    display: flex !important;
+    flex-direction: column;
+    font-size: 13px !important ;
+}
+.data{
+    font-size: 13px !important;
+    color: rgba(102, 112, 133, 1) !important;
+}

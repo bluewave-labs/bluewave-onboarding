@@ -1,0 +1,38 @@
+.organisation{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(238, 238, 238, 1);
+    padding-bottom: 15px;
+}
+.nameHeading{
+    margin: 0;
+}
+.organisationName{
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.team{
+    display: flex;
+    justify-content: space-between;
+}
+.tabs-list{
+    border: 1px solid rgba(234, 236, 240, 1);
+    height: 34px;
+}
+.tabs{
+    border-right: 0.85px solid rgba(234, 236, 240, 1) !important;
+    padding: 4px 12px 4px 12px;
+}
+.invite{
+    width: 160px;
+    height: 34px;
+    color: white;
+    background-color: #4C7DE7;
+    padding: 10px 16px;
+    border: 1px solid #175CD3;
+    border-radius: 4px;
+    cursor: pointer;
+}

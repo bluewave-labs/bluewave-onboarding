@@ -9,6 +9,7 @@ import SetNewPasswordPage from "./scenes/login/SetNewPassword";
 import Private from "./components/Private";
 import { useAuth } from "./services/authProvider";
 import ProgressStepsMain from "./scenes/progressSteps/ProgressStepsMain";
+import Settings from "./scenes/settings/Settings";
 
 function App() {
   const { isLoggedIn } = useAuth();
@@ -23,6 +24,7 @@ function App() {
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>    
     </>
   );
