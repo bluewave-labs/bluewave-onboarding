@@ -47,6 +47,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -t staging-server << 'EOF'
             set -e
             cd ~/bluewave-onboarding
+            git stash
             git pull
             docker compose down
             docker compose build
