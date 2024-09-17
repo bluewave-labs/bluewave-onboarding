@@ -23,16 +23,16 @@ jobs:
 
       - name: Set up SSH
         env:
-          SSH_PRIVATE_KEY_NEW: ${{ secrets.SSH_PRIVATE_KEY_NEW }}
-          SSH_PASSPHRASE_NEW: ${{ secrets.SSH_PASSPHRASE_NEW }}
+          SSH_PRIVATE_KEY_NEW: ${{ secrets.SSH_THIRD_PRIVATE_KEY }}
           KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY_NEW" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           eval $(ssh-agent -s)
-          echo "$SSH_PASSPHRASE_NEW" | ssh-add ~/.ssh/id_rsa
+          ssh-add ~/.ssh/id_rsa
           echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+
 
       - name: Configure SSH for easier access
         run: |
