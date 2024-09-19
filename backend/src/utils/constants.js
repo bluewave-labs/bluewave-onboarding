@@ -4,5 +4,11 @@ module.exports = Object.freeze({
     TOKEN_LIFESPAN: 3600 * 1000,
     // API_BASE_URL: 'https://onboarding-demo.bluewavelabs.ca/api/',
     API_BASE_URL: 'https://localhost:3000/api/',
+    TEAM: {
+      ROLE: {
+        ADMIN: 1,
+        MEMBER: 2
+      }
+    }
   });
   

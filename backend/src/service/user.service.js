@@ -32,7 +32,7 @@ class UserService {
               });
         }
         catch(err) {
-            throw new Error("Error retrieving User by ID");
+            throw new Error("Error retreiving users list");
         }
     }
 }
