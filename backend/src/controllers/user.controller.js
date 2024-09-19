@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
-const db = require("../models");
-const User = db.User
+const UserService = require("../service/user.service");
 
+const userService = new UserService();
 
 const getUsersList = async (req, res) => {
   const { page = 1, limit = 10, search = "" } = req.query;
@@ -9,24 +9,7 @@ const getUsersList = async (req, res) => {
   try {
     const offset = (page - 1) * limit;
 
-    const { rows: users, count: totalUsers } = await User.findAndCountAll({
-      where: {
-        [Sequelize.Op.or]: [
-          {
-            name: {
-              [Sequelize.Op.like]: `%${search}%`,
-            },
-          },
-          {
-            surname: {
-              [Sequelize.Op.like]: `%${search}%`,
-            },
-          },
-        ],
-      },
-      limit: parseInt(limit),
-      offset: parseInt(offset),
-    });
+    const { rows: users, count: totalUsers } = await userService.getUsers({page, limit, search})
 
     let returnObj = {
       users,
@@ -44,7 +27,7 @@ const getUsersList = async (req, res) => {
 
 const getCurrentUser = async (req, res) => {
   const userId = req.user.id;
-  const user = await User.findOne({ where: { id : userId } });
+  const user = await userService.getUserById(userId);
   if (user){
     const { name, surname, email, role } = user;
     return res.status(200).json({ user: { name, surname, email, role } });
@@ -58,7 +41,7 @@ const updateUserDetails = async (req, res) => {
   const userId = req.user.id;
   const inputs = req.body;
   try {
-    const user = await User.findByPk(userId);
+    const user = await userService.getUserById(userId);
     if(!user) {
       return res.status(400).json({ error: "User not found" });
     }
@@ -68,7 +51,7 @@ const updateUserDetails = async (req, res) => {
       ...(inputs.email && { email: inputs.email }),
     })
 
-    const updatedUser = await User.findByPk(userId);
+    const updatedUser = await userService.getUserById(userId);
     const { name, surname, email, role } = updatedUser;
 
     return res.status(200).json({ user: { name, surname, email, role} });
