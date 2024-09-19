@@ -1,17 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
-    const Team = sequelize.define(
-      "Team",
+    const UserTeams = sequelize.define(
+      "UserTeams",
       {
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
           autoIncrement: true,
         },
-        name: {
-          type: DataTypes.STRING(50),
-          allowNull: false,
-        },
-        createdBy: {
+        userId: {
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {
@@ -19,11 +15,15 @@ module.exports = (sequelize, DataTypes) => {
             key: "id",
           },
         },
-        role: {
+        teamId: {
           type: DataTypes.INTEGER,
           allowNull: false,
+          references: {
+            model: "teams",
+            key: "id",
+          },
         },
-        status: {
+        role: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
@@ -34,15 +34,11 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       {
-        tableName: "teams",
+        tableName: "users_teams",
         timestamps: false,
       },
     );
-
-    Team.associate = (models) => {
-      Team.belongsToMany(models.User, { through: models.UserTeams, foreignKey: "teamId" });
-    };
   
-    return Team;
+    return UserTeams;
   };
   

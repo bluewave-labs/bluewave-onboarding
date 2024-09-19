@@ -29,6 +29,7 @@ db.PopupLog = require("./PopupLog.js")(sequelize, Sequelize.DataTypes);
 db.Banner = require("./Banner.js")(sequelize, Sequelize.DataTypes);
 db.Team = require("./Team.js")(sequelize, Sequelize.DataTypes);
 db.Invite = require("./Invite.js")(sequelize, Sequelize.DataTypes);
+db.UserTeams = require("./UserTeams.js")(sequelize, Sequelize.DataTypes);
 
 // Define associations here
 db.User.hasMany(db.Popup, { foreignKey: "createdBy", as: "popups" });
@@ -37,7 +38,7 @@ db.Popup.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 db.User.hasMany(db.Banner, { foreignKey: "createdBy", as: "banners" });
 db.Banner.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 
-db.User.belongsToMany(db.Team, {through: "users_teams", foreignKey: "user_Id"});
-db.Team.belongsToMany(db.User, {through: "users_teams", foreignKey: "teamId"});
+db.User.belongsToMany(db.Team, {through: db.UserTeams, foreignKey: "userId"});
+db.Team.belongsToMany(db.User, {through: db.UserTeams, foreignKey: "teamId"});
 
 module.exports = db;
