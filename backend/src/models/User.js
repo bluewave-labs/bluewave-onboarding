@@ -26,11 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      role: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-        defaultValue: "user",
-      },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,

@@ -6,7 +6,7 @@ const User = db.User;
 
 class InviteService {
     // args to be made objects
-    async sendInvite(userId, teamId, targetUserId, role) {
+    async sendInvite(userId, teamId, invitedEmail, role) {
         try {
             const team = await Team.findOne({
                 where: {
@@ -14,17 +14,25 @@ class InviteService {
                 },
                 include: [{
                     model: User,
-                    where: { id: userId }
                 }]
             });
             if(!team) {
-                throw new Error("Team not found or User not belong");
+                throw new Error("Team not found");
+            }
+            const findUser = team.Users.find((user) => user.id == userId);
+            if(!findUser) {
+                throw new Error("User not belong to team");
             }
             // check if user is authrised using its role and role from config
+
+            const invitedUser = team.Users.find((user) => user.email == invitedEmail);
+            if(invitedUser) {
+                throw new Error("Invited User already exists in team")
+            }
             await Invite.create({
                 invitedBy: userId,
-                team: teamId,
-                invitee: targetUserId,
+                teamId: teamId,
+                invitedEmail: invitedEmail,
                 role: role
             });
         }

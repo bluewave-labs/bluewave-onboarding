@@ -19,7 +19,7 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      invitedByEmail: {
+      invitedEmail: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
