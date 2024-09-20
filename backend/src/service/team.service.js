@@ -2,6 +2,7 @@ const db = require("../models");
 const { TEAM } = require("../utils/constants");
 const Team = db.Team;
 const User = db.User;
+const UserTeams = db.UserTeams;
 
 class UserService {
     async getTeamById(userId, teamId) {
@@ -22,7 +23,7 @@ class UserService {
             if(!findUser) {
                 throw new Error("User not part of team");
             }
-            // team.role = findUser.role;   // can be included
+            team.role = findUser.UserTeams.role;   // can be included
             return team;
         }
         catch(err) {
@@ -31,10 +32,14 @@ class UserService {
     }
     async getTeams(userId) {
         try {
-            const teams = await User.findAll({
+            const teams = await User.findOne({
                 where: { id: userId },
                 include: [{
-                    model: Team
+                    model: Team,
+                    attributes: ['id', 'name'],
+                    through: {
+                        attributes: ['role']
+                    }
                 }]
             });
             return teams;
@@ -43,41 +48,40 @@ class UserService {
             throw new Error("Error retrieving Teams");
         }
     }
-    async createTeam({ userId, name }) {
+    async createTeam(userId, name) {
         try {
             const team = await Team.create({
                 name: name,
                 createdBy: userId,
-                Users: [{
-                    userId: userId,
-                    role: TEAM.ROLE.ADMIN
-                }]
-            }, {
-                include: {
-                    model: User
-                }
             })
+            await team.addUser(userId, {
+                through: {
+                    role: TEAM.ROLE.ADMIN
+                }
+            });
             return team;
         }
         catch(err) {
-            throw new Error("Error retrieving Teams");
+            throw new Error("Error creating team");
         }
     }
-    async updateTeam({ userId, teamId, name }) {
+    async updateTeam(userId, teamId, name) {
         try {
-            const [rows] = await Team.update(
-                {name: name},
-                {
-                    where: {
-                        id: teamId,
-                        '$Users.id': userId
-                    },
-                    include: [{
-                        model: User,
-                    }],
-                    returning: true
-                }
-            )
+            const team = await Team.findOne({
+                where: {
+                    id: teamId,
+                },
+                include: [{
+                    model: User,
+                    where: { id: userId }
+                }]
+            });
+            if(!team) {
+                throw new Error("Team not found or User not belong");
+            }
+            await team.update({
+                name: name,
+            })
         }
         catch(err) {
             throw new Error("Error updating Team");

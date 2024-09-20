@@ -18,7 +18,6 @@ module.exports = {
     await queryInterface.removeColumn("users", "surname");
     await queryInterface.addColumn("users", "username", {
       type: Sequelize.STRING(50),
-      allowNull: false,
       unique: true
     });
   },
