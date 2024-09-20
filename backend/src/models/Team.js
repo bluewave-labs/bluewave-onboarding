@@ -19,10 +19,6 @@ module.exports = (sequelize, DataTypes) => {
             key: "id",
           },
         },
-        role: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
         status: {
           type: DataTypes.INTEGER,
           allowNull: false,

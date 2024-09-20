@@ -1,17 +1,28 @@
 const db = require("../models");
 const { TEAM } = require("../utils/constants");
-const Team = db.Team
+const Team = db.Team;
+const User = db.User;
 
 class UserService {
-    async getTeamById({ userId, teamId }) {
+    async getTeamById(userId, teamId) {
         try {
             const team = await Team.findOne({
                 where: { id: teamId },
                 include: [{
                     model: User,
-                    where: { id: userId }
+                    attributes: ['id', 'name', 'email'],
+                    through: {
+                        attributes: ['role']
+                    }
                 }],
             });
+            const findUser = team.Users.find((user) => {
+                return user.id == userId
+            })
+            if(!findUser) {
+                throw new Error("User not part of team");
+            }
+            // team.role = findUser.role;   // can be included
             return team;
         }
         catch(err) {

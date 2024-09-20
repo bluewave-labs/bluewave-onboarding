@@ -1,6 +1,6 @@
 const express = require("express");
-// const { 
-//   getTeamDetails, 
+const { 
+  getTeamDetails, 
 //   getAllTeams, 
 //   getInvitations,
 //   getTeamInvitations, 
@@ -9,12 +9,12 @@ const express = require("express");
 //   inviteUser, 
 //   acceptTeamInvite, 
 //   rejectTeamInvite 
-// } = require("../controllers/team.controller");
+} = require("../controllers/team.controller");
 const authenticateJWT = require("../middleware/auth.middleware");
 
 const router = express.Router();
 
-// router.get("/details", authenticateJWT, getTeamDetails);
+router.get("/details", authenticateJWT, getTeamDetails);
 // router.get("/list", authenticateJWT, getAllTeams);
 // router.get("/invites", authenticateJWT, getInvitations);
 // router.get("/invites-sent", authenticateJWT, getTeamInvitations);

@@ -1,4 +1,3 @@
-const { Sequelize } = require("sequelize");
 const UserService = require("../service/user.service");
 
 const userService = new UserService();
