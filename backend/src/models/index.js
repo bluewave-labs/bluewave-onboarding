@@ -38,7 +38,18 @@ db.Popup.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 db.User.hasMany(db.Banner, { foreignKey: "createdBy", as: "banners" });
 db.Banner.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 
-db.User.belongsToMany(db.Team, {through: db.UserTeams, foreignKey: "userId"});
-db.Team.belongsToMany(db.User, {through: db.UserTeams, foreignKey: "teamId"});
+db.User.belongsToMany(db.Team, { through: db.UserTeams, foreignKey: "userId" });
+db.Team.belongsToMany(db.User, { through: db.UserTeams, foreignKey: "teamId" });
+
+db.Team.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
+
+db.Invite.belongsTo(db.User, { foreignKey: "invitedBy" });
+db.User.hasMany(db.Invite, { foreignKey: "invitedBy" });
+
+db.Invite.belongsTo(db.User, { foreignKey: "invitedEmail" });
+db.User.hasMany(db.Invite, { foreignKey: "invitedEmail" });
+
+db.Invite.belongsTo(db.Team, { foreignKey: "teamId" });
+
 
 module.exports = db;

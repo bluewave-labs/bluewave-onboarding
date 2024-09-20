@@ -2,9 +2,8 @@ const db = require("../models");
 const { TEAM } = require("../utils/constants");
 const Team = db.Team;
 const User = db.User;
-const UserTeams = db.UserTeams;
 
-class UserService {
+class TeamService {
     async getTeamById(userId, teamId) {
         try {
             const team = await Team.findOne({
@@ -89,4 +88,4 @@ class UserService {
     }
 }
 
-module.exports = UserService;
+module.exports = TeamService;

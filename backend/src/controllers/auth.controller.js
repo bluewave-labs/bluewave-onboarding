@@ -6,6 +6,9 @@ const { generateToken, verifyToken } = require("../utils/jwt");
 const crypto = require('crypto');
 const { TOKEN_LIFESPAN } = require('../utils/constants');
 const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.service');
+const TeamService = require("../service/team.service");
+
+const teamService = new TeamService();
 
 const register = async (req, res) => {
   try {
@@ -15,6 +18,9 @@ const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({ name, surname, email, password: hashedPassword });
+
+    await teamService.createTeam(newUser.id, `${name}'s organisation`);
+
     const token = generateToken({ id: newUser.id, email: newUser.email });
 
     await Token.create({ token, userId: newUser.id, type: 'auth' });

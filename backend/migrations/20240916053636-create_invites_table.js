@@ -19,17 +19,11 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      invitee: {
+      invitedByEmail: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: "users",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
       },
-      team: {
+      teamId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

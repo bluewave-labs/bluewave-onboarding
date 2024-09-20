@@ -43,7 +43,7 @@ const getTeamsList = async (req, res) => {
 
 const createTeam = async (req, res) => {
     const userId = req.user.id;
-    const name = req.body.name;
+    const { name } = req.body;
     try {
       await teamService.createTeam(userId, name);
       return res.status(200).json({ message: "Team created" });

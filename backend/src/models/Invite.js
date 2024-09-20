@@ -7,10 +7,6 @@ module.exports = (sequelize, DataTypes) => {
           primaryKey: true,
           autoIncrement: true,
         },
-        name: {
-          type: DataTypes.STRING(50),
-          allowNull: false,
-        },
         invitedBy: {
           type: DataTypes.INTEGER,
           allowNull: false,
@@ -19,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             key: "id",
           },
         },
-        invitee: {
+        invitedEmail: {
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {
@@ -27,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             key: "id",
           },
         },
-        team: {
+        teamId: {
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {
@@ -46,6 +42,20 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false,
       },
     );
+
+    Invite.associate = (models) => {
+      Invite.belongsTo(models.User, {
+        foreignKey: "invitedBy",
+      });
+  
+      Invite.belongsTo(models.User, {
+        foreignKey: "invitedEmail",
+      });
+  
+      Invite.belongsTo(models.Team, {
+        foreignKey: "teamId",
+      });
+    };
   
     return Invite;
   };
