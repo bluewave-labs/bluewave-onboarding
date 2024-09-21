@@ -34,6 +34,7 @@ const BannerPage = () => {
                         />}
                     leftContent={() =>
                         <BannerLeftContent
+                            isTopPosition={isTopPosition}
                             setIsTopPosition={setIsTopPosition}
                             url={url}
                             setUrl={setUrl}
