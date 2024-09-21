@@ -98,10 +98,17 @@ class InviteService {
                 },
                 transaction
             });
-            await invite.update({
-                status: 2, // from config
+            await Invite.update(
+                {
+                    status: 2,
+                },
+                {
+                    where: {
+                        teamId: invite.team.id,
+                    }
+                }, 
                 transaction
-            })
+            )
             await transaction.commit();
         }
         catch(err) {

@@ -30,10 +30,6 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false,
       },
     );
-
-    Team.associate = (models) => {
-      Team.belongsToMany(models.User, { through: models.UserTeams, foreignKey: "teamId" });
-    };
   
     return Team;
   };
