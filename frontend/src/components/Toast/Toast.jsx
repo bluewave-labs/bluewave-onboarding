@@ -4,13 +4,13 @@ import { defaultToastOptions, MAXIMUM_TOAST_COUNT } from './constant';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 import styles from './Toast.module.scss';
 
-const Toast = () => {  // No need for removeToast prop
+const Toast = () => {
   const [toasts, setToasts] = useState([]);
 
   useEffect(() => {
     const handleNewToast = (toastMessage) => {
       const newToast = {
-        id: Date.now(), // Use number as id
+        id: `${Date.now()}-${Math.random()}`,
         message: toastMessage,
         duration: defaultToastOptions.duration,
       };
@@ -29,7 +29,6 @@ const Toast = () => {  // No need for removeToast prop
     };
   }, []);
 
-  // Function to handle removal of toast
   const handleRemoveToast = (id) => {
     setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
   };

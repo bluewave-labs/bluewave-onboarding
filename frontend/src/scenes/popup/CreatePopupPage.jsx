@@ -7,7 +7,6 @@ import { addPopup, getPopupById, editPopup } from '../../services/popupServices'
 import { useNavigate, useLocation } from 'react-router-dom';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 
-
 const CreatePopupPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -27,7 +26,6 @@ const CreatePopupPage = () => {
     const [actionButtonText, setActionButtonText] = useState("Take me to subscription page");
     const [buttonAction, setButtonAction] = useState('No action');
     const [popupSize, setPopupSize] = useState('Small');
-
 
     const stateList = [
         { stateName: 'Header Background Color', state: headerBackgroundColor, setState: setHeaderBackgroundColor },
@@ -101,7 +99,6 @@ const CreatePopupPage = () => {
             }
         }
     }
-
 
     const handleButtonClick = (index) => {
         setActiveButton(index);
