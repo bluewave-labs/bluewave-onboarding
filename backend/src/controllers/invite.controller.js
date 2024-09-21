@@ -4,9 +4,6 @@ const InviteService = require("../service/invite.service");
 const inviteService = new InviteService();
 
 const sendTeamInvite = async (req, res) => {
-    /**
-     * who can send invite in a team?
-     */
   const userId = req.user.id;
   const { teamId, invitedEmail, role } = req.body;
   try {
@@ -21,7 +18,6 @@ const getRecievedInvites = async (req, res) => {
   const userEmail = req.user.email;
   try {
     const data = await inviteService.getRecievedInvites(userEmail);
-    console.log("🚀 ~ getRecievedInvites ~ data:", data)
     const result = data.map((invite) => ({
         id: invite.id,
         team: {

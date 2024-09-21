@@ -38,7 +38,6 @@ class InviteService {
             });
         }
         catch(err) {
-            console.log("🚀 ~ InviteService ~ sendInvite ~ err:", err)
             throw new Error("Error sending Invite");
         }
     }
@@ -47,7 +46,7 @@ class InviteService {
             const invites = await Invite.findAll({
                 where: { 
                     invitedEmail: userEmail,
-                    status: 1,    // to be fetched from config
+                    status: 1,
                 },
                 include: [
                   {
@@ -57,14 +56,13 @@ class InviteService {
                   },
                   {
                     model: User,
-                    attributes: ['name']    // image slug to be here too
+                    attributes: ['name']
                   }
                 ]
             })
             return invites;
         }
         catch(err) {
-            console.log("🚀 ~ InviteService ~ getRecievedInvites ~ err:", err)
             throw new Error("Error retrieving Team");
         }
     }
@@ -83,7 +81,7 @@ class InviteService {
                 where: {
                     id: inviteId,
                     invitedEmail: user.email,
-                    status: 1,
+                    status: 1, // from config
                 },
                 include: {
                     model: Team,
@@ -91,7 +89,6 @@ class InviteService {
                 },
                 transaction
             });
-            console.log("🚀 ~ InviteService ~ acceptInvite ~ invite:", invite)
             if(!invite) {
                 throw new Error("Invite not found or user not the reciever");
             };
@@ -102,13 +99,12 @@ class InviteService {
                 transaction
             });
             await invite.update({
-                status: 2,
+                status: 2, // from config
                 transaction
             })
             await transaction.commit();
         }
         catch(err) {
-            console.log("🚀 ~ InviteService ~ acceptInvite ~ err:", err)
             throw new Error("Error creating team");
         }
     }
