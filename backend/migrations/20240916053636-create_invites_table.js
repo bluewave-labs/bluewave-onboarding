@@ -20,7 +20,7 @@ module.exports = {
         onDelete: "CASCADE",
       },
       invitedEmail: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(100),
         allowNull: false,
       },
       teamId: {

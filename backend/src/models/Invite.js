@@ -16,12 +16,8 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
         invitedEmail: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING(100),
           allowNull: false,
-          references: {
-            model: "users",
-            key: "id",
-          },
         },
         teamId: {
           type: DataTypes.INTEGER,
@@ -32,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
         role: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
+        status: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
@@ -51,11 +51,6 @@ module.exports = (sequelize, DataTypes) => {
       Invite.belongsTo(models.User, {
         foreignKey: "invitedBy",
       });
-  
-      Invite.belongsTo(models.User, {
-        foreignKey: "invitedEmail",
-      });
-  
       Invite.belongsTo(models.Team, {
         foreignKey: "teamId",
       });

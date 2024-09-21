@@ -33,18 +33,38 @@ class InviteService {
                 invitedBy: userId,
                 teamId: teamId,
                 invitedEmail: invitedEmail,
-                role: role
+                role: role,
+                status: 1, // should be added in default
             });
         }
         catch(err) {
+            console.log("🚀 ~ InviteService ~ sendInvite ~ err:", err)
             throw new Error("Error sending Invite");
         }
     }
-    async getRecievedInvites(userId) {
+    async getRecievedInvites(userEmail) {
         try {
-            
+            const invites = await Invite.findAll({
+                where: { 
+                    invitedEmail: userEmail,
+                    status: 1,    // to be fetched from config
+                },
+                include: [
+                  {
+                    model: Team,
+                    as: 'team',
+                    attributes: ['name']
+                  },
+                  {
+                    model: User,
+                    attributes: ['name']    // image slug to be here too
+                  }
+                ]
+            })
+            return invites;
         }
         catch(err) {
+            console.log("🚀 ~ InviteService ~ getRecievedInvites ~ err:", err)
             throw new Error("Error retrieving Team");
         }
     }
@@ -56,11 +76,39 @@ class InviteService {
             throw new Error("Error retrieving Teams");
         }
     }
-    async acceptInvite(userId, inviteId) {
+    async acceptInvite(user, inviteId) {
         try {
-            
+            const transaction = await db.sequelize.transaction();
+            const invite = await Invite.findOne({
+                where: {
+                    id: inviteId,
+                    invitedEmail: user.email,
+                    status: 1,
+                },
+                include: {
+                    model: Team,
+                    as: 'team'
+                },
+                transaction
+            });
+            console.log("🚀 ~ InviteService ~ acceptInvite ~ invite:", invite)
+            if(!invite) {
+                throw new Error("Invite not found or user not the reciever");
+            };
+            await invite.team.addUser(user.id, {
+                through: {
+                    role: invite.role,
+                },
+                transaction
+            });
+            await invite.update({
+                status: 2,
+                transaction
+            })
+            await transaction.commit();
         }
         catch(err) {
+            console.log("🚀 ~ InviteService ~ acceptInvite ~ err:", err)
             throw new Error("Error creating team");
         }
     }

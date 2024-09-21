@@ -46,10 +46,7 @@ db.Team.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 db.Invite.belongsTo(db.User, { foreignKey: "invitedBy" });
 db.User.hasMany(db.Invite, { foreignKey: "invitedBy" });
 
-db.Invite.belongsTo(db.User, { foreignKey: "invitedEmail" });
-db.User.hasMany(db.Invite, { foreignKey: "invitedEmail" });
-
-db.Invite.belongsTo(db.Team, { foreignKey: "teamId" });
+db.Invite.belongsTo(db.Team, { foreignKey: "teamId", as: "team" });
 
 
 module.exports = db;

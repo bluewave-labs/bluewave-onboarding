@@ -17,4 +17,37 @@ const sendTeamInvite = async (req, res) => {
   }
 };
 
-module.exports = { sendTeamInvite };
+const getRecievedInvites = async (req, res) => {
+  const userEmail = req.user.email;
+  try {
+    const data = await inviteService.getRecievedInvites(userEmail);
+    console.log("🚀 ~ getRecievedInvites ~ data:", data)
+    const result = data.map((invite) => ({
+        id: invite.id,
+        team: {
+            name: invite.team.name
+            // add image slug
+        },
+        invitedBy: {
+            name: invite.User.name
+            // add image slug
+        }
+    }));
+    return res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ error: "some error" }); // tbu later
+  }
+};
+
+const acceptTeamInvite = async (req, res) => {
+  const user = req.user;
+  const { inviteId } = req.body;
+  try {
+    await inviteService.acceptInvite(user, inviteId);
+    return res.status(200).json({ message: "Invite accepted" });
+  } catch (err) {
+    res.status(500).json({ error: "some error" }); // tbu later
+  }
+}
+
+module.exports = { sendTeamInvite, getRecievedInvites, acceptTeamInvite };
