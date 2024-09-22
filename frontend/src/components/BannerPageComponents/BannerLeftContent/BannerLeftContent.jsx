@@ -14,7 +14,7 @@ const BannerLeftContent = ({ isTopPosition, setIsTopPosition, url, setUrl }) => 
             <h2>Action</h2>
             <DropdownList actions={['No action', 'Open a URL', 'Open a URL in a new page']} />
             <h2>Position</h2>
-            <RadioGroup onChange={(e) => { setIsTopPosition(e.target.value) }} value={isTopPosition}>
+            <RadioGroup onChange={(e) => { setIsTopPosition(e.target.value.toString() === 'true') }} value={isTopPosition}>
                 <div className={styles.radioContent}>
                     <Radio value={true} />
                     <h3>Top (centered)</h3>

@@ -20,7 +20,7 @@ const BannerPreview = ({ bannerText = '',
                 placeholder="Change the Banner Text Here"
                 value={bannerText}
                 onChange={handleChange}
-                style={{color: color}}
+                style={{ color: color }}
             />
             <CloseOutlinedIcon style={{ color: color, fontSize: '20px' }} />
         </div>
@@ -30,11 +30,11 @@ const BannerPreview = ({ bannerText = '',
         <div className={styles.container}>
             <h2>Preview</h2>
             <div className={styles.preview}>
-                {isTopPosition === 'true' && banner}
+                {isTopPosition && banner}
                 <div className={styles.bannerOne}></div>
                 <div className={styles.bannerTwo}></div>
                 <div className={styles.bannerThree}></div>
-                {isTopPosition === 'false' && banner}
+                {!isTopPosition && banner}
             </div>
         </div>
     );
