@@ -1,11 +1,13 @@
 import os
 import requests
 
-def generate_release_notes():
-    GITHUB_TOKEN = os.getenv('GH_TOKEN')
-    REPO_OWNER, REPO_NAME = os.getenv('GITHUB_REPOSITORY').split('/')
+GITHUB_API_BASE_URL = "https://api.github.com"
+REPO_OWNER = "bluewave-labs"
+REPO_NAME = "bluewave-onboarding"
+GITHUB_TOKEN = os.getenv('GH_TOKEN')
 
-    url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/issues"
+def get_issues():
+    url = f"{GITHUB_API_BASE_URL}/repos/{REPO_OWNER}/{REPO_NAME}/issues"
     headers = {
         'Authorization': f'token {GITHUB_TOKEN}',
         'Accept': 'application/vnd.github.v3+json',
@@ -17,14 +19,22 @@ def generate_release_notes():
     }
 
     response = requests.get(url, headers=headers, params=params)
-    issues = response.json()
+
+    if response.status_code != 200:
+        raise Exception(f"Error fetching issues: {response.status_code} {response.text}")
+
+    return response.json()
+
+def generate_release_notes():
+    issues = get_issues()
 
     release_notes = "# Release Notes\n\n"
 
     for issue in issues:
-        if 'pull_request' in issue:
-            release_notes += f"## {issue['title']}\n"
-            release_notes += f"{issue['body']}\n\n"
+        if 'pull_request' in issue and issue['pull_request'] is not None:
+            if issue.get('merged_at'): 
+                release_notes += f"## {issue['title']}\n"
+                release_notes += f"{issue['body']}\n\n"
 
     with open('release_notes.md', 'w') as f:
         f.write(release_notes)
