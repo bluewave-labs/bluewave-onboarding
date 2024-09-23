@@ -1,5 +1,4 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { describe, it, expect, vi } from 'vitest';
 import Button from '../../../components/Button/Button';
 
@@ -8,18 +7,20 @@ describe('Button component', () => {
     render(<Button />);
     
     const buttonElement = screen.getByRole('button');
-    expect(buttonElement).toBeInTheDocument();
-    expect(buttonElement).toHaveClass('button primary');
-    expect(buttonElement).toHaveTextContent('');
-    expect(buttonElement).toBeEnabled();
+    expect(buttonElement).not.toBeNull();
+    expect(buttonElement.classList.contains('button')).toBe(true);
+    expect(buttonElement.classList.contains('primary')).toBe(true);
+    expect(buttonElement.textContent).toBe('');
+    expect(buttonElement.disabled).toBe(false);
   });
 
   it('renders with custom text and class', () => {
     render(<Button text="Click Me" buttonType="secondary-purple" />);
     
     const buttonElement = screen.getByText('Click Me');
-    expect(buttonElement).toBeInTheDocument();
-    expect(buttonElement).toHaveClass('button secondary-purple');
+    expect(buttonElement).not.toBeNull();
+    expect(buttonElement.classList.contains('button')).toBe(true);
+    expect(buttonElement.classList.contains('secondary-purple')).toBe(true);
   });
 
   it('handles click events', () => {
@@ -32,28 +33,26 @@ describe('Button component', () => {
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
-    it('applies variant, style, and disabled props', () => {
-      render(
-        <Button
-          text="Styled Button"
-          variant="outlined"
-          style={{ backgroundColor: 'blue' }}
-          disabled={true}
-        />
-      );
+  it('applies variant, style, and disabled props', () => {
+    render(
+      <Button
+        text="Styled Button"
+        variant="outlined"
+        style={{ backgroundColor: 'blue' }}
+        disabled={true}
+      />
+    );
     
-      const buttonElement = screen.getByText('Styled Button');
-      expect(buttonElement).toHaveClass('MuiButton-outlined');
-      expect(buttonElement).toHaveAttribute('style', 'background-color: blue;');
-      expect(buttonElement).toBeDisabled();
-    });
+    const buttonElement = screen.getByText('Styled Button');
+    expect(buttonElement.classList.contains('MuiButton-outlined')).toBe(true);
+    expect(buttonElement.getAttribute('style')).toBe('background-color: blue;');
+    expect(buttonElement.disabled).toBe(true);
+  });
 
   it('applies sx prop correctly', () => {
     render(<Button text="SX Button" sx={{ margin: '10px' }} />);
     
     const buttonElement = screen.getByText('SX Button');
-    // Since sx prop is handled by MUI's system, we can't directly test inline styles, 
-    // but we can check that the button is rendered without errors.
-    expect(buttonElement).toBeInTheDocument();
+    expect(buttonElement).not.toBeNull();
   });
 });
