@@ -1,0 +1,14 @@
+@use '../../styles/globals.scss' as *;
+
+.colorTextField {
+    input {
+        height: 34px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    button {
+        height: 15px;
+        width: 15px;
+    }
+}
