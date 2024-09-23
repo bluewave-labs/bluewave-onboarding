@@ -4,6 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const { API_BASE_URL } = require('../utils/constants');
 
+const emailEnabled = process.env.EMAIL_ENABLE === 'true';
+
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST || 'localhost',
   port: process.env.EMAIL_PORT || 465,
@@ -27,12 +29,18 @@ const readHTMLFile = (filePath) => {
 };
 
 const sendEmail = async (to, subject, templateName, replacements) => {
+  if (!emailEnabled) {
+    console.log('Email sending is disabled.');
+    return;
+  }
+
   const templatePath = path.join(__dirname, `../templates/${templateName}.hbs`);
   const html = await readHTMLFile(templatePath);
   const template = handlebars.compile(html);
   const htmlToSend = template(replacements);
 
   const mailOptions = {
+    from: process.env.EMAIL,
     to,
     subject,
     html: htmlToSend
