@@ -5,13 +5,13 @@ import ContentHeader from '../../components/TourComponents/ContentHeader/Content
 import ConfirmationPopup from '../../components/TourComponents/ConfirmationPopup/ConfirmationPopup';
 import Button from '../../components/Button/Button';
 import './ProductTourStyles.css';
-import TourDescriptionText from '../../components/TourComponents/TourDescriptionText/TourDescriptionText';
-import InfoTooltip from '../../components/TourComponents/InfoTooltip/InfoTooltip';
+import Settings from '../../components/Settings/Settings';
 
 const TourPage = ({ items }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [showDemoItems, setShowDemoItems] = useState(false);
+  const [showSettings, setShowSettings] = useState(false); // New state for showing settings
 
   useEffect(() => {
     setShowDemoItems(items.length === 0);
@@ -25,15 +25,12 @@ const TourPage = ({ items }) => {
     setPopupOpen(false);
   };
 
-  const handleOpenPopup = () => {
-    setPopupOpen(true);
-  };
-
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
 
-  const handleCreateItem = () => {
+  const toggleSettings = () => {
+    setShowSettings(!showSettings); // Toggle the settings visibility
   };
 
   const demoItems = [
@@ -46,13 +43,14 @@ const TourPage = ({ items }) => {
       onEdit: () => { }
     },
   ];
+
   const listItems = (showDemoItems ? demoItems : items).flatMap(item => Array(3).fill(item));
 
   return (
     <div className="product-page-container">
       <div className="product-page-header">
         <ContentHeader title={showDemoItems ? "Demo Tours" : "All Tours"} />
-        <Button text="Create a new tour"/>
+        <Button text="Create a new tour" onClick={toggleSettings} /> {/* Button action */}
       </div>
       <div className="product-page">
         <ContentArea className="content-area">
@@ -68,8 +66,14 @@ const TourPage = ({ items }) => {
           </p>
         </div>
       </div>
-      {/* <TourDescriptionText description="A product onboarding tour is a guided walkthrough or tutorial..." />
-      <InfoTooltip text="More info here" title="What is a product tour?" /> */}
+
+      {/* Settings Component - Position and Animation */}
+      {showSettings && (
+        <div className="settings-container">
+          <Settings onClose={toggleSettings}/>
+        </div>
+      )}
+
       <ConfirmationPopup open={isPopupOpen} onConfirm={handleDelete} onCancel={handleClosePopup} />
     </div>
   );
