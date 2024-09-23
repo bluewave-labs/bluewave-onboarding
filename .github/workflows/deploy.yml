@@ -1,0 +1,41 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Set up SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval $(ssh-agent -s)
+          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
+
+      - name: Deploy to DigitalOcean Droplet
+        env:
+          DO_USERNAME: ${{ secrets.DO_USERNAME }}
+        run: |
+          ssh -o StrictHostKeyChecking=no $DO_USERNAME@your_droplet_ip << EOF
+          cd ~/bluewave-onboarding && git pull && docker compose down && docker compose build && docker compose up -d
+          EOF

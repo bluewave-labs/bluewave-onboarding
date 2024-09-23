@@ -3,13 +3,17 @@ import './Login.css';
 import GoogleSignInButton from '../../components/Button/GoogleSignInButton/GoogleSignInButton';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { signUp } from '../../services/loginServices';
-import { useNavigate } from 'react-router-dom';
+import CustomLink from '../../components/CustomLink/CustomLink';
+import { handleAuthSuccess } from '../../utils/loginHelper';
+import { useAuth } from '../../services/authProvider';
+import { useNavigate } from 'react-router-dom'; 
 
 function CreateAccountPage() {
-  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
-  const [validation, setValidation] = useState({ isUsernameValid: false, isEmailValid: false, isPasswordValid: false });
+  const [formData, setFormData] = useState({ name: '', surname: '', email: '', password: '' });
+  const [validation, setValidation] = useState({ isNameValid: false, isSurnameValid: false, isEmailValid: false, isPasswordValid: false });
   const [passwordChecks, setPasswordChecks] = useState({ hasSpecialCharacter: false, atLeastEightCharacters: false });
   const [error, setError] = useState('');
+  const { loginAuth } = useAuth();
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -17,8 +21,11 @@ function CreateAccountPage() {
     setFormData({ ...formData, [name]: value });
 
     switch (name) {
-      case 'username':
-        setValidation((prev) => ({ ...prev, isUsernameValid: value.length > 0 }));
+      case 'name':
+        setValidation((prev) => ({ ...prev, isNameValid: value.length > 0 }));
+        break;
+      case 'surname':
+        setValidation((prev) => ({ ...prev, isSurnameValid: value.length > 0 }));
         break;
       case 'email':
         setValidation((prev) => ({ ...prev, isEmailValid: validateEmail(value) }));
@@ -40,18 +47,19 @@ function CreateAccountPage() {
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSignUp = async () => {
-    const { isUsernameValid, isEmailValid, isPasswordValid } = validation;
-    if (!isUsernameValid || !isEmailValid || !isPasswordValid) {
+    const { name, surname, email, password } = formData;
+    const { isNameValid, isSurnameValid, isEmailValid, isPasswordValid } = validation;
+
+    if (!isNameValid || (surname && !isSurnameValid) || !isEmailValid || !isPasswordValid) {
       alert('Please fill out the form correctly.');
       return;
     }
 
-    const userData = { username: formData.username, email: formData.email, password: formData.password };
+    const userData = { name: name, surname: surname, email: email, password: password };
 
     try {
-      const response = await signUp(formData);
-      console.log('Sign up successful:', response);
-      navigate('/');
+      const response = await signUp(userData);
+      handleAuthSuccess(response, loginAuth, navigate)
     } catch (error) {
       if (error.response && error.response.data) {
         if (error.response.data.error === 'Email already exists') {
@@ -60,6 +68,7 @@ function CreateAccountPage() {
           setError('An error occurred. Please try again.');
         }
       } else {
+        console.log(error)
         setError('An error occurred. Please check your network connection and try again.');
       }
     }
@@ -70,16 +79,31 @@ function CreateAccountPage() {
       <h2>Create an account</h2>
       <div className="form-group">
         <div className='check-div'>
-          {validation.isUsernameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
-          <label htmlFor="username">Username*:</label>
+          {validation.isNameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
+          <label htmlFor="name">Name*:</label>
         </div>
         <input
-          id="username"
+          id="name"
           type="name"
-          name="username"
-          value={formData.username}
+          name="name"
+          value={formData.name}
           onChange={handleInputChange}
-          placeholder="Enter your username"
+          placeholder="Enter your name"
+        />
+      </div>
+
+      <div className="form-group">
+        <div className='check-div'>
+          {validation.isSurnameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
+          <label htmlFor="surname">Surname*:</label>
+        </div>
+        <input
+          id="surname"
+          type="name"
+          name="surname"
+          value={formData.surname}
+          onChange={handleInputChange}
+          placeholder="Enter your surname"
         />
       </div>
 
@@ -128,7 +152,7 @@ function CreateAccountPage() {
       </button>
       <GoogleSignInButton />
       <div className="sign-up-link">
-        Already have an account? <a href="/">Log in</a>
+        Already have an account? <CustomLink text="Log in" url="/" />
       </div>
     </div>
   );

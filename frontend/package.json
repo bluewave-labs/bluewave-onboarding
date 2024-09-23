@@ -4,34 +4,27 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@emotion/react": "^11.13.0",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^5.15.19",
-    "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.16.5",
-    "@mui/system": "^5.15.20",
-    "@mui/x-data-grid": "^7.3.0",
     "@mui/x-date-pickers": "^7.3.1",
     "@mui/x-date-pickers-pro": "^7.3.1",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/user-event": "^13.5.0",
     "@vitejs/plugin-react-swc": "^3.6.0",
     "axios": "^1.6.8",
     "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
     "dompurify": "^3.1.6",
-    "font-awesome": "^4.7.0",
-    "formik": "^2.4.5",
+    "js-cookie": "^3.0.5",
+    "punycode": "^2.3.1",
     "mui-color-input": "^4.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^5.2.1",
-    "react-pro-sidebar": "^1.1.0",
     "react-quill": "^2.0.0",
     "react-redux": "^9.1.2",
     "react-router": "^6.23.0",
     "react-router-dom": "^6.24.0",
-    "react-scripts": "^3.0.1",
     "redux": "^5.0.1",
     "sass": "^1.77.0",
     "vite-plugin-svgr": "^4.2.0",
@@ -39,15 +32,31 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^1.7.0",
+    "@storybook/addon-essentials": "^8.2.9",
+    "@storybook/addon-interactions": "^8.2.9",
+    "@storybook/addon-links": "^8.2.9",
+    "@storybook/addon-onboarding": "^8.2.9",
+    "@storybook/blocks": "^8.2.9",
+    "@storybook/preset-create-react-app": "^4.1.0",
+    "@storybook/react": "^8.2.9",
+    "@storybook/react-vite": "^8.2.9",
+    "@storybook/react-webpack5": "^8.2.9",
+    "@storybook/test": "^8.2.9",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^15.0.7",
+    "@types/storybook__react": "^4.0.2",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-storybook": "^0.8.0",
     "jsdom": "^24.0.0",
+    "prop-types": "^15.8.1",
     "sass": "^1.77.0",
+    "storybook": "^8.2.9",
     "vite": "^5.4.0",
-    "vitest": "^1.6.0"
+    "vitest": "^1.6.0",
+    "webpack": "^5.93.0"
   },
   "scripts": {
     "dev": "vite",
@@ -56,6 +65,13 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "start": "vite"
+    "start": "vite",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }
