@@ -42,7 +42,7 @@ app.use("/mock/", mocks);
 app.use("/popup", popup);
 app.use("/popup_log", popup_log);
 app.use("/banner", banner);
-app.use("/tours", tourRoutes);
+app.use("/tour", tourRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
