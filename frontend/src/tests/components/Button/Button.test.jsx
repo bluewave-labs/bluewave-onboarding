@@ -31,6 +31,7 @@ describe('Button component', () => {
     fireEvent.click(buttonElement);
     
     expect(handleClick).toHaveBeenCalledTimes(1);
+    expect(handleClick).toHaveBeenCalledWith(expect.any(Object));
   });
 
   it('applies variant, style, and disabled props', () => {

@@ -6,6 +6,7 @@ import PopupContent from '../../components/PopupPageComponents/PopupContent/Popu
 import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
 import { useNavigate, useLocation } from 'react-router-dom';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+import {emitToastError} from '../../utils/guideHelpers'
 
 const CreatePopupPage = () => {
     const navigate = useNavigate();
@@ -56,11 +57,7 @@ const CreatePopupPage = () => {
 
                     console.log('Get popup successful:', popupData);
                 } catch (error) {
-                    if (error.response && error.response.data) {
-                        toastEmitter.emit(TOAST_EMITTER_KEY, 'An error occurred: ' + error.response.data.errors[0].msg)
-                    } else {
-                        toastEmitter.emit(TOAST_EMITTER_KEY, 'An error occurred. Please check your network connection and try again.')
-                    }
+                    emitToastError(error);
                 }
             };
 
@@ -92,11 +89,7 @@ const CreatePopupPage = () => {
             toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
             navigate('/popup');
         } catch (error) {
-            if (error.response && error.response.data) {
-                toastEmitter.emit(TOAST_EMITTER_KEY, 'An error occurred: ' + error.response.data.errors[0].msg)
-            } else {
-                toastEmitter.emit(TOAST_EMITTER_KEY, 'An error occurred. Please check your network connection and try again.')
-            }
+            emitToastError(error);
         }
     }
 
