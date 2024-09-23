@@ -1,6 +1,7 @@
 import os
 import requests
 
+
 GITHUB_API_BASE_URL = "https://api.github.com"
 REPO_OWNER = "bluewave-labs"
 REPO_NAME = "bluewave-onboarding"
