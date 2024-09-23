@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "49232a94-4163-4b6b-bc79-2d9017404dd8",
+		"name": "Tours",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38229311"
+	},
+	"item": [
+		{
+			"name": "Fetch all Tours",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjcwMzE3MjYsImV4cCI6MTcyNzAzNTMyNn0.BP2431P3eBf0NMaq6jUeVkBXFgxFPxXjUg5ysa3brm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/tours",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tours"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Tour",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjcwMzE3MjYsImV4cCI6MTcyNzAzNTMyNn0.BP2431P3eBf0NMaq6jUeVkBXFgxFPxXjUg5ysa3brm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Tour 5\",\r\n  \"description\": \"A beautiful journey\",\r\n  \"createdBy\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/tours",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tours"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjcwMzE3MjYsImV4cCI6MTcyNzAzNTMyNn0.BP2431P3eBf0NMaq6jUeVkBXFgxFPxXjUg5ysa3brm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Updated Tour Title\",\r\n  \"description\": \"Updated description\",\r\n  \"createdBy\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/tours/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tours",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjcwMzE3MjYsImV4cCI6MTcyNzAzNTMyNn0.BP2431P3eBf0NMaq6jUeVkBXFgxFPxXjUg5ysa3brm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/tours/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tours",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
