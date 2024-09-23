@@ -14,7 +14,7 @@ const mocks = require("./src/routes/mocks.routes");
 const popup = require("./src/routes/popup.routes");
 const popup_log = require("./src/routes/popup_log.routes");
 const banner = require("./src/routes/banner.routes");
-// const tourRoutes = require('./src/routes/tour.routes');
+const tourRoutes = require('./src/routes/tour.routes');
 
 const app = express();
 
@@ -42,7 +42,7 @@ app.use("/mock/", mocks);
 app.use("/popup", popup);
 app.use("/popup_log", popup_log);
 app.use("/banner", banner);
-// app.use('/tours', tourRoutes);
+app.use('/tour', tourRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
