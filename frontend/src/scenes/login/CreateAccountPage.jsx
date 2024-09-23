@@ -61,7 +61,7 @@ function CreateAccountPage() {
       const response = await signUp(userData);
       handleAuthSuccess(response, loginAuth, navigate)
     } catch (error) {
-      if (error.response && error.response.data) {
+      if (error.response?.data) {
         if (error.response.data.error === 'Email already exists') {
           setError('Email already exists');
         } else {

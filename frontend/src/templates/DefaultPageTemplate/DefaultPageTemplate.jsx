@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ParagraphCSS from '../../components/ParagraphCSS/ParagraphCSS';
 import GuideMainPageTemplate from '../GuideMainPageTemplate/GuideMainPageTemplate';
@@ -15,13 +15,17 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
     const [load, setLoad] = useState(true)
 
     const handleDelete = async () => {
-        await deleteItem(itemToDelete);
-        setPopupOpen(false);
-        if(items.length > 1){
-            setLoad(false);
+        try {
+            await deleteItem(itemToDelete);
+            setPopupOpen(false);
+            if(items.length > 1){
+                setLoad(false);
+            }
+            setItemDeleted(prevState => !prevState);
+            toastEmitter.emit(TOAST_EMITTER_KEY, `This ${itemType.slice(0, -1)} is removed`);
+        } catch (error) {
+            toastEmitter.emit(TOAST_EMITTER_KEY, `Failed to remove this ${itemType.slice(0, -1)}`);
         }
-        setItemDeleted(prevState => !prevState);
-        toastEmitter.emit(TOAST_EMITTER_KEY, `This ${itemType.slice(0, -1)} is removed`);
     };
 
     const handleOpenPopup = (id) => {
@@ -51,12 +55,12 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
         fetchData();
     }, [itemDeleted]);
 
-    const mappedItems = items.map(item => ({
+    const mappedItems = useMemo(() => items.map(item => ({
         idItem: item.id,
         ...getItemDetails(item),
         onDelete: () => handleOpenPopup(item.id),
         onEdit: () => navigateToCreate({ state: { isEdit: true, id: item.id } }),
-    }));
+    })), [items, getItemDetails, handleOpenPopup, navigateToCreate]);
 
     return (
         <>
