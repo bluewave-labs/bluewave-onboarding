@@ -64,7 +64,7 @@ class BannerController {
     try {
       const { id } = req.params;
 
-      if (isNaN(id) || id.trim() === "") {
+      if (Number.isNaN(Number(id)) || id.trim() === "")  {
         return res.status(400).json({ errors: [{ msg: "Invalid id" }] });
       }
 
@@ -174,7 +174,7 @@ class BannerController {
     try {
       const { id } = req.params;
 
-      if (isNaN(id) || id.trim() === "") {
+      if (Number.isNaN(Number(id)) || id.trim() === "")  {
         return res.status(400).json({ errors: [{ msg: "Invalid id" }] });
       }
 
