@@ -1,14 +1,32 @@
 @use '../../styles/globals.scss' as *;
 
 .colorTextField {
+
+    :global {
+        .MuiOutlinedInput-root {
+            &:hover fieldset {
+                border-color: var(--main-purple);
+            }
+
+            &.Mui-focused fieldset {
+                border-color: var(--main-purple);
+            }
+
+        }
+    }
+
     input {
+        font-size: 13px;
+        color: var(--second-text-color);
         height: 34px;
         padding-top: 0;
         padding-bottom: 0;
     }
 
     button {
-        height: 15px;
-        width: 15px;
+        height: 17px;
+        width: 17px;
+        box-shadow: none;
+        border: 1.23px solid var(--grey-border);
     }
 }
