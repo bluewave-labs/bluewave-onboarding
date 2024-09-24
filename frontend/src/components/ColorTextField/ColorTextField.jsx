@@ -1,25 +1,16 @@
+import styles from './ColorTextField.module.scss'
 import { React } from 'react';
-import CustomTextField from '../TextFieldComponents/CustomTextField/CustomTextField';
-import CircleIcon from '@mui/icons-material/Circle';
+import { MuiColorInput } from 'mui-color-input'
 
-const ColorTextField = ({onChange  = () => null, value = null}) => {
-    const handleColor = (event) => {
-        let newText = event.target.value;
-        if (!newText.startsWith('#')) {
-            newText = '#' + newText;
-        }
-        onChange(newText);
-        
-    }
+const ColorTextField = ({ onChange = () => null, value = null }) => {
     return (
-        <>
-        <CustomTextField
-        TextFieldWidth="100%"
-        value={value}
-        onChange={handleColor}
+        <MuiColorInput
+            className={styles.colorTextField}
+            format="hex"
+            isAlphaHidden="true"
+            value={value}
+            onChange={onChange}
         />
-        <CircleIcon style={{ fontSize: '24px', color: value, marginLeft: '10px' }} />
-        </>
     )
 }
 
