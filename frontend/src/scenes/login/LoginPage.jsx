@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './Login.css';
-import GoogleSignInButton from '../../components/Button/GoogleSignInButton/GoogleSignInButton';
 import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import { login } from '../../services/loginServices';
@@ -89,7 +88,6 @@ function LoginPage() {
       <button className="sign-in-button" type="submit">
         {loading ? <CircularProgress size={12} color="inherit" /> : 'Sign In'}
       </button>
-      <GoogleSignInButton />
       <div className="sign-up-link">
         Don't have an account? <CustomLink text="Sign up" url="/signup" />
       </div>
