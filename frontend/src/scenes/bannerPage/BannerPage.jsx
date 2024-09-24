@@ -7,6 +7,7 @@ import BannerPreview from '../../components/BannerPageComponents/BannerPreview/B
 import { addBanner, getBannerById, editBanner } from '../../services/bannerServices';
 import { useNavigate, useLocation } from 'react-router-dom';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+import {emitToastError} from '../../utils/guideHelpers'
 
 const BannerPage = () => {
     const navigate = useNavigate();
@@ -40,11 +41,7 @@ const BannerPage = () => {
 
                     console.log('Get banner successful:', bannerData);
                 } catch (error) {
-                    if (error.response && error.response.data) {
-                        console.error('An error occurred:', error.response.data.errors[0].msg);
-                    } else {
-                        console.log('An error occurred. Please check your network connection and try again.');
-                    }
+                    emitToastError(error)
                 }
             };
 
@@ -69,11 +66,7 @@ const BannerPage = () => {
             toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
             navigate('/banner');
         } catch (error) {
-            if (error.response && error.response.data) {
-                console.error('An error occurred:', error.response.data.errors[0].msg);
-            } else {
-                console.log('An error occurred. Please check your network connection and try again.');
-            }
+            emitToastError(error)
         }
     }
 
