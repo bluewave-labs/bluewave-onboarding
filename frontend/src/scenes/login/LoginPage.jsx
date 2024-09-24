@@ -5,7 +5,7 @@ import { login } from '../../services/loginServices';
 import CustomLink from '../../components/CustomLink/CustomLink';
 import { handleAuthSuccess } from '../../utils/loginHelper';
 import { useAuth } from '../../services/authProvider';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -15,6 +15,12 @@ function LoginPage() {
   const [errorMessage, setErrorMessage] = useState('');
   const { loginAuth } = useAuth();
   const navigate = useNavigate();
+
+  const handleEnterPress = (event) => {
+    if (event.key === 'Enter') {
+      handleLogin();
+    }
+  }
 
   const handleLogin = async () => {
     try {
@@ -49,6 +55,7 @@ function LoginPage() {
           id="password"
           type="password"
           value={password}
+          onKeyDown={handleEnterPress}
           onChange={(e) => setPassword(e.target.value)}
         />
         {loginError && <div className='error-message'>{errorMessage}</div>}
