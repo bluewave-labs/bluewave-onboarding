@@ -4,7 +4,7 @@ module.exports = {
     username: process.env.DEV_DB_USERNAME,
     password: process.env.DEV_DB_PASSWORD,
     database: process.env.DEV_DB_NAME,
-    host: 'db',
+    host: 'host.docker.internal',
     dialect: "postgres",
     port: process.env.DEV_DB_PORT,
     logging: false,
