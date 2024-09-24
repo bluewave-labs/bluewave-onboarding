@@ -1,22 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import HomePageTemplate from '../HomePageTemplate/HomePageTemplate';
 import ParagraphCSS from '../../components/ParagraphCSS/ParagraphCSS';
 import GuideMainPageTemplate from '../GuideMainPageTemplate/GuideMainPageTemplate';
 import CreateActivityButton from '../../components/Button/CreateActivityButton/CreateActivityButton';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+import './DefaultPageTemplate.css'
 
 const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType, itemTypeInfo, getItemDetails }) => {
     const [items, setItems] = useState([]);
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState();
     const [itemDeleted, setItemDeleted] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [load, setLoad] = useState(true)
 
     const handleDelete = async () => {
-        await deleteItem(itemToDelete);
-        setPopupOpen(false);
-        setItemDeleted(prevState => !prevState);
-        toastEmitter.emit(TOAST_EMITTER_KEY, 'This banner is removed');
+        try {
+            await deleteItem(itemToDelete);
+            setPopupOpen(false);
+            if(items.length > 1){
+                setLoad(false);
+            }
+            setItemDeleted(prevState => !prevState);
+            toastEmitter.emit(TOAST_EMITTER_KEY, `This ${itemType.slice(0, -1)} is removed`);
+        } catch (error) {
+            toastEmitter.emit(TOAST_EMITTER_KEY, `Failed to remove this ${itemType.slice(0, -1)}`);
+        }
     };
 
     const handleOpenPopup = (id) => {
@@ -31,46 +40,50 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
     useEffect(() => {
         const fetchData = async () => {
             try {
+                if(load){
+                    setLoading(true); 
+                }
                 const data = await getItems();
                 setItems(data);
             } catch (error) {
                 console.error(`Failed to fetch ${itemType.toLowerCase()}s:`, error);
+            } finally {
+                setLoading(false);
+                setLoad(true);
             }
         };
         fetchData();
     }, [itemDeleted]);
 
-    const style = {
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-    };
-
-    const mappedItems = items.map(item => ({
+    const mappedItems = useMemo(() => items.map(item => ({
         idItem: item.id,
         ...getItemDetails(item),
         onDelete: () => handleOpenPopup(item.id),
         onEdit: () => navigateToCreate({ state: { isEdit: true, id: item.id } }),
-    }));
+    })), [items, getItemDetails, handleOpenPopup, navigateToCreate]);
 
     return (
         <>
-            {items.length === 0 ? (
-                <div style={style}>
-                    <ParagraphCSS />
-                    <CreateActivityButton type={itemType} onClick={navigateToCreate} />
-                </div>
+            {loading ? (
+                <div/>
             ) : (
-                <GuideMainPageTemplate
-                    items={mappedItems}
-                    handleDelete={handleDelete}
-                    isPopupOpen={isPopupOpen}
-                    handleClosePopup={handleClosePopup}
-                    type={itemTypeInfo}
-                    onClick={navigateToCreate}
-                />
+                <div className={`fade-in`}>
+                    {items.length === 0 ? (
+                        <div className={'placeholder-style'}>
+                            <ParagraphCSS />
+                            <CreateActivityButton type={itemType} onClick={navigateToCreate} />
+                        </div>
+                    ) : (
+                        <GuideMainPageTemplate
+                            items={mappedItems}
+                            handleDelete={handleDelete}
+                            isPopupOpen={isPopupOpen}
+                            handleClosePopup={handleClosePopup}
+                            type={itemTypeInfo}
+                            onClick={navigateToCreate}
+                        />
+                    )}
+                </div>
             )}
         </>
     );

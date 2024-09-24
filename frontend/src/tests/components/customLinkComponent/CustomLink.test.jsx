@@ -1,36 +1,38 @@
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { describe, it, expect } from 'vitest';
 import CustomLink from '../../../components/CustomLink/CustomLink';
 
-test('renders CustomLink with text and url', () => {
-  render(<CustomLink text="Link Text" url="https://example.com" />);
-  const linkElement = screen.getByText(/Link Text/i);
-  expect(linkElement).toBeInTheDocument();
-  expect(linkElement).toHaveAttribute('href', 'https://example.com');
-});
+describe('CustomLink', () => {
+  it('renders CustomLink with text and url', () => {
+    render(<CustomLink text="Link Text" url="https://example.com" />);
+    const linkElement = screen.getByText(/Link Text/i);
+    expect(linkElement).not.toBeNull();
+    expect(linkElement.getAttribute('href')).toBe('https://example.com');
+  });
 
-test('applies default text and url correctly', () => {
-  render(<CustomLink />);
-  const linkElement = screen.getByText(/Default Text/i);
-  expect(linkElement).toBeInTheDocument();
-  expect(linkElement).toHaveAttribute('href', '#');
-});
+  it('applies default text and url correctly', () => {
+    render(<CustomLink />);
+    const linkElement = screen.getByText(/Default Text/i);
+    expect(linkElement).not.toBeNull();
+    expect(linkElement.getAttribute('href')).toBe('#');
+  });
 
-test('applies custom class names correctly', () => {
-  render(
-    <CustomLink
-      text="Link Text"
-      url="https://example.com"
-      className="tertiary"
-    />
-  );
-  const linkElement = screen.getByText(/Link Text/i);
-  expect(linkElement).toHaveClass('custom-link');
-  expect(linkElement).toHaveClass('tertiary');
-});
+  it('applies custom class names correctly', () => {
+    render(
+      <CustomLink
+        text="Link Text"
+        url="https://example.com"
+        className="tertiary"
+      />
+    );
+    const linkElement = screen.getByText(/Link Text/i);
+    expect(linkElement.classList.contains('custom-link')).toBe(true);
+    expect(linkElement.classList.contains('tertiary')).toBe(true);
+  });
 
-test('applies underline prop correctly', () => {
-  render(<CustomLink text="Link Text" url="https://example.com" underline="hover" />);
-  const linkElement = screen.getByText(/Link Text/i);
-  expect(linkElement).toHaveClass('MuiLink-underlineHover');
+  it('applies underline prop correctly', () => {
+    render(<CustomLink text="Link Text" url="https://example.com" underline="hover" />);
+    const linkElement = screen.getByText(/Link Text/i);
+    expect(linkElement.classList.contains('MuiLink-underlineHover')).toBe(true);
+  });
 });
