@@ -19,7 +19,7 @@ def get_issues():
     }
 
     response = requests.get(url, headers=headers, params=params)
-
+    
     if response.status_code != 200:
         raise Exception(f"Error fetching issues: {response.status_code} {response.text}")
 
@@ -27,7 +27,7 @@ def get_issues():
 
 def generate_release_notes():
     issues = get_issues()
-
+    print(issues)
     release_notes = "# Release Notes\n\n"
 
     for issue in issues:
