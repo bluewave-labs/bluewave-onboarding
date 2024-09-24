@@ -19,16 +19,21 @@ const CustomTextField = ({
   labelFontWeight = 600,
   TextFieldWidth = "320px",
   inputHeight = "34px",
+  textFieldMargin = "normal",
+  type="text",
+  required = false,
   style
 }) => {
   return (
     <div style={style}>
       <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
       <TextField
+        type={type}
+        required={Boolean(required)}
         className="textField"
         sx={{ width: TextFieldWidth }}
         fullWidth
-        margin="normal"
+        margin={textFieldMargin}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
