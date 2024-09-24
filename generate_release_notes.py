@@ -27,17 +27,22 @@ def get_issues():
 
 def generate_release_notes():
     issues = get_issues()
-    print(issues)
+    print("Fetched issues:", issues)
     release_notes = "# Release Notes\n\n"
 
     for issue in issues:
-        if 'pull_request' in issue and issue['pull_request'] is not None:
-            if issue.get('merged_at'): 
-                release_notes += f"## {issue['title']}\n"
-                release_notes += f"{issue['body']}\n\n"
+        if 'pull_request' in issue and issue['pull_request'] is not None and issue.get('merged_at'):
+            release_notes += f"## {issue['title']}\n"
+            release_notes += f"{issue['body']}\n\n"
+
+    if release_notes == "# Release Notes\n\n":
+        release_notes += "No merged pull requests found.\n"
 
     with open('release_notes.md', 'w') as f:
         f.write(release_notes)
 
 if __name__ == "__main__":
-    generate_release_notes()
+    if GITHUB_TOKEN is None:
+        print("Error: GH_TOKEN environment variable is not set.")
+    else:
+        generate_release_notes()
