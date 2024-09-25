@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import './Login.css'; 
+import './ForgotPassword.css'; 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { forgotPassword } from '../../services/loginServices'; // Make sure this function is properly implemented
 import { useNavigate } from 'react-router-dom';
 import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
 import CircularProgress from '@mui/material/CircularProgress';
+import Logo from '../../components/Logo/Logo';
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const ForgotPasswordPage = () => {
 
   return (
     <form onSubmit={handleSubmit} className="login-container">
+      <Logo />
       <h2 style={{marginBottom: "0px"}}>Forgot password?</h2>
       <h3>No worries, we'll send you reset instructions.</h3>
       <div className="form-group">

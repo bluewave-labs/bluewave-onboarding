@@ -8,6 +8,7 @@ import CustomLink from '../../components/CustomLink/CustomLink';
 import { handleAuthSuccess } from '../../utils/loginHelper';
 import { useAuth } from '../../services/authProvider';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../../components/Logo/Logo';
 
 function CreateAccountPage() {
   const [formData, setFormData] = useState({ name: '', surname: '', email: '', password: '' });
@@ -83,6 +84,7 @@ function CreateAccountPage() {
 
   return (
     <form onSubmit={handleSignUp} className="login-container">
+      <Logo />
       <h2>Create an account</h2>
       <div className="form-group">
         <CustomTextField

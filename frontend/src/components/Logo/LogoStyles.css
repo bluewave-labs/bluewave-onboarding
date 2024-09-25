@@ -5,9 +5,7 @@
   padding: 14px;
   border: 16px solid transparent;
   box-sizing: border-box;
-}
-
-.logo-image {
-  width: 100%;
-  height: auto;
+  margin-top: 78px;
+  font-weight: 400;
+  font-size: 40px;
 }

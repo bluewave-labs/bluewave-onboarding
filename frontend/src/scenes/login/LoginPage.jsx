@@ -7,6 +7,7 @@ import CustomLink from '../../components/CustomLink/CustomLink';
 import { handleAuthSuccess } from '../../utils/loginHelper';
 import { useAuth } from '../../services/authProvider';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../../components/Logo/Logo';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -49,6 +50,7 @@ function LoginPage() {
 
   return (
     <form onSubmit={handleSubmit} className="login-container">
+      <Logo />
       <h2>Log in to your account</h2>
       <div className="form-group">
         <CustomTextField
