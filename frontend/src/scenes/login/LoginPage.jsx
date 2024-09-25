@@ -52,6 +52,7 @@ function LoginPage() {
       <h2>Log in to your account</h2>
       <div className="form-group">
         <CustomTextField
+          placeholder='Enter email'
           labelText='Email:'
           textFieldMargin='none'
           TextFieldWidth="full"
@@ -62,6 +63,7 @@ function LoginPage() {
       </div>
       <div className="form-group">
         <CustomTextField
+          placeholder='Enter password'
           labelText='Password:'
           textFieldMargin='none'
           TextFieldWidth="full"

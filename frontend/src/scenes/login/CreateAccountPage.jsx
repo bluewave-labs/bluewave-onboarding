@@ -144,7 +144,7 @@ function CreateAccountPage() {
           labelText='Password*:'
           checkCircleIconVisible={true}
           displayCheckCircleIcon={validation.isPasswordValid}
-          placeholder='Enter your email'
+          placeholder='Create your password'
           textFieldMargin='none'
           TextFieldWidth="full"
           required="true"
