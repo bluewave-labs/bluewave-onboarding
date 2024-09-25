@@ -49,7 +49,7 @@ const TourPage = ({ items }) => {
   return (
     <div className="product-page-container">
       <div className="product-page-header">
-        <h2 style={{marginTop: "0.3rem"}}>{showDemoItems ? "Demo Tours" : "All Tours"}</h2>
+        <ContentHeader title={showDemoItems ? "Demo Tours" : "All Tours"} />
         <Button text="Create a new tour" onClick={toggleSettings} /> {/* Button action */}
       </div>
       <div className="product-page">

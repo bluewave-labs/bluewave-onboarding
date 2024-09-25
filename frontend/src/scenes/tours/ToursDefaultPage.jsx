@@ -13,10 +13,10 @@ const ToursDefaultPage = () => {
 
     const style = {
         "display": "flex",
-        "flexDirection": "column",
+        "flex-direction": "column",
         "width": "100%",
-        "justifyContent": "center",
-        "alignItems": "center",
+        "justify-content": "center",
+        "align-items": "center",
     };
 
     return (

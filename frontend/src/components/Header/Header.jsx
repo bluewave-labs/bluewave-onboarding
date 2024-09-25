@@ -3,7 +3,7 @@ import './Header.css';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import DropdownMenu from './DropdownMenu/DropdownMenu';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import Avatar from '../Avatar/Avatar';
+import Avatar from './Avatar/Avatar';
 import { useAuth } from '../../services/authProvider';
 
 function Header({ }) {

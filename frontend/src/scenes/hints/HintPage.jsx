@@ -26,7 +26,7 @@ const HintPage = () => {
     return (
       <div className="hint-page-container">
         <div className="hint-page-left-section">
-          <h2 className="hint-page-title" style={{ marginTop: "8px", marginBottom: "16px" }}>All Hints</h2>
+          <h2 className="hint-page-title" style={{ marginBottom: "16px" }}>All Hints</h2>
           <List items={hintsData} onSelectItem={() => { }} />
         </div>
         <div className="hint-right-content">

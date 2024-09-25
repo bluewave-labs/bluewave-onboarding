@@ -9,14 +9,3 @@
   font-weight: 400;
   font-size: 40px;
 }
-
-.sidebar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 200px;
-  padding: 0;
-  margin-top: 1.5rem;
-  padding: 0px 16px;
-  box-sizing: border-box;
-}
