@@ -89,7 +89,11 @@ const CreatePopupPage = () => {
             toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
             navigate('/popup');
         } catch (error) {
-            emitToastError(error);
+            if (error.response?.data?.message) {
+                toastEmitter.emit(TOAST_EMITTER_KEY, `Error: ${error.response.data.message}`);
+            } else {
+                toastEmitter.emit(TOAST_EMITTER_KEY, 'An unexpected error occurred. Please try again.');
+            }
         }
     }
 
