@@ -42,24 +42,26 @@ function LeftMenu() {
 
   return (
     <div className="left-menu">
-      <Logo isSidebar={true} />
-      <List>
-        {menuItems.map((item, index) => (
-          item.title ? (
-            <ListItemText key={index} primary={item.text} className="title" />
-          ) : (
-            <ListItemButton
-              key={index}
-              className="menu-item"
-              onClick={() => handleNavigation(item.route)}
-            >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          )
-        ))}
-      </List>
-      <Divider />
+      <div>
+        <Logo isSidebar={true} />
+        <List>
+          {menuItems.map((item, index) => (
+            item.title ? (
+              <ListItemText key={index} primary={item.text} className="title" />
+            ) : (
+              <ListItemButton
+                key={index}
+                className="menu-item"
+                onClick={() => handleNavigation(item.route)}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            )
+          ))}
+        </List>
+        <Divider />
+      </div>
       <UserProfileSidebar />
     </div>
   );
