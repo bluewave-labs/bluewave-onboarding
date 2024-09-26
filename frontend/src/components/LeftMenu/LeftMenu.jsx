@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { List, ListItemIcon, ListItemText, Divider, ListItemButton } from '@mui/material';
 import {
   DirectionsBusFilledOutlined as DirectionsBusIcon,
@@ -14,11 +14,8 @@ import {
 import './LeftMenu.css';
 import Logo from '../Logo/Logo';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../services/authProvider';
-import Avatar from '../Avatar/Avatar';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import UserProfileSidebar from '../UserProfileSidebar/UserProfileSidebar';
+
 
 const menuItems = [
   { text: 'Home', icon: <HomeIcon />, route: '/' },
@@ -40,13 +37,6 @@ function LeftMenu() {
 
   const handleNavigation = (route) => {
     if (route) navigate(route);
-  };
-
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { userInfo } = useAuth();
-
-  const handleDropdownClick = () => {
-    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -77,18 +67,7 @@ function LeftMenu() {
           <ListItemText primary="Support" />
         </ListItemButton>
       </div>
-      <div className="user-info">
-        <div className='user-details-container'>
-          <Avatar src="/vendetta.png" alt="User" size="medium" />
-          <div className="user-details">
-            <div className="user-name">{userInfo.fullName}</div>
-            <div className="user-role">{userInfo.role}</div>
-          </div>
-        </div>
-        <button className="dropdown-button" onClick={handleDropdownClick}>
-          {isDropdownOpen ? <>< KeyboardArrowUpIcon /><DropdownMenu /></> : <KeyboardArrowDownOutlinedIcon />}
-        </button>
-      </div>
+      <UserProfileSidebar />
     </div>
   );
 }
