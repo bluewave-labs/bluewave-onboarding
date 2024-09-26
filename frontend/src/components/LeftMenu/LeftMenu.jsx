@@ -30,6 +30,7 @@ const menuItems = [
   { text: 'GET FEEDBACK', title: true },
   { text: 'Feedback', icon: <ChatIcon /> },
   { text: 'Surveys', icon: <ListIcon /> },
+  { text: 'Support', icon: <SportsIcon /> },
 ];
 
 function LeftMenu() {
@@ -58,15 +59,7 @@ function LeftMenu() {
           )
         ))}
       </List>
-      <div className="bottom-menu">
-        <Divider />
-        <ListItemButton className="menu-item">
-          <ListItemIcon>
-            <SportsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Support" />
-        </ListItemButton>
-      </div>
+      <Divider />
       <UserProfileSidebar />
     </div>
   );
