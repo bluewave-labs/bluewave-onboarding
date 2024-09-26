@@ -43,10 +43,10 @@
   right: 0px;
   background-color: white;
   z-index: 1000;
-  animation: fadeIn 0.5s ease-out; /* Fade-in animation */
+  animation: fadeInRight 0.5s ease-out; /* Fade-in animation */
 }
 
-@keyframes fadeIn {
+@keyframes fadeInRight {
   from {
     opacity: 0;
     transform: translateX(50px); /* Slide in from the right */

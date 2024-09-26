@@ -1,6 +1,6 @@
 const popupService = require("../service/popup.service");
 const { internalServerError } = require("../utils/errors");
-const { isValidHexColor } = require("../utils/guideHelpers");
+const { isValidHexColor, checkColorFields } = require("../utils/guideHelpers");
 const db = require("../models");
 const Popup = db.Popup;
 
@@ -53,15 +53,7 @@ class PopupController {
       buttonBackgroundColor,
       buttonTextColor,
     };
-    for (const [field, value] of Object.entries(colorFields)) {
-      if (value && !isValidHexColor(value)) {
-        return res
-          .status(400)
-          .json({
-            errors: [{ msg: `${field} must be a valid hex color code` }],
-          });
-      }
-    }
+    checkColorFields(colorFields);
 
     try {
       const newPopupData = { ...req.body, createdBy: userId };
@@ -81,7 +73,7 @@ class PopupController {
     try {
       const { id } = req.params;
 
-      if (isNaN(id) || id.trim() === "") {
+      if (Number.isNaN(Number(id)) || id.trim() === "")  {
         return res.status(400).json({ errors: [{ msg: "Invalid id" }] });
       }
 
@@ -199,7 +191,7 @@ class PopupController {
     try {
       const { id } = req.params;
 
-      if (isNaN(id) || id.trim() === "") {
+      if (Number.isNaN(Number(id)) || id.trim() === "")  {
         return res.status(400).json({ errors: [{ msg: "Invalid popup ID" }] });
       }
 
