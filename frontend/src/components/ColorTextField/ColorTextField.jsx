@@ -7,9 +7,10 @@ const ColorTextField = ({ onChange = () => null, value = null }) => {
         <MuiColorInput
             className={styles.colorTextField}
             format="hex"
-            isAlphaHidden="true"
+            isAlphaHidden={true}
             value={value}
             onChange={onChange}
+        />
         />
     )
 }
