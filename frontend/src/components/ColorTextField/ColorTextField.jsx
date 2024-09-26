@@ -11,7 +11,6 @@ const ColorTextField = ({ onChange = () => null, value = null }) => {
             value={value}
             onChange={onChange}
         />
-        />
     )
 }
 
