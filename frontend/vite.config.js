@@ -14,8 +14,13 @@ export default defineConfig({
     include: ['src/tests/**/*.test.jsx'],
     css: {
       modules: {
-          classNameStrategy: 'non-scoped'
+        classNameStrategy: 'non-scoped'
       }
-    }
+    },
+    server: {
+      deps: {
+        inline: ['mui-color-input']
+      },
+    },
   }
 });
