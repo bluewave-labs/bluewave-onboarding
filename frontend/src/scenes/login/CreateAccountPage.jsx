@@ -48,7 +48,7 @@ function CreateAccountPage() {
 
   const handleEnterPress = (event) => {
     if (event.key === 'Enter') {
-      handleLogin();
+      handleSignUp();
     }
   }
 
