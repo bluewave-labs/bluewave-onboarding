@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import './Header.css';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-import DropdownMenu from './DropdownMenu/DropdownMenu';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Avatar from '../Avatar/Avatar';
+import DropdownMenu from './DropdownMenu/DropdownMenu';
 import { useAuth } from '../../services/authProvider';
 
-function Header({ }) {
+const Header = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const {userInfo} = useAuth();
+    const { userInfo } = useAuth();
 
     const handleDropdownClick = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -24,11 +24,18 @@ function Header({ }) {
                     <div className="user-role">{userInfo.role}</div>
                 </div>
                 <button className="dropdown-button" onClick={handleDropdownClick}>
-                    {isDropdownOpen ? <>< KeyboardArrowUpIcon /><DropdownMenu /></> : <KeyboardArrowDownOutlinedIcon />}
+                    {isDropdownOpen ? (
+                        <>
+                            <KeyboardArrowUpIcon />
+                            <DropdownMenu />
+                        </>
+                    ) : (
+                        <KeyboardArrowDownOutlinedIcon />
+                    )}
                 </button>
             </div>
         </div>
     );
-}
+};
 
 export default Header;

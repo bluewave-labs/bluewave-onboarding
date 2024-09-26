@@ -49,6 +49,12 @@ function CreateAccountPage() {
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+  const handleEnterPress = (event) => {
+    if (event.key === 'Enter') {
+      handleLogin();
+    }
+  }
+
   const handleSignUp = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -69,7 +75,7 @@ function CreateAccountPage() {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      if (error.response && error.response.data) {
+      if (error.response?.data) {
         if (error.response.data.error === 'Email already exists') {
           setError('Email already exists');
         } else {
@@ -152,6 +158,7 @@ function CreateAccountPage() {
           required="true"
           value={formData.password}
           onChange={handleInputChange}
+          onKeyDown={handleEnterPress}
         />
       </div>
 
