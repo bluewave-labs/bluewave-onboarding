@@ -111,6 +111,7 @@ function CreateAccountPage() {
           onChange={handleInputChange}
           placeholder="Enter your surname"
         />
+        {error && <div className="error-message">{error}</div>}
       </div>
 
       <div className="form-group">
@@ -126,7 +127,6 @@ function CreateAccountPage() {
           onChange={handleInputChange}
           placeholder="Enter your email"
         />
-        {error && <div className="error-message">{error}</div>}
       </div>
 
       <div className="form-group">
