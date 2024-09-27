@@ -1,5 +1,4 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { describe, it, expect, vi } from 'vitest';
 import CreatePopupPage from '../../../scenes/popup/CreatePopupPage';
 import * as popupServices from '../../../services/popupServices';
@@ -85,7 +84,7 @@ describe('CreatePopupPage component', () => {
     await waitFor(() => {
       expect(emitSpy).toHaveBeenCalledWith(
         expect.anything(), // The first argument is the key, which can be anything
-        expect.stringContaining('An error occurred')
+        expect.stringContaining('An unexpected error occurred')
       );
     });
 
@@ -98,17 +97,18 @@ describe('CreatePopupPage component', () => {
 
 
   it('initializes form fields correctly', async () => {
-    await act(async () => {
-      render(
-        <Router>
-          <CreatePopupPage />
-        </Router>
-      );
-    });
+    render(
+      <Router>
+        <CreatePopupPage />
+      </Router>
+    );
 
     // Check initial state of form fields
-    expect(screen.getByDisplayValue('No action')).toBeInTheDocument(); // Example for headerBackgroundColor
-    expect(screen.getByDisplayValue('https://')).toBeInTheDocument(); // Example for headerColor
+    const headerBackgroundColor = screen.getByDisplayValue('No action');
+    const headerColor = screen.getByDisplayValue('https://');
+
+    expect(headerBackgroundColor).not.toBeNull(); // Example for headerBackgroundColor
+    expect(headerColor).not.toBeNull(); // Example for headerColor
     // Add more checks for other form fields
   });
 

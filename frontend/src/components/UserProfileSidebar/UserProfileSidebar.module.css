@@ -1,0 +1,41 @@
+.user-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    padding-left: 16px;
+}
+
+.user-details-container {
+    display: flex;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 20px;
+    color: #344054;
+}
+
+.user-role {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #344054;
+}
+
+.dropdown-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.4em 0.4em;
+    margin: 1px
+}
