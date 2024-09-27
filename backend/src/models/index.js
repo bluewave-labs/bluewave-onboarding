@@ -29,7 +29,6 @@ db.PopupLog = require("./PopupLog.js")(sequelize, Sequelize.DataTypes);
 db.Banner = require("./Banner.js")(sequelize, Sequelize.DataTypes);
 db.Team = require("./Team.js")(sequelize, Sequelize.DataTypes);
 db.Invite = require("./Invite.js")(sequelize, Sequelize.DataTypes);
-db.UserTeams = require("./UserTeams.js")(sequelize, Sequelize.DataTypes);
 
 // Define associations here
 db.User.hasMany(db.Popup, { foreignKey: "createdBy", as: "popups" });

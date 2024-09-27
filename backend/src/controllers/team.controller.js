@@ -6,9 +6,8 @@ const getTeamDetails = async (req, res) => {
   try {
     const data = await teamService.getTeam();
     const result = {
-        id: data.id,
-        name: data.name,
-        users: data.Users.map((user)=> ({
+        name: data.team.name,
+        users: data.users.map((user)=> ({
             name: user.name,
             email: user.email,
             role: user.UserTeams.role,

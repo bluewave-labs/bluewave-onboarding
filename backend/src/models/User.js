@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
+      role: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 2, // from config
+      },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
