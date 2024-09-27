@@ -3,6 +3,7 @@ import { apiClient } from './apiClient';
 export const addPopup = async (popupData) => {
   try {
     const response = await apiClient.post('/popup/add_popup', popupData);
+    console.log(response)
     return response.data;
   } catch (error) {
     console.error('Add Popup error:', error.response);
@@ -13,7 +14,6 @@ export const addPopup = async (popupData) => {
 export const getPopups = async () => {
   try {
     const response = await apiClient.get('/popup/popups');
-    console.log(response)
     return response.data;
   } catch (error) {
     console.error('Get Popups error:', error);

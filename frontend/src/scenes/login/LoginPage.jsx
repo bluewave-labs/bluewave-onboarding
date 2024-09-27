@@ -1,56 +1,91 @@
 import React, { useState } from 'react';
-import './Login.css'; 
-import GoogleSignInButton from '../../components/Button/GoogleSignInButton/GoogleSignInButton';
+import './Login.css';
+import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
+import CircularProgress from '@mui/material/CircularProgress';
 import { login } from '../../services/loginServices';
-import { useNavigate } from 'react-router-dom';
 import CustomLink from '../../components/CustomLink/CustomLink';
-import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+import { handleAuthSuccess } from '../../utils/loginHelper';
+import { useAuth } from '../../services/authProvider';
+import { useNavigate } from 'react-router-dom';
+import Logo from '../../components/Logo/Logo';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const { loginAuth } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleEnterPress = (event) => {
+    if (event.key === 'Enter') {
+      handleLogin();
+    }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
     try {
       const response = await login(email, password);
-      toastEmitter.emit(TOAST_EMITTER_KEY, `Login successfull`)
-      window.location.reload(); // TODO: should remove reload func
-      navigate('/home');
+      handleAuthSuccess(response, loginAuth, navigate)
+      setLoading(false);
     } catch (error) {
       setLoginError(true);
-      setErrorMessage(error.response.data.error);
+      setLoading(false);
+      if (error.response?.data?.error) {
+        setErrorMessage(error.response.data.error);
+      }
+      else {
+        setErrorMessage('An error occurred. Please try again.');
+      }
     }
   };
 
+  const handleEmailChange = e => {
+    setEmail(e.target.value);
+    setErrorMessage('');
+  }
+
+  const handlePasswordChange = e => {
+    setPassword(e.target.value);
+    setErrorMessage('');
+  }
+
   return (
-    <div className="login-container">
+    <form onSubmit={handleSubmit} className="login-container">
+      <Logo />
       <h2>Log in to your account</h2>
       <div className="form-group">
-        <label htmlFor="email">Email:</label>
-        <input
-          id="email"
-          type="email"
+        <CustomTextField
+          placeholder='Enter email'
+          labelText='Email:'
+          textFieldMargin='none'
+          TextFieldWidth="full"
+          required={true}
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleEmailChange}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="password">Password:</label>
-        <input
-          id="password"
+        <CustomTextField
+          placeholder='Enter password'
+          labelText='Password:'
+          textFieldMargin='none'
+          TextFieldWidth="full"
           type="password"
+          required="true"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleEnterPress}
+          onChange={handlePasswordChange}
         />
         {loginError && <div className='error-message'>{errorMessage}</div>}
       </div>
       <div className="form-group">
         <div className='form-group-2'>
-        <label>
+          <label>
             <input
               type="checkbox"
               checked={rememberMe}
@@ -61,14 +96,13 @@ function LoginPage() {
           <CustomLink text="Forgot Password" url="/forgot-password" />
         </div>
       </div>
-      <button className="sign-in-button" onClick={handleLogin}>
-        Sign in
+      <button className="sign-in-button" type="submit">
+        {loading ? <CircularProgress size={12} color="inherit" /> : 'Sign In'}
       </button>
-      <GoogleSignInButton/>
       <div className="sign-up-link">
         Don't have an account? <CustomLink text="Sign up" url="/signup" />
       </div>
-    </div>
+    </form>
   );
 }
 

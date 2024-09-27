@@ -15,8 +15,14 @@ services:
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
       - JWT_SECRET=${JWT_SECRET}
+      - EMAIL=${EMAIL}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_ENABLE=${EMAIL_ENABLE}
     command: >
       bash -c "npx sequelize-cli db:migrate || (npx sequelize-cli db:create && npx sequelize-cli db:migrate) && if [ \"$$NODE_ENV\" = \"production\" ] ; then npm run prod ; elif [ \"$$NODE_ENV\" = \"staging\" ] ; then npm run staging ; else npm run dev ; fi"
+
   db:
     image: postgres:latest
     env_file:
@@ -29,16 +35,24 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
   frontend:
     build: ./frontend
     volumes:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - "3001:3001"
+      - "4173:4173"
     environment:
-      - NODE_ENV=${NODE_ENV}
+      - NODE_ENV=production
     command: >
-      bash -c "if [ \"$$NODE_ENV\" = \"production\" ] ; then npm run build && npm run preview ; fi"
+      bash -c "npm run build && npm run preview"
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
 volumes:
   pgdata:
