@@ -23,22 +23,8 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
-      teamId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "teams",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
       role: {
-        type: Sequelize.INTEGER,       // to be made enum
-        allowNull: false,
-      },
-      status: {
-        type: Sequelize.INTEGER,       // to be made enum
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {
@@ -49,7 +35,7 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     await queryInterface.dropTable("invites");
   },
 };

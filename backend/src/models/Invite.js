@@ -19,19 +19,7 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.STRING(100),
           allowNull: false,
         },
-        teamId: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          references: {
-            model: "teams",
-            key: "id",
-          },
-        },
         role: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        status: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
@@ -46,15 +34,6 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false,
       },
     );
-
-    Invite.associate = (models) => {
-      Invite.belongsTo(models.User, {
-        foreignKey: "invitedBy",
-      });
-      Invite.belongsTo(models.Team, {
-        foreignKey: "teamId",
-      });
-    };
   
     return Invite;
   };
