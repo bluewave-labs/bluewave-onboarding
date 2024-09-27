@@ -2,20 +2,32 @@ const bcrypt = require("bcryptjs");
 const db = require("../models");
 const User = db.User;
 const Token = db.Token;
+const Invite = db.Invite;
+const sequelize = db.sequelize;
 const { generateToken, verifyToken } = require("../utils/jwt");
 const crypto = require('crypto');
 const { TOKEN_LIFESPAN } = require('../utils/constants');
 const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.service');
-const TeamService = require("../service/team.service");
-const InviteService = require("../service/invite.service");
-const AuthService = require("../service/auth.service");
-
-const authService = new AuthService();
 
 const register = async (req, res) => {
   try {
     const { name, surname, email, password } = req.body;
-    const newUser = await authService.registerUser(name, surname, email, password);
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) return res.status(400).json({ error: "Email already exists" });
+
+    const invite = await Invite.findOne({
+      where: { invitedEmail: email }
+    })
+    if(!invite) {
+      return res.status(400).json({ error: "No invite" });
+    }
+
+    const transaction = await sequelize.transaction();
+    await invite.destroy({ transaction });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.create({ name, surname, email, password: hashedPassword }, transaction);
+    await transaction.commit();
 
     const token = generateToken({ id: newUser.id, email: newUser.email });
 
@@ -26,6 +38,7 @@ const register = async (req, res) => {
     res.status(201).json({ user: newUser, token });
   } catch (error) {
     console.error("Error registering user:", error);
+    await transaction.rollback();
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

@@ -1,5 +1,7 @@
 const db = require("../models");
-const User = db.User
+const User = db.User;
+const Invite = db.Invite;
+const sequelize = db.sequelize;
 
 class UserService {
     async getUserById(userId) {
@@ -34,6 +36,25 @@ class UserService {
         catch(err) {
             throw new Error("Error retreiving users list");
         }
+    }
+
+    async deleteUser(userId) {
+      try {
+        const transaction = await sequelize.transaction();
+        await User.destroy({
+          where: { id: userId },
+          transaction
+        });
+        await Invite.destroy({
+          where: { invitedBy: userId },
+          transaction
+        });
+        await transaction.commit();
+      } catch (err) {
+        await transaction.rollback();
+        throw new Error("Error deleting user");
+      }
+      
     }
 }
 

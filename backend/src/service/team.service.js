@@ -16,23 +16,7 @@ class TeamService {
             throw new Error("Error retrieving Team");
         }
     }
-    async createTeam(userId, name) {
-        try {
-            const team = await Team.create({
-                name: name,
-                createdBy: userId,
-            })
-            await team.addUser(userId, {
-                through: {
-                    role: TEAM.ROLE.ADMIN
-                }
-            });
-            return team;
-        }
-        catch(err) {
-            throw new Error("Error creating team");
-        }
-    }
+
     async updateTeam(userId, name) {
         try {
             const user = await User.findOne({
@@ -49,6 +33,7 @@ class TeamService {
             throw new Error("Error updating Team");
         }
     }
+    
     async removeMemberFromTeam(userId, memberId) {
         try {
             const user = await User.findOne({

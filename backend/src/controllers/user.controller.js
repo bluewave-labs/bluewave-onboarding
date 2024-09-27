@@ -59,8 +59,15 @@ const updateUserDetails = async (req, res) => {
   }
 }
 
-const deleteUser = (req, res) => {
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    await userService.deleteUser(userId);
 
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 }
 
 module.exports = { getUsersList, getCurrentUser, updateUserDetails, deleteUser };

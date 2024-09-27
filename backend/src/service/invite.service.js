@@ -29,34 +29,6 @@ class InviteService {
             throw new Error("Error sending Invite");
         }
     }
-    async acceptInvite(user) {
-        try {
-            const transaction = await db.sequelize.transaction();
-            const invite = await Invite.findOne({
-                where: {
-                    invitedEmail: user.email,
-                },
-            });
-            if(!invite) {
-                throw new Error("Invite not found");
-            };
-            await 
-            await invite.team.addUser(user.id, {
-                through: {
-                    role: invite.role,
-                },
-                
-            });
-            await invite.destroy({
-                transaction
-            })
-            await transaction.commit();
-        }
-        catch(err) {
-            await transaction.rollback();
-            throw new Error("Error creating team");
-        }
-    }
 }
 
 module.exports = InviteService;
