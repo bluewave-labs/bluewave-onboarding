@@ -1,5 +1,5 @@
 const express = require("express");
-const tourController = require("../controllers/tourController");
+const tourController = require("../controllers/tour.Controller");
 const authenticateJWT = require("../middleware/auth.middleware");
 
 const router = express.Router();

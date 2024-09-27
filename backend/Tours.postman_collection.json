@@ -14,7 +14,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjcwMzE3MjYsImV4cCI6MTcyNzAzNTMyNn0.BP2431P3eBf0NMaq6jUeVkBXFgxFPxXjUg5ysa3brm0",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3Mjc0NjI3NTUsImV4cCI6MTcyNzQ2NjM1NX0.yD0DL-LDFC7O-jgLI_eSHtJw2L1AttsnPv8lOzGzNRw",
 							"type": "string"
 						}
 					]
@@ -22,15 +22,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/tours",
+					"raw": "http://localhost:3000/tour/all_tours",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"api",
-						"tours"
+						"tour",
+						"all_tours"
 					]
 				}
 			},
@@ -66,7 +66,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjcwMzE3MjYsImV4cCI6MTcyNzAzNTMyNn0.BP2431P3eBf0NMaq6jUeVkBXFgxFPxXjUg5ysa3brm0",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3Mjc0NjI3NTUsImV4cCI6MTcyNzQ2NjM1NX0.yD0DL-LDFC7O-jgLI_eSHtJw2L1AttsnPv8lOzGzNRw",
 							"type": "string"
 						}
 					]
@@ -75,7 +75,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"title\": \"Tour 5\",\r\n  \"description\": \"A beautiful journey\",\r\n  \"createdBy\": 1\r\n}\r\n",
+					"raw": "{\r\n  \"title\": \"Tour 3\",\r\n  \"description\": \"A beautiful journey\",\r\n  \"pageTargeting\": \"equals to\",\r\n  \"theme\": \"default theme\",\r\n  \"triggeringFrequency\": \"Just once\",\r\n  \"createdBy\": 1\r\n}\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -83,15 +83,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/tours",
+					"raw": "http://localhost:3000/tour/add_tour",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"api",
-						"tours"
+						"tour",
+						"add_tour"
 					]
 				}
 			},
@@ -105,7 +105,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjcwMzE3MjYsImV4cCI6MTcyNzAzNTMyNn0.BP2431P3eBf0NMaq6jUeVkBXFgxFPxXjUg5ysa3brm0",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3Mjc0NjI3NTUsImV4cCI6MTcyNzQ2NjM1NX0.yD0DL-LDFC7O-jgLI_eSHtJw2L1AttsnPv8lOzGzNRw",
 							"type": "string"
 						}
 					]
@@ -114,7 +114,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"title\": \"Updated Tour Title\",\r\n  \"description\": \"Updated description\",\r\n  \"createdBy\": 1\r\n}",
+					"raw": "{\r\n  \"title\": \"Tour 1 Updated\",\r\n  \"description\": \"A beautiful journey\",\r\n  \"pageTargeting\": \"equals to\",\r\n  \"theme\": \"default theme\",\r\n  \"triggeringFrequency\": \"Just once\",\r\n  \"createdBy\": 1\r\n}\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -122,16 +122,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/tours/2",
+					"raw": "http://localhost:3000/tour/edit_tour/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"api",
-						"tours",
-						"2"
+						"tour",
+						"edit_tour",
+						"1"
 					]
 				}
 			},
@@ -145,7 +145,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjcwMzE3MjYsImV4cCI6MTcyNzAzNTMyNn0.BP2431P3eBf0NMaq6jUeVkBXFgxFPxXjUg5ysa3brm0",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3Mjc0NjI3NTUsImV4cCI6MTcyNzQ2NjM1NX0.yD0DL-LDFC7O-jgLI_eSHtJw2L1AttsnPv8lOzGzNRw",
 							"type": "string"
 						}
 					]
@@ -153,16 +153,16 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/tours/3",
+					"raw": "http://localhost:3000/tour/delete_tour/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"api",
-						"tours",
-						"3"
+						"tour",
+						"delete_tour",
+						"2"
 					]
 				}
 			},
