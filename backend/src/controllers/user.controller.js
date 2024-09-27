@@ -59,5 +59,8 @@ const updateUserDetails = async (req, res) => {
   }
 }
 
+const deleteUser = (req, res) => {
 
-module.exports = { getUsersList, getCurrentUser, updateUserDetails };
+}
+
+module.exports = { getUsersList, getCurrentUser, updateUserDetails, deleteUser };

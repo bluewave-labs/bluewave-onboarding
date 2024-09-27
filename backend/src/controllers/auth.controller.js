@@ -8,26 +8,14 @@ const { TOKEN_LIFESPAN } = require('../utils/constants');
 const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.service');
 const TeamService = require("../service/team.service");
 const InviteService = require("../service/invite.service");
+const AuthService = require("../service/auth.service");
 
-const teamService = new TeamService();
-const inviteService = new InviteService();
+const authService = new AuthService();
 
 const register = async (req, res) => {
   try {
     const { name, surname, email, password } = req.body;
-    const existingUser = await User.findOne({ where: { email } });
-    if (existingUser) return res.status(400).json({ error: "Email already exists" });
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await User.create({ name, surname, email, password: hashedPassword });
-
-    const invites = await inviteService.getRecievedInvites(email);
-    if(invites.length > 0) {
-      await inviteService.acceptInvite(newUser, invites[0].id); // can be last too
-    }
-    else {
-      await teamService.createTeam(newUser.id, `${name}'s organisation`);
-    }
+    const newUser = await authService.registerUser(name, surname, email, password);
 
     const token = generateToken({ id: newUser.id, email: newUser.email });
 

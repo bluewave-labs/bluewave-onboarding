@@ -1,24 +1,27 @@
 const db = require("../models");
 const { TEAM } = require("../utils/constants");
 const Invite = db.Invite;
-const Team = db.Team;
 const User = db.User;
 
 class InviteService {
     // args to be made objects
     async sendInvite(userId, invitedEmail, role) {
         try {
-            const findUser = team.Users.find((user) => user.id == userId);
+            const user = await User.findOne({
+                where: {id: userId},
+            })
             // check if user is authorised to send invite using its role and role from config
 
-            const invitedUser = Users.find((user) => user.email == invitedEmail);
+            const invitedUser = User.findOne({
+                where: {email: invitedEmail}
+            })
             if(invitedUser) {
                 throw new Error("Invited User already exists in team")
             }
             await Invite.create({
                 invitedBy: userId,
                 invitedEmail: invitedEmail,
-                role: role,
+                role: role, // converted using config
                 status: 2, // should be added in default for member
             });
         }
@@ -33,19 +36,16 @@ class InviteService {
                 where: {
                     invitedEmail: user.email,
                 },
-                include: {
-                    model: Team,
-                    as: 'team'
-                },
             });
             if(!invite) {
                 throw new Error("Invite not found");
             };
+            await 
             await invite.team.addUser(user.id, {
                 through: {
                     role: invite.role,
                 },
-                transaction
+                
             });
             await invite.destroy({
                 transaction

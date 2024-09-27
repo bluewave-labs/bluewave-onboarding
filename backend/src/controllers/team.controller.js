@@ -31,4 +31,15 @@ const updateTeamDetails = async (req, res) => {
     }
 };
 
-module.exports = { getTeamDetails, updateTeamDetails };
+const removeMember = async (req, res) => {
+  const userId = req.user.id;
+  const { memberId } = req.body;
+  try {
+    await teamService.removeMemberFromTeam(userId, memberId);
+    return res.status(200).json({ message: "Member removed" });
+  } catch (err) {
+    res.status(500).json({ error: "some error" }); // tbu later
+  }
+}
+
+module.exports = { getTeamDetails, updateTeamDetails, removeMember };

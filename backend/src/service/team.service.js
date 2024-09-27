@@ -7,16 +7,10 @@ class TeamService {
     async getTeam() {
         try {
             const team = await Team.findOne({
-                include: [{
-                    model: User,
-                    attributes: ['id', 'name', 'email'],
-                    through: {
-                        attributes: ['role']
-                    }
-                }],
                 limit: 1,
             });
-            return team;
+            const users = await Team.find();
+            return {team, users};
         }
         catch(err) {
             throw new Error("Error retrieving Team");
@@ -68,7 +62,6 @@ class TeamService {
             await User.destroy({
                 where: {id: memberId}
             })
-            
         }
         catch(err) {
             throw new Error("Error deleting User");
