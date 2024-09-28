@@ -63,7 +63,7 @@ const CreatePopupPage = () => {
 
             fetchPopupData();
         }
-    }, []);
+    }, [location.state]);
 
     const onSave = async () => {
         const popupData = {
@@ -132,6 +132,7 @@ const CreatePopupPage = () => {
                 <PopupAppearance
                     data={stateList}
                     setPopupSize={setPopupSize}
+                    popupSize={popupSize}
                 />
             )} />
     );

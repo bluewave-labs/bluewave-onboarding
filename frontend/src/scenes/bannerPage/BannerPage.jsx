@@ -47,7 +47,7 @@ const BannerPage = () => {
 
             fetchBannerData();
         }
-    }, [location.state?.isEdit, location.state?.id]);
+    }, [location.state]);
 
     const onSave = async () => {
         const bannerData = {
