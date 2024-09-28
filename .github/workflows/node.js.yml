@@ -21,6 +21,20 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           
+      # Clear npm cache
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      # Remove node_modules and package-lock.json for backend
+      - name: Remove backend node_modules and package-lock.json
+        run: |
+          rm -rf ./backend/node_modules ./backend/package-lock.json
+
+      # Remove node_modules and package-lock.json for frontend
+      - name: Remove frontend node_modules and package-lock.json
+        run: |
+          rm -rf ./frontend/node_modules ./frontend/package-lock.json
+
       # Cache backend dependencies
       - name: Cache backend dependencies
         uses: actions/cache@v3
