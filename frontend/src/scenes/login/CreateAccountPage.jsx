@@ -75,7 +75,6 @@ function CreateAccountPage() {
           setError('An error occurred. Please try again.');
         }
       } else {
-        console.log(error)
         setError('An error occurred. Please check your network connection and try again.');
       }
     }
