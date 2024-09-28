@@ -6,7 +6,7 @@ import PopupContent from '../../components/PopupPageComponents/PopupContent/Popu
 import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
 import { useNavigate, useLocation } from 'react-router-dom';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
-import {emitToastError} from '../../utils/guideHelpers'
+import { emitToastError } from '../../utils/guideHelpers'
 
 const CreatePopupPage = () => {
     const navigate = useNavigate();
@@ -89,11 +89,10 @@ const CreatePopupPage = () => {
             toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
             navigate('/popup');
         } catch (error) {
-            if (error.response?.data?.message) {
-                toastEmitter.emit(TOAST_EMITTER_KEY, `Error: ${error.response.data.message}`);
-            } else {
-                toastEmitter.emit(TOAST_EMITTER_KEY, 'An unexpected error occurred. Please try again.');
-            }
+            const errorMessage = error.response?.data?.message
+                ? `Error: ${error.response.data.message}`
+                : 'An unexpected error occurred. Please try again.';
+            toastEmitter.emit(TOAST_EMITTER_KEY, errorMessage);
         }
     }
 
@@ -102,7 +101,7 @@ const CreatePopupPage = () => {
     };
 
     return (
-        <GuideTemplate title='New Popup'
+        <GuideTemplate title={location.state?.isEdit ? 'Edit Popup' : 'New Popup'}
             activeButton={activeButton}
             handleButtonClick={handleButtonClick}
             onSave={onSave}
