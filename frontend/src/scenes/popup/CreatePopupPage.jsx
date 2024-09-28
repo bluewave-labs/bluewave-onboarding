@@ -1,12 +1,12 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
-import { React, useState, useEffect } from 'react';
 import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
 import PopupAppearance from '../../components/PopupPageComponents/PopupAppearance/PopupAppearance';
 import PopupContent from '../../components/PopupPageComponents/PopupContent/PopupContent';
 import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
-import { useNavigate, useLocation } from 'react-router-dom';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
-import {emitToastError} from '../../utils/guideHelpers'
+import { emitToastError } from '../../utils/guideHelpers';
 
 const CreatePopupPage = () => {
     const navigate = useNavigate();
