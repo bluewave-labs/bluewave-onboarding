@@ -76,7 +76,7 @@ function LoginPage() {
           textFieldMargin='none'
           TextFieldWidth="full"
           type="password"
-          required="true"
+          required={true}
           value={password}
           onKeyDown={handleEnterPress}
           onChange={handlePasswordChange}
