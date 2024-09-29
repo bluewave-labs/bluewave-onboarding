@@ -1,3 +1,4 @@
+const settings = require("../../config/settings");
 const UserService = require("../service/user.service");
 
 const userService = new UserService();
@@ -11,7 +12,12 @@ const getUsersList = async (req, res) => {
     const { rows: users, count: totalUsers } = await userService.getUsers({page, limit, search})
 
     let returnObj = {
-      users,
+      ...users.map(user => ({
+        name: user.name,
+        surname: user.surname,
+        email: user.email,
+        role: settings.user.roleName[user.role]
+      })),
       totalPages: Math.ceil(totalUsers / limit),
       currentPage: parseInt(page),
       totalUsers,
@@ -29,7 +35,8 @@ const getCurrentUser = async (req, res) => {
   const user = await userService.getUserById(userId);
   if (user){
     const { name, surname, email, role } = user;
-    return res.status(200).json({ user: { name, surname, email, role } });
+    const roleName = settings.user.roleName[role];
+    return res.status(200).json({ user: { name, surname, email, role: roleName } });
   }
   else{
     return res.status(400).json({ error: "User not found" });

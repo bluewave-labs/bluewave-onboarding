@@ -2,6 +2,7 @@ const settings = require("../../config/settings");
 const db = require("../models");
 const User = db.User;
 const Invite = db.Invite;
+const Token = db.Token;
 const Sequelize = db.Sequelize;
 const sequelize = db.sequelize;
 
@@ -43,6 +44,7 @@ class UserService {
     }
 
     async deleteUser(userId) {
+      const transaction = await sequelize.transaction();
       try {
         const user = await User.findOne({
           where: { id: userId }
@@ -56,7 +58,6 @@ class UserService {
           }
         }
 
-        const transaction = await sequelize.transaction();
         await User.destroy({
           where: { id: userId },
           transaction
@@ -66,7 +67,12 @@ class UserService {
           transaction
         });
         await transaction.commit();
+
+        await Token.destroy({ 
+          where: { userId } 
+        });
       } catch (err) {
+        console.log("🚀 ~ UserService ~ deleteUser ~ err:", err)
         await transaction.rollback();
         throw new Error("Error deleting user");
       }

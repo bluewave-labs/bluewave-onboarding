@@ -13,7 +13,7 @@ class InviteService {
                 throw new Error("User not authorized to send invite");
             }
 
-            const invitedUser = User.findOne({
+            const invitedUser = await User.findOne({
                 where: {email: invitedEmail}
             })
             if(invitedUser) {
@@ -26,6 +26,7 @@ class InviteService {
             });
         }
         catch(err) {
+            console.log("🚀 ~ InviteService ~ sendInvite ~ err:", err.message)
             throw new Error("Error Sending Invite");
         }
     }

@@ -9,6 +9,7 @@ const sendTeamInvite = async (req, res) => {
     await inviteService.sendInvite(userId, invitedEmail, role);
     return res.status(200).json({ message: "Invite Sent Successfully" });
   } catch (error) {
+    console.log("🚀 ~ sendTeamInvite ~ error:", error)
     res.status(500).json({ message: error });
   }
 };
