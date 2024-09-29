@@ -1,5 +1,5 @@
+const settings = require("../../config/settings");
 const db = require("../models");
-const { TEAM } = require("../utils/constants");
 const Team = db.Team;
 const User = db.User;
 
@@ -22,11 +22,14 @@ class TeamService {
             const user = await User.findOne({
                 where: {id: userId}
             });
-            // check if user is authorized to update a team
+            if(!settings.team.update.includes(user.role)) {
+                throw new Error("User not authorized to update team details");
+            }
+
             await Team.update({
-                limit: 1
-            }, {
                 name: name
+            }, {
+                limit: 1
             });
         }
         catch(err) {
@@ -34,18 +37,37 @@ class TeamService {
         }
     }
     
-    async removeMemberFromTeam(userId, memberId) {
+    async removeUserFromTeam(userId, memberId) {
         try {
             const user = await User.findOne({
                 where: {id: userId}
             });
-            const member = await User.findOne({
-                where: {id: memberId}
-            });
-            // check if user is authorized to delete this user
+            if(!settings.team.removeUser.includes(user.role)) {
+                throw new Error("User not authorized to delete this user");
+            }
             
             await User.destroy({
                 where: {id: memberId}
+            })
+        }
+        catch(err) {
+            throw new Error("Error deleting User");
+        }
+    }
+
+    async updateUserRole(userId, memberId, role) {
+        try {
+            const user = await User.findOne({
+                where: {id: userId}
+            });
+            if(!settings.team.changeRole.includes(user.role)) {
+                throw new Error("User not authorized to change role");
+            }
+
+            await User.update({
+                role: settings.user.role[role]
+            }, {
+                where: { id: memberId }
             })
         }
         catch(err) {

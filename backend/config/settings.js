@@ -13,9 +13,10 @@ module.exports = {
       [userRole.MEMBER]: 'member'
     }
   },
-  access: {
+  team: {
     invite: [userRole.ADMIN],
-    delete: [userRole.ADMIN],
+    removeUser: [userRole.ADMIN],
+    update: [userRole.ADMIN],
     changeRole: [userRole.ADMIN]
   }
   

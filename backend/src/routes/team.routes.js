@@ -2,7 +2,8 @@ const express = require("express");
 const { 
   getTeamDetails, 
   updateTeamDetails, 
-  removeMember 
+  removeMember, 
+  changeRole 
 } = require("../controllers/team.controller");
 const {
     sendTeamInvite 
@@ -15,6 +16,7 @@ router.get("/details", authenticateJWT, getTeamDetails);
 
 router.post("/invite", authenticateJWT, sendTeamInvite);
 router.post("/update", authenticateJWT, updateTeamDetails);
+router.post("/change-role", authenticateJWT, changeRole);
 
 router.delete("/remove", authenticateJWT, removeMember);
 

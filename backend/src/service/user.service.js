@@ -1,6 +1,8 @@
+const settings = require("../../config/settings");
 const db = require("../models");
 const User = db.User;
 const Invite = db.Invite;
+const Sequelize = db.Sequelize;
 const sequelize = db.sequelize;
 
 class UserService {
@@ -40,6 +42,18 @@ class UserService {
 
     async deleteUser(userId) {
       try {
+        const user = await User.findOne({
+          where: { id: userId }
+        });
+        if(user.role == settings.user.role.admin) {
+          const adminCount = await User.count({
+            where: { role: settings.user.role.admin }
+          });
+          if(adminCount <= 1) {
+            throw new Error("The team has only single admin and can't delete themselves");
+          }
+        }
+
         const transaction = await sequelize.transaction();
         await User.destroy({
           where: { id: userId },

@@ -1,16 +1,17 @@
+const settings = require("../../config/settings");
 const db = require("../models");
-const { TEAM } = require("../utils/constants");
 const Invite = db.Invite;
 const User = db.User;
 
 class InviteService {
-    // args to be made objects
     async sendInvite(userId, invitedEmail, role) {
         try {
             const user = await User.findOne({
                 where: {id: userId},
             })
-            // check if user is authorised to send invite using its role and role from config
+            if(!settings.team.invite.includes(user.role)) {
+                throw new Error("User not authorized to send invite");
+            }
 
             const invitedUser = User.findOne({
                 where: {email: invitedEmail}
@@ -21,8 +22,7 @@ class InviteService {
             await Invite.create({
                 invitedBy: userId,
                 invitedEmail: invitedEmail,
-                role: role, // converted using config
-                status: 2, // should be added in default for member
+                role: settings.user.role[role],
             });
         }
         catch(err) {
