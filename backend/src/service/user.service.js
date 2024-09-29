@@ -14,7 +14,7 @@ class UserService {
         } catch(err) {
           throw new Error("Error retrieving User by ID");
         }
-      }
+    }
 
     async getUsers({search, page, limit}) {
         try {

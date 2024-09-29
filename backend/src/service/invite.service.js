@@ -26,7 +26,7 @@ class InviteService {
             });
         }
         catch(err) {
-            throw new Error("Error sending Invite");
+            throw new Error("Error Sending Invite");
         }
     }
 }

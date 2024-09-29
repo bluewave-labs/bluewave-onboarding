@@ -19,7 +19,7 @@ const register = async (req, res) => {
       where: { invitedEmail: email }
     })
     if(!invite) {
-      return res.status(400).json({ error: "No invite" });
+      return res.status(400).json({ error: "No Invite Found" });
     }
 
     const transaction = await sequelize.transaction();

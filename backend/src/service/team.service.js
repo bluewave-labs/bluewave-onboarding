@@ -32,8 +32,8 @@ class TeamService {
                 limit: 1
             });
         }
-        catch(err) {
-            throw new Error("Error updating Team");
+        catch(error) {
+            throw new Error("Error Updating Team");
         }
     }
     
@@ -51,7 +51,7 @@ class TeamService {
             })
         }
         catch(err) {
-            throw new Error("Error deleting User");
+            throw new Error("Error Deleting User");
         }
     }
 
@@ -71,7 +71,7 @@ class TeamService {
             })
         }
         catch(err) {
-            throw new Error("Error deleting User");
+            throw new Error("Error Changing User Roles");
         }
     }
 }
