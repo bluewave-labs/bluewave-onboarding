@@ -26,7 +26,7 @@ const register = async (req, res) => {
     await invite.destroy({ transaction });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await User.create({ name, surname, email, password: hashedPassword }, transaction);
+    const newUser = await User.create({ name, surname, email, password: hashedPassword, role: invite.role }, transaction);
     await transaction.commit();
 
     const token = generateToken({ id: newUser.id, email: newUser.email });

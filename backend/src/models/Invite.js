@@ -1,3 +1,5 @@
+const settings = require("../../config/settings");
+
 module.exports = (sequelize, DataTypes) => {
     const Invite = sequelize.define(
       "Invite",
@@ -20,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false,
         },
         role: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.ENUM(settings.user.roleEnum),
           allowNull: false,
         },
         createdAt: {

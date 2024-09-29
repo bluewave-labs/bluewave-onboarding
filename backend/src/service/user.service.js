@@ -8,7 +8,9 @@ const sequelize = db.sequelize;
 class UserService {
     async getUserById(userId) {
         try {
-          return await User.findByPk.findByPk(userId);
+          return await User.findOne({
+            where: { id: userId }
+          });
         } catch(err) {
           throw new Error("Error retrieving User by ID");
         }
