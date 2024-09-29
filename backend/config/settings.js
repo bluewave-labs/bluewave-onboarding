@@ -1,10 +1,22 @@
-// const USER = require('../src/utils/constants').USER;
+const constants = require("../src/utils/constants");
+const userRole = constants.ROLE;
 
 module.exports = {
-  team: {
+  user: {
     role: {
-        administrator: 1,
-        member: 2
+      'admin': userRole.ADMIN,
+      'member': userRole.MEMBER
+    },
+    roleEnum: [userRole.ADMIN, userRole.MEMBER],
+    roleName: {
+      [userRole.ADMIN]: 'admin',
+      [userRole.MEMBER]: 'member'
     }
+  },
+  access: {
+    invite: [userRole.ADMIN],
+    delete: [userRole.ADMIN],
+    changeRole: [userRole.ADMIN]
   }
+  
 };

@@ -1,3 +1,5 @@
+const settings = require("../../config/settings");
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "User",
@@ -27,9 +29,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       role: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.ENUM(settings.user.roleEnum),
+        defaultValue: settings.user.role.member,
         allowNull: false,
-        defaultValue: 2, // from config
       },
       createdAt: {
         type: DataTypes.DATE,
