@@ -1,30 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './LogoStyles.css';
+import styles from './LogoStyles.module.css';
 
-const Logo = ({ logo }) => {
-
-if (!logo || !logo.src) {
-    return null;
-  }
-
-  return (
-    <div className="logo-container">
-      <img
-        src={logo.src}
-        alt={logo.alt}
-        className={`logo-image ${logo.className || ''}`}
-      />
-    </div>
-  );
+const Logo = ({ isSidebar = false, logoText = 'BlueWave', highlightText = 'Onboard' }) => {
+    const containerClass = isSidebar ? styles.sidebar : styles.logoContainer;
+    
+    return (
+        <div className={containerClass}>
+            <span className={styles.logoText}>{logoText}&nbsp;</span>
+            <span className={styles.logoTextPurple}>{highlightText}</span>
+        </div>
+    );
 };
 
 Logo.propTypes = {
-  logo: PropTypes.shape({
-    src: PropTypes.string.isRequired,
-    alt: PropTypes.string.isRequired,
-    className: PropTypes.string,
-  }).isRequired,
+    isSidebar: PropTypes.bool,
+    logoText: PropTypes.string,
+    highlightText: PropTypes.string,
 };
 
 export default Logo;

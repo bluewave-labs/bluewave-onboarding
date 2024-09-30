@@ -1,48 +1,61 @@
 import React, { useState } from 'react';
-import './Login.css'; 
+import './ForgotPassword.css'; 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { forgotPassword } from '../../services/loginServices'; // Make sure this function is properly implemented
 import { useNavigate } from 'react-router-dom';
+import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
+import CircularProgress from '@mui/material/CircularProgress';
+import Logo from '../../components/Logo/Logo';
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailerror, setEmailError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleForgotPassword = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
     try {
       const userData = { email };
       const response = await forgotPassword(userData);
       console.log('Password Reset successful:', response);
       navigate('/check-email', { state: { email } });
+      setLoading(false);
     } catch (error) {
       setEmailError(true);
       setErrorMessage(error.response.data.error); 
+      setLoading(false);
      }
   };
 
   return (
-    <div className="login-container">
+    <form onSubmit={handleSubmit} className="login-container">
+      <Logo />
       <h2 style={{marginBottom: "0px"}}>Forgot password?</h2>
       <h3>No worries, we'll send you reset instructions.</h3>
       <div className="form-group">
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
+        <CustomTextField
           id="email"
-          placeholder="Enter your email"
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
+          name="email"
+          type="email"
+          labelText='Email'
+          placeholder='Enter your email'
+          textFieldMargin='none'
+          TextFieldWidth="full"
+          required="true"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         {emailerror && <div className='error-message'>{errorMessage}</div>}
       </div>
-      <button style={{marginTop: "0px"}} className="create-account-button" onClick={handleForgotPassword}>Reset password</button>
+      <button style={{ marginTop: "0px" }} className="create-account-button">{loading ? <CircularProgress size={12} color="inherit" /> : "Reset password"}</button>
       <button className="back-to-login-button" onClick={() => navigate('/')}> 
         <ArrowBackIcon style={{fontSize: "18px", marginRight: "5px"}}/>
         Back to log in
       </button>
-    </div>
+    </form>
   );
 };
 

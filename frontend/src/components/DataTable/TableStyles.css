@@ -35,8 +35,8 @@
 
 /* Style for the customize button */
 .customize-btn {
-    color: #344054 !important;
-    border:1px solid #344054 !important;
+    color: var(--main-text-color) !important;
+    border:1px solid var(--main-text-color) !important;
     margin-top: 10px !important;
     display:inline !important;
     float:right;

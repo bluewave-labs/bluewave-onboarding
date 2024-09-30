@@ -1,3 +1,5 @@
+const { validateHexColor } = require('../utils/guideHelpers');
+
 module.exports = (sequelize, DataTypes) => {
   const Popup = sequelize.define(
     "Popup",
@@ -11,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isIn: [["no-action", "open-url", "close-popup", "open-url-new-tab"]],
+          isIn: [["no action", "open url", "open url in a new tab"]],
         },
       },
       popupSize: {
@@ -33,26 +35,61 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+              validateHexColor(value, 'headerBackgroundColor');
+          },
+        },
       },
       headerColor: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+              validateHexColor(value, 'headerColor');
+          },
+        },
       },
       textColor: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+              validateHexColor(value, 'textColor');
+          },
+        },
       },
       buttonBackgroundColor: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+              validateHexColor(value, 'buttonBackgroundColor');
+          },
+        },
       },
       buttonTextColor: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+              validateHexColor(value, 'buttonTextColor');
+          },
+        },
+      },
+      header: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
+      },
+      content: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
       },
       createdBy: {
         type: DataTypes.INTEGER,

@@ -1,28 +1,31 @@
-import CreateActivityButton from "../../components/CreateActivityButton/CreateActivityButton"
-import HomePageTemplate from "../../components/templates/HomePageTemplate"
-import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
-import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
+import React from 'react';
+import DefaultPageTemplate from '../../templates/DefaultPageTemplate/DefaultPageTemplate';
+import { getPopups, deletePopup } from '../../services/popupServices';
 import { useNavigate } from 'react-router-dom';
+import { ACTIVITY_TYPES_INFO } from '../../data/GuideMainPageData';
 
 const PopupDefaultPage = () => {
     const navigate = useNavigate();
-    const style = {
-        "display": "flex",
-        "flex-direction": "column",
-        "width": "100%",
-        "justify-content": "center",
-        "align-items": "center",
-    }
+
+    const getPopupDetails = (popup) => ({
+        title: `Popup ${popup.id}`,
+        text: popup.header,
+    });
+
+    const navigateToCreate = (state) => {
+        navigate('/popup/create', state);
+    };
+
     return (
-        <HomePageTemplate>
-            <div style={style}>
-                <ParagraphCSS />
-                <CreateActivityButton type={ACTIVITY_TYPES.POPUPS} onClick={() => navigate('/popup/create')}/>
-            </div>
+        <DefaultPageTemplate
+            getItems={getPopups}
+            deleteItem={deletePopup}
+            navigateToCreate={navigateToCreate}
+            itemType={ACTIVITY_TYPES_INFO.POPUPS}
+            itemTypeInfo={ACTIVITY_TYPES_INFO.POPUPS}
+            getItemDetails={getPopupDetails}
+        />
+    );
+};
 
-        </HomePageTemplate>
-    )
-}
-
-export default PopupDefaultPage
-
+export default PopupDefaultPage;

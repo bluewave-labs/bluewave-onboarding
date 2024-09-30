@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './UserTitle.module.scss'
 
-const UserTitle = ({ userName }) => {
+const UserTitle = ({ fullName }) => {
   return (
     <div className={styles.title}>
-      Hello, {userName}
+      Hello, {fullName}
     </div>
   );
 };
 
 UserTitle.propTypes = {
-  userName: PropTypes.string.isRequired,
+  fullName: PropTypes.string.isRequired,
 };
 
 export default UserTitle;
