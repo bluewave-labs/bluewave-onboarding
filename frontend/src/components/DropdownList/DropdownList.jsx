@@ -24,13 +24,13 @@ const DropdownList = ({
       return actions[selectedActionIndex] || "";
     };
     setSelectedAction(getInitialSelectedAction());
-  }, [selectedActionString, actions, selectedActionIndex]);
+  }, []);
 
   useEffect(() => {
     if (onActionChange) {
       onActionChange(selectedAction);
     }
-  }, [selectedAction]);
+  }, [selectedAction, onActionChange]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;
