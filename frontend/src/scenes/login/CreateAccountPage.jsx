@@ -49,12 +49,6 @@ function CreateAccountPage() {
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleEnterPress = (event) => {
-    if (event.key === 'Enter') {
-      handleSignUp();
-    }
-  }
-
   const handleSignUp = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -158,7 +152,6 @@ function CreateAccountPage() {
           required="true"
           value={formData.password}
           onChange={handleInputChange}
-          onKeyDown={handleEnterPress}
         />
       </div>
 

@@ -19,12 +19,6 @@ function LoginPage() {
   const { loginAuth } = useAuth();
   const navigate = useNavigate();
 
-  const handleEnterPress = (event) => {
-    if (event.key === 'Enter') {
-      handleLogin();
-    }
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -78,7 +72,6 @@ function LoginPage() {
           type="password"
           required="true"
           value={password}
-          onKeyDown={handleEnterPress}
           onChange={handlePasswordChange}
         />
         {loginError && <div className={styles["error-message"]}>{errorMessage}</div>}
