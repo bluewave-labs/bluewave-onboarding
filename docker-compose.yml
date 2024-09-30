@@ -21,8 +21,19 @@ services:
       - EMAIL_PORT=${EMAIL_PORT}
       - EMAIL_ENABLE=${EMAIL_ENABLE}
     command: >
-      bash -c "npx sequelize-cli db:migrate || (npx sequelize-cli db:create && npx sequelize-cli db:migrate) && if [ \"$$NODE_ENV\" = \"production\" ] ; then npm run prod ; elif [ \"$$NODE_ENV\" = \"staging\" ] ; then npm run staging ; else npm run dev ; fi"
-
+      bash -c "if ! npx sequelize-cli db:migrate; then
+        if ! npx sequelize-cli db:create; then
+          echo 'Database already exists';
+        fi
+        npx sequelize-cli db:migrate;
+      fi;
+      if [ \"$$NODE_ENV\" = \"production\" ]; then
+        npm run prod;
+      elif [ \"$$NODE_ENV\" = \"staging\" ]; then
+        npm run staging;
+      else
+        npm run dev;
+      fi"
   db:
     image: postgres:latest
     env_file:
