@@ -1,55 +1,54 @@
-# name: Deploy to Staging
+name: Deploy to Staging
 
-# on:
-#   push:
-#     branches:
-#       - staging
+on:
+  push:
+    branches:
+      - staging
 
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     strategy:
-#       matrix:
-#         node-version: [22.x]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
 
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-#       - name: Set up Node.js ${{ matrix.node-version }}
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: ${{ matrix.node-version }}
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
 
-#       - name: Set up SSH
-#         env:
-#           SSH_PRIVATE_KEY_NEW: ${{ secrets.SSH_THIRD_PRIVATE_KEY }}
-#           KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
-#         run: |
-#           mkdir -p ~/.ssh
-#           echo "$SSH_PRIVATE_KEY_NEW" > ~/.ssh/id_rsa
-#           chmod 600 ~/.ssh/id_rsa
-#           eval $(ssh-agent -s)
-#           ssh-add ~/.ssh/id_rsa
-#           echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+      - name: Set up SSH
+        env:
+          SSH_PRIVATE_KEY_NEW: ${{ secrets.SSH_THIRD_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY_NEW" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_rsa
+          echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
 
+      - name: Configure SSH for easier access
+        run: |
+          echo "Host staging-server" >> ~/.ssh/config
+          echo "  HostName ${{ secrets.DO_IP_ADDRESS }}" >> ~/.ssh/config
+          echo "  User ${{ secrets.DO_USERNAME }}" >> ~/.ssh/config
+          echo "  IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
+          echo "  StrictHostKeyChecking no" >> ~/.ssh/config
 
-#       - name: Configure SSH for easier access
-#         run: |
-#           echo "Host staging-server" >> ~/.ssh/config
-#           echo "  HostName ${{ secrets.DO_IP_ADDRESS }}" >> ~/.ssh/config
-#           echo "  User ${{ secrets.DO_USERNAME }}" >> ~/.ssh/config
-#           echo "  IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
-#           echo "  StrictHostKeyChecking no" >> ~/.ssh/config
-
-#       - name: Deploy to DigitalOcean Droplet
-#         run: |
-#           ssh -o StrictHostKeyChecking=no -t staging-server << 'EOF'
-#             set -e
-#             cd ~/bluewave-onboarding
-#             git stash
-#             git pull
-#             docker compose down
-#             docker compose build
-#             docker compose up -d
-#           EOF
+      - name: Deploy to DigitalOcean Droplet
+        run: |
+          ssh -o StrictHostKeyChecking=no -t staging-server << 'EOF'
+            set -e
+            cd ~/bluewave-onboarding
+            git stash
+            git pull
+            docker compose down
+            docker compose build
+            docker compose up -d
+          EOF
