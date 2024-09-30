@@ -21,7 +21,7 @@ import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
 
-function App() {
+const App = () => {
   const { isLoggedIn } = useAuth(); 
 
   return (

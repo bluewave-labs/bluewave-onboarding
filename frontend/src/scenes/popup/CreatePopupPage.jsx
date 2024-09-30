@@ -1,12 +1,12 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
-import { React, useState, useEffect } from 'react';
 import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
 import PopupAppearance from '../../components/PopupPageComponents/PopupAppearance/PopupAppearance';
 import PopupContent from '../../components/PopupPageComponents/PopupContent/PopupContent';
 import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
-import { useNavigate, useLocation } from 'react-router-dom';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
-import {emitToastError} from '../../utils/guideHelpers'
+import { emitToastError } from '../../utils/guideHelpers';
 
 const CreatePopupPage = () => {
     const navigate = useNavigate();
@@ -63,7 +63,7 @@ const CreatePopupPage = () => {
 
             fetchPopupData();
         }
-    }, []);
+    }, [location.state]);
 
     const onSave = async () => {
         const popupData = {
@@ -89,7 +89,10 @@ const CreatePopupPage = () => {
             toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
             navigate('/popup');
         } catch (error) {
-            emitToastError(error);
+            const errorMessage = error.response?.data?.message
+                ? `Error: ${error.response.data.message}`
+                : 'An unexpected error occurred. Please try again.';
+            toastEmitter.emit(TOAST_EMITTER_KEY, errorMessage);
         }
     }
 
@@ -98,7 +101,7 @@ const CreatePopupPage = () => {
     };
 
     return (
-        <GuideTemplate title='New Popup'
+        <GuideTemplate title={location.state?.isEdit ? 'Edit Popup' : 'New Popup'}
             activeButton={activeButton}
             handleButtonClick={handleButtonClick}
             onSave={onSave}
@@ -129,6 +132,7 @@ const CreatePopupPage = () => {
                 <PopupAppearance
                     data={stateList}
                     setPopupSize={setPopupSize}
+                    popupSize={popupSize}
                 />
             )} />
     );

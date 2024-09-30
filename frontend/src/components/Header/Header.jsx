@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './Header.css';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Avatar from '../Avatar/Avatar';
 import DropdownMenu from './DropdownMenu/DropdownMenu';
-import Avatar from './Avatar/Avatar';
 import { useAuth } from '../../services/authProvider';
 
 const Header = () => {
