@@ -54,6 +54,24 @@ class PopupService {
       throw new Error("Error retrieving popup by ID");
     }
   }
+
+  async getPopupByApiAndClientId(apiId, clientId) {
+    try {
+      return await Popup.findAll({
+        include: [
+          {
+            model: db.User,
+            as: "creator",
+            where: { apiId }
+          },
+        ],
+        where: { clientId },
+        order: [['createdAt', 'DESC']],
+      });
+    } catch (error) {
+      throw new Error("Error retrieving popups for the given API and Client ID");
+    }
+  }
 }
 
 module.exports = new PopupService();
