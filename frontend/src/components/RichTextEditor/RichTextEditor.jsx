@@ -58,7 +58,7 @@ const RichTextEditor = ({
   });
 
   return (
-    <div style={{ width: "100%", margin: "3rem 3rem" }}>
+    <div style={sx}>
       {mode === "editor" ? (
         <>
           <CustomTextField

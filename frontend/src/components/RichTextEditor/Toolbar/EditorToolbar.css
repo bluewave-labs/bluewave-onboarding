@@ -1,8 +1,9 @@
 .toolbar-container {
   display: flex;
-  justify-content: space-between;
+  gap: 16px;
+  /* justify-content: space-between; */
   align-items: center;
-  width: 100%;
+  width: 70%;
 }
 
 .toolbar-container button {

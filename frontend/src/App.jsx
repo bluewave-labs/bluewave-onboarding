@@ -35,9 +35,8 @@ function App() {
           <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
           <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
           <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
-          <Route path="/hint-default" element={<HintDefaultPage />} />
           <Route path="/hint/create" element={<CreateHintPage />} />
-          <Route path="/hint" element={<HintPage />} />
+          <Route path="/hint" element={<HintDefaultPage />} />
         </Route>
 
         <Route path="/login" element={<LoginPage />} />

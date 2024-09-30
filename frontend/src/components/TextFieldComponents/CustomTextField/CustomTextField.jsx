@@ -23,7 +23,9 @@ const CustomTextField = ({
 }) => {
   return (
     <div style={style}>
-      <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
+      <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>
+        {labelText}
+      </InputLabel>
       <TextField
         className="textField"
         sx={{ width: TextFieldWidth }}
