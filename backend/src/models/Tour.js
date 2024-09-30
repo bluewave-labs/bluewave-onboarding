@@ -1,3 +1,9 @@
+const {
+  validateTriggeringFrequency,
+  validatePageTargeting,
+  validateTheme,
+} = require("../utils/tour_helper");
+
 module.exports = (sequelize, DataTypes) => {
   const Tour = sequelize.define(
     "Tour",
@@ -23,28 +29,33 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isIn: [["equals to", "is different from"]],
+          customValidator(value) {
+            if (!validatePageTargeting(value)) {
+              throw new Error("Invalid page targeting value");
+            }
+          },
         },
       },
       theme: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isIn: [["default theme"]],
+          customValidator(value) {
+            if (!validateTheme(value)) {
+              throw new Error("Invalid theme value");
+            }
+          },
         },
       },
       triggeringFrequency: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isIn: [[
-            "Just once",
-            "Once in every session",
-            "Once every day",
-            "Once every week",
-            "Once every month",
-            "Always"
-          ]],
+          customValidator(value) {
+            if (!validateTriggeringFrequency(value)) {
+              throw new Error("Invalid triggering frequency");
+            }
+          },
         },
       },
       createdBy: {
