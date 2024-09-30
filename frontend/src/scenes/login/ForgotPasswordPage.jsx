@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './ForgotPassword.module.css'; 
+import styles from './Login.module.css'; 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { forgotPassword } from '../../services/loginServices'; // Make sure this function is properly implemented
 import { useNavigate } from 'react-router-dom';
@@ -36,7 +36,6 @@ const ForgotPasswordPage = () => {
       <h2 style={{marginBottom: "0px"}}>Forgot password?</h2>
       <h3>No worries, we'll send you reset instructions.</h3>
       <div className={styles["form-group"]}>
-      {/* <div className="form-group"> */}
         <CustomTextField
           id="email"
           name="email"
