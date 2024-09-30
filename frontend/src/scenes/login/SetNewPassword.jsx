@@ -14,11 +14,13 @@ function SetNewPasswordPage({ email = 'asdf@asdf.com' }) {
   const [hasSpecialCharacter, setHasSpecialCharacter] = useState(false);
   const [atLeastEightCharacters, setAtLeastEightCharacters] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
     try {
       const response = await resetPassword({ email, password });
       setLoading(false);
@@ -27,6 +29,12 @@ function SetNewPasswordPage({ email = 'asdf@asdf.com' }) {
     } catch (error) {
       setLoading(false);
       console.error('Password Reset failed:', error);
+      if (error.response?.data?.error) {
+        setError(error.response.data.error);
+      }
+      else {
+        setError('An error occurred. Please try again.');
+      }
     }
   };
 
@@ -71,12 +79,12 @@ function SetNewPasswordPage({ email = 'asdf@asdf.com' }) {
             placeholder='Create your password'
             textFieldMargin='none'
             TextFieldWidth="full"
-            required="true"
+            required={true}
             value={password}
             onChange={handlePasswordChange}
           />
         </div>
-        <div className={styles["form-group"]}>
+        <div className={styles["form-group"]} style={{ marginBottom: 0 }}>
           <CustomTextField
             id="confirmPassword"
             type="password"
@@ -87,10 +95,11 @@ function SetNewPasswordPage({ email = 'asdf@asdf.com' }) {
             placeholder='Confirm your password'
             textFieldMargin='none'
             TextFieldWidth="full"
-            required="true"
+            required={true}
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
           />
+          {error && <div className={styles["error-message"]}>{error}</div>}
         </div>
 
         <div className={styles["password-constraints"]}>
@@ -105,8 +114,8 @@ function SetNewPasswordPage({ email = 'asdf@asdf.com' }) {
           {loading ? <CircularProgress size={12} color="inherit" /> : 'Reset Password'}
         </button>
         <button type="button" onClick={() => navigate('/login')} className={styles["back-to-login-button"]}> <ArrowBackIcon style={{ fontSize: "18px", marginRight: "5px" }} />Back to log in</button>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 }
 
