@@ -19,16 +19,17 @@ function CreateAccountPage() {
   const { loginAuth } = useAuth();
   const navigate = useNavigate();
 
+  const isValidName = (value) => /^[A-Za-z'-]+$/.test(value) && value.length > 0 ;
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
     switch (name) {
       case 'name':
-        setValidation((prev) => ({ ...prev, isNameValid: value.length > 0 }));
-        break;
+        setValidation((prev) => ({...prev, isNameValid: isValidName(value)}));
       case 'surname':
-        setValidation((prev) => ({ ...prev, isSurnameValid: value.length > 0 }));
+        setValidation((prev) => ({ ...prev, isSurnameValid: isValidName(value) }));
         break;
       case 'email':
         setValidation((prev) => ({ ...prev, isEmailValid: validateEmail(value) }));
@@ -76,7 +77,6 @@ function CreateAccountPage() {
           setError('An error occurred. Please try again.');
         }
       } else {
-        console.log(error)
         setError('An error occurred. Please check your network connection and try again.');
       }
     }

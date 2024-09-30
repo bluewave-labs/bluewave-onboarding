@@ -98,6 +98,13 @@ CustomTextField.propTypes = {
   labelFontWeight: PropTypes.number,
   TextFieldWidth: PropTypes.string,
   inputHeight: PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  checkCircleIconVisible: PropTypes.bool,
+  displayCheckCircleIcon: PropTypes.bool,
+  textFieldMargin: PropTypes.string,
+  type: PropTypes.string,
+  required: PropTypes.bool,
 };
 
 export default CustomTextField;

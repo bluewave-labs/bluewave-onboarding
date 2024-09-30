@@ -36,7 +36,7 @@ class BannerController {
     }
 
     const colorFields = { fontColor, backgroundColor };
-    checkColorFields(colorFields);
+    checkColorFields(colorFields, res);
 
     try {
       const newBannerData = { ...req.body, createdBy: userId };

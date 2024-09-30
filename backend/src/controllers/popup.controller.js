@@ -53,7 +53,7 @@ class PopupController {
       buttonBackgroundColor,
       buttonTextColor,
     };
-    checkColorFields(colorFields);
+    checkColorFields(colorFields, res);
 
     try {
       const newPopupData = { ...req.body, createdBy: userId };
