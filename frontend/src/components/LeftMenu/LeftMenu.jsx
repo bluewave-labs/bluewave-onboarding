@@ -12,7 +12,10 @@ import {
   MarkChatUnreadOutlined as ChatIcon,
 } from '@mui/icons-material';
 import './LeftMenu.css';
+import Logo from '../Logo/Logo';
 import { useNavigate } from 'react-router-dom';
+import UserProfileSidebar from '../UserProfileSidebar/UserProfileSidebar';
+
 
 const menuItems = [
   { text: 'Home', icon: <HomeIcon />, route: '/' },
@@ -21,12 +24,13 @@ const menuItems = [
   { text: 'Hints', icon: <TipsIcon />, route: '/hint' },
   { text: 'Checklist', icon: <ChecklistIcon /> },
   { text: 'MAKE AN ANNOUNCEMENT', title: true },
-  { text: 'Popups', icon: <SmsIcon />, route: '/popup'},
-  { text: 'Banners', icon: <SportsIcon /> , route: '/banner'},
-  { text: 'Helper Links', icon: <LinkIcon /> , route: '/link'},
+  { text: 'Popups', icon: <SmsIcon />, route: '/popup' },
+  { text: 'Banners', icon: <SportsIcon />, route: '/banner' },
+  { text: 'Helper Links', icon: <LinkIcon />, route: '/link' },
   { text: 'GET FEEDBACK', title: true },
   { text: 'Feedback', icon: <ChatIcon /> },
   { text: 'Surveys', icon: <ListIcon /> },
+  { text: 'Support', icon: <SportsIcon /> },
 ];
 
 function LeftMenu() {
@@ -38,31 +42,27 @@ function LeftMenu() {
 
   return (
     <div className="left-menu">
-      <List>
-        {menuItems.map((item, index) => (
-          item.title ? (
-            <ListItemText key={index} primary={item.text} className="title" />
-          ) : (
-            <ListItemButton
-              key={index}
-              className="menu-item"
-              onClick={() => handleNavigation(item.route)}
-            >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          )
-        ))}
-      </List>
-      <div className="bottom-menu">
+      <div>
+        <Logo isSidebar={true} />
+        <List>
+          {menuItems.map((item, index) => (
+            item.title ? (
+              <ListItemText key={index} primary={item.text} className="title" />
+            ) : (
+              <ListItemButton
+                key={index}
+                className="menu-item"
+                onClick={() => handleNavigation(item.route)}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            )
+          ))}
+        </List>
         <Divider />
-        <ListItemButton className="menu-item">
-          <ListItemIcon>
-            <SportsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Support" />
-        </ListItemButton>
       </div>
+      <UserProfileSidebar />
     </div>
   );
 }

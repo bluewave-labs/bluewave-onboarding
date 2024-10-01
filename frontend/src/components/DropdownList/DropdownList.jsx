@@ -16,23 +16,21 @@ const DropdownList = ({
   useEffect(() => {
     const getInitialSelectedAction = () => {
       if (selectedActionString) {
-        const lowerCaseSelectedActionString = selectedActionString.toLowerCase();
         const index = actions.findIndex(action =>
-          action.toLowerCase() === lowerCaseSelectedActionString
+          action.toLowerCase() === selectedActionString.toLowerCase()
         );
         return index !== -1 ? actions[index] : actions[0] || "";
       }
       return actions[selectedActionIndex] || "";
     };
-
     setSelectedAction(getInitialSelectedAction());
-  }, [selectedActionString, actions, selectedActionIndex]);
+  }, []);
 
   useEffect(() => {
     if (onActionChange) {
       onActionChange(selectedAction);
     }
-  }, [selectedAction]);
+  }, [selectedAction, onActionChange]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;

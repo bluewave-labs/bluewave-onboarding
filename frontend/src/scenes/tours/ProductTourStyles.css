@@ -1,5 +1,5 @@
 .product-page-container {
-  padding: 2% 3%;
+  padding: 3rem;
 }
 
 .product-page-header {
@@ -35,4 +35,24 @@
 .tour-info-box p {
   margin-bottom: 0;
   color: #6b7280;
+}
+
+.settings-container {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: white;
+  z-index: 1000;
+  animation: fadeInRight 0.5s ease-out; /* Fade-in animation */
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px); /* Slide in from the right */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

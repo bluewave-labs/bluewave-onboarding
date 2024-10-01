@@ -3,7 +3,7 @@ import styles from './PopupAppearance.module.scss';
 import ColorTextField from '../../ColorTextField/ColorTextField';
 import DropdownList from '../../DropdownList/DropdownList';
 
-const PopupAppearance = ({ data = [], setPopupSize }) => {
+const PopupAppearance = ({ data = [], setPopupSize, popupSize }) => {
     const handleActionChange = (newAction) => {
         setPopupSize(newAction);
       };
@@ -23,7 +23,8 @@ const PopupAppearance = ({ data = [], setPopupSize }) => {
             <h2 style={{ marginBottom: '1rem' }}>Popup Size</h2>
             <DropdownList
                 actions={['Small', 'Medium', 'Large']}
-                onActionChange={handleActionChange} />
+                onActionChange={handleActionChange} 
+                selectedActionString={popupSize}/>
         </div>
     );
 };

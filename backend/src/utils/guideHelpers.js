@@ -9,7 +9,19 @@ const validateHexColor = (value, fieldName) => {
     }
 };
 
+const checkColorFields = (colorFields, res) => {
+  for (const [field, value] of Object.entries(colorFields)) {
+    if (value && !isValidHexColor(value)) {
+      return res.status(400).json({
+        errors: [{ msg: `${field} must be a valid hex color code` }],
+      });
+    }
+  }
+  return true;
+};
+
 module.exports = {
     isValidHexColor,
     validateHexColor,
+    checkColorFields
 };

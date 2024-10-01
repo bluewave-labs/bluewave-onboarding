@@ -1,7 +1,7 @@
 const bannerService = require("../service/banner.service.js");
 const { internalServerError } = require("../utils/errors");
-const { isValidHexColor } = require("../utils/guideHelpers");
-const db = require("../models");
+const { isValidHexColor, checkColorFields } = require("../utils/guideHelpers");
+const db = require("../models"); 
 const Banner = db.Banner;
 
 const validatePosition = (value) => {
@@ -36,15 +36,7 @@ class BannerController {
     }
 
     const colorFields = { fontColor, backgroundColor };
-    for (const [field, value] of Object.entries(colorFields)) {
-      if (value && !isValidHexColor(value)) {
-        return res
-          .status(400)
-          .json({
-            errors: [{ msg: `${field} must be a valid hex color code` }],
-          });
-      }
-    }
+    checkColorFields(colorFields, res);
 
     try {
       const newBannerData = { ...req.body, createdBy: userId };
@@ -64,7 +56,7 @@ class BannerController {
     try {
       const { id } = req.params;
 
-      if (isNaN(id) || id.trim() === "") {
+      if (Number.isNaN(Number(id)) || id.trim() === "")  {
         return res.status(400).json({ errors: [{ msg: "Invalid id" }] });
       }
 
@@ -174,7 +166,7 @@ class BannerController {
     try {
       const { id } = req.params;
 
-      if (isNaN(id) || id.trim() === "") {
+      if (Number.isNaN(Number(id)) || id.trim() === "")  {
         return res.status(400).json({ errors: [{ msg: "Invalid id" }] });
       }
 
