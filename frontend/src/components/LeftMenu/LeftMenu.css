@@ -7,6 +7,7 @@
   box-shadow: 0px 4px 6px rgba(81, 81, 81, 0.1);
   border-right: 1px solid #EBEBEB;
   min-width: max-content;
+  height: 100vh;
 }
 
 .left-menu .MuiSvgIcon-root {
@@ -49,4 +50,58 @@
 
 .left-menu .MuiListItemButton-root {
   border-radius: 6px;
+}
+
+@media screen and (max-height: 730px) {
+  .left-menu {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .title .MuiTypography-root {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .menu-item .MuiTypography-root {
+    padding-right: 1rem;
+  }
+
+  .left-menu .MuiListItemButton-root {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+@media screen and (max-height: 650px) {
+  .menu-item .MuiTypography-root {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .title .MuiTypography-root {
+    font-size: 10px;
+    line-height: 32px;
+  }
+
+  .left-menu .MuiListItemButton-root {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
+  .search-item {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .left-menu {
+    padding-left: 0.25rem;
+    padding-right: 0.5rem;
+  }
+
+  .menu-item .MuiTypography-root {
+    padding-right: 0.5rem;
+  }
 }
