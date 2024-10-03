@@ -1,28 +1,43 @@
 import React, { useState } from 'react';
-import './Login.css'; 
+import styles from './Login.module.css';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CircularProgress from '@mui/material/CircularProgress';
 import { resetPassword } from '../../services/loginServices';
 import { useNavigate } from 'react-router-dom';
 
-function SetNewPasswordPage({email='asdf@asdf.com'}) {
+function SetNewPasswordPage({ email = 'asdf@asdf.com' }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [hasSpecialCharacter, setHasSpecialCharacter] = useState(false);
   const [atLeastEightCharacters, setAtLeastEightCharacters] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleResetPassword = async () => {
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
     try {
-      const response = await resetPassword({email, password});
+      const response = await resetPassword({ email, password });
+      setLoading(false);
       console.log('Password Reset successful:', response);
       navigate('/reset-password');
     } catch (error) {
+      setLoading(false);
       console.error('Password Reset failed:', error);
+      if (error.response?.data?.error) {
+        setError(error.response.data.error);
+      }
+      else {
+        setError('An error occurred. Please try again.');
+      }
     }
   };
-  
+
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -49,47 +64,58 @@ function SetNewPasswordPage({email='asdf@asdf.com'}) {
   };
 
   return (
-    <body class="login-body">
-    <div className="login-container">
-      <h2 style={{marginBottom: "0px"}}>Set new Password</h2>
-      <h3>Your new password must be different to previously used passwords.</h3>
-      <div className="form-group">
-        <div className='check-div'>
-          {isPasswordValid && <CheckCircleIcon style={{ color: 'green' , fontSize: '20px'}} />}
-          <label>Password</label>
-        </div>    
-        <input
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-          placeholder="Enter your password"
-        />
-      </div>
-      <div className="form-group">
-        <div className='check-div'>
-          <label>Confirm Password</label>
-        </div>    
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-          placeholder="Confirm your password"
-        />
-      </div>
-      <div className="password-constraints">
-        <CheckCircleIcon style={{ color: atLeastEightCharacters ? 'green' : '#D0D5DD', fontSize: '20px', marginRight:"5px" }} />
-        Must be at least 8 characters
-      </div>
-      <div className="password-constraints">
-        <CheckCircleIcon style={{ color: hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight:"5px"}} />
-        Must contain one special character
-      </div>
-      <button className="sign-in-button" style={{marginTop: "15px"}} onClick={handleResetPassword}>
-        Reset Password
-      </button>
-      <button className="back-to-login-button"> <ArrowBackIcon style={{fontSize: "18px", marginRight: "5px"}}/>Back to log in</button>
-    </div>
-    </body>
+    <div className={styles["login-body"]}>
+      <form onSubmit={handleResetPassword} className={styles["login-container"]}>
+        <h2 style={{ marginBottom: "0px" }}>Set new Password</h2>
+        <h3>Your new password must be different to previously used passwords.</h3>
+        <div className={styles["form-group"]}>
+          <CustomTextField
+            id="password"
+            type="password"
+            name="password"
+            labelText='Password*:'
+            checkCircleIconVisible={true}
+            displayCheckCircleIcon={isPasswordValid}
+            placeholder='Create your password'
+            textFieldMargin='none'
+            TextFieldWidth="full"
+            required={true}
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </div>
+        <div className={styles["form-group"]} style={{ marginBottom: 0 }}>
+          <CustomTextField
+            id="confirmPassword"
+            type="password"
+            name="confirmPassword"
+            labelText='Confirm Password*:'
+            checkCircleIconVisible={true}
+            displayCheckCircleIcon={isPasswordValid && password === confirmPassword}
+            placeholder='Confirm your password'
+            textFieldMargin='none'
+            TextFieldWidth="full"
+            required={true}
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+          />
+          {error && <div className={styles["error-message"]}>{error}</div>}
+        </div>
+
+        <div className={styles["password-constraints"]}>
+          <CheckCircleIcon style={{ color: atLeastEightCharacters ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: "5px" }} />
+          Must be at least 8 characters
+        </div>
+        <div className={styles["password-constraints"]}>
+          <CheckCircleIcon style={{ color: hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: "5px" }} />
+          Must contain one special character
+        </div>
+        <button type="submit" className={styles["sign-in-button"]} style={{ marginTop: "15px" }}>
+          {loading ? <CircularProgress size={12} color="inherit" /> : 'Reset Password'}
+        </button>
+        <button type="button" onClick={() => navigate('/login')} className={styles["back-to-login-button"]}> <ArrowBackIcon style={{ fontSize: "18px", marginRight: "5px" }} />Back to log in</button>
+      </form >
+    </div >
   );
 }
 
