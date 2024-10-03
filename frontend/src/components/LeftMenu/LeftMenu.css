@@ -51,7 +51,7 @@
   border-radius: 6px;
 }
 
-@media screen and (max-height: 730px) {
+@media screen and (max-height: 680px) {
   .left-menu {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -72,7 +72,7 @@
   }
 }
 
-@media screen and (max-height: 650px) {
+@media screen and (max-height: 615px) {
   .menu-item .MuiTypography-root {
     font-size: 12px;
     line-height: 20px;
