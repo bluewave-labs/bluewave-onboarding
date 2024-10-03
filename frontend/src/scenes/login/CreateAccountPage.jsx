@@ -28,6 +28,7 @@ function CreateAccountPage() {
     switch (name) {
       case 'name':
         setValidation((prev) => ({...prev, isNameValid: isValidName(value)}));
+        break;
       case 'surname':
         setValidation((prev) => ({ ...prev, isSurnameValid: isValidName(value) }));
         break;
