@@ -1,21 +1,23 @@
-.dropdown{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.select{
+.select {
     width: 241px;
     height: 34px;
     font-size: 13px !important;
     border-radius: 8px !important;
 }
-.menuItem{
+
+.select:hover .MuiOutlinedInput-notchedOutline{
+    border-color: var(--main-purple) !important;
+}
+
+.menuItem {
     font-size: 13px !important;
 }
+
 .MuiMenuItem-root.Mui-selected {
     background-color: #F9FAFB !important;
     border-radius: 8px !important;
 }
-.MuiMenuItem-root{
+
+.MuiMenuItem-root {
     margin: 0px 5px !important;
 }
