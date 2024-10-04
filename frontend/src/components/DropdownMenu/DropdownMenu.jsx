@@ -13,6 +13,10 @@ const DropdownMenu = () => {
     const navigate = useNavigate();
     const { logoutAuth } = useAuth();
 
+    const handleNavigation = () => {
+        navigate("/profile-settings");
+    };
+
     const handleLogoutClick = async () => {
         await logout();
         logoutAuth();
@@ -21,8 +25,8 @@ const DropdownMenu = () => {
     };
 
     const menuItems = [
-        { text: 'Profile', icon: <Person2OutlinedIcon /> },
-        { text: 'Settings', icon: <SettingsOutlinedIcon /> },
+        { text: 'Profile', icon: <Person2OutlinedIcon />, onClick: handleNavigation },
+        { text: 'Settings', icon: <SettingsOutlinedIcon />, onClick: handleNavigation },
         { text: 'Logout', icon: <LogoutOutlinedIcon />, onClick: handleLogoutClick },
     ];
 
