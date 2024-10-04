@@ -1,4 +1,5 @@
 const { validateHexColor } = require('../utils/guideHelpers');
+const { validateCloseButtonAction, validatePosition } = require('../utils/banner.helper');
 
 module.exports = (sequelize, DataTypes) => {
     const Banner = sequelize.define('Banner', {
@@ -6,14 +7,18 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-              isIn: [["no action", "open url", "open url in a new tab"]],
+              isValidAction(value) {
+                validateCloseButtonAction(value);
+              },
             },
           },
           position: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-              isIn: [["top", "bottom"]],
+              isValidPosition(value) {
+                validatePosition(value);
+              },
             },
           },
           url: {

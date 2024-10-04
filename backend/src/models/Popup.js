@@ -1,4 +1,5 @@
 const { validateHexColor } = require('../utils/guideHelpers');
+const { validateCloseButtonAction, validatePopupSize } = require('../utils/popup.helper');
 
 module.exports = (sequelize, DataTypes) => {
   const Popup = sequelize.define(
@@ -13,14 +14,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isIn: [["no action", "open url", "open url in a new tab"]],
+          isValidAction(value) {
+            validateCloseButtonAction(value);
+          },
         },
       },
       popupSize: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isIn: [["small", "medium", "large"]],
+          isValidPopupSize(value) {
+            validatePopupSize(value);
+          },
         },
       },
       url: {
