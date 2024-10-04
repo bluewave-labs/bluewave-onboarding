@@ -26,12 +26,6 @@
   min-width: 2rem;
 }
 
-
-.search-item {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
 .left-menu .MuiListItemText-root {
   margin: 0;
 }
@@ -93,11 +87,7 @@
     padding-bottom: 2px;
   }
 
-  .search-item {
-    padding-top: 2px;
-    padding-bottom: 2px;
-  }
-
+  
   .left-menu .MuiSvgIcon-root {
     font-size: 1.4rem;  
   }
