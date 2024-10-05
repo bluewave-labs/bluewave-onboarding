@@ -1,5 +1,5 @@
-const { validateHexColor } = require('../utils/guideHelpers');
-const { validateCloseButtonAction, validatePopupSize } = require('../utils/popup.helper');
+const { validateHexColor, validateCloseButtonAction } = require('../utils/guideHelpers');
+const { validatePopupSize } = require('../utils/popup.helper');
 
 module.exports = (sequelize, DataTypes) => {
   const Popup = sequelize.define(

@@ -1,5 +1,5 @@
-const { validateHexColor } = require('../utils/guideHelpers');
-const { validateCloseButtonAction, validatePosition } = require('../utils/banner.helper');
+const { validateHexColor, validateCloseButtonAction } = require('../utils/guideHelpers');
+const { validatePosition } = require('../utils/banner.helper');
 
 module.exports = (sequelize, DataTypes) => {
     const Banner = sequelize.define('Banner', {

@@ -20,8 +20,14 @@ const checkColorFields = (colorFields, res) => {
   return true;
 };
 
+const validateCloseButtonAction = (value) => {
+  const validActions = ["no action", "open url", "open url in a new tab"];
+  return validActions.includes(value);
+};
+
 module.exports = {
     isValidHexColor,
     validateHexColor,
-    checkColorFields
+    checkColorFields,
+    validateCloseButtonAction,
 };
