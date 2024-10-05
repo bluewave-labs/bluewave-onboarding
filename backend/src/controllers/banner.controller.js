@@ -27,7 +27,11 @@ class BannerController {
     }
 
     const colorFields = { fontColor, backgroundColor };
-    checkColorFields(colorFields, res);
+    try {
+      checkColorFields(colorFields);
+    } catch (error) {
+      return res.status(400).json({ errors: [{ msg: error.message }] });
+    }
 
     try {
       const newBannerData = { ...req.body, createdBy: userId };
@@ -98,7 +102,11 @@ class BannerController {
       }
   
       const colorFields = { fontColor: req.body.fontColor, backgroundColor: req.body.backgroundColor };
-      checkColorFields(colorFields, res);
+      try {
+        checkColorFields(colorFields);
+      } catch (error) {
+        return res.status(400).json({ errors: [{ msg: error.message }] });
+      }
   
       const updatedBanner = await bannerService.updateBanner(id, req.body);
       res.status(200).json(updatedBanner);
