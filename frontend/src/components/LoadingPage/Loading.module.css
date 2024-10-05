@@ -1,0 +1,34 @@
+@import url(../../styles/variables.css);
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-repeat: no-repeat;
+  background-image: url('../../assets/auth-screen-background.svg');
+  background-position: center -350px;
+}
+
+.loading {
+  display: flex;
+  margin-top: 100px;
+  justify-content: center;
+}
+
+.loading::after {
+  content: "";
+  width: 50px;
+  height: 50px;
+  border: 10px solid #dddddd;
+  border-top-color: var(--main-purple);
+  border-radius: 50%;
+  animation: loading 1s ease infinite;
+}
+
+@keyframes loading {
+  to {
+    transform: rotate(1turn);
+  }
+}

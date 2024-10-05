@@ -21,14 +21,15 @@ import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
+import LoadingPage from "./components/LoadingPage/LoadingPage";
 
 const App = () => {
-  const { isLoggedIn } = useAuth(); 
+  const { isLoggedIn, isFetching } = useAuth(); 
 
   return (
     <>
       <Routes>
-        <Route path="/" element={isLoggedIn ? <Private Component={HomePageTemplate} /> : <LoginPage />}>
+        <Route path="/" element={isFetching ? <LoadingPage /> : (isLoggedIn ? <Private Component={HomePageTemplate} /> : <LoginPage />)}>
           <Route index element={<Home />} />
           <Route path="link" element={<LinksDefaultPage />} />
           <Route path="tour" element={<ToursDefaultPage />} />
