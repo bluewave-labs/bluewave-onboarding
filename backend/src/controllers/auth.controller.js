@@ -30,10 +30,10 @@ const register = async (req, res) => {
       }
 
       await invite.destroy({ transaction });
-      newUser = await User.create({ name, surname, email, password: hashedPassword, role: invite.role }, transaction);
+      newUser = await User.create({ name, surname, email, password: hashedPassword, role: invite.role }, { transaction });
     }
     else {
-      newUser = await User.create({ name, surname, email, password: hashedPassword, role: settings.user.role.admin });
+      newUser = await User.create({ name, surname, email, password: hashedPassword, role: settings.user.role.admin }, { transaction });
     }
     await transaction.commit();
 

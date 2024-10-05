@@ -3,6 +3,8 @@ const db = require("../models");
 const Team = db.Team;
 const User = db.User;
 const Token = db.Token;
+const Invite = db.Invite;
+const sequelize = db.sequelize;
 
 class TeamService {
     async getTeam() {
@@ -55,14 +57,17 @@ class TeamService {
             }
             
             await User.destroy({
-                where: { id: memberId }
-            }, { transaction })
+                where: { id: memberId },
+                transaction
+            })
             await Token.destroy({ 
-                where: { userId: memberId } 
-            }, { transaction });
+                where: { userId: memberId },
+                transaction
+            });
             await Invite.destroy({
-                where: { invitedBy: memberId }
-            }, { transaction });
+                where: { invitedBy: memberId },
+                transaction
+            });
 
             await transaction.commit();
         }

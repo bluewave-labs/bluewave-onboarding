@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         invitedEmail: {
           type: DataTypes.STRING(100),
+          unique: true,
           allowNull: false,
         },
         role: {

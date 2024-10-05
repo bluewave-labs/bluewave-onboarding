@@ -19,6 +19,7 @@ module.exports = {
       },
       invitedEmail: {
         type: Sequelize.STRING(100),
+        unique: true,
         allowNull: false,
       },
       role: {
