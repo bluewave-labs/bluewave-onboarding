@@ -1,35 +1,14 @@
-import HomePageTemplate from '../../templates/HomePageTemplate/HomePageTemplate';
-import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
-import BannerLeftContent from '../../components/BannerPageComponents/BannerLeftContent/BannerLeftContent';
-import BannerLeftAppearance from '../../components/BannerPageComponents/BannerLeftAppearance/BannerLeftApperance';
-import { React, useState, useEffect } from 'react';
-import BannerPreview from '../../components/BannerPageComponents/BannerPreview/BannerPreview';
-import { addBanner, getBannerById, editBanner } from '../../services/bannerServices';
-import { useNavigate, useLocation } from 'react-router-dom';
-import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
-import { emitToastError } from '../../utils/guideHelpers'
+import { React, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './ProfileSettings.module.scss';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import classNames from 'classnames';
 import Button from '../../components/Button/Button';
 import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
-import { TextField, InputLabel, Divider } from "@mui/material";
+import { InputLabel, Divider } from "@mui/material";
 import Avatar from '../../components/Avatar/Avatar';
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import DeleteConfirmationModal from '../../components/Modals/DeleteConfirmationModal/DeleteConfirmationModal';
+import UploadModal from '../../components/Modals/UploadImageModal/UploadModal';
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    borderRadius: '5px',
-    p: 4,
-};
 
 const ProfileSettingsPage = ({ title = '', leftContent = () => null, rightContent = () => null, leftAppearance = () => null, onSave = () => null }) => {
     const navigate = useNavigate();
@@ -37,10 +16,16 @@ const ProfileSettingsPage = ({ title = '', leftContent = () => null, rightConten
     const handleButtonClick = (index) => {
         setActiveButton(index);
     };
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [openDeleteConfirmationModal, setOpenDeleteConfirmationModal] = useState(false);
+    const handleOpenDeleteConfirmationModal = () => setOpenDeleteConfirmationModal(true);
+    const handleCloseDeleteConfirmationModal = () => setOpenDeleteConfirmationModal(false);
+
+    const [openUploadModal, setOpenUploadModal] = useState(false);
+    const handleOpenUploadModal = () => setOpenUploadModal(true);
+    const handleCloseUploadModal = () => setOpenUploadModal(false);
+
     const buttons = ['Profile', 'Password', 'Team'];
+
     return (
         <div className={styles.container}>
             <div className={styles.popup}>
@@ -72,9 +57,9 @@ const ProfileSettingsPage = ({ title = '', leftContent = () => null, rightConten
                                             <InputLabel sx={{ fontWeight: '400', fontSize: '13px', margin: 0 }}>This photo will be displayed in your profile page.</InputLabel>
                                         </div>
                                         <div style={{ display: 'flex', gap: '1rem' }}>
-                                            <Avatar />
+                                            <Avatar src='/vendetta.png' />
                                             <Button buttonType='secondary-grey' variant='contained' text='Delete' onClick={onSave} />
-                                            <Button buttonType='secondary-grey' variant='contained' text='Update' onClick={onSave} />
+                                            <Button buttonType='secondary-grey' variant='contained' text='Update' onClick={handleOpenUploadModal} />
                                         </div>
                                     </div>
                                 </div>
@@ -85,24 +70,16 @@ const ProfileSettingsPage = ({ title = '', leftContent = () => null, rightConten
                                 <div>
                                     <h3>Delete Account</h3>
                                     <p>Note that deleting your account will remove all data from our system. This is permanent and non-recoverable.</p>
-                                    <Button onClick={handleOpen} buttonType='error' variant='contained' text='Delete Account' />
+                                    <Button onClick={handleOpenDeleteConfirmationModal} buttonType='error' variant='contained' text='Delete Account' />
                                 </div>
-                                <Modal
-                                    open={open}
-                                    onClose={handleClose}
-                                    aria-labelledby="modal-modal-title"
-                                    aria-describedby="modal-modal-description"
-                                >
-                                    <Box className={styles.modalBox}>
-                                        <h3>Really Delete this account ?</h3>
-                                        <p>If you delete your account, you will no longer be able to sign in, and all of your data will be deleted. Deleting your account is permanent and non-recoverable action.</p>
-                                        <div style={{ display: 'flex', width: '100%', gap: '1rem', justifyContent: 'flex-end' }}>
-                                            <Button onClick={handleClose} buttonType='secondary-grey' variant='contained' text='Cancel' />
-                                            <Button buttonType='error' variant='contained' text='Delete Account' />
-                                        </div>
-                                    </Box>
-                                </Modal>
-
+                                <UploadModal
+                                    open={openUploadModal}
+                                    handleClose={handleCloseUploadModal}
+                                />
+                                <DeleteConfirmationModal
+                                    open={openDeleteConfirmationModal}
+                                    handleClose={handleCloseDeleteConfirmationModal}
+                                />
                             </div>
 
                         )
