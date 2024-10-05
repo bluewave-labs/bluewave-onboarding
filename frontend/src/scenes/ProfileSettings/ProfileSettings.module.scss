@@ -44,13 +44,7 @@
     margin-top: 1rem;
   }
 
-  .optionButtons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 2rem;
-    gap: 1rem;
-  }
-
+  
 
   .menuButton {
     border: none;
@@ -85,43 +79,4 @@
   .menuButton.active::after {
     background-color: var(--dark-purple);
   }
-}
-
-.modalBox {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  background-color: white;
-  box-shadow: 24;
-  border-radius: 5px;
-  padding: 2rem;
-}
-
-.uploadBox {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  box-shadow: 0px 1px 2px 0px #1018280D;
-  border-radius: 5px;
-  padding: 1.5rem 3rem;
-  box-sizing: content-box;
-  font-size: 13px;
-  width: 350px;
-  color: var(--third-text-color);
-}
-
-.uploadContainer {
-  display: flex;
-  flex-direction: column;
-  border: 1px dashed #ccc;
-  border-radius: 5px;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  cursor: pointer;
-  height: 150px;
 }
