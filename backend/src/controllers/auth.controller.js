@@ -44,7 +44,7 @@ const register = async (req, res) => {
 
     await sendSignupEmail(newUser.email, newUser.name);
 
-    res.status(201).json({ user: newUser, token });
+    res.status(201).json({ user: {name: newUser.name, surname: newUser.surname, email: newUser.email, role: settings.user.roleName[newUser.role]}, token });
   } catch (error) {
     console.error("Error registering user:", error);
     await transaction.rollback();

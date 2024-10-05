@@ -1,5 +1,3 @@
-"use strict";
-
 const config = require('../config/config');
 
 /** @type {import('sequelize-cli').Migration} */

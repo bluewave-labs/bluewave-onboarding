@@ -19,6 +19,8 @@ class UserService {
 
     async getUsers({search, page, limit}) {
         try {
+            const offset = (page - 1) * limit;
+
             return await User.findAndCountAll({
                 where: {
                   [Sequelize.Op.or]: [
@@ -41,6 +43,25 @@ class UserService {
         catch(err) {
             throw new Error("Error retreiving users list");
         }
+    }
+
+    async updateUser(userId, inputs) {
+      try {
+        const details = {
+          ...(inputs.name && { name: inputs.name }),
+          ...(inputs.surname && { surname: inputs.surname }),
+          ...(inputs.email && { email: inputs.email }),
+        };
+
+        await User.update({
+          details,
+        }, {
+          where: { id: userId }
+        });
+      }
+      catch(err) {
+        throw new Error("Error updating user");
+      }
     }
 
     async deleteUser(userId) {

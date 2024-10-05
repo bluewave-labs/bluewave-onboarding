@@ -7,12 +7,10 @@ const getUsersList = async (req, res) => {
   const { page = 1, limit = 10, search = "" } = req.query;
 
   try {
-    const offset = (page - 1) * limit;
-
     const { rows: users, count: totalUsers } = await userService.getUsers({page, limit, search})
 
     let returnObj = {
-      ...users.map(user => ({
+      users: users.map(user => ({
         name: user.name,
         surname: user.surname,
         email: user.email,
@@ -32,14 +30,18 @@ const getUsersList = async (req, res) => {
 
 const getCurrentUser = async (req, res) => {
   const userId = req.user.id;
-  const user = await userService.getUserById(userId);
-  if (user){
-    const { name, surname, email, role } = user;
-    const roleName = settings.user.roleName[role];
-    return res.status(200).json({ user: { name, surname, email, role: roleName } });
+  try {
+    const user = await userService.getUser(userId);
+    if (user){
+      const { id, name, surname, email, role } = user;
+      return res.status(200).json({ user: { id, name, surname, email, role: settings.user.roleName[role] } });
+    }
+    else{
+      return res.status(400).json({ error: "User not found" });
+    }
   }
-  else{
-    return res.status(400).json({ error: "User not found" });
+  catch(err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
@@ -47,20 +49,9 @@ const updateUserDetails = async (req, res) => {
   const userId = req.user.id;
   const inputs = req.body;
   try {
-    const user = await userService.getUserById(userId);
-    if(!user) {
-      return res.status(400).json({ error: "User not found" });
-    }
-    await user.update({
-      ...(inputs.name && { name: inputs.name }),
-      ...(inputs.surname && { surname: inputs.surname }),
-      ...(inputs.email && { email: inputs.email }),
-    })
+    const user = await userService.updateUser(userId, inputs);
 
-    const updatedUser = await userService.getUserById(userId);
-    const { name, surname, email, role } = updatedUser;
-
-    return res.status(200).json({ user: { name, surname, email, role} });
+    return res.status(200).json({ message: "User updated successfully" });
   } catch (err) {
     return res.status(500).json({ error: "Internal Server Error" })
   }
