@@ -15,7 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isValidAction(value) {
-            validateCloseButtonAction(value);
+            if (!validateCloseButtonAction(value)) {
+              throw new Error('Invalid close button action');
+            }
           },
         },
       },
@@ -24,7 +26,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isValidPopupSize(value) {
-            validatePopupSize(value);
+            if (!validatePopupSize(value)) {
+              throw new Error('Invalid popup size');
+            }
           },
         },
       },
