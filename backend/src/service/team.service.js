@@ -42,6 +42,7 @@ class TeamService {
     }
     
     async removeUserFromTeam(userId, memberId) {
+        const transaction = await sequelize.transaction();
         try {
             if(userId == memberId) {
                 throw new Error("User can't remove itself through team list");
@@ -54,14 +55,20 @@ class TeamService {
             }
             
             await User.destroy({
-                where: {id: memberId}
-            })
+                where: { id: memberId }
+            }, { transaction })
             await Token.destroy({ 
                 where: { userId: memberId } 
-            });
+            }, { transaction });
+            await Invite.destroy({
+                where: { invitedBy: memberId }
+            }, { transaction });
+
+            await transaction.commit();
         }
         catch(err) {
-            console.log("🚀 ~ TeamService ~ removeUserFromTeam ~ err:", err)
+            console.log("🚀 ~ TeamService ~ removeUserFromTeam ~ err:", err);
+            await transaction.rollback();
             throw new Error("Error Deleting User");
         }
     }

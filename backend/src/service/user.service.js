@@ -19,7 +19,7 @@ class UserService {
 
     async getUsers({search, page, limit}) {
         try {
-            const offset = (page - 1) * limit;
+            const offset = (parseInt(page) - 1) * parseInt(limit);
 
             return await User.findAndCountAll({
                 where: {
@@ -53,9 +53,8 @@ class UserService {
           ...(inputs.email && { email: inputs.email }),
         };
 
-        await User.update({
-          details,
-        }, {
+        await User.update(
+          details, {
           where: { id: userId }
         });
       }
