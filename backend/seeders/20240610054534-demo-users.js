@@ -1,10 +1,8 @@
 "use strict";
 
-const bcrypt = require('bcrypt');
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const hashedPassword = await bcrypt.hash('password123', 10);
+    const hashedPassword = "$2b$10$tQiyc0NpG9UFoH6k6j6IbuPcZNFZFUkFMC28r9752WLqlDB.sIzC." //password123
     await queryInterface.bulkInsert(
       "users",
       [
