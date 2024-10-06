@@ -110,7 +110,7 @@ function SetNewPasswordPage({ email = 'asdf@asdf.com' }) {
           <CheckCircleIcon style={{ color: hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: "5px" }} />
           Must contain one special character
         </div>
-        <button type="submit" className={styles["sign-in-button"]} style={{ marginTop: "15px" }}>
+        <button type="submit" className={styles["sign-in-button"]} style={{ marginTop: "15px" }} disabled={loading}>
           {loading ? <CircularProgress size={12} color="inherit" /> : 'Reset Password'}
         </button>
         <button type="button" onClick={() => navigate('/login')} className={styles["back-to-login-button"]}> <ArrowBackIcon style={{ fontSize: "18px", marginRight: "5px" }} />Back to log in</button>
