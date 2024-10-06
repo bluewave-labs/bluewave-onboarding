@@ -1,5 +1,5 @@
-const { validateHexColor, validateCloseButtonAction } = require('../utils/guideHelpers');
-const { validatePosition } = require('../utils/banner.helper');
+const { validateHexColor, validateActionButton } = require('../utils/guideHelpers');
+const { validatePositionWrapper } = require('../utils/banner.helper');
 
 module.exports = (sequelize, DataTypes) => {
     const Banner = sequelize.define('Banner', {
@@ -8,9 +8,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             validate: {
               isValidAction(value) {
-                if (!validateCloseButtonAction(value)) {
-                    throw new Error('Invalid close button action');
-                }
+                  validateActionButton(value);
               },
             },
           },
@@ -19,9 +17,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             validate: {
               isValidPosition(value) {
-                if (!validatePosition(value)) {
-                    throw new Error('Invalid position');
-                }
+                  validatePositionWrapper(value);
               },
             },
           },

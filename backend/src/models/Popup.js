@@ -1,5 +1,5 @@
-const { validateHexColor, validateCloseButtonAction } = require('../utils/guideHelpers');
-const { validatePopupSize } = require('../utils/popup.helper');
+const { validateHexColor, validateActionButton } = require('../utils/guideHelpers');
+const { validatePopupSizeWrapper } = require('../utils/popup.helper');
 
 module.exports = (sequelize, DataTypes) => {
   const Popup = sequelize.define(
@@ -15,9 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isValidAction(value) {
-            if (!validateCloseButtonAction(value)) {
-              throw new Error('Invalid close button action');
-            }
+              validateActionButton(value);
           },
         },
       },
@@ -26,9 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isValidPopupSize(value) {
-            if (!validatePopupSize(value)) {
-              throw new Error('Invalid popup size');
-            }
+              validatePopupSizeWrapper(value);
           },
         },
       },

@@ -22,9 +22,16 @@ const validateCloseButtonAction = (value) => {
   return validActions.includes(value);
 };
 
+const validateActionButton = (value) => {
+  if (!validateCloseButtonAction(value)) {
+    throw new Error('Invalid close button action');
+  }
+};
+
 module.exports = {
     isValidHexColor,
     validateHexColor,
     checkColorFields,
     validateCloseButtonAction,
+    validateActionButton
 };
