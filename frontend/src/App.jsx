@@ -7,7 +7,6 @@ import ForgotPasswordPage from "./scenes/login/ForgotPasswordPage";
 import CheckYourEmailPage from "./scenes/login/CheckYourEmailPage";
 import SetNewPasswordPage from "./scenes/login/SetNewPassword";
 import Private from "./components/Private";
-import { useAuth } from "./services/authProvider";
 import ProgressStepsMain from "./scenes/progressSteps/ProgressStepsMain";
 import BannerPage from "./scenes/bannerPage/BannerPage";
 import BannerDefaultPage from "./scenes/bannerPage/BannerDefaultPage";
@@ -21,22 +20,20 @@ import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
-import LoadingPage from "./components/LoadingPage/LoadingPage";
 
 const App = () => {
-  const { isLoggedIn, isFetching } = useAuth(); 
 
   return (
     <>
       <Routes>
-        <Route path="/" element={isFetching ? <LoadingPage /> : (isLoggedIn ? <Private Component={HomePageTemplate} /> : <LoginPage />)}>
+        <Route path="/" element={<Private Component={HomePageTemplate} />}>
           <Route index element={<Home />} />
           <Route path="link" element={<LinksDefaultPage />} />
           <Route path="tour" element={<ToursDefaultPage />} />
           <Route path="/banner/create" element={<BannerPage />} />
-          <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
-          <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
-          <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
+          <Route path="/popup/create" element={<CreatePopupPage/>} />
+          <Route path="/banner" element={<BannerDefaultPage />} />
+          <Route path="/popup" element={<PopupDefaultPage />} />
           <Route path="/hint-default" element={<HintDefaultPage />} />
           <Route path="/hint/create" element={<CreateHintPage />} />
           <Route path="/hint" element={<HintPage />} />
