@@ -1,36 +1,38 @@
 "use strict";
+const bcrypt = require('bcrypt');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    const hashedPassword = await bcrypt.hash('password123', 10);
     await queryInterface.bulkInsert(
       "users",
       [
         {
-          username: "demoUser1",
+          name: "demoUser1",
           email: "demo1@example.com",
-          password: "password123",
+          password: hashedPassword,
           role: "user",
           createdAt: new Date(),
         },
         {
-          username: "demoUser2",
+          name: "demoUser2",
           email: "demo2@example.com",
-          password: "password123",
+          password: hashedPassword,
           role: "user",
           createdAt: new Date(),
         },
         {
-          username: "demoUser3",
+          name: "demoUser3",
           email: "demo3@example.com",
-          password: "password123",
+          password: hashedPassword,
           role: "user",
           createdAt: new Date(),
         },
         {
-          username: "demoUser4",
+          name: "demoname4",
           email: "demo4@example.com",
-          password: "password123",
-          role: "user",
+          password: hashedPassword,
+          role: "name",
           createdAt: new Date(),
         },
       ],
@@ -39,6 +41,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("users", null, {});
+    await queryInterface.bulkDelete("names", null, {});
   },
 };
