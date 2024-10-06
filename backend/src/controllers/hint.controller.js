@@ -95,7 +95,7 @@ class HintController {
   async getHintById(req, res) {
     const { hintId } = req.params;
 
-    if (isNaN(hintId) || hintId.trim() === "") {
+    if (Number.isNaN(Number(hintId)) || hintId.trim() === "") {
       return res.status(400).json({ errors: [{ msg: "Invalid hint ID" }] });
     }
 
