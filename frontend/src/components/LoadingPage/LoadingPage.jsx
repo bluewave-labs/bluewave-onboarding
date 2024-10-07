@@ -8,7 +8,7 @@ const LoadingPage = () => {
             <div className={styles['loading-container']}>
                 <LeftMenu />
                 <div className={styles['background-pattern']}>
-                    <div className={styles["loading-spinner"]}></div>
+                    <div className={styles["loading"]}></div>
                 </div>
             </div>
         </div>
