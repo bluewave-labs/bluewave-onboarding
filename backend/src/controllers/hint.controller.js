@@ -1,51 +1,17 @@
 const HintService = require("../service/hint.service");
 const { internalServerError } = require("../utils/errors");
-const { isValidHexColor } = require("../utils/guideHelpers");
+const validateHintData = require("../utils/hintValidation");
 const db = require("../models");
 const Hint = db.Hint;
-
-const validateAction = (value) => {
-  const validActions = ["no action", "open url", "open url in a new tab"];
-  return validActions.includes(value);
-};
 
 class HintController {
   async addHint(req, res) {
     const userId = req.user.id;
-    const {
-      action,
-      headerBackgroundColor,
-      headerColor,
-      textColor,
-      buttonBackgroundColor,
-      buttonTextColor,
-    } = req.body;
 
-    if (!action) {
-      return res.status(400).json({
-        errors: [{ msg: "action is required" }],
-      });
-    }
+    const validationErrors = validateHintData(req.body);
 
-    if (!validateAction(action)) {
-      return res.status(400).json({
-        errors: [{ msg: "Invalid value for action" }],
-      });
-    }
-
-    const colorFields = {
-      headerBackgroundColor,
-      headerColor,
-      textColor,
-      buttonBackgroundColor,
-      buttonTextColor,
-    };
-    for (const [field, value] of Object.entries(colorFields)) {
-      if (value && !isValidHexColor(value)) {
-        return res.status(400).json({
-          errors: [{ msg: `Invalid value for ${field}` }],
-        });
-      }
+    if (validationErrors.length > 0) {
+      return res.status(400).json({ errors: validationErrors });
     }
 
     try {
@@ -120,40 +86,11 @@ class HintController {
 
   async updateHint(req, res) {
     const { hintId } = req.params;
-    const {
-      action,
-      headerBackgroundColor,
-      headerColor,
-      textColor,
-      buttonBackgroundColor,
-      buttonTextColor,
-    } = req.body;
 
-    if (!action) {
-      return res.status(400).json({
-        errors: [{ msg: "action is required" }],
-      });
-    }
+    const validationErrors = validateHintData(req.body);
 
-    if (!validateAction(action)) {
-      return res.status(400).json({
-        errors: [{ msg: "Invalid value for action" }],
-      });
-    }
-
-    const colorFields = {
-      headerBackgroundColor,
-      headerColor,
-      textColor,
-      buttonBackgroundColor,
-      buttonTextColor,
-    };
-    for (const [field, value] of Object.entries(colorFields)) {
-      if (value && !isValidHexColor(value)) {
-        return res.status(400).json({
-          errors: [{ msg: `Invalid value for ${field}` }],
-        });
-      }
+    if (validationErrors.length > 0) {
+      return res.status(400).json({ errors: validationErrors });
     }
 
     try {

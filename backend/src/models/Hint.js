@@ -68,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
       textColor: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "#OOOOOO",
+        defaultValue: "#000000",
         validate: {
           isHexColor(value) {
             validateHexColor(value, "textColor");
