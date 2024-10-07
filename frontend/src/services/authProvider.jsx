@@ -23,7 +23,7 @@ const authReducer = (state, action) => {
 };
 
 export const AuthProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(authReducer, { isLoggedIn: false, userInfo: null });
+    const [state, dispatch] = useReducer(authReducer, { isLoggedIn: false, userInfo: JSON.parse(localStorage.getItem('userInfo')) || null });
     const [isFetching, setIsFetching] = useState(true);
 
     useEffect(() => {
@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }) => {
                         const userData = response.data.user;
                         const fullName = userData.surname ? `${userData.name} ${userData.surname}` : userData.name;
                         const payload = { fullName, role: userData.role };
+                        localStorage.setItem('userInfo', JSON.stringify(payload));
                         dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload });
                     }
                 } else {

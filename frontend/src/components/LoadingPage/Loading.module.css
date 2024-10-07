@@ -1,6 +1,19 @@
 @import url(../../styles/variables.css);
 
+.container{
+  display: flex;
+  flex-direction: column;
+  width:100vw;
+  height:100vh;
+  flex-grow: 1;
+}
+
 .loading-container {
+  display: flex;
+  flex-grow: 1;
+}
+
+.background-pattern {
   display: flex;
   flex-direction: column;
   width: 400px;
@@ -11,13 +24,13 @@
   background-position: center -350px;
 }
 
-.loading {
+.loading-spinner {
   display: flex;
   margin-top: 100px;
   justify-content: center;
 }
 
-.loading::after {
+.loading-spinner::after {
   content: "";
   width: 50px;
   height: 50px;
@@ -27,7 +40,7 @@
   animation: loading 1s ease infinite;
 }
 
-@keyframes loading {
+@keyframes loading-spinner {
   to {
     transform: rotate(1turn);
   }
