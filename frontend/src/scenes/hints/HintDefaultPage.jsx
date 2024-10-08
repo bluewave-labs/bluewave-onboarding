@@ -1,25 +1,36 @@
-import CreateActivityButton from "../../components/Button/CreateActivityButton/CreateActivityButton"
-import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
-import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
+import React from "react";
+import DefaultPageTemplate from "../../templates/DefaultPageTemplate/DefaultPageTemplate";
+import { ACTIVITY_TYPES_INFO } from "../../data/GuideMainPageData";
 import { useNavigate } from "react-router";
+
+const mockHints = [
+  {
+    idItem: 184293,
+    title: "Main dashboard - feature hint",
+    text: "This pops up the first time a user logs in to the dashboard.",
+  },
+  {
+    idItem: 194294,
+    title: "Main dashboard - password hint",
+    text: "This pops up the first time a user logs in to the dashboard.",
+  },
+];
 
 const HintDefaultPage = () => {
   const navigate = useNavigate();
-  const style = {
-    display: "flex",
-    "flex-direction": "column",
-    width: "100%",
-    "justify-content": "center",
-    "align-items": "center",
-  };
+  
   return (
-      <div style={style}>
-        <ParagraphCSS />
-        <CreateActivityButton
-          type={ACTIVITY_TYPES.HINTS}
-          onClick={() => navigate("/hint/create")}
-        />
-      </div>
+    <DefaultPageTemplate
+      getItems={() => mockHints}
+      deleteItem={() => {}}
+      navigateToCreate={() => navigate("/hint/create")}
+      itemType={ACTIVITY_TYPES_INFO.HINTS}
+      itemTypeInfo={ACTIVITY_TYPES_INFO.HINTS}
+      getItemDetails={(hint) => ({
+        title: hint.title,
+        text: hint.text,
+      })}
+    />
   );
 };
 

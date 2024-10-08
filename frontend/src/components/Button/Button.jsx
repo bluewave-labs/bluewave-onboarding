@@ -26,7 +26,7 @@ Button.propTypes = {
   variant: PropTypes.oneOf(["text", "outlined", "contained"]),
   className: PropTypes.string,
   disabled: PropTypes.bool,
-  buttonType: PropTypes.oneOf(['primary', 'secondary-grey', 'secondary-purple', 'error'])
+  buttonType: PropTypes.oneOf(['primary', 'secondary', 'secondary-grey', 'secondary-purple', 'error'])
 };
 
 export default Button;

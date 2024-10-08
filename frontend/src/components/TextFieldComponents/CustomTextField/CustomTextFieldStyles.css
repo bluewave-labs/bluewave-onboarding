@@ -34,3 +34,7 @@
   font-size: 13px;
   color: var(--second-text-color);
 }
+
+.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border-radius: 8px !important;
+}
