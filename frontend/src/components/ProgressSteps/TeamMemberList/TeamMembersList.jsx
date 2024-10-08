@@ -18,7 +18,7 @@ const TeamMembersList = ({ members, setMembers }) => {
                     {member}
                     <CloseOutlinedIcon 
                         onClick={() => handleDeleteMember(index)} 
-                        style={{color: '#98A2B3', fontSize: '12px', cursor: 'pointer'}}
+                        style={{color: '#98A2B3', fontSize: '12px', cursor: 'pointer', zIndex:1000}}
                     />
                 </div>
             ))}
