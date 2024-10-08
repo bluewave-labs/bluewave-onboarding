@@ -1,0 +1,47 @@
+<svg width="768" height="768" viewBox="0 0 768 768" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="fadeGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="white" />
+      <stop offset="100%" stop-color="white" stop-opacity="0" />
+    </radialGradient>
+    <mask id="fadeMask">
+      <rect width="768" height="768" fill="url(#fadeGradient)" />
+    </mask>
+  </defs>
+
+  <g mask="url(#fadeMask)" stroke="#EAECF0">
+
+    <line x1="0" x2="0" y2="768" />
+    <line x1="48" x2="48" y2="768" />
+    <line x1="96" x2="96" y2="768" />
+    <line x1="144" x2="144" y2="768" />
+    <line x1="192" x2="192" y2="768" />
+    <line x1="240" x2="240" y2="768" />
+    <line x1="288" x2="288" y2="768" />
+    <line x1="336" x2="336" y2="768" />
+    <line x1="384" x2="384" y2="768" />
+    <line x1="432" x2="432" y2="768" />
+    <line x1="480" x2="480" y2="768" />
+    <line x1="528" x2="528" y2="768" />
+    <line x1="576" x2="576" y2="768" />
+    <line x1="624" x2="624" y2="768" />
+    <line x1="672" x2="672" y2="768" />
+    <line x1="720" x2="720" y2="768" />
+
+    <line y1="48" x2="768" y2="48" />
+    <line y1="96" x2="768" y2="96" />
+    <line y1="144" x2="768" y2="144" />
+    <line y1="192" x2="768" y2="192" />
+    <line y1="240" x2="768" y2="240" />
+    <line y1="288" x2="768" y2="288" />
+    <line y1="336" x2="768" y2="336" />
+    <line y1="384" x2="768" y2="384" />
+    <line y1="432" x2="768" y2="432" />
+    <line y1="480" x2="768" y2="480" />
+    <line y1="528" x2="768" y2="528" />
+    <line y1="576" x2="768" y2="576" />
+    <line y1="624" x2="768" y2="624" />
+    <line y1="672" x2="768" y2="672" />
+    <line y1="720" x2="768" y2="720" />
+  </g>
+</svg>
