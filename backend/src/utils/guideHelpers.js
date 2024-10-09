@@ -9,12 +9,15 @@ const validateHexColor = (value, fieldName) => {
     }
 };
 
-const checkColorFields = (colorFields) => {
+const checkColorFields = (colorFields, res) => {
   for (const [field, value] of Object.entries(colorFields)) {
     if (value && !isValidHexColor(value)) {
-      throw new Error(`${field} must be a valid hex color code`);
+      return res.status(400).json({
+        errors: [{ msg: `${field} must be a valid hex color code` }],
+      });
     }
   }
+  return true;
 };
 
 const validateCloseButtonAction = (value) => {
