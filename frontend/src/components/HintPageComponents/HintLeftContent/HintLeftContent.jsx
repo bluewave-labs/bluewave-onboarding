@@ -13,7 +13,7 @@ const HintLeftContent = ({ setLeftContentFormData, formData }) => {
     <div className="left-content-container">
       <h2 className="hint-label">Action</h2>
       <DropdownList
-        actions={["No action", "Open a URL", "Open a URL in a new page"]}
+        actions={["No action", "Open a URL", "Open a URL in a new tab"]}
       />
       <h2 className="hint-label" style={{ marginBottom: 0 }}>
         Action button url (can be relative)
