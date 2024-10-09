@@ -1,6 +1,6 @@
 const popupService = require("../service/popup.service");
 const { internalServerError } = require("../utils/errors");
-const { isValidHexColor, checkColorFields, validateCloseButtonAction } = require("../utils/guideHelpers");
+const { isValidHexColor, checkColorFieldsFail, validateCloseButtonAction } = require("../utils/guideHelpers");
 const db = require("../models");
 const Popup = db.Popup;
 const { validatePopupSize } = require("../utils/popup.helper");
@@ -44,7 +44,8 @@ class PopupController {
       buttonBackgroundColor,
       buttonTextColor,
     };
-    checkColorFields(colorFields, res);
+    const colorCheck = checkColorFieldsFail(colorFields, res)
+    if(colorCheck){return colorCheck};
 
     try {
       const newPopupData = { ...req.body, createdBy: userId };
@@ -114,23 +115,15 @@ class PopupController {
           .json({ errors: [{ msg: "Invalid value for closeButtonAction" }] });
       }
 
-      const colorFields = [
-        "headerBackgroundColor",
-        "headerColor",
-        "textColor",
-        "buttonBackgroundColor",
-        "buttonTextColor",
-      ];
-      
-      for (const field of colorFields) {
-        if (req.body[field] && !isValidHexColor(req.body[field])) {
-          return res
-            .status(400)
-            .json({
-              errors: [{ msg: `${field} must be a valid hex color code` }],
-            });
-        }
-      }
+      const colorFields = {
+        headerBackgroundColor,
+        headerColor,
+        textColor,
+        buttonBackgroundColor,
+        buttonTextColor,
+      };
+      const colorCheck = checkColorFieldsFail(colorFields, res)
+      if(colorCheck){return colorCheck};
 
       const updatedPopup = await popupService.updatePopup(id, req.body);
       res.status(200).json(updatedPopup);
