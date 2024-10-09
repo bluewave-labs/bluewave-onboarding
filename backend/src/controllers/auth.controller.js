@@ -2,28 +2,51 @@ const bcrypt = require("bcryptjs");
 const db = require("../models");
 const User = db.User;
 const Token = db.Token;
+const Invite = db.Invite;
+const sequelize = db.sequelize;
 const { generateToken, verifyToken } = require("../utils/jwt");
 const crypto = require('crypto');
 const { TOKEN_LIFESPAN } = require('../utils/constants');
 const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.service');
+const settings = require("../../config/settings");
 
 const register = async (req, res) => {
+  const transaction = await sequelize.transaction();
   try {
     const { name, surname, email, password } = req.body;
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) return res.status(400).json({ error: "Email already exists" });
 
+    const userCount = await User.count();
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await User.create({ name, surname, email, password: hashedPassword });
+
+    let newUser;
+    if(userCount) {
+      const invite = await Invite.findOne({
+        where: { invitedEmail: email }
+      })
+      if(!invite) {
+        throw new Error("No Invite Found");
+      }
+
+      await invite.destroy({ transaction });
+      newUser = await User.create({ name, surname, email, password: hashedPassword, role: invite.role }, { transaction });
+    }
+    else {
+      newUser = await User.create({ name, surname, email, password: hashedPassword, role: settings.user.role.admin }, { transaction });
+    }
+    await transaction.commit();
+
     const token = generateToken({ id: newUser.id, email: newUser.email });
 
     await Token.create({ token, userId: newUser.id, type: 'auth' });
 
     await sendSignupEmail(newUser.email, newUser.name);
 
-    res.status(201).json({ user: newUser, token });
+    res.status(201).json({ user: {id: newUser.id, name: newUser.name, surname: newUser.surname, email: newUser.email, role: settings.user.roleName[newUser.role]}, token });
   } catch (error) {
     console.error("Error registering user:", error);
+    await transaction.rollback();
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -41,7 +64,7 @@ const login = async (req, res) => {
     const token = generateToken({ id: user.id, email: user.email });
     await Token.create({ token, userId: user.id, type: 'auth' });
 
-    res.status(200).json({ user, token });
+    res.status(200).json({ user: {id: user.id, name: user.name, surname: user.surname, email: user.email, role: settings.user.roleName[user.role]}, token });
   } catch (error) {
     console.error("Error logging in user:", error);
     res.status(500).json({ error: "Internal Server Error" });
