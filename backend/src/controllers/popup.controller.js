@@ -1,18 +1,9 @@
 const popupService = require("../service/popup.service");
 const { internalServerError } = require("../utils/errors");
-const { isValidHexColor } = require("../utils/guideHelpers");
+const { isValidHexColor, checkColorFields, validateCloseButtonAction } = require("../utils/guideHelpers");
 const db = require("../models");
 const Popup = db.Popup;
-
-const validatePopupSize = (value) => {
-  const validSizes = ["small", "medium", "large"];
-  return validSizes.includes(value);
-};
-
-const validateCloseButtonAction = (value) => {
-  const validActions = ["no action", "open url", "open url in a new tab"];
-  return validActions.includes(value);
-};
+const { validatePopupSize } = require("../utils/popup.helper");
 
 class PopupController {
   async addPopup(req, res) {
@@ -53,15 +44,7 @@ class PopupController {
       buttonBackgroundColor,
       buttonTextColor,
     };
-    for (const [field, value] of Object.entries(colorFields)) {
-      if (value && !isValidHexColor(value)) {
-        return res
-          .status(400)
-          .json({
-            errors: [{ msg: `${field} must be a valid hex color code` }],
-          });
-      }
-    }
+    checkColorFields(colorFields, res);
 
     try {
       const newPopupData = { ...req.body, createdBy: userId };
@@ -81,7 +64,7 @@ class PopupController {
     try {
       const { id } = req.params;
 
-      if (isNaN(id) || id.trim() === "") {
+      if (Number.isNaN(Number(id)) || id.trim() === "")  {
         return res.status(400).json({ errors: [{ msg: "Invalid id" }] });
       }
 
@@ -119,21 +102,13 @@ class PopupController {
           });
       }
 
-      const popupSizeColumn = Popup.tableAttributes.popupSize;
-
-      if (!popupSizeColumn.validate.isIn[0].includes(req.body.popupSize)) {
+      if (!validatePopupSize(req.body.popupSize)) {
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid value for popupSize" }] });
       }
 
-      const closeButtonActionColumn = Popup.tableAttributes.closeButtonAction;
-
-      if (
-        !closeButtonActionColumn.validate.isIn[0].includes(
-          req.body.closeButtonAction,
-        )
-      ) {
+      if (!validateCloseButtonAction(req.body.closeButtonAction)) {
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid value for closeButtonAction" }] });
@@ -168,6 +143,7 @@ class PopupController {
     }
   }
 
+
   async getAllPopups(req, res) {
     try {
       const popups = await popupService.getAllPopups();
@@ -199,7 +175,7 @@ class PopupController {
     try {
       const { id } = req.params;
 
-      if (isNaN(id) || id.trim() === "") {
+      if (Number.isNaN(Number(id)) || id.trim() === "")  {
         return res.status(400).json({ errors: [{ msg: "Invalid popup ID" }] });
       }
 

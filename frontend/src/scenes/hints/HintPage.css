@@ -3,7 +3,7 @@
   grid-template-columns: 3fr 1fr;
   grid-gap: 20px;
   width: 100%;
-  padding: 2% 3%;
+  padding: 3rem;
 }
 
 .hint-page-title {
@@ -23,7 +23,7 @@
   height: 510px;
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .hint-info {

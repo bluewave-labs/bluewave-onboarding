@@ -20,10 +20,10 @@ describe('CreateAccountPage', () => {
     );
 
     expect(screen.getByText('Create an account')).to.exist;
-    expect(screen.getByLabelText('Name*:')).to.exist;
-    expect(screen.getByLabelText('Surname*:')).to.exist;
-    expect(screen.getByLabelText('Email*:')).to.exist;
-    expect(screen.getByLabelText('Password*:')).to.exist;
+    expect(screen.getByPlaceholderText('Enter your name')).to.exist;
+    expect(screen.getByPlaceholderText('Enter your surname')).to.exist;
+    expect(screen.getByPlaceholderText('Enter your email')).to.exist;
+    expect(screen.getByPlaceholderText('Create your password')).to.exist;
     expect(screen.getByText('Get started')).to.exist;
   });
 

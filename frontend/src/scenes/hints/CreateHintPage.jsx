@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import HomePageTemplate from "../../templates/HomePageTemplate/HomePageTemplate";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import RichTextEditor from "../../components/RichTextEditor/RichTextEditor";
 import HintLeftContent from "../../components/HintPageComponents/HintLeftContent/HintLeftContent";
@@ -48,38 +47,35 @@ const HintPage = () => {
   ];
 
   return (
-    <div>
-      <HomePageTemplate>
-        <GuideTemplate
-          title="New Hint"
-          activeButton={activeButton}
-          handleButtonClick={handleButtonClick}
-          rightContent={() => (
-            <RichTextEditor
-              previewBtnText={leftContentFormData.actionButtonText}
-              headerBackgroundColor={headerBackgroundColor}
-              headerColor={headerColor}
-              textColor={textColor}
-              buttonBackgroundColor={buttonBackgroundColor}
-              buttonTextColor={buttonTextColor}
-              sx={{
-                width: "100%",
-                maxWidth: "700px",
-                marginLeft: "2.5rem",
-                marginTop: "1rem",
-              }}
-            />
-          )}
-          leftContent={() => (
-            <HintLeftContent
-              formData={leftContentFormData}
-              setLeftContentFormData={setLeftContentFormData}
-            />
-          )}
-          leftAppearance={() => <HintLeftAppearance data={stateList} />}
+
+    <GuideTemplate
+      title="New Hint"
+      activeButton={activeButton}
+      handleButtonClick={handleButtonClick}
+      rightContent={() => (
+        <RichTextEditor
+          previewBtnText={leftContentFormData.actionButtonText}
+          headerBackgroundColor={headerBackgroundColor}
+          headerColor={headerColor}
+          textColor={textColor}
+          buttonBackgroundColor={buttonBackgroundColor}
+          buttonTextColor={buttonTextColor}
+          sx={{
+            width: "100%",
+            maxWidth: "700px",
+            marginLeft: "2.5rem",
+            marginTop: "1rem",
+          }}
         />
-      </HomePageTemplate>
-    </div>
+      )}
+      leftContent={() => (
+        <HintLeftContent
+          formData={leftContentFormData}
+          setLeftContentFormData={setLeftContentFormData}
+        />
+      )}
+      leftAppearance={() => <HintLeftAppearance data={stateList} />}
+    />
   );
 };
 

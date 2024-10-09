@@ -4,8 +4,8 @@ const User = db.User;
 const Token = db.Token;
 const { generateToken, verifyToken } = require("../utils/jwt");
 const crypto = require('crypto');
-const nodemailer = require('nodemailer');
 const { TOKEN_LIFESPAN } = require('../utils/constants');
+const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.service');
 
 const register = async (req, res) => {
   try {
@@ -18,6 +18,8 @@ const register = async (req, res) => {
     const token = generateToken({ id: newUser.id, email: newUser.email });
 
     await Token.create({ token, userId: newUser.id, type: 'auth' });
+
+    await sendSignupEmail(newUser.email, newUser.name);
 
     res.status(201).json({ user: newUser, token });
   } catch (error) {
@@ -79,18 +81,7 @@ const forgetPassword = async (req, res) => {
     const expiresAt = new Date(Date.now() + TOKEN_LIFESPAN);
     await Token.create({ token: hash, userId: user.id, type: 'reset', expiresAt });
 
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: { user: process.env.EMAIL, pass: process.env.EMAIL_PASSWORD }
-    });
-
-    const mailOptions = {
-      to: user.email,
-      subject: 'Password Reset',
-      text: `Please use this token to reset your password: ${resetToken}`
-    };
-
-    await transporter.sendMail(mailOptions);
+    await sendPasswordResetEmail(user.email, user.name, resetToken);
     res.status(200).json({ message: "Password reset token sent" });
   } catch (error) {
     console.error("Error in forget password:", error);

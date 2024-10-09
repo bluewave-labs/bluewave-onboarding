@@ -5,9 +5,17 @@
   padding: 14px;
   border: 16px solid transparent;
   box-sizing: border-box;
+  margin-top: 78px;
 }
 
-.logo-image {
-  width: 100%;
-  height: auto;
+.sidebar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 200px;
+  padding: 0;
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
+  padding: 0px 16px;
+  box-sizing: border-box;
 }

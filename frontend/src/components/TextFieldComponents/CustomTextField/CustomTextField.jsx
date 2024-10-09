@@ -1,13 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { TextField, InputLabel } from "@mui/material";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ChipAdornment from "../Chips/ChipAdornment";
 import "./CustomTextFieldStyles.css";
 
 const CustomTextField = ({
+  id = "",
+  name = "",
+  checkCircleIconVisible = false,
+  displayCheckCircleIcon = false,
   labelText = "",
   value = "",
-  onChange = () => {},
+  onChange = () => { },
   helperText = "",
   error = false,
   multiline = false,
@@ -19,16 +24,29 @@ const CustomTextField = ({
   labelFontWeight = 600,
   TextFieldWidth = "320px",
   inputHeight = "34px",
+  textFieldMargin = "normal",
+  type = "text",
+  required = false,
   style
 }) => {
   return (
     <div style={style}>
-      <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
+      {!checkCircleIconVisible && <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>}
+      {checkCircleIconVisible &&
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          {displayCheckCircleIcon && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
+          <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
+        </div>
+      }
       <TextField
+        id={id}
+        type={type}
+        name={name}
+        required={Boolean(required)}
         className="textField"
         sx={{ width: TextFieldWidth }}
         fullWidth
-        margin="normal"
+        margin={textFieldMargin}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
@@ -41,8 +59,8 @@ const CustomTextField = ({
           endAdornment: endAdornment,
           ...(chips &&
             chips.length > 0 && {
-              startAdornment: <ChipAdornment chips={chips} />,
-            }),
+            startAdornment: <ChipAdornment chips={chips} />,
+          }),
         }}
         inputProps={{
           style: {
@@ -80,6 +98,13 @@ CustomTextField.propTypes = {
   labelFontWeight: PropTypes.number,
   TextFieldWidth: PropTypes.string,
   inputHeight: PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  checkCircleIconVisible: PropTypes.bool,
+  displayCheckCircleIcon: PropTypes.bool,
+  textFieldMargin: PropTypes.string,
+  type: PropTypes.string,
+  required: PropTypes.bool,
 };
 
 export default CustomTextField;

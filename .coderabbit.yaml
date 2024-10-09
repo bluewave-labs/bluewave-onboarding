@@ -10,6 +10,7 @@ reviews:
 
   auto_review:
     enabled: true
+    base_branches: [.*]
     drafts: false
 chat:
   auto_reply: false

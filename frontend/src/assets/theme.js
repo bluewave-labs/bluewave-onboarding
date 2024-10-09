@@ -1,7 +1,9 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 
-const theme = createTheme({
+// Light theme definition
+export const lightTheme = createTheme({
   palette: {
+    mode: 'light',
     primary: {
       main: "#7f56d9",
     },
@@ -33,4 +35,37 @@ const theme = createTheme({
   },
 });
 
-export default theme;
+// Dark theme definition
+export const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: "#7f56d9",
+    },
+    background: {
+      default: "#121212",
+    },
+  },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#333",
+          color: "#FFFFFF",
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          width: "250px",
+          flexShrink: 0,
+          zIndex: 1200,
+        },
+      },
+    },
+  },
+  typography: {
+    fontFamily: "Inter",
+  },
+});
