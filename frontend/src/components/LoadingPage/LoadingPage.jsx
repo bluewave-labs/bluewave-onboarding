@@ -7,9 +7,7 @@ const LoadingPage = () => {
         <div className={styles["container"]}>
             <div className={styles['loading-container']}>
                 <LeftMenu />
-                <div className={styles['background-pattern']}>
-                    <div className={styles["loading"]}></div>
-                </div>
+                <div className={styles["loading"]}></div>
             </div>
         </div>
     );

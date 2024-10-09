@@ -13,20 +13,9 @@
   flex-grow: 1;
 }
 
-.background-pattern {
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-repeat: no-repeat;
-  background-image: url('../../assets/auth-screen-background.svg');
-  background-position: center -350px;
-}
-
 .loading {
   display: flex;
-  margin-top: 100px;
+  margin: auto;
   justify-content: center;
 }
 
