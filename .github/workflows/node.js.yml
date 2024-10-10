@@ -20,18 +20,26 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          
+
       # Clear npm cache
       - name: Clear npm cache
         run: npm cache clean --force
 
-      # Remove node_modules and package-lock.json for backend
+      # Check if package.json has changed
+      - name: Check if package.json has changed
+        id: check_packages
+        run: |
+          git diff --quiet HEAD^ HEAD -- '**/package.json' || echo "packages_changed=true" >> $GITHUB_OUTPUT
+
+      # Remove backend node_modules and package-lock.json if packages changed
       - name: Remove backend node_modules and package-lock.json
+        if: steps.check_packages.outputs.packages_changed == 'true'
         run: |
           rm -rf ./backend/node_modules ./backend/package-lock.json
 
-      # Remove node_modules and package-lock.json for frontend
+      # Remove frontend node_modules and package-lock.json if packages changed
       - name: Remove frontend node_modules and package-lock.json
+        if: steps.check_packages.outputs.packages_changed == 'true'
         run: |
           rm -rf ./frontend/node_modules ./frontend/package-lock.json
 

@@ -47,7 +47,7 @@ const BannerPage = () => {
 
             fetchBannerData();
         }
-    }, [location.state?.isEdit, location.state?.id]);
+    }, [location.state]);
 
     const onSave = async () => {
         const bannerData = {
@@ -72,7 +72,7 @@ const BannerPage = () => {
 
     return (
 
-        <GuideTemplate title='New banner'
+        <GuideTemplate title={location.state?.isEdit ? 'Edit Banner' : 'New Banner'}
             activeButton={activeButton}
             handleButtonClick={handleButtonClick}
             onSave={onSave}

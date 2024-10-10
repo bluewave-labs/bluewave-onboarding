@@ -24,13 +24,13 @@ const DropdownList = ({
       return actions[selectedActionIndex] || "";
     };
     setSelectedAction(getInitialSelectedAction());
-  }, [selectedActionString, actions, selectedActionIndex]);
+  }, []);
 
   useEffect(() => {
     if (onActionChange) {
       onActionChange(selectedAction);
     }
-  }, [selectedAction]);
+  }, [selectedAction, onActionChange]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -41,33 +41,31 @@ const DropdownList = ({
   };
 
   return (
-    <div className="dropdown">
-      <Select
-        value={selectedAction}
-        onChange={handleChange}
-        className="select"
-      >
-        {actions.length > 0 ? (
-          actions.map((action, index) => (
-            <MenuItem key={index} className="menuItem" value={action}>
-              {action}
-            </MenuItem>
-          ))
-        ) : (
-          <MenuItem value="" disabled className="menuItem">
-            No Actions Available
+    <Select
+      value={selectedAction}
+      onChange={handleChange}
+      className="select"
+    >
+      {actions.length > 0 ? (
+        actions.map((action, index) => (
+          <MenuItem key={index} className="menuItem" value={action}>
+            {action}
           </MenuItem>
-        )}
-      </Select>
-    </div>
+        ))
+      ) : (
+        <MenuItem value="" disabled className="menuItem">
+          No Actions Available
+        </MenuItem>
+      )}
+    </Select>
   );
 };
 
 DropdownList.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.string),
   onActionChange: PropTypes.func,
-  selectedActionIndex: PropTypes.number, // Index for the selected action
-  selectedActionString: PropTypes.string, // String for the selected action
+  selectedActionIndex: PropTypes.number, 
+  selectedActionString: PropTypes.string, 
 };
 
 export default DropdownList;
