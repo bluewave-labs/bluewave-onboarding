@@ -1,106 +1,108 @@
 @use '../../styles/globals.scss' as *;
 
 .settings {
-    box-shadow: 0px 8px 8px -4px #10182808;
-    box-shadow: 0px 20px 24px -4px #10182814;
-    border: 1px solid #D0D5DD;
-    max-width: 460px;
+  box-shadow: 0px 8px 8px -4px var(--shadow-one);
+  box-shadow: 0px 20px 24px -4px var(--shadow-two);
+  border: 1px solid #D0D5DD;
+  max-width: 460px;
 
-    .smallText{
-       font-weight: 400;
-       line-height: 20px;
-       font-size: 11px; 
-       color: var(--second-text-color);
-       margin-bottom: 20px;
-    }
-
-    input[type="text"],
-    select 
-    {
-        border: 1px solid #ccc;
-        padding: 5px;
-        margin-bottom: 16px;
-        border: 1px solid var(--light-border-color);
-        box-shadow: 0px 1px 2px 0px #1018280D;
-        width: 100%;
-    }
-
-    select{
-        @include text-style(regular);
-        color: var(--second-text-color);
-        box-shadow: 0px 1px 2px 0px #1018280D;
-    }
-
-    .switch {
-        margin-right: 10px;
-    }
-
-    .switch .MuiSwitch-check {
-        background-color: var(--main-purple); /* Change thumb color */
-      }
-      
-      .switch .MuiSwitch-track {
-        background-color: rgba(var(--main-purple-rgb), 0.5); /* Change track color */
-      }
-
-    .settingsHeader {
-      font-size: 20px;
-      font-weight: bold;
-      padding: 20px;
-      background-color: #F8F9F8;
-      border-bottom: 1px solid var(--light-border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-  
-    .settingsContent {
-        padding: 15px 25px;
-    }
-  
-    h3 {
-      @include text-style(header-text);
-      margin: 0;
-      margin-bottom: 30px;
-    }
-  
-    h4 {
-        @include text-style(regular);
-        margin:10px 0px;
-    }
-  
-    .status {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    option{
-        @include text-style(regular);
-        color: var(--second-text-color);
-        border-radius: 0;
-    }
-  
-    .tourName,
-    .description,
-    .pageTargeting,
-    .triggeringFrequency,
-    .theme {
-      display: grid;
-      margin-bottom: 5px;
-    }
-  
-    .pageTargetingOption,
-    .freqButtonContainer,
-    .themeButtonContainer {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .triggeringFrequency,
-    .theme{
-      display: grid;
-    }
+  .smallText {
+    font-weight: 400;
+    line-height: 20px;
+    font-size: 11px;
+    color: var(--second-text-color);
+    margin-bottom: 20px;
   }
-  
+
+  input[type="text"],
+  select {
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 16px;
+    border: 1px solid var(--light-border-color);
+    box-shadow: 0px 1px 2px 0px #1018280D;
+    width: 100%;
+    height: 1.4rem;
+    border-radius: 0.5rem;
+  }
+
+  select {
+    @include text-style(regular);
+    color: var(--second-text-color);
+    box-shadow: 0px 1px 2px 0px #1018280D;
+  }
+
+  .switch {
+    margin-right: 10px;
+  }
+
+  .switch .MuiSwitch-check {
+    background-color: var(--main-purple);
+    /* Change thumb color */
+  }
+
+  .switch .MuiSwitch-track {
+    background-color: rgba(var(--main-purple-rgb), 0.5);
+    /* Change track color */
+  }
+
+  .settingsHeader {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 20px;
+    background-color: var(--header-background);
+    border-bottom: 1px solid var(--light-border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .settingsContent {
+    padding: 15px 25px;
+  }
+
+  h3 {
+    @include text-style(header-text);
+    margin: 0;
+    margin-bottom: 30px;
+  }
+
+  h4 {
+    @include text-style(regular);
+    margin: 10px 0px;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  option {
+    @include text-style(regular);
+    color: var(--second-text-color);
+    border-radius: 0;
+  }
+
+  .tourName,
+  .description,
+  .pageTargeting,
+  .triggeringFrequency,
+  .theme {
+    display: grid;
+    margin-bottom: 5px;
+  }
+
+  .pageTargetingOption,
+  .freqButtonContainer,
+  .themeButtonContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .triggeringFrequency,
+  .theme {
+    display: grid;
+  }
+}

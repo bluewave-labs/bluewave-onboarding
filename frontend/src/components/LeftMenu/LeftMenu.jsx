@@ -1,103 +1,68 @@
-
 import React from 'react';
-import { List, ListItem, ListItemIcon, ListItemText, TextField, InputAdornment, Divider, ListItemButton} from '@mui/material';
-import DirectionsBusFilledOutlinedIcon from '@mui/icons-material/DirectionsBusFilledOutlined';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import SportsSoccerOutlinedIcon from '@mui/icons-material/SportsSoccerOutlined';
-import TipsAndUpdatesOutlinedIcon from '@mui/icons-material/TipsAndUpdatesOutlined';
-import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
-import SmsOutlinedIcon from '@mui/icons-material/SmsOutlined';
-import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
-import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
-import MarkChatUnreadOutlinedIcon from '@mui/icons-material/MarkChatUnreadOutlined';
-import './LeftMenu.css'; 
+import { List, ListItemIcon, ListItemText, Divider, ListItemButton } from '@mui/material';
+import {
+  DirectionsBusFilledOutlined as DirectionsBusIcon,
+  HomeOutlined as HomeIcon,
+  SportsSoccerOutlined as SportsIcon,
+  TipsAndUpdatesOutlined as TipsIcon,
+  ChecklistOutlined as ChecklistIcon,
+  SmsOutlined as SmsIcon,
+  LinkOutlined as LinkIcon,
+  ListOutlined as ListIcon,
+  MarkChatUnreadOutlined as ChatIcon,
+} from '@mui/icons-material';
+import './LeftMenu.css';
+import Logo from '../Logo/Logo';
 import { useNavigate } from 'react-router-dom';
+import UserProfileSidebar from '../UserProfileSidebar/UserProfileSidebar';
+
+
+const menuItems = [
+  { text: 'Home', icon: <HomeIcon />, route: '/' },
+  { text: 'SERVE A CONTENT', title: true },
+  { text: 'Tours', icon: <DirectionsBusIcon />, route: '/tour' },
+  { text: 'Hints', icon: <TipsIcon />, route: '/hint' },
+  { text: 'Checklist', icon: <ChecklistIcon /> },
+  { text: 'MAKE AN ANNOUNCEMENT', title: true },
+  { text: 'Popups', icon: <SmsIcon />, route: '/popup' },
+  { text: 'Banners', icon: <SportsIcon />, route: '/banner' },
+  { text: 'Helper Links', icon: <LinkIcon />, route: '/link' },
+  { text: 'GET FEEDBACK', title: true },
+  { text: 'Feedback', icon: <ChatIcon /> },
+  { text: 'Surveys', icon: <ListIcon /> },
+  { text: 'Support', icon: <SportsIcon /> },
+];
 
 function LeftMenu() {
   const navigate = useNavigate();
-  const handleHomeClick = () => {
-    navigate('/');
+
+  const handleNavigation = (route) => {
+    if (route) navigate(route);
   };
-  
+
   return (
     <div className="left-menu">
-      <List>
-        <ListItemButton className="menu-item" style={{backgroundColor: "#F9FAFB"}} onClick={handleHomeClick}>
-          <ListItemIcon>
-            <HomeOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Home" />
-        </ListItemButton>
-
-        <ListItemText primary="SERVE A CONTENT" className="title"/>
-
-        <ListItemButton className="menu-item">
-          <ListItemIcon>
-            <DirectionsBusFilledOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Tours" />
-        </ListItemButton>
-
-        <ListItemButton className="menu-item">
-          <ListItemIcon>
-            <TipsAndUpdatesOutlinedIcon /> 
-          </ListItemIcon>
-          <ListItemText primary="Hints" />
-        </ListItemButton>
-        <ListItemButton className="menu-item">
-          <ListItemIcon>
-            <ChecklistOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Checklist" />
-        </ListItemButton>
-
-        <ListItemText primary="MAKE AN ANNOUNCEMENT" className="title"/>
-
-        <ListItemButton className="menu-item">
-          <ListItemIcon>
-            <SmsOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Popups" />
-        </ListItemButton>
-        <ListItemButton className="menu-item">
-          <ListItemIcon>
-          <SportsSoccerOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Banners" />
-        </ListItemButton>
-        <ListItemButton className="menu-item">
-          <ListItemIcon>
-            <LinkOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Helper Links" />
-        </ListItemButton>
-
-        
-        <ListItemText primary="GET FEEDBACK" className="title"/>
-
-        <ListItemButton className="menu-item">
-          <ListItemIcon>
-            <MarkChatUnreadOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Feedback" />
-        </ListItemButton>
-        <ListItemButton className="menu-item">
-          <ListItemIcon>
-            <ListOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Surveys" />
-        </ListItemButton>
-
-      </List>
-      <div className="bottom-menu">
-      <Divider />
-        <ListItemButton className="menu-item">
-          <ListItemIcon>
-            <SportsSoccerOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Support" />
-        </ListItemButton>
+      <div>
+        <Logo isSidebar={true} />
+        <List>
+          {menuItems.map((item, index) => (
+            item.title ? (
+              <ListItemText key={index} primary={item.text} className="title" />
+            ) : (
+              <ListItemButton
+                key={index}
+                className="menu-item"
+                onClick={() => handleNavigation(item.route)}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            )
+          ))}
+        </List>
+        <Divider />
       </div>
+      <UserProfileSidebar />
     </div>
   );
 }

@@ -1,132 +1,177 @@
 import React, { useState } from 'react';
-import './Login.css'; 
-import GoogleSignInButton from '../../components/Button/GoogleSignInButton/GoogleSignInButton';
+import styles from './Login.module.css'; 
+import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CircularProgress from '@mui/material/CircularProgress';
 import { signUp } from '../../services/loginServices';
+import CustomLink from '../../components/CustomLink/CustomLink';
+import { handleAuthSuccess } from '../../utils/loginHelper';
+import { useAuth } from '../../services/authProvider';
 import { useNavigate } from 'react-router-dom';
-
+import Logo from '../../components/Logo/Logo';
 
 function CreateAccountPage() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isUsernameValid, setIsNameValid] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
-  const [hasSpecialCharacter, setHasSpecialCharacter] = useState(false);
-  const [atLeastEightCharacters, setAtLeastEightCharacters] = useState(false);
+  const [formData, setFormData] = useState({ name: '', surname: '', email: '', password: '' });
+  const [validation, setValidation] = useState({ isNameValid: false, isSurnameValid: false, isEmailValid: false, isPasswordValid: false });
+  const [passwordChecks, setPasswordChecks] = useState({ hasSpecialCharacter: false, atLeastEightCharacters: false });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState('');
+  const { loginAuth } = useAuth();
   const navigate = useNavigate();
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-    setIsNameValid(e.target.value.length > 0);
+  const isValidName = (value) => /^[A-Za-z'-]+$/.test(value) && value.length > 0 ;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    switch (name) {
+      case 'name':
+        setValidation((prev) => ({...prev, isNameValid: isValidName(value)}));
+        break;
+      case 'surname':
+        setValidation((prev) => ({ ...prev, isSurnameValid: isValidName(value) }));
+        break;
+      case 'email':
+        setValidation((prev) => ({ ...prev, isEmailValid: validateEmail(value) }));
+        break;
+      case 'password':
+        const hasSpecialCharacter = /[!@#$%^&*-_]/.test(value);
+        const atLeastEightCharacters = value.length >= 8;
+        setPasswordChecks({ hasSpecialCharacter, atLeastEightCharacters });
+        setValidation((prev) => ({
+          ...prev,
+          isPasswordValid: hasSpecialCharacter && atLeastEightCharacters
+        }));
+        break;
+      default:
+        break;
+    }
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    setIsEmailValid(validateEmail(e.target.value));
-  };
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    setHasSpecialCharacter(hasSpecialCharacterCheck(e.target.value));
-    setAtLeastEightCharacters(atLeastEightCharactersCheck(e.target.value));
-    setIsPasswordValid(validatePassword(e.target.value));
-  };
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const { name, surname, email, password } = formData;
+    const { isNameValid, isSurnameValid, isEmailValid, isPasswordValid } = validation;
 
-  const hasSpecialCharacterCheck = (password) => {
-    const regex = /[!@#$%^&*-_]/;
-    return regex.test(password);
-  };
-
-  const atLeastEightCharactersCheck = (password) => {
-    return password.length >= 8;
-  };
-
-  const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  const validatePassword = (password) => {
-    return atLeastEightCharactersCheck(password) && hasSpecialCharacterCheck(password);
-  };
-
-  const handleSignUp = async () => {
-    if (!isUsernameValid || !isEmailValid || !isPasswordValid) {
+    if (!isNameValid || (surname && !isSurnameValid) || !isEmailValid || !isPasswordValid) {
       alert('Please fill out the form correctly.');
+      setLoading(false);
       return;
     }
 
-    const userData = {username, email, password };
+    const userData = { name: name, surname: surname, email: email, password: password };
 
     try {
       const response = await signUp(userData);
-      console.log('Sign up successful:', response);
-      navigate('/');
-
+      handleAuthSuccess(response, loginAuth, navigate)
+      setLoading(false);
     } catch (error) {
-      console.error('Sign up failed:', error);
+      setLoading(false);
+      if (error.response?.data) {
+        if (error.response.data.error === 'Email already exists') {
+          setError('Email already exists');
+        } else {
+          setError('An error occurred. Please try again.');
+        }
+      } else {
+        setError('An error occurred. Please check your network connection and try again.');
+      }
     }
   };
 
   return (
-    <div className="login-container">
+    <form onSubmit={handleSignUp} className={styles["login-container"]}>
+      <Logo />
       <h2>Create an account</h2>
-      {/* <h3>Start your 30-day free trial</h3> */}
-      <div className="form-group">
-      <div className='check-div'>
-      {isUsernameValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
-        <label>Username*:</label>  
-        </div>
-        <input
+      <div className={styles["form-group"]}>
+        <CustomTextField
+          id="name"
+          name="name"
           type="name"
-          value={username}
-          onChange={handleUsernameChange}
-          placeholder="Enter your username"
+          labelText='Name*:'
+          checkCircleIconVisible={true}
+          displayCheckCircleIcon={validation.isNameValid}
+          placeholder='Enter your name'
+          textFieldMargin='none'
+          TextFieldWidth="full"
+          required="true"
+          value={formData.name}
+          onChange={handleInputChange}
         />
       </div>
 
-      <div className="form-group">
-      <div className='check-div'> 
-      {isEmailValid && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
-        <label>Email*:</label>     
-        </div>
-        <input
+      <div className={styles["form-group"]}>
+        <CustomTextField
+          id="surname"
+          name="surname"
+          type="name"
+          labelText='Surname*:'
+          checkCircleIconVisible={true}
+          displayCheckCircleIcon={validation.isSurnameValid}
+          placeholder='Enter your surname'
+          textFieldMargin='none'
+          TextFieldWidth="full"
+          required="true"
+          value={formData.surname}
+          onChange={handleInputChange}
+        />
+      </div>
+
+      <div className={styles["form-group"]}>
+        <CustomTextField
+          id="email"
           type="email"
-          value={email}
-          onChange={handleEmailChange}
-          placeholder="Enter your email"
+          name="email"
+          labelText='Email*:'
+          checkCircleIconVisible={true}
+          displayCheckCircleIcon={validation.isEmailValid}
+          placeholder='Enter your email'
+          textFieldMargin='none'
+          TextFieldWidth="full"
+          required="true"
+          value={formData.email}
+          onChange={handleInputChange}
         />
+        {error && <div className={styles["error-message"]}>{error}</div>}
       </div>
-      <div className="form-group">
-      <div className='check-div'>
-      {isPasswordValid && <CheckCircleIcon style={{ color: 'green' , fontSize: '20px'}} />}
-        <label>Password*:</label>
-        </div>    
-        <input
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-          placeholder="Create your password"
-        />
 
+      <div className={styles["form-group"]}>
+        <CustomTextField
+          id="password"
+          type="password"
+          name="password"
+          labelText='Password*:'
+          checkCircleIconVisible={true}
+          displayCheckCircleIcon={validation.isPasswordValid}
+          placeholder='Create your password'
+          textFieldMargin='none'
+          TextFieldWidth="full"
+          required="true"
+          value={formData.password}
+          onChange={handleInputChange}
+        />
       </div>
-        <div className="password-constraints">
-          <CheckCircleIcon style={{ color: atLeastEightCharacters ? 'green' : '#D0D5DD', fontSize: '20px' , marginRight:"5px"}} />
-          Must be at least 8 characters
-        </div>
-        <div className="password-constraints">
-          <CheckCircleIcon style={{ color: hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight:"5px" }} />
-          Must contain one special character
-        </div>
-      <button className="create-account-button" onClick={handleSignUp}>
-        Get started
+
+      <div className={styles["password-constraints"]}>
+        <CheckCircleIcon style={{ color: passwordChecks.atLeastEightCharacters ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: '5px' }} />
+        Must be at least 8 characters
+      </div>
+      <div className={styles["password-constraints"]}>
+        <CheckCircleIcon style={{ color: passwordChecks.hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: '5px' }} />
+        Must contain one special character
+      </div>
+
+      <button className={styles["create-account-button"]} type="submit">
+        {loading ? <CircularProgress size={12} color="inherit" /> : "Get started"}
       </button>
-      <GoogleSignInButton/>
-      <div className="sign-up-link">
-        Already have an account? <a href="login">Log in</a>
+      <div className={styles["sign-up-link"]}>
+        Already have an account? <CustomLink text="Log in" url="/" />
       </div>
-    </div>
+    </form>
   );
 }
 

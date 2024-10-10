@@ -6,41 +6,38 @@ import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../services/loginServices';
+import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+import { useAuth } from '../../services/authProvider';
 
 const DropdownMenu = () => {
-
     const navigate = useNavigate();
+    const { logoutAuth } = useAuth();
+
     const handleLogoutClick = async () => {
-        const response = await logout();
-        console.log('Logout successful:', response);
-        window.location.reload();
+        await logout();
+        logoutAuth();
+        toastEmitter.emit(TOAST_EMITTER_KEY, 'Logout successful');
         navigate('/');
     };
 
+    const menuItems = [
+        { text: 'Profile', icon: <Person2OutlinedIcon /> },
+        { text: 'Settings', icon: <SettingsOutlinedIcon /> },
+        { text: 'Logout', icon: <LogoutOutlinedIcon />, onClick: handleLogoutClick },
+    ];
+
     return (
         <Paper className="dropdown-menu" elevation={3}>
-            <List className='dropdown-list'>
-                <ListItemButton className="dropdown-item">
-                    <ListItemIcon>
-                        <Person2OutlinedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Profile" />
-                </ListItemButton>
-                <ListItemButton className="dropdown-item">
-                    <ListItemIcon>
-                        <SettingsOutlinedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Settings" />
-                </ListItemButton>
-                <ListItemButton className="dropdown-item">
-                    <ListItemIcon>
-                        <LogoutOutlinedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Logout" onClick={handleLogoutClick}/>
-                </ListItemButton>
+            <List className="dropdown-list">
+                {menuItems.map(({ text, icon, onClick }, index) => (
+                    <ListItemButton key={index} className="dropdown-item" onClick={onClick}>
+                        <ListItemIcon>{icon}</ListItemIcon>
+                        <ListItemText primary={text} />
+                    </ListItemButton>
+                ))}
             </List>
         </Paper>
     );
-}
+};
 
 export default DropdownMenu;

@@ -1,7 +1,7 @@
-import {apiClient} from './apiClient';  // Import the existing apiClient
+import {apiClient} from './apiClient'; 
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
-// Create a new instance of apiClient with 'auth' appended to the baseURL
 const authClient = axios.create({
   ...apiClient.defaults,
   baseURL: `${apiClient.defaults.baseURL}auth`,
@@ -65,6 +65,22 @@ export const resetPassword = async (userData) => {
   } catch (error) {
     console.error(error.response);
     throw error;
+  }
+};
+
+export const getCurrentUser = async ()=> {
+  try {
+    const response = await apiClient.get('users/current-user');
+    const user = response.data.user;
+    const fullName = user.surname ? user.name + " " + user.surname : user.name;
+
+    Cookies.set('fullName', fullName);
+    Cookies.set('role', user.role);
+
+    return user;
+  } catch (error) {
+    console.error('Get user error:', error.response);
+    return {'fullName': 'John Doe', 'role': 'visitor'}
   }
 };
 

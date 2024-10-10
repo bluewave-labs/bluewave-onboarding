@@ -22,6 +22,7 @@
   &.Mui-focused fieldset {
     border-color: var(--main-purple);
   }
+
 }
 
 .textField .MuiButton-root {

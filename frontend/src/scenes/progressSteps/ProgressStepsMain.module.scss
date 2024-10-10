@@ -9,12 +9,13 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
+
+        
         h2{
             @include text-style(header-text, semibold);
             margin: 1.5rem;
         }
-
-        width: 100%;
     }
     h3{
         @include text-style(regular);
@@ -33,14 +34,13 @@
         box-shadow: 0px 1px 2px 0px #1018280D;
         border-radius: 8px;
         width: 450px;
+        margin-bottom: 10px;
     }
     input[type="text"]::placeholder {
         @include text-style(regular);
         color:  #D0D5DD;
         padding-left: 0.5rem;
       }
-      
-      
 
     .buttons{
         display: flex;            
@@ -61,7 +61,14 @@
     .stepOne{
         display: flex;
         flex-direction: row;
-        align-items: center;
         margin-top: 4rem;
+        justify-content: start;
+    }
+    .invite{
+        display: flex;
+    }
+    .teamMembers{
+        display: flex;
+        flex-direction: column;
     }
 }

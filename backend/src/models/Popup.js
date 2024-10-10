@@ -1,3 +1,6 @@
+const { validateHexColor, validateActionButton } = require('../utils/guideHelpers');
+const { validatePopupSizeWrapper } = require('../utils/popup.helper');
+
 module.exports = (sequelize, DataTypes) => {
   const Popup = sequelize.define(
     "Popup",
@@ -11,14 +14,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isIn: [["no-action", "open-url", "close-popup", "open-url-new-tab"]],
+          isValidAction(value) {
+              validateActionButton(value);
+          },
         },
       },
       popupSize: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isIn: [["small", "medium", "large"]],
+          isValidPopupSize(value) {
+              validatePopupSizeWrapper(value);
+          },
         },
       },
       url: {
@@ -33,26 +40,61 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+              validateHexColor(value, 'headerBackgroundColor');
+          },
+        },
       },
       headerColor: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+              validateHexColor(value, 'headerColor');
+          },
+        },
       },
       textColor: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+              validateHexColor(value, 'textColor');
+          },
+        },
       },
       buttonBackgroundColor: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+              validateHexColor(value, 'buttonBackgroundColor');
+          },
+        },
       },
       buttonTextColor: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+              validateHexColor(value, 'buttonTextColor');
+          },
+        },
+      },
+      header: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
+      },
+      content: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
       },
       createdBy: {
         type: DataTypes.INTEGER,
