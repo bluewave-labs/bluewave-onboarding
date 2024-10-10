@@ -4,13 +4,13 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import ProfileTab from "./ProfileTab/ProfileTab";
-import PasswordTab from "./PasswordTab/PasswordTab";
+import ProfileTab from "../ProfileTab/ProfileTab";
+import PasswordTab from "../PasswordTab/PasswordTab";
 import "./SettingsTabs.css";
-import TeamTab from "./TeamTab/TeamTab";
+import TeamTab from "../TeamTab/TeamTab";
 
 
-export default function SettingsTabs() {
+export default function Settings() {
   const [value, setValue] = useState("1");
 
   const handleChange = (event, newValue) => {
