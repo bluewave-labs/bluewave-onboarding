@@ -22,7 +22,7 @@ const DropdownMenu = () => {
 
     const menuItems = [
         { text: 'Profile', icon: <Person2OutlinedIcon /> },
-        { text: 'Settings', icon: <SettingsOutlinedIcon /> },
+        { text: 'Password', icon: <SettingsOutlinedIcon /> },
         { text: 'Logout', icon: <LogoutOutlinedIcon />, onClick: handleLogoutClick },
     ];
 

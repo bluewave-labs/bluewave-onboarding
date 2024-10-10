@@ -1,0 +1,78 @@
+.form {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.formElements {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
+
+.photoElements {
+    display: flex;
+    margin-top: 30px;
+}
+
+.photoAlign{
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.photoOptions {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.saveButton{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.labelElements {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: left;
+    flex-grow: 1;
+    margin: 0;
+}
+
+.supportText {
+    margin: 0;
+    color: var(--second-text-color);
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-top: 6px;
+}
+
+.input {
+    width: 378px;
+    height: 34px;
+    border: 1px solid #D0D5DD;
+    border-radius: 4px;
+}
+
+.update {
+    color: var(--main-purple);
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.delete {
+    color: var(--second-text-color);
+    border: none;
+    background: none;
+    cursor: pointer;
+}
