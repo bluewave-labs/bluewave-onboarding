@@ -21,8 +21,10 @@ import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
+import ProfileSettingsPage from "./scenes/ProfileSettings/ProfileSettingsPage";
 
 const App = () => {
+  const { isLoggedIn } = useAuth();
 
   return (
     <>
@@ -47,6 +49,7 @@ const App = () => {
         <Route path="/reset-password" element={<PasswordResetPage />} />
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
+
 
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
         <Route path="/403" element={<Error403 />} />

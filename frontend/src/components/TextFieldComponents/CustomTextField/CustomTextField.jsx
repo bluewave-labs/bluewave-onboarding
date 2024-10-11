@@ -27,15 +27,22 @@ const CustomTextField = ({
   textFieldMargin = "normal",
   type = "text",
   required = false,
-  style
+  style,
+  labelSubText
 }) => {
   return (
     <div style={style}>
-      {!checkCircleIconVisible && <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>}
+      {!checkCircleIconVisible &&
+        <div>
+          <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
+          {labelSubText && <InputLabel sx={{ fontWeight: '400', fontSize: '13px', margin: 0 }}>{labelSubText}</InputLabel>}
+        </div>
+      }
       {checkCircleIconVisible &&
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           {displayCheckCircleIcon && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
           <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
+          {labelSubText && <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelSubText}</InputLabel>}
         </div>
       }
       <TextField
