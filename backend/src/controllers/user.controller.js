@@ -67,6 +67,10 @@ const updateUser = async (req, res) => {
       await User.update(updateUserData, { where: { id: userId } });
     }
 
+    if (picture === '' || picture === null) {
+      await User.update({ profile_picture_url: null }, { where: { id: userId } });
+    }
+
     return res.status(200).json({ updated: true, message: 'Profile updated successfully' });
   } catch (e) {
     return res.status(500).json({ updated: false, error: "Error occurred, please try again after some time!" });
