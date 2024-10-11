@@ -1,5 +1,7 @@
+const { Sequelize } = require("sequelize");
 const db = require("../models");
 const User = db.User
+
 
 const getUsersList = async (req, res) => {
   const { page = 1, limit = 10, search = "" } = req.query;
