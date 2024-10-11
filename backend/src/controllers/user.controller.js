@@ -1,7 +1,5 @@
 const db = require("../models");
 const User = db.User
-const ProfilePicture = db.ProfilePicture;
-
 
 const getUsersList = async (req, res) => {
   const { page = 1, limit = 10, search = "" } = req.query;
@@ -46,39 +44,30 @@ const getCurrentUser = async (req, res) => {
   const userId = req.user.id;
   const user = await User.findOne({ where: { id: userId } });
   if (user) {
-    const { name, surname, email, role } = user;
-    return res.status(200).json({ user: { name, surname, email, role } });
+    const { name, surname, email, role, profile_picture_url } = user;
+    return res.status(200).json({ user: { name, surname, email, role, picture: profile_picture_url } });
   }
   else {
-    return res.status(400).json({ error: "User not found" });
+    return res.status(404).json({ error: "User not found" });
   }
 };
 
 const updateUser = async (req, res) => {
-  const transaction = await db.sequelize.transaction();
   try {
     const userId = req.user.id;
     const { name, surname, picture } = req.body;
 
-    if (name || surname) {
+    if (name || surname || picture) {
       const updateUserData = {};
       if (name) updateUserData.name = name;
       if (surname) updateUserData.surname = surname;
+      if (picture) updateUserData.profile_picture_url = picture;
       await User.update(updateUserData, { where: { id: userId } });
     }
 
-    if (picture === null || picture === '') {
-      await ProfilePicture.destroy({ where: { id: userId }, transaction });
-    } else if (picture) {
-      await ProfilePicture.upsert({ id: userId, picture }, { where: { id: userId }, transaction });
-    }
-
-    await transaction.commit();
-
-    return res.status(200).json({ message: 'Profile updated successfully' });
+    return res.status(200).json({ updated: true, message: 'Profile updated successfully' });
   } catch (e) {
-    await transaction.rollback();
-    return res.status(500).json({ error: "Error occured, please try again after some time!" });
+    return res.status(500).json({ updated: false, error: "Error occurred, please try again after some time!" });
   }
 };
 

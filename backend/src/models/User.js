@@ -31,6 +31,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: "user",
       },
+      profile_picture_url: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+        validate: {
+          isUrl: true,
+        },
+      },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,

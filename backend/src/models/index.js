@@ -27,7 +27,6 @@ db.Popup = require("./Popup.js")(sequelize, Sequelize.DataTypes);
 db.Token = require("./Token.js")(sequelize, Sequelize.DataTypes);
 db.PopupLog = require("./PopupLog.js")(sequelize, Sequelize.DataTypes);
 db.Banner = require("./Banner.js")(sequelize, Sequelize.DataTypes);
-db.ProfilePicture = require("./ProfilePicture.js")(sequelize, Sequelize.DataTypes);
 
 // Define associations here
 db.User.hasMany(db.Popup, { foreignKey: "createdBy", as: "popups" });
@@ -35,8 +34,5 @@ db.Popup.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 
 db.User.hasMany(db.Banner, { foreignKey: "createdBy", as: "banners" });
 db.Banner.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
-
-db.User.hasOne(db.ProfilePicture, { foreignKey: 'id', sourceKey: 'id', as: 'profilePicture' });
-db.ProfilePicture.belongsTo(db.User, { foreignKey: 'id', targetKey: 'id', as: 'user' });
 
 module.exports = db;
