@@ -19,4 +19,11 @@ export const activityInfoData = {
         buttonText: "Create a new banner",
         title: "All banners"
     },
+    [ACTIVITY_TYPES_INFO.HINTS]: {
+    heading: "What is a hint?",
+    paragraph:
+      "Hints are like friendly reminders in an app, giving tips without stopping what you are doing. They show up at small bubbles near buttons or menus, guiding you on how to use things. \n One good thing about hints is they help you use the app better by giving tips when you need them. For example, they can show clear instructions when you're trying something new, so you don't get stuck or confused. \n Hints work for everyone, from beginners to experts. They give basic tips for people just starting out and clever tricks for those who know the app well. This makes the app easier for everyone to use.",
+    buttonText: "Create a new hint",
+    title: "All hints",
+  },
 };
