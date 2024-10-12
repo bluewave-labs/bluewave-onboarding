@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Button as MuiButton } from "@mui/material";
 import "./ButtonStyles.css";
 
-const Button = ({ text='', onClick= () => {}, variant="contained", style=null, sx=null, disabled=false, buttonType='primary'}) => {
+const Button = ({ text='', onClick= () => {}, variant="contained", style=null, sx=null, disabled=false, buttonType='primary', type = "button"}) => {
   const classname = 'button ' + buttonType;
     return (
     <MuiButton
@@ -14,6 +14,7 @@ const Button = ({ text='', onClick= () => {}, variant="contained", style=null, s
       disabled={disabled}
       sx={sx}
       style={style}
+      type={type}
     >
       {text}
     </MuiButton>

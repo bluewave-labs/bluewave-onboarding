@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -8,9 +8,16 @@ import { VscEdit } from "react-icons/vsc";
 import styles from './TeamTab.module.css';
 import TeamTable from "./TeamTable/TeamTable";
 import Button from "../../../components/Button/Button";
+import InviteTeamMemberModal from "../../../components/Modals/InviteTeamMemberModal/InviteTeamMemberModal";
 
 const TeamTab = () => {
   const [value, setValue] = React.useState('1');
+
+  const [openInviteTeamMemberModal, setOpenInviteTeamMemberModal] = useState(false);
+
+  const handleInviteTeamMemberModalClose = () => {
+    setOpenInviteTeamMemberModal(false);
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -57,6 +64,7 @@ const TeamTab = () => {
                 </TabList>
                 <Button
                   text="Invite Team Members"
+                  onClick={() => setOpenInviteTeamMemberModal(!openInviteTeamMemberModal)}
                 // onClick={handleSubmit}
                 />
               </Box>
@@ -66,6 +74,7 @@ const TeamTab = () => {
             </TabContext>
           </Box>
         </div>
+        <InviteTeamMemberModal open={openInviteTeamMemberModal} handleClose={handleInviteTeamMemberModalClose} />
       </div>
     </>
   );

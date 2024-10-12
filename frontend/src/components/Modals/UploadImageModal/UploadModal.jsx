@@ -6,9 +6,7 @@ import styles from './UploadModal.module.scss';
 import { useDropzone } from 'react-dropzone';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 
-const UploadModal = ({ open, handleClose }) => {
-
-    const [uploadedFile, setUploadedFile] = useState(null);
+const UploadModal = ({ open, handleClose, handleUpload, uploadedFile, setUploadedFile }) => {
 
     const onDrop = useCallback((acceptedFiles) => {
         setUploadedFile(acceptedFiles[0]); // Only allow one file
@@ -25,10 +23,6 @@ const UploadModal = ({ open, handleClose }) => {
 
     const clearUploadedFile = () => {
         setUploadedFile(null);
-    }
-
-    const handleUpload = () => {
-        // do something with uploadedFile
     }
 
     return (
@@ -56,9 +50,9 @@ const UploadModal = ({ open, handleClose }) => {
                 }</p>)}
                 <p>Supported formats: JPG, PNG</p>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Button buttonType='secondary-grey' text='Edit' />
+                    <Button buttonType='secondary-grey' text='Close' onClick={handleClose} />
                     <div style={{ display: 'flex', gap: '10px' }}>
-                        <Button disabled={!uploadedFile} onClick={clearUploadedFile} buttonType='secondary-grey' text='Remove' />
+                        <Button disabled={!uploadedFile} onClick={clearUploadedFile} buttonType='secondary-grey' text='Clear' />
                         <Button disabled={!uploadedFile} onClick={handleUpload} text='Update' />
                     </div>
                 </div>

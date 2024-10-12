@@ -13,10 +13,6 @@ const DropdownMenu = () => {
     const navigate = useNavigate();
     const { logoutAuth } = useAuth();
 
-    const handleNavigation = () => {
-        navigate("/profile-settings");
-    };
-
     const handleLogoutClick = async () => {
         await logout();
         logoutAuth();

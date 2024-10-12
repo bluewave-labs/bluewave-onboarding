@@ -28,7 +28,8 @@ const CustomTextField = ({
   type = "text",
   required = false,
   style,
-  labelSubText
+  labelSubText,
+  disabled = false
 }) => {
   return (
     <div style={style}>
@@ -61,6 +62,7 @@ const CustomTextField = ({
         multiline={multiline}
         rows={rows}
         helperText={helperText}
+        disabled={disabled}
         InputProps={{
           startAdornment: startAdornment,
           endAdornment: endAdornment,

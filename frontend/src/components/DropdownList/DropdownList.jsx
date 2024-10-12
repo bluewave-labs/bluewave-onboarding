@@ -8,7 +8,9 @@ const DropdownList = ({
   actions = [],
   onActionChange,
   selectedActionIndex = 0,
-  selectedActionString = ""
+  selectedActionString = "",
+  className = "",
+  name = "select"
 }) => {
 
   const [selectedAction, setSelectedAction] = useState('');
@@ -42,9 +44,10 @@ const DropdownList = ({
 
   return (
     <Select
+      name={name}
       value={selectedAction}
       onChange={handleChange}
-      className="select"
+      className={`select ${className}`}
     >
       {actions.length > 0 ? (
         actions.map((action, index) => (
@@ -64,8 +67,8 @@ const DropdownList = ({
 DropdownList.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.string),
   onActionChange: PropTypes.func,
-  selectedActionIndex: PropTypes.number, 
-  selectedActionString: PropTypes.string, 
+  selectedActionIndex: PropTypes.number,
+  selectedActionString: PropTypes.string,
 };
 
 export default DropdownList;
