@@ -64,7 +64,6 @@ const HintPage = () => {
             width: "100%",
             maxWidth: "700px",
             marginLeft: "2.5rem",
-            marginRight: "2.5rem",
             marginTop: "1rem",
           }}
         />
