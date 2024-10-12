@@ -12,6 +12,10 @@
     width: 350px;
     color: var(--third-text-color);
 
+    p:first-child {
+        font-weight: 600;
+    }
+
     .select {
         width: 100% !important;
         margin-bottom: 1.5rem;
