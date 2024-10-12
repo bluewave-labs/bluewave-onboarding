@@ -40,6 +40,13 @@ class TeamService {
             if(userId == memberId) {
                 throw new Error("User can't remove itself through team list");
             }
+
+            const member = await User.findOne({
+                where: { id: memberId }
+            })
+            if(!member) {
+                throw new Error("User to be removed not found")
+            }
             
             await User.destroy({
                 where: { id: memberId },
@@ -65,7 +72,7 @@ class TeamService {
     async updateUserRole(memberId, role) {
         try {
             const member = await User.findOne({
-                where: {id: memberId}
+                where: { id: memberId }
             });
             if(!member) {
                 throw new Error("User Not Found")

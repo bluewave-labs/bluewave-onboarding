@@ -7,6 +7,9 @@ const teamService = new TeamService();
 const getTeamDetails = async (req, res) => {
   try {
     const data = await teamService.getTeam();
+    if (!data || !data.team || !data.users) {
+      throw new Error("Team data not found");
+    }
     const result = {
         name: data.team.name,
         users: data.users.map((user)=> ({

@@ -21,7 +21,6 @@ const register = async (req, res) => {
 
     let newUser;
     if(userCount) {
-      const transaction = await sequelize.transaction();
       const invite = await Invite.findOne({
         where: { invitedEmail: email }
       })
@@ -29,6 +28,7 @@ const register = async (req, res) => {
         throw new Error("No Invite Found");
       }
       
+      const transaction = await sequelize.transaction();
       try {
         await invite.destroy({ transaction });
         newUser = await User.create({ name, surname, email, password: hashedPassword, role: invite.role }, { transaction });
