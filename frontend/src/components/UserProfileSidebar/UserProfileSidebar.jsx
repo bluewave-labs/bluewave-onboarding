@@ -21,8 +21,8 @@ function UserProfileSidebar() {
             <div className={styles['user-details-container']}>
                 <Avatar src="/vendetta.png" alt="User" size="medium" />
                 <div className={styles["user-details"]}>
-                    <div className={styles["user-name"]}>{userInfo.fullName}</div>
-                    <div className={styles["user-role"]}>{userInfo.role}</div>
+                    <div className={styles["user-name"]}>{userInfo?.fullName}</div>
+                    <div className={styles["user-role"]}>{userInfo?.role}</div>
                 </div>
             </div>
             <button className={styles["dropdown-button"]} onClick={handleDropdownClick}>

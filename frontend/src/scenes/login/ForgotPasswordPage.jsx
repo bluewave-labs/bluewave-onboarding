@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ForgotPassword.css'; 
+import styles from './Login.module.css'; 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { forgotPassword } from '../../services/loginServices'; // Make sure this function is properly implemented
 import { useNavigate } from 'react-router-dom';
@@ -31,11 +31,11 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="login-container">
+    <form onSubmit={handleSubmit} className={styles["login-container"]}>
       <Logo />
       <h2 style={{marginBottom: "0px"}}>Forgot password?</h2>
       <h3>No worries, we'll send you reset instructions.</h3>
-      <div className="form-group">
+      <div className={styles["form-group"]}>
         <CustomTextField
           id="email"
           name="email"
@@ -48,10 +48,10 @@ const ForgotPasswordPage = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        {emailerror && <div className='error-message'>{errorMessage}</div>}
+        {emailerror && <div className={styles["error-message"]}>{errorMessage}</div>}
       </div>
-      <button style={{ marginTop: "0px" }} className="create-account-button">{loading ? <CircularProgress size={12} color="inherit" /> : "Reset password"}</button>
-      <button className="back-to-login-button" onClick={() => navigate('/')}> 
+      <button style={{ marginTop: "0px" }} className={styles["reset-password-button"]}>{loading ? <CircularProgress size={12} color="inherit" /> : "Reset password"}</button>
+      <button className={styles["back-to-login-button"]} onClick={() => navigate('/')}> 
         <ArrowBackIcon style={{fontSize: "18px", marginRight: "5px"}}/>
         Back to log in
       </button>
