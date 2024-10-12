@@ -8,8 +8,23 @@ import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 
 const UploadModal = ({ open, handleClose, handleUpload, uploadedFile, setUploadedFile }) => {
 
+    const [uploadFileErrors, setUploadFileErrors] = useState('');
+
     const onDrop = useCallback((acceptedFiles) => {
+        setUploadFileErrors();
         setUploadedFile(acceptedFiles[0]); // Only allow one file
+        
+        // check for explicit extension as image/jpeg also includes .jfif and other formats
+        const validExtensions = ['jpg', 'png'];
+
+        const fileExtension = acceptedFiles[0].name.split('.').pop().toLowerCase();
+
+        if (validExtensions.includes(fileExtension)) {
+            setUploadedFile(acceptedFiles[0]);
+        } else {
+            setUploadedFile();
+            setUploadFileErrors('File should .jpg or .png');
+        }
     }, []);
 
     const { getRootProps, getInputProps, fileRejections } = useDropzone({
@@ -17,7 +32,8 @@ const UploadModal = ({ open, handleClose, handleUpload, uploadedFile, setUploade
         maxFiles: 1,
         maxSize: 3 * 1024 * 1024,
         accept: {
-            "image/*": [".png", ".jpg"],
+            "image/png": [".png"],
+            "image/jpeg": [".jpg"],
         }
     })
 
@@ -43,6 +59,7 @@ const UploadModal = ({ open, handleClose, handleUpload, uploadedFile, setUploade
                     }
                     {uploadedFile && <p>{uploadedFile.path}</p>}
                 </div>
+                {uploadFileErrors && <p className={styles.errorMessage}>{uploadFileErrors}</p>}
                 {fileRejections.map(({ file, errors }) => <p>{
                     errors.map(e => (
                         <p className={styles.errorMessage} key={e.code}>{e.message}</p>

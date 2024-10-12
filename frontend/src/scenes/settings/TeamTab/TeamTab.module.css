@@ -4,6 +4,7 @@
     align-items: center;
     border-bottom: 1px solid rgba(238, 238, 238, 1);
     padding-bottom: 15px;
+    height: 2rem;
 }
 
 .nameHeading {
@@ -34,4 +35,8 @@ h6 {
 
 .MuiTabPanel-root{
     padding: 0
+}
+
+.pencil {
+    cursor: pointer;
 }

@@ -6,7 +6,7 @@ import styles from './InviteTeamMemberModal.module.scss';
 import CustomTextField from '../../TextFieldComponents/CustomTextField/CustomTextField';
 import DropdownList from '../../DropdownList/DropdownList';
 
-const InviteTeamMemberModal = ({ open, handleClose }) => {
+const InviteTeamMemberModal = ({ open, handleClose, actions }) => {
 
     const [email, setEmail] = useState('');
     const [role, setRole] = useState('');
@@ -45,7 +45,7 @@ const InviteTeamMemberModal = ({ open, handleClose }) => {
                     />
                     <DropdownList
                         name="role"
-                        actions={['User', 'Admin']}
+                        actions={actions}
                         onActionChange={handleActionChange}
                         selectedActionString={role}
                         className={styles.select} />

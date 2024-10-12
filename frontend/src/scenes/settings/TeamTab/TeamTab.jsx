@@ -9,9 +9,13 @@ import styles from './TeamTab.module.css';
 import TeamTable from "./TeamTable/TeamTable";
 import Button from "../../../components/Button/Button";
 import InviteTeamMemberModal from "../../../components/Modals/InviteTeamMemberModal/InviteTeamMemberModal";
+import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
+import { FaCheck } from "react-icons/fa";
 
 const TeamTab = () => {
   const [value, setValue] = React.useState('1');
+  const [editOrgName, setEditOrgName] = useState(false);
+  const [orgName, setOrgName] = useState('BlueWave Labs');
 
   const [openInviteTeamMemberModal, setOpenInviteTeamMemberModal] = useState(false);
 
@@ -23,14 +27,31 @@ const TeamTab = () => {
     setValue(newValue);
   };
 
+  const toggleEdit = () => {
+    setEditOrgName(!editOrgName);
+  }
+
   return (
     <>
       <div className={styles.organisation}>
         <h6 className={styles.nameHeading}>Organisation Name</h6>
-        <p className={styles.organisationName}>
-          BlueWave Labs
-          <VscEdit />
-        </p>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          {!editOrgName && <p className={styles.organisationName}>{orgName}</p>}
+          {editOrgName && <CustomTextField
+            autofocus={true}
+            TextFieldWidth="auto"
+            value={orgName}
+            onChange={e => setOrgName(e.target.value)}
+            onFocus={(e) =>
+              e.currentTarget.setSelectionRange(
+                e.currentTarget.value.length,
+                e.currentTarget.value.length
+              )
+            }
+          />}
+          {!editOrgName ? <VscEdit className={styles.pencil} onClick={toggleEdit} /> : <FaCheck onClick={toggleEdit} className={styles.pencil} color="green" />}
+
+        </div>
       </div>
       <div>
         <h6>Team Members</h6>

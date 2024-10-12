@@ -29,7 +29,8 @@ const CustomTextField = ({
   required = false,
   style,
   labelSubText,
-  disabled = false
+  disabled = false,
+  autofocus = false
 }) => {
   return (
     <div style={style}>
@@ -50,6 +51,7 @@ const CustomTextField = ({
         id={id}
         type={type}
         name={name}
+        autoFocus={autofocus}
         required={Boolean(required)}
         className="textField"
         sx={{ width: TextFieldWidth }}

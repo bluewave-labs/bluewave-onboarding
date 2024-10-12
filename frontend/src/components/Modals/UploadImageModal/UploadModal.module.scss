@@ -11,13 +11,11 @@
     font-size: 13px;
     width: 350px;
     color: var(--third-text-color);
-
-    p {
-        .errorMessage {
-           color: #D92D20;
-        }
-    }
 }
+
+.errorMessage {
+    color: #D92D20;
+ }
 
 .uploadContainer {
     display: flex;
