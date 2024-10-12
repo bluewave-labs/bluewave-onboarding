@@ -92,9 +92,8 @@ class UserService {
           where: { userId } 
         });
       } catch (err) {
-        console.log("🚀 ~ UserService ~ deleteUser ~ err:", err)
         await transaction.rollback();
-        throw new Error("Error deleting user");
+        throw new Error(`Error deleting user ~ ${err.message}`);
       }
       
     }

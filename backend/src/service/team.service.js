@@ -16,12 +16,11 @@ class TeamService {
             return {team, users};
         }
         catch(err) {
-            console.log("🚀 ~ TeamService ~ getTeam ~ err:", err)
             throw new Error("Error retrieving Team");
         }
     }
 
-    async updateTeam(userId, name) {
+    async updateTeam(name) {
         try {
             await Team.update({
                 name: name
@@ -31,7 +30,6 @@ class TeamService {
             });
         }
         catch(error) {
-            console.log("🚀 ~ TeamService ~ updateTeam ~ error:", error)
             throw new Error("Error Updating Team");
         }
     }
@@ -59,13 +57,12 @@ class TeamService {
             await transaction.commit();
         }
         catch(err) {
-            console.log("🚀 ~ TeamService ~ removeUserFromTeam ~ err:", err);
             await transaction.rollback();
-            throw new Error("Error Deleting User");
+            throw new Error(`Error Deleting User ~ ${err.message}`);
         }
     }
 
-    async updateUserRole(userId, memberId, role) {
+    async updateUserRole(memberId, role) {
         try {
             const member = await User.findOne({
                 where: {id: memberId}
@@ -79,7 +76,7 @@ class TeamService {
                     where: { role: settings.user.role.admin }
                 });
                 if(adminCount <= 1) {
-                    throw new Error("The team has only single admin and its role can't be downgraded");
+                    throw new Error("The team has only single admin and its role can't be changed");
                 }
             }
 
@@ -90,8 +87,7 @@ class TeamService {
             })
         }
         catch(err) {
-            console.log("🚀 ~ TeamService ~ updateUserRole ~ err:", err)
-            throw new Error("Error Changing User Roles");
+            throw new Error(`Error Changing User Roles ~ ${err.message}`);
         }
     }
 }

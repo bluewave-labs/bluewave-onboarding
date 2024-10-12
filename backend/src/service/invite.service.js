@@ -32,8 +32,7 @@ class InviteService {
             }
         }
         catch(err) {
-            console.log("🚀 ~ InviteService ~ sendInvite ~ err:", err.message)
-            throw new Error("Error Sending Invite");
+            throw new Error(`Error Sending Invite ~ ${err.message}`);
         }
     }
 }

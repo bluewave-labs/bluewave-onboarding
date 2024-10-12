@@ -23,7 +23,11 @@ const getUsersList = async (req, res) => {
 
     res.status(200).json(returnObj);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    const { statusCode, payload } = internalServerError(
+      "GET_USER_LIST_ERROR",
+      err.message,
+    );
+    res.status(statusCode).json(payload);
   }
 };
 
@@ -41,7 +45,11 @@ const getCurrentUser = async (req, res) => {
     }
   }
   catch(err) {
-    res.status(500).json({ error: err.message });
+    const { statusCode, payload } = internalServerError(
+      "GET_USER_ERROR",
+      err.message,
+    );
+    res.status(statusCode).json(payload);
   }
 };
 
@@ -53,7 +61,11 @@ const updateUserDetails = async (req, res) => {
 
     return res.status(200).json({ message: "User updated successfully" });
   } catch (err) {
-    return res.status(500).json({ error: "Internal Server Error" })
+    const { statusCode, payload } = internalServerError(
+      "UPDATE_USER_ERROR",
+      err.message,
+    );
+    res.status(statusCode).json(payload);
   }
 }
 
@@ -63,8 +75,12 @@ const deleteUser = async (req, res) => {
     await userService.deleteUser(userId);
 
     res.status(200).json({ message: "User deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "DELETE_USER_ERROR",
+      err.message,
+    );
+    res.status(statusCode).json(payload);
   }
 }
 

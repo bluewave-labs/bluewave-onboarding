@@ -15,8 +15,12 @@ const getTeamDetails = async (req, res) => {
         })),
     }
     return res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ message: error });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "GET_TEAM_ERROR",
+      err.message,
+    );
+    res.status(statusCode).json(payload);
   }
 };
 
@@ -26,8 +30,12 @@ const updateTeamDetails = async (req, res) => {
     try {
       await teamService.updateTeam(userId, name);
       return res.status(200).json({ message: "Team Details Updated Successfully" });
-    } catch (error) {
-      res.status(500).json({ message: error });
+    } catch (err) {
+      const { statusCode, payload } = internalServerError(
+        "UPDATE_TEAM_ERROR",
+        err.message,
+      );
+      res.status(statusCode).json(payload);
     }
 };
 
@@ -37,8 +45,12 @@ const removeMember = async (req, res) => {
   try {
     await teamService.removeUserFromTeam(userId, memberId);
     return res.status(200).json({ message: "User Removed from Team Successfully" });
-  } catch (error) {
-    res.status(500).json({ message: error });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "REMOVE_USER_ERROR",
+      err.message,
+    );
+    res.status(statusCode).json(payload);
   }
 }
 
@@ -48,8 +60,12 @@ const changeRole = async (req, res) => {
   try {
     await teamService.updateUserRole(userId, memberId, role);
     return res.status(200).json({ message: "User Role Updated Successfully" });
-  } catch (error) {
-    res.status(500).json({ message: error });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "CHANGE_ROLE_ERROR",
+      err.message,
+    );
+    res.status(statusCode).json(payload);
   }
 }
 
