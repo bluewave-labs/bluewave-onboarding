@@ -6,13 +6,6 @@ const User = db.User;
 class InviteService {
     async sendInvite(userId, invitedEmail, role) {
         try {
-            const user = await User.findOne({
-                where: {id: userId},
-            })
-            if(!settings.team.invite.includes(user.role)) {
-                throw new Error("User not authorized to send invite");
-            }
-
             const invitedUser = await User.findOne({
                 where: {email: invitedEmail}
             })

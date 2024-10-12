@@ -7,7 +7,7 @@ const Sequelize = db.Sequelize;
 const sequelize = db.sequelize;
 
 class UserService {
-    async getUserById(userId) {
+    async getUser(userId) {
         try {
           return await User.findOne({
             where: { id: userId }

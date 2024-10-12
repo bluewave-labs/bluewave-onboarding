@@ -14,10 +14,11 @@ module.exports = {
     }
   },
   team: {
-    invite: [userRole.ADMIN],
-    removeUser: [userRole.ADMIN],
-    update: [userRole.ADMIN],
-    changeRole: [userRole.ADMIN]
+    permissions: {
+      invite: [userRole.ADMIN],
+      removeUser: [userRole.ADMIN],
+      update: [userRole.ADMIN],
+      changeRole: [userRole.ADMIN]
+    }
   }
-  
 };

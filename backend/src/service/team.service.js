@@ -23,13 +23,6 @@ class TeamService {
 
     async updateTeam(userId, name) {
         try {
-            const user = await User.findOne({
-                where: {id: userId}
-            });
-            if(!settings.team.update.includes(user.role)) {
-                throw new Error("User not authorized to update team details");
-            }
-
             await Team.update({
                 name: name
             },{
@@ -48,12 +41,6 @@ class TeamService {
         try {
             if(userId == memberId) {
                 throw new Error("User can't remove itself through team list");
-            }
-            const user = await User.findOne({
-                where: {id: userId}
-            });
-            if(!settings.team.removeUser.includes(user.role)) {
-                throw new Error("User not authorized to delete this user");
             }
             
             await User.destroy({
@@ -80,13 +67,6 @@ class TeamService {
 
     async updateUserRole(userId, memberId, role) {
         try {
-            const user = await User.findOne({
-                where: {id: userId}
-            });
-            if(!settings.team.changeRole.includes(user.role)) {
-                throw new Error("User not authorized to change role");
-            }
-
             const member = await User.findOne({
                 where: {id: memberId}
             });
