@@ -28,8 +28,7 @@
 }
 
 .saveButton{
-    display: flex;
-    justify-content: flex-end;
+    text-align: right;
 }
 
 .labelElements {
@@ -49,30 +48,23 @@
 .supportText {
     margin: 0;
     color: var(--second-text-color);
-    font-family: Inter;
     font-size: 13px;
     font-weight: 400;
     line-height: 20px;
     margin-top: 6px;
 }
 
-.input {
-    width: 378px;
-    height: 34px;
-    border: 1px solid #D0D5DD;
-    border-radius: 4px;
-}
-
-.update {
-    color: var(--main-purple);
+.update,
+.delete{
     border: none;
     background: none;
     cursor: pointer;
+}
+.update {
+    color: var(--main-purple);
+
 }
 
 .delete {
     color: var(--second-text-color);
-    border: none;
-    background: none;
-    cursor: pointer;
 }

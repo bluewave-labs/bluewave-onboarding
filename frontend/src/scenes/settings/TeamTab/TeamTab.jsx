@@ -35,25 +35,24 @@ const TeamTab = () => {
                   onChange={handleChange}
                   aria-label="lab API tabs example"
                   TabIndicatorProps={{
-                    style: {
-                      backgroundColor: "rgba(244, 245, 247, 1)",
-                      paddingTop: '0px',
-                    },
+                    className: styles.tabIndicator
                   }}
                 >
                   <Tab
                     label="All"
                     value="1"
-                    style={{
-                      fontWeight: value === '1' ? 'bold' : 'normal'
-                    }}
-                    className={styles.tabs} />
-                  <Tab label="Administrator" value="2" style={{
-                    fontWeight: value === '2' ? 'bold' : 'normal'
-                  }} className={styles.tabs} />
-                  <Tab label="Member" value="3" style={{
-                    fontWeight: value === '3' ? 'bold' : 'normal'
-                  }} className={styles.tabs} />
+                    className={`${styles.tabs} ${value === '1' ? styles.boldTab : styles.normalTab}`}
+                  />
+                  <Tab
+                    label="Administrator"
+                    value="2"
+                    className={`${styles.tabs} ${value === '2' ? styles.boldTab : styles.normalTab}`}
+                  />
+                  <Tab
+                    label="Member"
+                    value="3"
+                    className={`${styles.tabs} ${value === '3' ? styles.boldTab : styles.normalTab}`}
+                  />
                 </TabList>
                 <Button
                   text="Invite Team Members"
