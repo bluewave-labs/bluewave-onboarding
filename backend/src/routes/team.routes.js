@@ -18,8 +18,8 @@ const teamPermissions = settings.team.permissions;
 router.get("/details", authenticateJWT, getTeamDetails);
 
 router.post("/invite", authenticateJWT, accessGuard(teamPermissions.invite), sendTeamInvite);
-router.post("/update", authenticateJWT, accessGuard(teamPermissions.update), updateTeamDetails);
-router.post("/change-role", authenticateJWT, accessGuard(teamPermissions.changeRole), changeRole);
+router.put("/update", authenticateJWT, accessGuard(teamPermissions.update), updateTeamDetails);
+router.put("/change-role", authenticateJWT, accessGuard(teamPermissions.changeRole), changeRole);
 
 router.delete("/remove", authenticateJWT, accessGuard(teamPermissions.removeUser), removeMember);
 

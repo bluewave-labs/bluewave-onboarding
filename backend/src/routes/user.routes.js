@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/users-list", getUsersList);
 router.get("/current-user", authenticateJWT, getCurrentUser);
 
-router.post("/update", authenticateJWT, updateUserDetails);
+router.put("/update", authenticateJWT, updateUserDetails);
 
 router.delete("/delete", authenticateJWT, deleteUser);
 
