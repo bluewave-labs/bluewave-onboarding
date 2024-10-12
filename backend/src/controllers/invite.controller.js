@@ -1,4 +1,5 @@
 const InviteService = require("../service/invite.service");
+const { internalServerError } = require("../utils/errors");
 
 const inviteService = new InviteService();
 

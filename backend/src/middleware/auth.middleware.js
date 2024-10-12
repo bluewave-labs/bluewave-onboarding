@@ -21,7 +21,11 @@ const authenticateJWT = async (req, res, next) => {
       return res.status(401).json({ error: "Token has expired" });
     }
     const user = await User.findOne({ where: {id: decoded.id } })
-    req.user = user;
+    req.user = {
+      id: user.id,
+      email: user.email,
+      role: user.role
+    };
     next();
   } catch (error) {
     console.error("Error authenticating token:", error);

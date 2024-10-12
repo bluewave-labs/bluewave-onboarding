@@ -1,5 +1,6 @@
 const settings = require("../../config/settings");
 const UserService = require("../service/user.service");
+const { internalServerError } = require("../utils/errors");
 
 const userService = new UserService();
 

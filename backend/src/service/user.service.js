@@ -86,11 +86,12 @@ class UserService {
           where: { invitedBy: userId },
           transaction
         });
-        await transaction.commit();
-
         await Token.destroy({ 
-          where: { userId } 
+          where: { userId } ,
+          transaction
         });
+
+        await transaction.commit();        
       } catch (err) {
         await transaction.rollback();
         throw new Error(`Error deleting user ~ ${err.message}`);

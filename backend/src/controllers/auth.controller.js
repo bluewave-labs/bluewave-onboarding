@@ -11,7 +11,6 @@ const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.se
 const settings = require("../../config/settings");
 
 const register = async (req, res) => {
-  const transaction = await sequelize.transaction();
   try {
     const { name, surname, email, password } = req.body;
     const existingUser = await User.findOne({ where: { email } });
@@ -22,20 +21,27 @@ const register = async (req, res) => {
 
     let newUser;
     if(userCount) {
+      const transaction = await sequelize.transaction();
       const invite = await Invite.findOne({
         where: { invitedEmail: email }
       })
       if(!invite) {
         throw new Error("No Invite Found");
       }
-
-      await invite.destroy({ transaction });
-      newUser = await User.create({ name, surname, email, password: hashedPassword, role: invite.role }, { transaction });
+      
+      try {
+        await invite.destroy({ transaction });
+        newUser = await User.create({ name, surname, email, password: hashedPassword, role: invite.role }, { transaction });
+        await transaction.commit();
+      }
+      catch(err) {
+        transaction.rollback();
+        throw new Error("Error registering user by invite");
+      }
     }
     else {
-      newUser = await User.create({ name, surname, email, password: hashedPassword, role: settings.user.role.admin }, { transaction });
+      newUser = await User.create({ name, surname, email, password: hashedPassword, role: settings.user.role.admin });
     }
-    await transaction.commit();
 
     const token = generateToken({ id: newUser.id, email: newUser.email });
 
@@ -46,7 +52,6 @@ const register = async (req, res) => {
     res.status(201).json({ user: {id: newUser.id, name: newUser.name, surname: newUser.surname, email: newUser.email, role: settings.user.roleName[newUser.role]}, token });
   } catch (error) {
     console.error("Error registering user:", error);
-    await transaction.rollback();
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
