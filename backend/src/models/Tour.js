@@ -2,7 +2,7 @@ const {
   validateTriggeringFrequency,
   validatePageTargeting,
   validateTheme,
-} = require("../utils/tour_helper");
+} = require("../utils/tour_helpers");
 
 module.exports = (sequelize, DataTypes) => {
   const Tour = sequelize.define(

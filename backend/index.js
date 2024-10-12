@@ -12,7 +12,7 @@ const authRoutes = require("./src/routes/auth.routes");
 const userRoutes = require("./src/routes/user.routes");
 const mocks = require("./src/routes/mocks.routes");
 const popup = require("./src/routes/popup.routes");
-const popup_log = require("./src/routes/popup_log.routes");
+const popup_log = require("./src/routes/popuplog.routes");
 const banner = require("./src/routes/banner.routes");
 const tourRoutes = require("./src/routes/tour.routes");
 
@@ -32,7 +32,7 @@ sequelize
   .catch((err) => console.log("Error: " + err));
 
 sequelize
-  .sync({ force: true })
+  .sync({ alter: true })
   .then(() => console.log("Models synced with the database..."))
   .catch((err) => console.log("Error syncing models: " + err));
 
@@ -42,7 +42,7 @@ app.use("/api/mock/", mocks);
 app.use("/api/popup", popup);
 app.use("/api/popup_log", popup_log);
 app.use("/api/banner", banner);
-app.use("/api/tours", tourRoutes);
+app.use("/api/tour", tourRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
