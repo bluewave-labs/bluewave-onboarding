@@ -19,7 +19,7 @@ function UserProfileSidebar() {
     return (
         <div className={styles["user-info"]}>
             <div className={styles['user-details-container']}>
-                <Avatar src="/vendetta.png" alt="User" size="medium" />
+                <Avatar src={userInfo.picture || "/vendetta.png"} alt="User" size="medium" />
                 <div className={styles["user-details"]}>
                     <div className={styles["user-name"]}>{userInfo?.fullName}</div>
                     <div className={styles["user-role"]}>{userInfo?.role}</div>

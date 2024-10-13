@@ -8,6 +8,7 @@ import DeleteConfirmationModal from "../../../components/Modals/DeleteConfirmati
 import UploadModal from "../../../components/Modals/UploadImageModal/UploadModal";
 import { updateUser } from "../../../services/settingServices";
 import { handleProfileUpdateSuccess, handleNothingToUpdateProfile } from "../../../utils/settingsHelper";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ProfileTab = () => {
 
@@ -26,6 +27,11 @@ const ProfileTab = () => {
 
   const [uploadedFile, setUploadedFile] = useState(null);
 
+  const handleUploadImageModalOpen = (e) => {
+    e.preventDefault();
+    setOpenUploadImageModal(true);
+  }
+
   const handleUploadImageModalClose = () => {
     setOpenUploadImageModal(false);
   }
@@ -40,6 +46,35 @@ const ProfileTab = () => {
       ...prev,
       [name]: value
     }))
+  }
+
+  const handleImageDelete = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const response = await updateUser({ picture: null });
+      handleProfileUpdateSuccess(response, updateProfile);
+    } catch (e) {
+      console.error('Error Updating image');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const handleImageUpload = async () => {
+    if (uploadedFile) {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64Data = reader.result;
+        try {
+          const response = await updateUser({ picture: base64Data });
+          handleProfileUpdateSuccess(response, updateProfile);
+        } catch (e) {
+          console.error('Error Updating image');
+        }
+      }
+      reader.readAsDataURL(uploadedFile);
+    }
   }
 
   const submitHandler = async (e) => {
@@ -126,10 +161,16 @@ const ProfileTab = () => {
                 This photo will be displayed on your profile page.
               </p>
               <div className={styles.photoOptions}>
-                <Avatar src="/vendetta.png" alt="User" size="large" />
+                <Avatar src={userInfo.picture || "/vendetta.png"} alt="User" size="large" />
                 <div>
-                  <button className={styles.delete}>Delete</button>
-                  <button onClick={() => setOpenUploadImageModal(!openUploadImageModal)} className={styles.update}>Update</button>
+                  {loading ?
+                    <CircularProgress size={12} color="inherit" />
+                    :
+                    <>
+                      <button onClick={handleImageDelete} className={styles.delete}>Delete</button>
+                      <button onClick={handleUploadImageModalOpen} className={styles.update}>Update</button>
+                    </>
+                  }
                 </div>
               </div>
             </div>
@@ -153,6 +194,7 @@ const ProfileTab = () => {
       </div>
       <DeleteConfirmationModal open={openDeleteAccountModal} handleClose={handleDeleteAccountModalClose} />
       <UploadModal
+        handleUpload={handleImageUpload}
         uploadedFile={uploadedFile}
         setUploadedFile={setUploadedFile}
         open={openUploadImageModal}
