@@ -18,11 +18,11 @@ const authReducer = (state, action) => {
         case 'LOGIN_AND_SET_USER_INFO':
             return { isLoggedIn: true, userInfo: action.payload };
         case 'UPDATE_AND_SET_UPDATED_USER_INFO':
-            const updatedUserInfo = {
+            let updatedUserInfo = {
                 ...state.userInfo,
                 ...action.payload,
-                fullName: action.payload.surname ? `${action.payload.name} ${action.payload.surname}` : action.payload.name,
             };
+            updatedUserInfo = { ...updatedUserInfo, fullName: `${updatedUserInfo.name} ${updatedUserInfo.surname}` };
             localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
             return { isLoggedIn: true, userInfo: updatedUserInfo };
         default:
