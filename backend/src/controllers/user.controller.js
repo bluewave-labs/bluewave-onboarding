@@ -31,6 +31,18 @@ const validateProfileUpdate = [
   body('picture').optional().isURL().trim().escape(),
 ];
 
+const getUpdatedFields = (original, updated) => {
+  const result = {};
+
+  Object.keys(original).forEach(key => {
+    if (updated[key]) {
+      result[key] = updated[key];
+    }
+  })
+
+  return result;
+}
+
 const getUsersList = async (req, res) => {
   const { page = 1, limit = 10, search = "" } = req.query;
 
@@ -93,12 +105,18 @@ const updateProfile = async (req, res) => {
       profile_picture_url: picture || null,
     };
 
-    await User.update(updateUserData, { where: { id: userId } });
+    const [rowsUpdated, [updatedUser]] = await User.update(updateUserData, { where: { id: userId }, returning: true, });
 
-    return res.status(200).json({ updated: true, message: 'Profile updated successfully' });
+    if (rowsUpdated > 0) {
+      return res.status(200).json({ updated: true, user: getUpdatedFields(updateUserData, updatedUser) });
+    } else {
+      throw new Error('User not found or no changes made');
+    }
+
+
   } catch (error) {
     console.error('Error updating profile:', error);
-    return res.status(500).json({ updated: false, error: "Error occurred, please try again later!" });
+    return res.status(500).json({ updated: false, error: error.message || "Error occurred, please try again later!" });
   }
 };
 
