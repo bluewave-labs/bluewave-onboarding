@@ -10,7 +10,7 @@ import DropdownList from '../../DropdownList/DropdownList';
 const InviteTeamMemberModal = ({ open, handleClose, actions }) => {
 
     const [email, setEmail] = useState('');
-    const [role, setRole] = useState(actions[0]?.value || '');
+    const [role, setRole] = useState(actions?.[0]?.value || '');
 
     const handleActionChange = (role) => {
         setRole(role);
