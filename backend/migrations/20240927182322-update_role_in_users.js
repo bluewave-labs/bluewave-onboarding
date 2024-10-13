@@ -8,7 +8,7 @@ module.exports = {
       await queryInterface.addColumn("users", "role", {
         type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: settings.user.role.member
+        defaultValue: settings.user.role.admin
       }, { transaction });
     });
   },

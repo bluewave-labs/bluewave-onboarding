@@ -25,18 +25,18 @@ const register = async (req, res) => {
         where: { invitedEmail: email }
       })
       if(!invite) {
-        throw new Error("No Invite Found");
+        return res.status(404).json({ error: "Invitation not found or expired" });
       }
-      
+
       const transaction = await sequelize.transaction();
       try {
         await invite.destroy({ transaction });
-        newUser = await User.create({ name, surname, email, password: hashedPassword, role: invite.role }, { transaction });
+        newUser = await User.create({ name, surname, email, password: hashedPassword, role: settings.user.role.admin }, { transaction });
         await transaction.commit();
       }
       catch(err) {
-        transaction.rollback();
-        throw new Error("Error registering user by invite");
+        await transaction.rollback();
+        return res.status(400).json({ error: "Error registering user by invite" });
       }
     }
     else {

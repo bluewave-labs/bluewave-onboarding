@@ -20,7 +20,10 @@ const authenticateJWT = async (req, res, next) => {
       await dbToken.destroy();
       return res.status(401).json({ error: "Token has expired" });
     }
-    const user = await User.findOne({ where: {id: decoded.id } })
+    const user = await User.findOne({ where: { id: decoded.id } });
+    if(!user) {
+      return res.status(404).json("User not found");
+    }
     req.user = {
       id: user.id,
       email: user.email,
