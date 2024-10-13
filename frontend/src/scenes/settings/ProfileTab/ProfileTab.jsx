@@ -6,10 +6,20 @@ import Button from "../../../components/Button/Button";
 import { useAuth } from "../../../services/authProvider";
 import DeleteConfirmationModal from "../../../components/Modals/DeleteConfirmationModal/DeleteConfirmationModal";
 import UploadModal from "../../../components/Modals/UploadImageModal/UploadModal";
+import { updateUser } from "../../../services/settingServices";
+import { handleProfileUpdateSuccess, handleNothingToUpdateProfile } from "../../../utils/settingsHelper";
 
 const ProfileTab = () => {
 
-  const { userInfo } = useAuth();
+  const { userInfo, updateProfile } = useAuth();
+
+  const [formData, setFormData] = useState({
+    name: userInfo.name || "",
+    surname: userInfo.surname || "",
+    picture: ""
+  });
+
+  const [loading, setLoading] = useState(false);
 
   const [openDeleteAccountModal, setOpenDeleteAccountModal] = useState(false);
   const [openUploadImageModal, setOpenUploadImageModal] = useState(false);
@@ -24,9 +34,33 @@ const ProfileTab = () => {
     setOpenDeleteAccountModal(false);
   }
 
-  const submitHandler = (e) => {
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const submitHandler = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    // remove empty or unchanged data
+    let filteredFormData = Array.from(Object.entries(formData)).filter(([key, value]) => userInfo[key] !== value && value !== null && value !== '');
+    if (filteredFormData.length === 0) {
+      handleNothingToUpdateProfile('Nothing to update...');
+      return;
+    }
+    // convert back to object
+    filteredFormData = Object.fromEntries(filteredFormData);
+    try {
+      setLoading(true);
+      const response = await updateUser(filteredFormData);
+      handleProfileUpdateSuccess(response, updateProfile);
+    } catch (e) {
+      console.error('Error updating profile', e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,8 +74,9 @@ const ProfileTab = () => {
             type="text"
             name="name"
             id="first-name"
+            value={formData.name}
+            onChange={handleInputChange}
             placeholder="Enter your first name"
-            value={userInfo.name}
             style={{ flexGrow: 1, textAlign: 'right' }}
             TextFieldWidth="350px"
           />
@@ -55,7 +90,8 @@ const ProfileTab = () => {
             name="surname"
             id="last-name"
             placeholder="Enter your last name"
-            value={userInfo.surname}
+            value={formData.surname}
+            onChange={handleInputChange}
             style={{ flexGrow: 1, textAlign: 'right' }}
             TextFieldWidth="350px"
           />
@@ -103,6 +139,7 @@ const ProfileTab = () => {
           <Button
             text="Save"
             type="submit"
+            loading={loading}
             style={{ width: '120px', marginTop: '40px' }}
           />
         </div>

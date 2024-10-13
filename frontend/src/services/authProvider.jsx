@@ -17,6 +17,14 @@ const authReducer = (state, action) => {
             return { ...state, userInfo: action.payload };
         case 'LOGIN_AND_SET_USER_INFO':
             return { isLoggedIn: true, userInfo: action.payload };
+        case 'UPDATE_AND_SET_UPDATED_USER_INFO':
+            const updatedUserInfo = {
+                ...state.userInfo,
+                ...action.payload,
+                fullName: action.payload.surname ? `${action.payload.name} ${action.payload.surname}` : action.payload.name,
+            };
+            localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
+            return { isLoggedIn: true, userInfo: updatedUserInfo };
         default:
             return state;
     }
@@ -65,12 +73,16 @@ export const AuthProvider = ({ children }) => {
         dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload: userInfo });
     };
 
+    const updateProfile = (userInfo) => {
+        dispatch({ type: 'UPDATE_AND_SET_UPDATED_USER_INFO', payload: userInfo });
+    }
+
     const logoutAuth = () => {
         dispatch({ type: 'LOGOUT' });
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn: state.isLoggedIn, loginAuth, logoutAuth, userInfo: state.userInfo, isFetching }}>
+        <AuthContext.Provider value={{ isLoggedIn: state.isLoggedIn, loginAuth, logoutAuth, updateProfile, userInfo: state.userInfo, isFetching }}>
             {children}
         </AuthContext.Provider>
     );
