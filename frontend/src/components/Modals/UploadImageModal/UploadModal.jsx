@@ -60,7 +60,7 @@ const UploadModal = ({ open, handleClose, handleUpload, uploadedFile, setUploade
                     {uploadedFile && <p>{uploadedFile.path}</p>}
                 </div>
                 {uploadFileErrors && <p className={styles.errorMessage}>{uploadFileErrors}</p>}
-                {fileRejections.map(({ file, errors }) =>
+                {fileRejections.map(({ file, errors }, index) =>
                     <div key={`${file.name}-${index}`}>
                         {errors.map(e => (
                             <p className={styles.errorMessage} key={e.code}>{e.message}</p>

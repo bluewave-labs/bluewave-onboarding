@@ -23,9 +23,9 @@ export const lightTheme = createTheme({
     MuiTab: {
       styleOverrides: {
         root: {
-          textTransform: 'none', 
+          textTransform: 'none',
           fontSize: '14px',
-          padding: '3px 9px'      
+          padding: '3px 9px'
         },
       },
     },
@@ -71,6 +71,15 @@ export const darkTheme = createTheme({
           flexShrink: 0,
           zIndex: 1200,
         },
+      },
+    },
+  },
+  MuiTab: {
+    styleOverrides: {
+      root: {
+        textTransform: 'none',
+        fontSize: '14px',
+        padding: '3px 9px'
       },
     },
   },
