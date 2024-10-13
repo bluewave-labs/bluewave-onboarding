@@ -1,7 +1,12 @@
 const { Sequelize } = require("sequelize");
 const { body, validationResult } = require('express-validator');
 const db = require("../models");
+const he = require('he');
 const User = db.User
+
+const isBase64 = value => {
+  return /^data:image\/[a-zA-Z]+;base64,/.test(value);
+};
 
 const checkAtLeastOneField = (req, res, next) => {
   const { name, surname, picture } = req.body;
@@ -28,7 +33,11 @@ const handleValidationErrors = (req, res, next) => {
 const validateProfileUpdate = [
   body('name').optional().isString().trim().escape(),
   body('surname').optional().isString().trim().escape(),
-  body('picture').optional().isURL().trim().escape(),
+  body('picture').optional().custom(value => {
+    if (value === null) return true;
+    if (isBase64(value) || body('picture').isURL().run(value)) return true;
+    throw new Error('Picture must be either a valid URL or a base64 encoded string')
+  }).trim().escape(),
 ];
 
 const getUpdatedFields = (original, updated) => {
@@ -36,7 +45,13 @@ const getUpdatedFields = (original, updated) => {
 
   Object.keys(original).forEach(key => {
     if (updated[key]) {
-      result[key] = updated[key];
+      if (key === 'picture') {
+        result[key] = he.decode(updated[key]); // unescape picture
+      } else {
+        result[key] = updated[key];
+      }
+    } else if (key === 'picture' && !updated[key]) { //if picture is deleted return null;
+      result[key] = null;
     }
   })
 
@@ -86,8 +101,8 @@ const getCurrentUser = async (req, res) => {
   const userId = req.user.id;
   const user = await User.findOne({ where: { id: userId } });
   if (user) {
-    const { name, surname, email, role, profile_picture_url } = user;
-    return res.status(200).json({ user: { name, surname, email, role, picture: profile_picture_url } });
+    const { name, surname, email, role, picture } = user;
+    return res.status(200).json({ user: { name, surname, email, role, picture } });
   }
   else {
     return res.status(404).json({ error: "User not found" });
@@ -99,10 +114,11 @@ const updateProfile = async (req, res) => {
     const userId = req.user.id;
     const { name, surname, picture } = req.body;
 
-    const updateUserData = {
+    let updateUserData = {
       ...(name && { name }),
       ...(surname && { surname }),
-      profile_picture_url: picture || null,
+      //delete picture if empty or null
+      ...((picture || picture === '' || picture === null) && { picture })
     };
 
     const [rowsUpdated, [updatedUser]] = await User.update(updateUserData, { where: { id: userId }, returning: true, });
