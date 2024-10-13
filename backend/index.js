@@ -32,7 +32,7 @@ sequelize
   .catch((err) => console.log("Error: " + err));
 
 sequelize
-  .sync({ force: true })
+  .sync({ alter: true })
   .then(() => console.log("Models synced with the database..."))
   .catch((err) => console.log("Error syncing models: " + err));
 
@@ -42,7 +42,7 @@ app.use("/api/mock/", mocks);
 app.use("/api/popup", popup);
 app.use("/api/popup_log", popup_log);
 app.use("/api/banner", banner);
-app.use("/api/tours", tourRoutes);
+app.use("/api/tour", tourRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
