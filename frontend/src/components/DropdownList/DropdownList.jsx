@@ -69,6 +69,8 @@ DropdownList.propTypes = {
   onActionChange: PropTypes.func,
   selectedActionIndex: PropTypes.number,
   selectedActionString: PropTypes.string,
+  className: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default DropdownList;

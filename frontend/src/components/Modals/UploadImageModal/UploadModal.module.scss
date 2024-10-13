@@ -15,7 +15,7 @@
 
 .errorMessage {
     color: #D92D20;
- }
+}
 
 .uploadContainer {
     display: flex;
@@ -25,12 +25,14 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    min-height: 150px;
+    padding: 20px;
     cursor: pointer;
-    height: 150px;
 
-    p {
-        span {
+    &>p {
+        &>span {
             color: #1570EF;
+            cursor: pointer;
         }
     }
 }

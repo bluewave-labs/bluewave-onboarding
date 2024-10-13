@@ -21,10 +21,8 @@ import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
-import { useAuth } from './services/authProvider';
 
 const App = () => {
-  const { isLoggedIn } = useAuth();
 
   return (
     <>

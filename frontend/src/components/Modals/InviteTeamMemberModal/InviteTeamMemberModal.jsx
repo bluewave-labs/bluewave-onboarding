@@ -1,4 +1,5 @@
 import { React, useState } from 'react';
+import PropTypes from 'prop-types';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '../../Button/Button';
@@ -9,7 +10,7 @@ import DropdownList from '../../DropdownList/DropdownList';
 const InviteTeamMemberModal = ({ open, handleClose, actions }) => {
 
     const [email, setEmail] = useState('');
-    const [role, setRole] = useState('');
+    const [role, setRole] = useState(actions[0]?.value || '');
 
     const handleActionChange = (role) => {
         setRole(role);
@@ -27,11 +28,12 @@ const InviteTeamMemberModal = ({ open, handleClose, actions }) => {
             open={open}
             onClose={handleClose}
             aria-labelledby="invite-member-avatar-modal"
+            aria-describedby="invite-member-description"
         >
             <Box className={styles.box}>
                 <form onSubmit={onSubmit}>
                     <p>Invite New Team Member</p>
-                    <p>When you add a new team member, they will get access to all monitors.</p>
+                    <p id="invite-member-description">When you add a new team member, they will get access to all monitors.</p>
                     <CustomTextField
                         TextFieldWidth="100%"
                         style={{ marginBottom: '0.75rem' }}
@@ -60,5 +62,11 @@ const InviteTeamMemberModal = ({ open, handleClose, actions }) => {
         </Modal>
     )
 }
+
+InviteTeamMemberModal.propTypes = {
+    open: PropTypes.bool.isRequired,
+    handleClose: PropTypes.func.isRequired,
+    actions: PropTypes.array.isRequired,
+};
 
 export default InviteTeamMemberModal;

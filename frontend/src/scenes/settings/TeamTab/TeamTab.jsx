@@ -31,6 +31,10 @@ const TeamTab = () => {
     setEditOrgName(!editOrgName);
   }
 
+  const handleInviteTeamMemberModalOpen = () => {
+    setOpenInviteTeamMemberModal(true);
+  };
+
   return (
     <>
       <div className={styles.organisation}>
@@ -49,7 +53,11 @@ const TeamTab = () => {
               )
             }
           />}
-          {!editOrgName ? <VscEdit className={styles.pencil} onClick={toggleEdit} /> : <FaCheck onClick={toggleEdit} className={styles.pencil} color="green" />}
+          {!editOrgName ?
+            <VscEdit aria-label="Edit Organisation Name" className={styles.pencil} onClick={toggleEdit} /> :
+            <FaCheck aria-label="Save Organisation Name" onClick={toggleEdit} className={styles.pencil} color="green"
+            />
+          }
 
         </div>
       </div>
@@ -85,7 +93,7 @@ const TeamTab = () => {
                 </TabList>
                 <Button
                   text="Invite Team Members"
-                  onClick={() => setOpenInviteTeamMemberModal(!openInviteTeamMemberModal)}
+                  onClick={handleInviteTeamMemberModalOpen}
                 // onClick={handleSubmit}
                 />
               </Box>

@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
                     } else {
                         const userData = response.data.user;
                         const fullName = userData.surname ? `${userData.name} ${userData.surname}` : userData.name;
-                        const payload = { fullName, ...userData };
+                        const payload = { fullName, name: userData.name, surname: userData.surname, email: userData.email };
                         localStorage.setItem('userInfo', JSON.stringify(payload));
                         dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload });
                     }

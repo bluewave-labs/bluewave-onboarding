@@ -6,6 +6,8 @@ import styles from './UploadModal.module.scss';
 import { useDropzone } from 'react-dropzone';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 
+const VALID_EXTENSIONS = ['jpg', 'png'];
+
 const UploadModal = ({ open, handleClose, handleUpload, uploadedFile, setUploadedFile }) => {
 
     const [uploadFileErrors, setUploadFileErrors] = useState('');
@@ -13,17 +15,15 @@ const UploadModal = ({ open, handleClose, handleUpload, uploadedFile, setUploade
     const onDrop = useCallback((acceptedFiles) => {
         setUploadFileErrors();
         setUploadedFile(acceptedFiles[0]); // Only allow one file
-        
-        // check for explicit extension as image/jpeg also includes .jfif and other formats
-        const validExtensions = ['jpg', 'png'];
 
+        // check for explicit extension as image/jpeg also includes .jfif and other formats
         const fileExtension = acceptedFiles[0].name.split('.').pop().toLowerCase();
 
-        if (validExtensions.includes(fileExtension)) {
+        if (VALID_EXTENSIONS.includes(fileExtension)) {
             setUploadedFile(acceptedFiles[0]);
         } else {
             setUploadedFile();
-            setUploadFileErrors('File should .jpg or .png');
+            setUploadFileErrors(`File should be ${VALID_EXTENSIONS.join(' or ')}`);
         }
     }, []);
 
@@ -60,11 +60,13 @@ const UploadModal = ({ open, handleClose, handleUpload, uploadedFile, setUploade
                     {uploadedFile && <p>{uploadedFile.path}</p>}
                 </div>
                 {uploadFileErrors && <p className={styles.errorMessage}>{uploadFileErrors}</p>}
-                {fileRejections.map(({ file, errors }) => <p>{
-                    errors.map(e => (
-                        <p className={styles.errorMessage} key={e.code}>{e.message}</p>
-                    ))
-                }</p>)}
+                {fileRejections.map(({ file, errors }) =>
+                    <div key={`${file.name}-${index}`}>
+                        {errors.map(e => (
+                            <p className={styles.errorMessage} key={e.code}>{e.message}</p>
+                        ))}
+                    </div>
+                )}
                 <p>Supported formats: JPG, PNG</p>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Button buttonType='secondary-grey' text='Close' onClick={handleClose} />
