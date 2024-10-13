@@ -73,13 +73,13 @@ export const darkTheme = createTheme({
         },
       },
     },
-  },
-  MuiTab: {
-    styleOverrides: {
-      root: {
-        textTransform: 'none',
-        fontSize: '14px',
-        padding: '3px 9px'
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          fontSize: '14px',
+          padding: '3px 9px'
+        },
       },
     },
   },
