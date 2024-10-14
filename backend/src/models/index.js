@@ -27,6 +27,7 @@ db.Popup = require("./Popup.js")(sequelize, Sequelize.DataTypes);
 db.Token = require("./Token.js")(sequelize, Sequelize.DataTypes);
 db.PopupLog = require("./PopupLog.js")(sequelize, Sequelize.DataTypes);
 db.Banner = require("./Banner.js")(sequelize, Sequelize.DataTypes);
+db.Hint = require("./Hint.js")(sequelize, Sequelize.DataTypes);
 db.Tour = require("./Tour.js")(sequelize, Sequelize.DataTypes);
 
 // Define associations here
@@ -36,6 +37,8 @@ db.Popup.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 db.User.hasMany(db.Banner, { foreignKey: "createdBy", as: "banners" });
 db.Banner.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 
+db.User.hasMany(db.Hint, { foreignKey: "createdBy", as: "hints" });
+db.Hint.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 db.User.hasMany(db.Tour, { foreignKey: "createdBy", as: "tours" });
 db.Tour.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 
