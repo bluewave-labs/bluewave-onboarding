@@ -46,6 +46,7 @@ const App = () => {
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
 
+
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
         <Route path="/banner/create" element={<BannerPage />} />
         <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />

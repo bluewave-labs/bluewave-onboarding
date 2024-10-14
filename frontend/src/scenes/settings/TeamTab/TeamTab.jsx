@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -8,22 +8,58 @@ import { VscEdit } from "react-icons/vsc";
 import styles from './TeamTab.module.css';
 import TeamTable from "./TeamTable/TeamTable";
 import Button from "../../../components/Button/Button";
+import InviteTeamMemberModal from "../../../components/Modals/InviteTeamMemberModal/InviteTeamMemberModal";
+import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
+import { FaCheck } from "react-icons/fa";
 
 const TeamTab = () => {
   const [value, setValue] = React.useState('1');
+  const [editOrgName, setEditOrgName] = useState(false);
+  const [orgName, setOrgName] = useState('BlueWave Labs');
+
+  const [openInviteTeamMemberModal, setOpenInviteTeamMemberModal] = useState(false);
+
+  const handleInviteTeamMemberModalClose = () => {
+    setOpenInviteTeamMemberModal(false);
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const toggleEdit = () => {
+    setEditOrgName(!editOrgName);
+  }
+
+  const handleInviteTeamMemberModalOpen = () => {
+    setOpenInviteTeamMemberModal(true);
   };
 
   return (
     <>
       <div className={styles.organisation}>
         <h6 className={styles.nameHeading}>Organisation Name</h6>
-        <p className={styles.organisationName}>
-          BlueWave Labs
-          <VscEdit />
-        </p>
+        <div className={styles.orgNameContainer}>
+          {!editOrgName && <p className={styles.organisationName}>{orgName}</p>}
+          {editOrgName && <CustomTextField
+            autofocus={true}
+            TextFieldWidth="auto"
+            value={orgName}
+            onChange={e => setOrgName(e.target.value)}
+            onFocus={(e) =>
+              e.currentTarget.setSelectionRange(
+                e.currentTarget.value.length,
+                e.currentTarget.value.length
+              )
+            }
+          />}
+          {!editOrgName ?
+            <VscEdit aria-label="Edit Organisation Name" className={styles.pencil} onClick={toggleEdit} /> :
+            <FaCheck aria-label="Save Organisation Name" onClick={toggleEdit} className={styles.pencil} color="green"
+            />
+          }
+
+        </div>
       </div>
       <div>
         <h6>Team Members</h6>
@@ -56,6 +92,7 @@ const TeamTab = () => {
                 </TabList>
                 <Button
                   text="Invite Team Members"
+                  onClick={handleInviteTeamMemberModalOpen}
                 // onClick={handleSubmit}
                 />
               </Box>
@@ -65,6 +102,7 @@ const TeamTab = () => {
             </TabContext>
           </Box>
         </div>
+        <InviteTeamMemberModal open={openInviteTeamMemberModal} handleClose={handleInviteTeamMemberModalClose} />
       </div>
     </>
   );

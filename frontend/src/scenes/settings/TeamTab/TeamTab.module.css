@@ -4,6 +4,13 @@
     align-items: center;
     border-bottom: 1px solid var(--grey-border);
     padding-bottom: 15px;
+    height: 2rem;
+}
+
+.orgNameContainer {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 }
 
 .nameHeading {
@@ -34,6 +41,10 @@ h6 {
 
 .MuiTabPanel-root {
     padding: 0
+}
+
+.pencil {
+    cursor: pointer;
 }
 
 .boldTab {
