@@ -117,6 +117,7 @@ const CreatePopupPage = () => {
                     textColor={textColor}
                     buttonBackgroundColor={buttonBackgroundColor}
                     buttonTextColor={buttonTextColor}
+                    popupSize={popupSize}
                     sx={{ width: "100%", maxWidth: '700px', marginLeft: '2.5rem', marginTop: '1rem' }}
                 />}
             leftContent={() =>
