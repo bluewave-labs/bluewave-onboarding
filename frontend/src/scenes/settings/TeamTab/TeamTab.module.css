@@ -7,6 +7,12 @@
     height: 2rem;
 }
 
+.orgNameContainer {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
 .nameHeading {
     margin: 0;
 }

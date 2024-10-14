@@ -39,7 +39,7 @@ const TeamTab = () => {
     <>
       <div className={styles.organisation}>
         <h6 className={styles.nameHeading}>Organisation Name</h6>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <div className={styles.orgNameContainer}>
           {!editOrgName && <p className={styles.organisationName}>{orgName}</p>}
           {editOrgName && <CustomTextField
             autofocus={true}
