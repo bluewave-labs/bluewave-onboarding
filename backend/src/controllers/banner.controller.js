@@ -1,6 +1,6 @@
 const bannerService = require("../service/banner.service.js");
 const { internalServerError } = require("../utils/errors");
-const { bannerValidationRules } = require('../utils/bannerValidationRules.js');
+const { bannerValidationRules } = require('../utils/bannerValidationRules');
 const db = require("../models"); 
 const Banner = db.Banner;
 
