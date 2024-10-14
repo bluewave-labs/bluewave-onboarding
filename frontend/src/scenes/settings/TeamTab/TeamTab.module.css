@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(238, 238, 238, 1);
+    border-bottom: 1px solid var(--grey-border);
     padding-bottom: 15px;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .tabs {
-    border: 1px solid rgba(234, 236, 240, 1) !important;
+    border: 1px solid var(--grey-border) !important;
 }
 
 h6 {
@@ -45,6 +45,6 @@ h6 {
 }
 
 .tabIndicator {
-    background-color: rgba(244, 245, 247, 1);
+    background-color: var(--header-background);
     padding-top: 0px;
 }
