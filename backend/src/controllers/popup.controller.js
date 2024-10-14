@@ -1,71 +1,22 @@
 const popupService = require("../service/popup.service");
 const { internalServerError } = require("../utils/errors");
-const { isValidHexColor, checkColorFields } = require("../utils/guideHelpers");
-const db = require("../models");
-const Popup = db.Popup;
-
-const validatePopupSize = (value) => {
-  const validSizes = ["small", "medium", "large"];
-  return validSizes.includes(value);
-};
-
-const validateCloseButtonAction = (value) => {
-  const validActions = ["no action", "open url", "open url in a new tab"];
-  return validActions.includes(value);
-};
+const { validatePopupData, isValidId } = require("../utils/popupValidationRules");
 
 class PopupController {
   async addPopup(req, res) {
-    const userId = req.user.id;
-    const {
-      popupSize,
-      closeButtonAction,
-      headerBackgroundColor,
-      headerColor,
-      textColor,
-      buttonBackgroundColor,
-      buttonTextColor,
-    } = req.body;
-
-    if (!popupSize || !closeButtonAction) {
-      return res
-        .status(400)
-        .json({
-          errors: [{ msg: "popupSize and closeButtonAction are required" }],
-        });
-    }
-
-    if (
-      !validatePopupSize(popupSize) ||
-      !validateCloseButtonAction(closeButtonAction)
-    ) {
-      return res
-        .status(400)
-        .json({
-          errors: [{ msg: "Invalid value for popupSize or closeButtonAction" }],
-        });
-    }
-
-    const colorFields = {
-      headerBackgroundColor,
-      headerColor,
-      textColor,
-      buttonBackgroundColor,
-      buttonTextColor,
-    };
-    checkColorFields(colorFields, res);
-
     try {
-      const newPopupData = { ...req.body, createdBy: userId };
-      const newPopup = await popupService.createPopup(newPopupData);
+      const userId = req.user.id;
+      const popupData = { ...req.body, createdBy: userId };
+
+      const errors = validatePopupData(popupData);
+      if (errors.length > 0) {
+        return res.status(400).json({ errors });
+      }
+
+      const newPopup = await popupService.createPopup(popupData);
       res.status(201).json(newPopup);
     } catch (err) {
-      console.log(err);
-      const { statusCode, payload } = internalServerError(
-        "CREATE_POPUP_ERROR",
-        err.message,
-      );
-      res.status(statusCode).json(payload);
+      this.handleError(res, "CREATE_POPUP_ERROR", err);
     }
   }
 
@@ -73,90 +24,45 @@ class PopupController {
     try {
       const { id } = req.params;
 
-      if (Number.isNaN(Number(id)) || id.trim() === "")  {
+      if (!isValidId(id)) {
         return res.status(400).json({ errors: [{ msg: "Invalid id" }] });
       }
 
       const deletionResult = await popupService.deletePopup(id);
 
       if (!deletionResult) {
-        return res
-          .status(400)
-          .json({
-            errors: [{ msg: "Popup with the specified id does not exist" }],
-          });
+        return res.status(404).json({ errors: [{ msg: "Popup not found" }] });
       }
 
-      res
-        .status(200)
-        .json({ message: `Popup with ID ${id} deleted successfully` });
+      res.status(200).json({ message: `Popup with ID ${id} deleted successfully` });
     } catch (err) {
-      const { statusCode, payload } = internalServerError(
-        "DELETE_POPUP_ERROR",
-        err.message,
-      );
-      res.status(statusCode).json(payload);
+      this.handleError(res, "DELETE_POPUP_ERROR", err);
     }
   }
 
   async editPopup(req, res) {
     try {
       const { id } = req.params;
+      const popupData = req.body;
 
-      if (!req.body.popupSize || !req.body.closeButtonAction) {
-        return res
-          .status(400)
-          .json({
-            errors: [{ msg: "popupSize and closeButtonAction are required" }],
-          });
+      if (!isValidId(id)) {
+        return res.status(400).json({ errors: [{ msg: "Invalid id" }] });
       }
 
-      const popupSizeColumn = Popup.tableAttributes.popupSize;
-
-      if (!popupSizeColumn.validate.isIn[0].includes(req.body.popupSize)) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Invalid value for popupSize" }] });
+      const errors = validatePopupData(popupData);
+      if (errors.length > 0) {
+        return res.status(400).json({ errors });
       }
 
-      const closeButtonActionColumn = Popup.tableAttributes.closeButtonAction;
-
-      if (
-        !closeButtonActionColumn.validate.isIn[0].includes(
-          req.body.closeButtonAction,
-        )
-      ) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Invalid value for closeButtonAction" }] });
-      }
-
-      const colorFields = [
-        "headerBackgroundColor",
-        "headerColor",
-        "textColor",
-        "buttonBackgroundColor",
-        "buttonTextColor",
-      ];
+      const updatedPopup = await popupService.updatePopup(id, popupData);
       
-      for (const field of colorFields) {
-        if (req.body[field] && !isValidHexColor(req.body[field])) {
-          return res
-            .status(400)
-            .json({
-              errors: [{ msg: `${field} must be a valid hex color code` }],
-            });
-        }
+      if (!updatedPopup) {
+        return res.status(404).json({ errors: [{ msg: "Popup not found" }] });
       }
 
-      const updatedPopup = await popupService.updatePopup(id, req.body);
       res.status(200).json(updatedPopup);
     } catch (err) {
-      const { statusCode, payload } = internalServerError(
-        "EDIT_POPUP_ERROR",
-        err.message,
-      );
-      res.status(statusCode).json(payload);
+      this.handleError(res, "EDIT_POPUP_ERROR", err);
     }
   }
 
@@ -165,11 +71,7 @@ class PopupController {
       const popups = await popupService.getAllPopups();
       res.status(200).json(popups);
     } catch (err) {
-      const { statusCode, payload } = internalServerError(
-        "GET_ALL_POPUPS_ERROR",
-        err.message,
-      );
-      res.status(statusCode).json(payload);
+      this.handleError(res, "GET_ALL_POPUPS_ERROR", err);
     }
   }
 
@@ -179,11 +81,7 @@ class PopupController {
       const popups = await popupService.getPopups(userId);
       res.status(200).json(popups);
     } catch (err) {
-      const { statusCode, payload } = internalServerError(
-        "GET_POPUPS_ERROR",
-        err.message,
-      );
-      res.status(statusCode).json(payload);
+      this.handleError(res, "GET_POPUPS_ERROR", err);
     }
   }
 
@@ -191,29 +89,27 @@ class PopupController {
     try {
       const { id } = req.params;
 
-      if (Number.isNaN(Number(id)) || id.trim() === "")  {
+      if (!isValidId(id)) {
         return res.status(400).json({ errors: [{ msg: "Invalid popup ID" }] });
       }
 
       const popup = await popupService.getPopupById(id);
 
       if (!popup) {
-        return res
-          .status(404)
-          .json({ errors: [{ msg: "Popup not found" }] });
+        return res.status(404).json({ errors: [{ msg: "Popup not found" }] });
       }
 
       res.status(200).json(popup);
     } catch (err) {
-      const { statusCode, payload } = internalServerError(
-        "GET_POPUP_BY_ID_ERROR",
-        err.message,
-      );
-      res.status(statusCode).json(payload);
+      this.handleError(res, "GET_POPUP_BY_ID_ERROR", err);
     }
   }
 
-  
+  handleError(res, errorCode, err) {
+    console.error(err);
+    const { statusCode, payload } = internalServerError(errorCode, err.message);
+    res.status(statusCode).json(payload);
+  }
 }
 
 module.exports = new PopupController();

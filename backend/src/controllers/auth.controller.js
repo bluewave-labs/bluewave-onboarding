@@ -1,24 +1,57 @@
 const bcrypt = require("bcryptjs");
+const { validationResult } = require("express-validator");
 const db = require("../models");
 const User = db.User;
 const Token = db.Token;
 const { generateToken, verifyToken } = require("../utils/jwt");
-const crypto = require('crypto');
-const { TOKEN_LIFESPAN } = require('../utils/constants');
-const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.service');
+const crypto = require("crypto");
+const { TOKEN_LIFESPAN } = require("../utils/constants");
+const {
+  sendSignupEmail,
+  sendPasswordResetEmail,
+} = require("../service/email.service");
+const { 
+  registerRules, 
+  loginRules, 
+  forgetPasswordRules, 
+  resetPasswordRules 
+} = require('../utils/authValidationRules');
+
+const handleValidationErrors = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  next();
+};
+
+const findUserByEmail = async (email) => {
+  return await User.findOne({ where: { email } });
+};
+
+const createToken = async (userId, type, token) => {
+  const expiresAt =
+    type === "reset" ? new Date(Date.now() + TOKEN_LIFESPAN) : null;
+  return await Token.create({ token, userId, type, expiresAt });
+};
 
 const register = async (req, res) => {
   try {
     const { name, surname, email, password } = req.body;
-    const existingUser = await User.findOne({ where: { email } });
-    if (existingUser) return res.status(400).json({ error: "Email already exists" });
+    const existingUser = await findUserByEmail(email);
+    if (existingUser)
+      return res.status(400).json({ error: "Email already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await User.create({ name, surname, email, password: hashedPassword });
+    const newUser = await User.create({
+      name,
+      surname,
+      email,
+      password: hashedPassword,
+    });
     const token = generateToken({ id: newUser.id, email: newUser.email });
 
-    await Token.create({ token, userId: newUser.id, type: 'auth' });
-
+    await createToken(newUser.id, "auth", token);
     await sendSignupEmail(newUser.email, newUser.name);
 
     res.status(201).json({ user: newUser, token });
@@ -31,15 +64,15 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
+    const user = await findUserByEmail(email);
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    await Token.destroy({ where: { userId: user.id, type: 'auth' } });
+    await Token.destroy({ where: { userId: user.id, type: "auth" } });
 
     const token = generateToken({ id: user.id, email: user.email });
-    await Token.create({ token, userId: user.id, type: 'auth' });
+    await createToken(user.id, "auth", token);
 
     res.status(200).json({ user, token });
   } catch (error) {
@@ -57,7 +90,9 @@ const logout = async (req, res) => {
       return res.status(401).json({ error: "Invalid token" });
     }
 
-    const dbToken = await Token.findOne({ where: { token, userId: decoded.id, type: 'auth' } });
+    const dbToken = await Token.findOne({
+      where: { token, userId: decoded.id, type: "auth" },
+    });
     if (!dbToken) {
       return res.status(401).json({ error: "Invalid token" });
     }
@@ -73,14 +108,13 @@ const logout = async (req, res) => {
 const forgetPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    const user = await User.findOne({ where: { email } });
+    const user = await findUserByEmail(email);
     if (!user) return res.status(400).json({ error: "User not found" });
 
-    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetToken = crypto.randomBytes(32).toString("hex");
     const hash = await bcrypt.hash(resetToken, 10);
     const expiresAt = new Date(Date.now() + TOKEN_LIFESPAN);
-    await Token.create({ token: hash, userId: user.id, type: 'reset', expiresAt });
-
+    await createToken(user.id, "reset", hash);
     await sendPasswordResetEmail(user.email, user.name, resetToken);
     res.status(200).json({ message: "Password reset token sent" });
   } catch (error) {
@@ -92,9 +126,13 @@ const forgetPassword = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     const { token, newPassword } = req.body;
-    const dbToken = await Token.findOne({ where: { type: 'reset' } });
+    const dbToken = await Token.findOne({ where: { type: "reset" } });
 
-    if (!dbToken || new Date(dbToken.expiresAt) < new Date() || !(await bcrypt.compare(token, dbToken.token))) {
+    if (
+      !dbToken ||
+      new Date(dbToken.expiresAt) < new Date() ||
+      !(await bcrypt.compare(token, dbToken.token))
+    ) {
       return res.status(400).json({ error: "Invalid or expired token" });
     }
 
@@ -110,4 +148,11 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { register, login, logout, forgetPassword, resetPassword };
+
+module.exports = { 
+  register: [registerRules, handleValidationErrors, register],
+  login: [loginRules, handleValidationErrors, login],
+  logout,
+  forgetPassword: [forgetPasswordRules, handleValidationErrors, forgetPassword],
+  resetPassword: [resetPasswordRules, handleValidationErrors, resetPassword]
+};
