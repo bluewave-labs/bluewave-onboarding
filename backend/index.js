@@ -15,7 +15,6 @@ const popup = require('./src/routes/popup.routes');
 const popup_log = require('./src/routes/popuplog.routes');
 const banner = require('./src/routes/banner.routes');
 const teamRoutes = require('./src/routes/team.routes');
-// const tourRoutes = require('./src/routes/tour.routes');
 const hint = require('./src/routes/hint.routes');
 const tourRoutes = require('./src/routes/tour.routes');
 
