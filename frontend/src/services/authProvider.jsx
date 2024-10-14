@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useReducer } from 'react';
+import React, { useEffect, useContext, useReducer, useState } from 'react';
 import { apiClient } from './apiClient';
 
 const AuthContext = React.createContext();
@@ -23,7 +23,8 @@ const authReducer = (state, action) => {
 };
 
 export const AuthProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(authReducer, { isLoggedIn: false, userInfo: null });
+    const [state, dispatch] = useReducer(authReducer, { isLoggedIn: false, userInfo: JSON.parse(localStorage.getItem('userInfo')) || null });
+    const [isFetching, setIsFetching] = useState(true);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }) => {
                 const authToken = localStorage.getItem('authToken');
                 if (!authToken) {
                     dispatch({ type: 'LOGOUT' });
+                    setIsFetching(false);
                     return;
                 }
                 const response = await apiClient.get('/users/current-user');
@@ -41,6 +43,7 @@ export const AuthProvider = ({ children }) => {
                         const userData = response.data.user;
                         const fullName = userData.surname ? `${userData.name} ${userData.surname}` : userData.name;
                         const payload = { fullName, role: userData.role };
+                        localStorage.setItem('userInfo', JSON.stringify(payload));
                         dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload });
                     }
                 } else {
@@ -50,6 +53,8 @@ export const AuthProvider = ({ children }) => {
             } catch (error) {
                 localStorage.removeItem('authToken');
                 dispatch({ type: 'LOGOUT' });
+            } finally {
+                setIsFetching(false);
             }
         };
 
@@ -65,7 +70,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn: state.isLoggedIn, loginAuth, logoutAuth, userInfo: state.userInfo }}>
+        <AuthContext.Provider value={{ isLoggedIn: state.isLoggedIn, loginAuth, logoutAuth, userInfo: state.userInfo, isFetching }}>
             {children}
         </AuthContext.Provider>
     );

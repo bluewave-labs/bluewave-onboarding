@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
     dialect: envConfig.dialect,
     port: envConfig.port,
     logging: envConfig.logging,
-  },
+  }
 );
 
 const db = {};
@@ -28,6 +28,7 @@ db.Token = require("./Token.js")(sequelize, Sequelize.DataTypes);
 db.PopupLog = require("./PopupLog.js")(sequelize, Sequelize.DataTypes);
 db.Banner = require("./Banner.js")(sequelize, Sequelize.DataTypes);
 db.Hint = require("./Hint.js")(sequelize, Sequelize.DataTypes);
+db.Tour = require("./Tour.js")(sequelize, Sequelize.DataTypes);
 
 // Define associations here
 db.User.hasMany(db.Popup, { foreignKey: "createdBy", as: "popups" });
@@ -38,5 +39,7 @@ db.Banner.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 
 db.User.hasMany(db.Hint, { foreignKey: "createdBy", as: "hints" });
 db.Hint.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
+db.User.hasMany(db.Tour, { foreignKey: "createdBy", as: "tours" });
+db.Tour.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 
 module.exports = db;
