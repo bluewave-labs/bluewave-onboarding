@@ -50,6 +50,10 @@ const ProfileTab = () => {
 
   const handleImageDelete = async (e) => {
     e.preventDefault();
+    if (!userInfo?.picture) {
+      handleNothingToUpdateProfile('Nothing to update...');
+      return;
+    }
     try {
       setLoading(true);
       const response = await updateUser({ picture: null });
