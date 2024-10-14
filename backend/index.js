@@ -1,19 +1,19 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
-const jsonErrorMiddleware = require('./src/middleware/jsonErrorMiddleware');
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
+const jsonErrorMiddleware = require("./src/middleware/jsonErrorMiddleware");
 
 // Load environment variables from .env file
 dotenv.config();
 
-const authRoutes = require('./src/routes/auth.routes');
-const userRoutes = require('./src/routes/user.routes');
-const mocks = require('./src/routes/mocks.routes');
-const popup = require('./src/routes/popup.routes');
-const popup_log = require('./src/routes/popuplog.routes');
-const banner = require('./src/routes/banner.routes');
+const authRoutes = require("./src/routes/auth.routes");
+const userRoutes = require("./src/routes/user.routes");
+const mocks = require("./src/routes/mocks.routes");
+const popup = require("./src/routes/popup.routes");
+const popup_log = require("./src/routes/popuplog.routes");
+const banner = require("./src/routes/banner.routes");
 const teamRoutes = require("./src/routes/team.routes");
 // const tourRoutes = require('./src/routes/tour.routes');
 
@@ -32,18 +32,18 @@ sequelize
   .then(() => console.log("Database connected..."))
   .catch((err) => console.log("Error: " + err));
 
-// sequelize
-//   .sync({force:true})
-//   .then(() => console.log("Models synced with the database..."))
-//   .catch((err) => console.log("Error syncing models: " + err));
+sequelize
+  .sync({ alter: true })
+  .then(() => console.log("Models synced with the database..."))
+  .catch((err) => console.log("Error syncing models: " + err));
 
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/mock/', mocks);
-app.use('/api/popup', popup);
-app.use('/api/popup_log', popup_log);
-app.use('/api/banner', banner);
-app.use('/api/team', teamRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/mock/", mocks);
+app.use("/api/popup", popup);
+app.use("/api/popup_log", popup_log);
+app.use("/api/banner", banner);
+app.use("/api/team", teamRoutes);
 // app.use('/api/tours', tourRoutes);
 
 app.use((err, req, res, next) => {

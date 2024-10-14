@@ -1,3 +1,5 @@
+const settings = require('../config/settings');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -23,7 +25,8 @@ module.exports = {
         allowNull: false,
       },
       role: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.ENUM,
+        values: settings.user.roleEnum,
         allowNull: false,
       },
       createdAt: {

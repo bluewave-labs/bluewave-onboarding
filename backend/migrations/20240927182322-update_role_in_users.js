@@ -6,9 +6,10 @@ module.exports = {
     return queryInterface.sequelize.transaction(async (transaction) => {
       await queryInterface.removeColumn("users", "role", { transaction });
       await queryInterface.addColumn("users", "role", {
-        type: Sequelize.INTEGER,
+        type: Sequelize.ENUM,
+        values: settings.user.roleEnum,
+        defaultValue: settings.user.role.admin,
         allowNull: false,
-        defaultValue: settings.user.role.admin
       }, { transaction });
     });
   },

@@ -5,8 +5,8 @@ module.exports = Object.freeze({
     // API_BASE_URL: 'https://onboarding-demo.bluewavelabs.ca/api/',
     API_BASE_URL: 'localhost:3000/api/',
     ROLE: {
-      ADMIN: 1,
-      MEMBER: 2
+      ADMIN: '1',
+      MEMBER: '2'
     },
   });
   
