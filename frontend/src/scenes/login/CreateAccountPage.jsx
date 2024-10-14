@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Login.css';
+import styles from './Login.module.css'; 
 import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,16 +19,18 @@ function CreateAccountPage() {
   const { loginAuth } = useAuth();
   const navigate = useNavigate();
 
+  const isValidName = (value) => /^[A-Za-z'-]+$/.test(value) && value.length > 0 ;
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
     switch (name) {
       case 'name':
-        setValidation((prev) => ({ ...prev, isNameValid: value.length > 0 }));
+        setValidation((prev) => ({...prev, isNameValid: isValidName(value)}));
         break;
       case 'surname':
-        setValidation((prev) => ({ ...prev, isSurnameValid: value.length > 0 }));
+        setValidation((prev) => ({ ...prev, isSurnameValid: isValidName(value) }));
         break;
       case 'email':
         setValidation((prev) => ({ ...prev, isEmailValid: validateEmail(value) }));
@@ -48,12 +50,6 @@ function CreateAccountPage() {
   };
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  const handleEnterPress = (event) => {
-    if (event.key === 'Enter') {
-      handleSignUp();
-    }
-  }
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -82,17 +78,16 @@ function CreateAccountPage() {
           setError('An error occurred. Please try again.');
         }
       } else {
-        console.log(error)
         setError('An error occurred. Please check your network connection and try again.');
       }
     }
   };
 
   return (
-    <form onSubmit={handleSignUp} className="login-container">
+    <form onSubmit={handleSignUp} className={styles["login-container"]}>
       <Logo />
       <h2>Create an account</h2>
-      <div className="form-group">
+      <div className={styles["form-group"]}>
         <CustomTextField
           id="name"
           name="name"
@@ -109,7 +104,7 @@ function CreateAccountPage() {
         />
       </div>
 
-      <div className="form-group">
+      <div className={styles["form-group"]}>
         <CustomTextField
           id="surname"
           name="surname"
@@ -126,7 +121,7 @@ function CreateAccountPage() {
         />
       </div>
 
-      <div className="form-group">
+      <div className={styles["form-group"]}>
         <CustomTextField
           id="email"
           type="email"
@@ -141,10 +136,10 @@ function CreateAccountPage() {
           value={formData.email}
           onChange={handleInputChange}
         />
-        {error && <div className="error-message">{error}</div>}
+        {error && <div className={styles["error-message"]}>{error}</div>}
       </div>
 
-      <div className="form-group">
+      <div className={styles["form-group"]}>
         <CustomTextField
           id="password"
           type="password"
@@ -158,23 +153,22 @@ function CreateAccountPage() {
           required="true"
           value={formData.password}
           onChange={handleInputChange}
-          onKeyDown={handleEnterPress}
         />
       </div>
 
-      <div className="password-constraints">
+      <div className={styles["password-constraints"]}>
         <CheckCircleIcon style={{ color: passwordChecks.atLeastEightCharacters ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: '5px' }} />
         Must be at least 8 characters
       </div>
-      <div className="password-constraints">
+      <div className={styles["password-constraints"]}>
         <CheckCircleIcon style={{ color: passwordChecks.hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: '5px' }} />
         Must contain one special character
       </div>
 
-      <button className="create-account-button" type="submit">
+      <button className={styles["create-account-button"]} type="submit" disabled={loading}>
         {loading ? <CircularProgress size={12} color="inherit" /> : "Get started"}
       </button>
-      <div className="sign-up-link">
+      <div className={styles["sign-up-link"]}>
         Already have an account? <CustomLink text="Log in" url="/" />
       </div>
     </form>

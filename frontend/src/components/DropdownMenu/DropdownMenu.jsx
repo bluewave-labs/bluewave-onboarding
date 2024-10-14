@@ -16,13 +16,12 @@ const DropdownMenu = () => {
     const handleLogoutClick = async () => {
         await logout();
         logoutAuth();
-        toastEmitter.emit(TOAST_EMITTER_KEY, 'Logout successfull');
+        toastEmitter.emit(TOAST_EMITTER_KEY, 'Logout successful');
         navigate('/');
     };
 
     const menuItems = [
-        { text: 'Profile', icon: <Person2OutlinedIcon /> },
-        { text: 'Settings', icon: <SettingsOutlinedIcon /> },
+        { text: 'Settings', icon: <SettingsOutlinedIcon />, onClick: () => navigate('/settings') },
         { text: 'Logout', icon: <LogoutOutlinedIcon />, onClick: handleLogoutClick },
     ];
 

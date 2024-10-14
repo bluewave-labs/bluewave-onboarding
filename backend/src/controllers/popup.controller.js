@@ -1,18 +1,9 @@
 const popupService = require("../service/popup.service");
 const { internalServerError } = require("../utils/errors");
-const { isValidHexColor, checkColorFields } = require("../utils/guideHelpers");
+const { isValidHexColor, checkColorFields, validateCloseButtonAction } = require("../utils/guideHelpers");
 const db = require("../models");
 const Popup = db.Popup;
-
-const validatePopupSize = (value) => {
-  const validSizes = ["small", "medium", "large"];
-  return validSizes.includes(value);
-};
-
-const validateCloseButtonAction = (value) => {
-  const validActions = ["no action", "open url", "open url in a new tab"];
-  return validActions.includes(value);
-};
+const { validatePopupSize } = require("../utils/popup.helper");
 
 class PopupController {
   async addPopup(req, res) {
@@ -53,7 +44,7 @@ class PopupController {
       buttonBackgroundColor,
       buttonTextColor,
     };
-    checkColorFields(colorFields);
+    checkColorFields(colorFields, res);
 
     try {
       const newPopupData = { ...req.body, createdBy: userId };
@@ -111,21 +102,13 @@ class PopupController {
           });
       }
 
-      const popupSizeColumn = Popup.tableAttributes.popupSize;
-
-      if (!popupSizeColumn.validate.isIn[0].includes(req.body.popupSize)) {
+      if (!validatePopupSize(req.body.popupSize)) {
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid value for popupSize" }] });
       }
 
-      const closeButtonActionColumn = Popup.tableAttributes.closeButtonAction;
-
-      if (
-        !closeButtonActionColumn.validate.isIn[0].includes(
-          req.body.closeButtonAction,
-        )
-      ) {
+      if (!validateCloseButtonAction(req.body.closeButtonAction)) {
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid value for closeButtonAction" }] });
@@ -159,6 +142,7 @@ class PopupController {
       res.status(statusCode).json(payload);
     }
   }
+
 
   async getAllPopups(req, res) {
     try {

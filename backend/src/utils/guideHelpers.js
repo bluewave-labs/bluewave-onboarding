@@ -9,20 +9,32 @@ const validateHexColor = (value, fieldName) => {
     }
 };
 
-const checkColorFields = (colorFields) => {
-    for (const [field, value] of Object.entries(colorFields)) {
-        if (value && !isValidHexColor(value)) {
-          return res
-            .status(400)
-            .json({
-              errors: [{ msg: `${field} must be a valid hex color code` }],
-            });
-        }
-      }
-}
+const checkColorFields = (colorFields, res) => {
+  for (const [field, value] of Object.entries(colorFields)) {
+    if (value && !isValidHexColor(value)) {
+      return res.status(400).json({
+        errors: [{ msg: `${field} must be a valid hex color code` }],
+      });
+    }
+  }
+  return true;
+};
+
+const validateCloseButtonAction = (value) => {
+  const validActions = ["no action", "open url", "open url in a new tab"];
+  return validActions.includes(value);
+};
+
+const validateActionButton = (value) => {
+  if (!validateCloseButtonAction(value)) {
+    throw new Error('Invalid close button action');
+  }
+};
 
 module.exports = {
     isValidHexColor,
     validateHexColor,
-    checkColorFields
+    checkColorFields,
+    validateCloseButtonAction,
+    validateActionButton
 };

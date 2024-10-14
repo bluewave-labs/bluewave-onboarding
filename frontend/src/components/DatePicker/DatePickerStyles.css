@@ -1,5 +1,5 @@
 .css-1wy8uaa-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
-  background-color: #7f56d9 !important;
+  background-color: var(--main-purple) !important;
   color: white !important;
 }
 .css-1e6y48t-MuiButtonBase-root-MuiButton-root {

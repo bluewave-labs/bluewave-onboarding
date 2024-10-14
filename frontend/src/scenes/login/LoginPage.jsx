@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Login.css';
+import styles from './Login.module.css';
 import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import { login } from '../../services/loginServices';
@@ -18,12 +18,6 @@ function LoginPage() {
   const [errorMessage, setErrorMessage] = useState('');
   const { loginAuth } = useAuth();
   const navigate = useNavigate();
-
-  const handleEnterPress = (event) => {
-    if (event.key === 'Enter') {
-      handleLogin();
-    }
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,11 +49,12 @@ function LoginPage() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="login-container">
+    <form onSubmit={handleSubmit} className={styles["login-container"]}>
       <Logo />
       <h2>Log in to your account</h2>
-      <div className="form-group">
+      <div className={styles["form-group"]}>
         <CustomTextField
+          id="email"
           placeholder='Enter email'
           labelText='Email:'
           textFieldMargin='none'
@@ -69,22 +64,22 @@ function LoginPage() {
           onChange={handleEmailChange}
         />
       </div>
-      <div className="form-group">
+      <div className={styles["form-group"]}>
         <CustomTextField
+          id="password"
           placeholder='Enter password'
           labelText='Password:'
           textFieldMargin='none'
           TextFieldWidth="full"
           type="password"
-          required="true"
+          required={true}
           value={password}
-          onKeyDown={handleEnterPress}
           onChange={handlePasswordChange}
         />
-        {loginError && <div className='error-message'>{errorMessage}</div>}
+        {loginError && <div className={styles["error-message"]}>{errorMessage}</div>}
       </div>
-      <div className="form-group">
-        <div className='form-group-2'>
+      <div className={styles["form-group"]}>
+        <div className={styles["form-group-2"]}>
           <label>
             <input
               type="checkbox"
@@ -96,10 +91,10 @@ function LoginPage() {
           <CustomLink text="Forgot Password" url="/forgot-password" />
         </div>
       </div>
-      <button className="sign-in-button" type="submit">
+      <button className={styles["sign-in-button"]} type="submit" disabled={loading}>
         {loading ? <CircularProgress size={12} color="inherit" /> : 'Sign In'}
       </button>
-      <div className="sign-up-link">
+      <div className={styles["sign-up-link"]}>
         Don't have an account? <CustomLink text="Sign up" url="/signup" />
       </div>
     </form>

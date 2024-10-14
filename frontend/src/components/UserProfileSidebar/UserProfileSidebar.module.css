@@ -21,7 +21,7 @@
     font-size: 13px;
     font-weight: 600;
     line-height: 20px;
-    color: #344054;
+    color: var(--main-text-color);
 }
 
 .user-role {
@@ -29,7 +29,7 @@
     font-size: 13px;
     font-weight: 400;
     line-height: 20px;
-    color: #344054;
+    color: var(--main-text-color);
 }
 
 .dropdown-button {

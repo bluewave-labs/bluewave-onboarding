@@ -6,6 +6,12 @@
 
 .preview-content{
   padding: 12px 15px;
+  color: var(--second-text-color);
+  font-size: 13px;
+}
+
+.preview-content p {
+  margin: 0.5rem 0;
 }
 
 .preview-container h3 {

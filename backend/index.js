@@ -1,9 +1,9 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
-const jsonErrorMiddleware = require('./src/middleware/jsonErrorMiddleware');
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
+const jsonErrorMiddleware = require("./src/middleware/jsonErrorMiddleware");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -16,6 +16,8 @@ const popup_log = require('./src/routes/popuplog.routes');
 const banner = require('./src/routes/banner.routes');
 const teamRoutes = require('./src/routes/team.routes');
 // const tourRoutes = require('./src/routes/tour.routes');
+const hint = require('./src/routes/hint.routes');
+const tourRoutes = require('./src/routes/tour.routes');
 
 const app = express();
 
@@ -45,6 +47,8 @@ app.use('/api/popup_log', popup_log);
 app.use('/api/banner', banner);
 app.use('/api/team', teamRoutes);
 // app.use('/api/tours', tourRoutes);
+app.use('/api/hint', hint);
+app.use('/api/tour', tourRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
