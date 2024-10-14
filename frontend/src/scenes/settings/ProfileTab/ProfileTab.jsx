@@ -161,7 +161,7 @@ const ProfileTab = () => {
                 This photo will be displayed on your profile page.
               </p>
               <div className={styles.photoOptions}>
-                <Avatar src={userInfo.picture || "/vendetta.png"} alt="User" size="large" />
+                <Avatar src={userInfo?.picture || "/vendetta.png"} alt="User" size="large" />
                 <div>
                   {loading ?
                     <CircularProgress size={12} color="inherit" />
