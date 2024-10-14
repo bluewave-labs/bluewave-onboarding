@@ -20,6 +20,15 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none', 
+          fontSize: '14px',
+          padding: '3px 9px'      
+        },
+      },
+    },
     MuiDrawer: {
       styleOverrides: {
         paper: {

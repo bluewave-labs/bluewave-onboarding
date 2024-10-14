@@ -8,6 +8,7 @@ import CheckYourEmailPage from "./scenes/login/CheckYourEmailPage";
 import SetNewPasswordPage from "./scenes/login/SetNewPassword";
 import Private from "./components/Private";
 import ProgressStepsMain from "./scenes/progressSteps/ProgressStepsMain";
+import Settings from "./scenes/settings/Settings";
 import BannerPage from "./scenes/bannerPage/BannerPage";
 import BannerDefaultPage from "./scenes/bannerPage/BannerDefaultPage";
 import LinksDefaultPage from "./scenes/links/LinksDefaultPage";
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
           <Route path="/hint/create" element={<CreateHintPage />} />
           <Route path="/hint" element={<HintDefaultPage />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
 
         <Route path="/login" element={<LoginPage />} />
@@ -55,6 +57,7 @@ const App = () => {
         <Route path="/hint" element={<HintDefaultPage />} />
         <Route path="/403" element={<Error403 />} />
         <Route path="*" element={<Error404 />} />
+
       </Routes>
     </>
   );
