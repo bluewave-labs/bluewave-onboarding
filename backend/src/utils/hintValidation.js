@@ -34,7 +34,6 @@ const validateHintData = ({
   for (const [field, value] of Object.entries(colorFields)) {
     if (value && !isValidHexColor(value)) {
       errors.push({ msg: `Invalid value for ${field}` });
-      return errors;
     }
   }
 

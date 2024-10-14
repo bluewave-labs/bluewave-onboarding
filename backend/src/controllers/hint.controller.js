@@ -22,9 +22,10 @@ class HintController {
 
       return res.status(201).json(hint);
     } catch (error) {
+      console.error(`CREATE_HINT_ERROR: ${error.message}`);
       const { statusCode, payload } = internalServerError(
         "CREATE_HINT_ERROR",
-        error.message
+        "An unexpected error occurred while creating the hint"
       );
       res.status(statusCode).json(payload);
     }
@@ -37,9 +38,10 @@ class HintController {
       const hints = await HintService.getHints(userId);
       return res.status(200).json(hints);
     } catch (error) {
+      console.error(`GET_HINTS_ERROR: ${error.message}`);
       const { statusCode, payload } = internalServerError(
         "GET_HINTS_ERROR",
-        error.message
+        "An unexpected error occurred while retrieving hints"
       );
       res.status(statusCode).json(payload);
     }
@@ -50,9 +52,10 @@ class HintController {
       const hints = await HintService.getAllHints();
       return res.status(200).json(hints);
     } catch (error) {
+      console.error(`GET_ALL_HINTS_ERROR: ${error.message}`);
       const { statusCode, payload } = internalServerError(
         "GET_ALL_HINTS_ERROR",
-        error.message
+        "An unexpected error occurred while retrieving hints"
       );
       res.status(statusCode).json(payload);
     }
@@ -76,9 +79,10 @@ class HintController {
 
       return res.status(200).json(hint);
     } catch (error) {
+      console.error(`GET_HINT_BY_ID_ERROR: ${error.message}`);
       const { statusCode, payload } = internalServerError(
         "GET_HINT_BY_ID_ERROR",
-        error.message
+        "An unexpected error occurred while retrieving the hint"
       );
       res.status(statusCode).json(payload);
     }
@@ -106,9 +110,10 @@ class HintController {
 
       return res.status(200).json(updatedHint);
     } catch (error) {
+      console.error(`UPDATE_HINT_ERROR: ${error.message}`);
       const { statusCode, payload } = internalServerError(
         "UPDATE_HINT_ERROR",
-        error.message
+        "An unexpected error occurred while updating the hint"
       );
       res.status(statusCode).json(payload);
     }
@@ -134,9 +139,10 @@ class HintController {
         message: `Hint with ID ${hintId} deleted successfully`,
       });
     } catch (error) {
+      console.error(`DELETE_HINT_ERROR: ${error.message}`);
       const { statusCode, payload } = internalServerError(
         "DELETE_HINT_ERROR",
-        error.message
+        "An unexpected error occurred while deleting the hint"
       );
       res.status(statusCode).json(payload);
     }
