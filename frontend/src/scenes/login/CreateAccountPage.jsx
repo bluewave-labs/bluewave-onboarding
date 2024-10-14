@@ -165,7 +165,7 @@ function CreateAccountPage() {
         Must contain one special character
       </div>
 
-      <button className={styles["create-account-button"]} type="submit">
+      <button className={styles["create-account-button"]} type="submit" disabled={loading}>
         {loading ? <CircularProgress size={12} color="inherit" /> : "Get started"}
       </button>
       <div className={styles["sign-up-link"]}>
