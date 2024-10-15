@@ -1,5 +1,4 @@
-@use '../../styles/globals.scss' as *;
-
+@use "../../styles/globals.scss" as *;
 
 .toastContainer {
   position: fixed;
@@ -15,7 +14,7 @@
 .toast {
   background-color: white;
   border: 1px solid var(--light-border-color);
-  font-size: 13px;
+  font-size: var(--font-regular);
   line-height: 20px;
   color: var(--third-text-color);
   padding: 16px;
@@ -29,7 +28,7 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
-  gap: 10px
+  gap: 10px;
 }
 
 .text {
