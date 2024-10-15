@@ -1,6 +1,7 @@
 const { verifyToken } = require("../utils/jwt");
 const db = require("../models");
 const Token = db.Token;
+const User = db.User;
 
 const authenticateJWT = async (req, res, next) => {
   const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
@@ -19,8 +20,15 @@ const authenticateJWT = async (req, res, next) => {
       await dbToken.destroy();
       return res.status(401).json({ error: "Token has expired" });
     }
-
-    req.user = decoded;
+    const user = await User.findOne({ where: { id: decoded.id } });
+    if(!user) {
+      return res.status(404).json("User not found");
+    }
+    req.user = {
+      id: user.id,
+      email: user.email,
+      role: user.role
+    };
     next();
   } catch (error) {
     console.error("Error authenticating token:", error);
