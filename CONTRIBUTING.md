@@ -98,7 +98,7 @@ We have a Figma file that includes:
 
 You can see the dashboard designs [here](https://www.figma.com/design/MLPbP1HM2L9ON6f88pHTee/User-onboarding?node-id=0-1&t=T58Y7lj90RJBey0k-1), and the style guides [here](https://www.figma.com/design/USQRG7Oacv7uXw8XkTPINq/Style-guide?node-id=170-4048&t=QwZ5JRnYywYsScLj-1). Since they are read-only, we encourage you to copy to your own Figma page, then work on it.
  
-[This document](https://docs.google.com/document/d/1Gy3LiimGUNoSiWAMbwyK3SeMADcCMjCLu6cQYoawtSE/edit#heading=h.1lj2lgut6m7h) outlines the process every developer should follow for managing the issues lifecycle. Also make sure you read the [document about how to make a good pull request](/PULLREQUESTS.md).
+Also make sure you read the [document about how to make a good pull request](/PULLREQUESTS.md).
 
 ## Attribution
 This guide is based on the **contributing.md**. [Make your own](https://contributing.md/)!
