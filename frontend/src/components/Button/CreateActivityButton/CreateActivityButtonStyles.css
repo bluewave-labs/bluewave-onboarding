@@ -1,40 +1,40 @@
 @import "../../../styles/variables.css";
 
-.bannerStyle{
+.bannerStyle {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-.heading{
+.heading {
     color: var(--main-text-color);
     font-weight: 600;
     margin-bottom: 15px;
     font-size: 16px;
 }
 
-.list{
+.list {
     display: flex;
     align-items: center;
     gap: 15px;
     padding: 5px;
 }
 
-.listText{
+.listText {
     color: var(--main-text-color);
     font-weight: 400;
-    font-size: 13px;
+    font-size: var(--font-regular);
     margin-bottom: 10px;
     list-style-type: none;
 }
 
-.bannerContents{
+.bannerContents {
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
 }
 
-.button{
+.button {
     margin-top: 10px;
 }

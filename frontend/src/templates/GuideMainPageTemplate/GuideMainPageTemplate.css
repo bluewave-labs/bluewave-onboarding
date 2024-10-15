@@ -38,7 +38,7 @@
 .tour-info-container p {
   margin-bottom: 0;
   color: #6b7280;
-  font-size: 13px;
+  font-size: var(--font-regular);
   font-weight: 400;
   line-height: 20px;
   text-align: left;

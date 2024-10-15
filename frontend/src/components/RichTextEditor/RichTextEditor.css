@@ -3,7 +3,7 @@
   flex-direction: column;
   margin: 0 auto;
   color: var(--main-text-color);
-  font-size: 13px;
+  font-size: var(--font-regular);
   height: auto;
 }
 
