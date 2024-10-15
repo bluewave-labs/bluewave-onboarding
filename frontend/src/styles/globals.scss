@@ -8,10 +8,10 @@ $base-font-size: 16px;
     font-size: 16px;
     line-height: 24px;
   } @else if $type == informative {
-    font-size: 11px;
+    font-size: var(--font-informative);
     line-height: 11px;
   } @else {
-    font-size: 13px;
+    font-size: var(--font-regular);
     line-height: 13px;
   }
 

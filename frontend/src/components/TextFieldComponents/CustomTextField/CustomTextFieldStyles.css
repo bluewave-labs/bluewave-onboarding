@@ -11,7 +11,7 @@
 }
 
 .textField .MuiOutlinedInput-root {
-  font-size: 13px;
+  font-size: var(--font-regular);
   box-shadow: 0px 1px 2px 0px #1018280d;
 }
 
@@ -19,6 +19,7 @@
   &:hover fieldset {
     border-color: var(--main-purple);
   }
+
   &.Mui-focused fieldset {
     border-color: var(--main-purple);
   }
@@ -26,11 +27,11 @@
 }
 
 .textField .MuiButton-root {
-  font-size: 13px;
+  font-size: var(--font-regular);
   color: var(--second-text-color);
 }
 
 .MuiBox-root .MuiInputLabel-root {
-  font-size: 13px;
+  font-size: var(--font-regular);
   color: var(--second-text-color);
 }
