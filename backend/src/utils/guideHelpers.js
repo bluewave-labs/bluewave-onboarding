@@ -1,3 +1,4 @@
+const { ACTIONS } = require('../utils/constants');
 const isValidHexColor = (value) => {
     const hexColorRegex = /^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{4}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$/;
     return hexColorRegex.test(value);
@@ -21,8 +22,7 @@ const checkColorFields = (colorFields, res) => {
 };
 
 const validateCloseButtonAction = (value) => {
-  const validActions = ["no action", "open url", "open url in a new tab"];
-  return validActions.includes(value);
+  return Object.values(ACTIONS).includes(value);
 };
 
 const validateActionButton = (value) => {
