@@ -1,6 +1,6 @@
 const bannerService = require("../service/banner.service.js");
 const { internalServerError } = require("../utils/errors");
-const { isValidHexColor, checkColorFields, validateCloseButtonAction } = require("../utils/guideHelpers");
+const { isValidHexColor, checkColorFields, validateCloseButtonAction } = require("../utils/guide.helper");
 const { validatePosition } = require("../utils/banner.helper");
 const db = require("../models/index.js"); 
 const Banner = db.Banner;
