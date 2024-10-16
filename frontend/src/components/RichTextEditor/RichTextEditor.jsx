@@ -23,6 +23,8 @@ const RichTextEditor = ({
   buttonBackgroundColor,
   buttonTextColor,
   popupSize,
+  actionButtonUrl,
+  buttonAction,
   sx,
 }) => {
   const [htmlContent, setHtmlContent] = useState("");
@@ -88,6 +90,8 @@ const RichTextEditor = ({
           buttonTextColor={buttonTextColor}
           textColor={textColor}
           popupSize={popupSize}
+          buttonAction={buttonAction}
+          actionButtonUrl={actionButtonUrl}
         />
       )}
       <EditorTabs mode={mode} setMode={setMode}
