@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const { validationResult } = require('express-validator');
 const db = require("../models");
 const User = db.User;
 const Token = db.Token;
@@ -9,14 +10,30 @@ const crypto = require('crypto');
 const { TOKEN_LIFESPAN } = require('../utils/constants.helper');
 const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.service');
 const settings = require("../../config/settings");
-const he = require('he');
-const { create } = require("domain");
+const {
+  registerValidation,
+  loginValidation,
+  forgetPasswordValidation,
+  resetPasswordValidation
+} = require('../utils/auth.helper');
+
+const findUserByEmail = async (email) => {
+  return await User.findOne({ where: { email } });
+};
+
+const handleValidationErrors = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  next();
+};
 
 const isTestingEnv = process.env.NODE_ENV === 'test';
 const register = async (req, res) => {
   try {
     const { name, surname, email, password } = req.body;
-    const existingUser = await User.findOne({ where: { email } });
+    const existingUser = await findUserByEmail(email)
     if (existingUser) return res.status(400).json({ error: "Email already exists" });
 
     const userCount = await User.count();
@@ -75,7 +92,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
+    const user = await findUserByEmail(email)
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
@@ -117,7 +134,7 @@ const logout = async (req, res) => {
 const forgetPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    const user = await User.findOne({ where: { email } });
+    const user = await findUserByEmail(email)
     if (!user) return res.status(400).json({ error: "User not found" });
 
     const resetToken = crypto.randomBytes(32).toString('hex');
@@ -154,4 +171,10 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { register, login, logout, forgetPassword, resetPassword };
+module.exports = { 
+  register: [registerValidation, handleValidationErrors, register],
+  login: [loginValidation, handleValidationErrors, login],
+  logout,
+  forgetPassword: [forgetPasswordValidation, handleValidationErrors, forgetPassword],
+  resetPassword: [resetPasswordValidation, handleValidationErrors, resetPassword]
+};
