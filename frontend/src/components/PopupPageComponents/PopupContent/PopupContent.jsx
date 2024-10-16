@@ -2,8 +2,9 @@ import { React } from 'react';
 import styles from './PopupContent.module.scss';
 import DropdownList from '../../DropdownList/DropdownList';
 import CustomTextField from '../../TextFieldComponents/CustomTextField/CustomTextField';
+import {ActionsNames, actionsOptions, ActionsTypes} from "../../../../../Shared/constants.js";
 
-const PopupContent = ({ actionButtonText, setActionButtonText, setActionButtonUrl, buttonAction, actionButtonUrl, setButtonAction }) => {
+const PopupContent = ({ actionButtonText, setActionButtonText, setActionButtonUrl, buttonAction, actionButtonUrl, setButtonAction, buttonActionValue, setButtonActionValue }) => {
     const handleActionButtonText = (event) => {
         setActionButtonText(event.target.value);
       };
@@ -11,13 +12,29 @@ const PopupContent = ({ actionButtonText, setActionButtonText, setActionButtonUr
         setActionButtonUrl(event.target.value);
       };
       const handleActionChange = (newAction) => {
-        setButtonAction(newAction);
+          switch (newAction) {
+              case ActionsNames.NO_ACTION:
+                  setButtonAction(ActionsNames.NO_ACTION);
+                  setButtonActionValue(ActionsTypes.NO_ACTION);
+                  break;
+              case ActionsNames.OPEN_URL:
+                  setButtonAction(ActionsNames.OPEN_URL);
+                  setButtonActionValue(ActionsTypes.OPEN_URL);
+                  break;
+              case ActionsNames.OPEN_URL_IN_NEW_TAB:
+                  setButtonAction(ActionsNames.OPEN_URL_IN_NEW_TAB);
+                  setButtonActionValue(ActionsTypes.OPEN_URL_IN_NEW_TAB);
+                  break;
+              default:
+                  setButtonAction(ActionsNames.NO_ACTION);
+                  setButtonActionValue(ActionsTypes.NO_ACTION);
+          }
       };
     return (
         <div className={styles.container}>
             <h2>Action</h2>
             <DropdownList 
-                actions={['No action', 'Open URL', 'Open URL in a new tab']} 
+                actions={actionsOptions}
                 onActionChange={handleActionChange}
                 selectedActionString={buttonAction}
             />
