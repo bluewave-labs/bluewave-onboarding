@@ -7,7 +7,7 @@ import PopupContent from '../../components/PopupPageComponents/PopupContent/Popu
 import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 import { emitToastError } from '../../utils/guideHelpers';
-import {ActionsTypes} from "../../../../Shared/constants.js";
+import {ACTIONS_TYPES} from "../../utils/constants.js";
 
 const CreatePopupPage = () => {
     const navigate = useNavigate();
@@ -26,7 +26,7 @@ const CreatePopupPage = () => {
 
     const [actionButtonUrl, setActionButtonUrl] = useState("https://");
     const [actionButtonText, setActionButtonText] = useState("Take me to subscription page");
-    const [buttonAction, setButtonAction] = useState(ActionsTypes.OPEN_URL_IN_NEW_TAB);
+    const [buttonAction, setButtonAction] = useState(ACTIONS_TYPES.OPEN_URL_IN_NEW_TAB);
     const [popupSize, setPopupSize] = useState('Small');
 
     const stateList = [
@@ -53,7 +53,7 @@ const CreatePopupPage = () => {
                     setContent(popupData.content || '');
                     setActionButtonUrl(popupData.url || 'https://');
                     setActionButtonText(popupData.actionButtonText || 'Take me to subscription page');
-                    setButtonAction(popupData.closeButtonAction || ActionsTypes.NO_ACTION);
+                    setButtonAction(popupData.closeButtonAction || ACTIONS_TYPES.NO_ACTION);
                     setPopupSize(popupData.popupSize || 'Small');
 
                     console.log('Get popup successful:', popupData);
