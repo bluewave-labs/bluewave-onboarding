@@ -7,7 +7,7 @@ import Link from "@tiptap/extension-link";
 import BulletList from "@tiptap/extension-bullet-list";
 import OrderedList from "@tiptap/extension-ordered-list";
 import Toolbar from "./Toolbar/EditorToolbar";
-import PreviewComponent from "./Preview/PreviewComponent";
+import PopupComponent from "../../products/Popup/PopupComponent";
 import EditorTabs from "./Tabs/EditorTabs";
 import CustomTextField from "../TextFieldComponents/CustomTextField/CustomTextField";
 
@@ -22,6 +22,7 @@ const RichTextEditor = ({
   textColor,
   buttonBackgroundColor,
   buttonTextColor,
+  popupSize,
   sx,
 }) => {
   const [htmlContent, setHtmlContent] = useState("");
@@ -58,7 +59,7 @@ const RichTextEditor = ({
   });
 
   return (
-    <div style={sx}>
+    <div style={{ position: 'relative', ...sx }}>
       {mode === "editor" ? (
         <>
           <CustomTextField
@@ -77,7 +78,7 @@ const RichTextEditor = ({
           </div>
         </>
       ) : (
-        <PreviewComponent
+        <PopupComponent
           header={header}
           content={htmlContent}
           previewBtnText={previewBtnText}
@@ -86,9 +87,15 @@ const RichTextEditor = ({
           buttonBackgroundColor={buttonBackgroundColor}
           buttonTextColor={buttonTextColor}
           textColor={textColor}
+          popupSize={popupSize}
         />
       )}
-      <EditorTabs mode={mode} setMode={setMode} sx={{ marginTop: "1rem" }} />
+      <EditorTabs mode={mode} setMode={setMode}
+        sx={{
+          position: 'absolute',
+          top: '400px',
+          left: 0,
+        }} />
     </div>
   );
 };
