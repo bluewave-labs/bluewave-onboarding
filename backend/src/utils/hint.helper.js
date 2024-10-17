@@ -1,4 +1,4 @@
-const { isValidHexColor } = require("./guideHelpers");
+const { isValidHexColor } = require("./guide.helper");
 
 const validateHintData = ({
   action,
