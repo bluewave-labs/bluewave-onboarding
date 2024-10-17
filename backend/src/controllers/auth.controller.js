@@ -9,6 +9,7 @@ const crypto = require('crypto');
 const { TOKEN_LIFESPAN } = require('../utils/constants');
 const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.service');
 const settings = require("../../config/settings");
+const he = require('he');
 
 const register = async (req, res) => {
   try {
@@ -20,11 +21,11 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     let newUser;
-    if(userCount) {
+    if (userCount) {
       const invite = await Invite.findOne({
         where: { invitedEmail: email }
       })
-      if(!invite) {
+      if (!invite) {
         return res.status(404).json({ error: "Invitation not found or expired" });
       }
 
@@ -34,7 +35,7 @@ const register = async (req, res) => {
         newUser = await User.create({ name, surname, email, password: hashedPassword, role: settings.user.role.admin }, { transaction });
         await transaction.commit();
       }
-      catch(err) {
+      catch (err) {
         await transaction.rollback();
         return res.status(400).json({ error: "Error registering user by invite" });
       }
@@ -49,7 +50,7 @@ const register = async (req, res) => {
 
     await sendSignupEmail(newUser.email, newUser.name);
 
-    res.status(201).json({ user: {id: newUser.id, name: newUser.name, surname: newUser.surname, email: newUser.email, role: settings.user.roleName[newUser.role]}, token });
+    res.status(201).json({ user: { id: newUser.id, name: newUser.name, surname: newUser.surname, email: newUser.email, role: settings.user.roleName[newUser.role] }, token });
   } catch (error) {
     console.error("Error registering user:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -69,7 +70,7 @@ const login = async (req, res) => {
     const token = generateToken({ id: user.id, email: user.email });
     await Token.create({ token, userId: user.id, type: 'auth' });
 
-    res.status(200).json({ user: {id: user.id, name: user.name, surname: user.surname, email: user.email, role: settings.user.roleName[user.role]}, token });
+    res.status(200).json({ user: { id: user.id, name: user.name, surname: user.surname, email: user.email, role: settings.user.roleName[user.role],  picture: he.decode(user.picture || '') }, token });
   } catch (error) {
     console.error("Error logging in user:", error);
     res.status(500).json({ error: "Internal Server Error" });
