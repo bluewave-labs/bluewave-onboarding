@@ -1,12 +1,15 @@
-import React, { useState, useEffect} from "react";
-import EditorInput from "./EditorInput/EditorInput";
-import EditorTabs from "./Tabs/EditorTabs";
-import EditorToolbar from "./Toolbar/EditorToolbar";
-import "react-quill/dist/quill.snow.css";
-import { Box } from "@mui/material";
+import React, { useState, useEffect } from "react";
 import "./RichTextEditor.css";
+import { useEditor, EditorContent } from "@tiptap/react";
+import { StarterKit } from "@tiptap/starter-kit";
+import Heading from "@tiptap/extension-heading";
+import Link from "@tiptap/extension-link";
+import BulletList from "@tiptap/extension-bullet-list";
+import OrderedList from "@tiptap/extension-ordered-list";
+import Toolbar from "./Toolbar/EditorToolbar";
+import PopupComponent from "../../products/Popup/PopupComponent";
+import EditorTabs from "./Tabs/EditorTabs";
 import CustomTextField from "../TextFieldComponents/CustomTextField/CustomTextField";
-import PreviewComponent from "./Preview/PreviewComponent";
 
 const RichTextEditor = ({
   previewBtnText,
@@ -19,14 +22,17 @@ const RichTextEditor = ({
   textColor,
   buttonBackgroundColor,
   buttonTextColor,
-  sx }) => {
-
+  popupSize,
+  sx,
+}) => {
+  const [htmlContent, setHtmlContent] = useState("");
+  const [mode, setMode] = useState("editor");
   const [content, setContent] = useState(initialContent ?? "");
   const [header, setHeader] = useState(initialHeader ?? "");
 
   useEffect(() => {
     if (initialSetContent) initialSetContent(content);
-  }, [content])
+  }, [content]);
 
   const handleHeaderChange = (e) => {
     const newHeader = e.target.value;
@@ -35,54 +41,62 @@ const RichTextEditor = ({
     console.log(header);
   };
 
-  const [mode, setMode] = useState("editor");
-  const modules = {
-    toolbar: {
-      container: "#toolbar",
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        heading: false,
+        bulletList: false,
+        orderedList: false,
+      }),
+      Heading,
+      Link,
+      BulletList,
+      OrderedList,
+    ],
+    onUpdate: ({ editor }) => {
+      setHtmlContent(editor.getHTML());
     },
-    clipboard: {
-      matchVisual: false,
-    },
-  };
+  });
 
   return (
-    <Box className="container" sx={sx}>
+    <div style={{ position: 'relative', ...sx }}>
       {mode === "editor" ? (
         <>
           <CustomTextField
             labelText="Header"
             labelFontWeight={600}
             inputHeight="40px"
-            TextFieldWidth={'100%'}
+            TextFieldWidth={"100%"}
             value={header}
             onChange={handleHeaderChange}
-            style={{ marginBottom: '2rem' }}
+            style={{ marginBottom: "2rem" }}
           />
           <label className="editor-label">Content</label>
-
-          <Box className="row">
-            <EditorToolbar mode={mode} />
-            <EditorInput
-              value={content}
-              onChange={setContent}
-              modules={modules}
-            />
-          </Box>
+          <div className="editor-container">
+            <Toolbar editor={editor} />
+            <EditorContent editor={editor} />
+          </div>
         </>
       ) : (
-        <PreviewComponent
+        <PopupComponent
           header={header}
-          content={content}
+          content={htmlContent}
           previewBtnText={previewBtnText}
           headerBackgroundColor={headerBackgroundColor}
           headerColor={headerColor}
           buttonBackgroundColor={buttonBackgroundColor}
           buttonTextColor={buttonTextColor}
           textColor={textColor}
+          popupSize={popupSize}
         />
       )}
-      <EditorTabs mode={mode} setMode={setMode} sx={{ marginTop: '1rem' }} />
-    </Box>
+      <EditorTabs mode={mode} setMode={setMode}
+        sx={{
+          position: 'absolute',
+          top: '400px',
+          left: 0,
+        }} />
+    </div>
   );
 };
 

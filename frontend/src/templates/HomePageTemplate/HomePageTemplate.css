@@ -3,8 +3,10 @@
     flex-direction: column;
     width:100vw;
     height:100vh;
+    flex-grow: 1;
 }
 
 .content-container{
     display: flex;
+    flex-grow: 1;
 }

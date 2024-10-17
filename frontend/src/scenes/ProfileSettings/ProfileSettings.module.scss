@@ -1,0 +1,82 @@
+@use '../../styles/globals.scss' as *;
+
+.container {
+
+  // background-color: var(--background-color);
+  box-sizing: border-box;
+  padding: 10px 150px 10px 70px;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  .popup {
+    width: 100%;
+    // background-color: white;
+    // box-shadow: 0px 8px 8px -4px var(--shadow-one);
+    // box-shadow: 0px 20px 24px -4px var(--shadow-two);
+
+    .header {
+      font-size: 20px;
+      font-weight: bold;
+      padding: 20px;
+      background-color: var(--header-background);
+      border-bottom: 1px solid var(--light-border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .content {
+      padding: 15px 25px;
+    }
+  }
+
+
+
+  .leftRightContent {
+    display: flex;
+  }
+
+  .buttons {
+    display: flex;
+    border-bottom: 1px solid var(--border-secondary, #EAECF0);
+    margin-top: 1rem;
+  }
+
+  
+
+  .menuButton {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 13px 20px;
+    position: relative;
+    @include text-style(regular);
+    color: var(--second-text-color);
+  }
+
+
+  .menuButton::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+  }
+
+  .menuButton:active,
+  .menuButton.active {
+    color: var(--dark-purple);
+    outline: none;
+    background-color: #F9F5FF;
+  }
+
+  .menuButton:active::after,
+  .menuButton.active::after {
+    background-color: var(--dark-purple);
+  }
+}

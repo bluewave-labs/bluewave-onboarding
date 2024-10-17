@@ -34,6 +34,7 @@
         box-shadow: 0px 1px 2px 0px #1018280D;
         border-radius: 8px;
         width: 450px;
+        margin-bottom: 10px;
     }
     input[type="text"]::placeholder {
         @include text-style(regular);
@@ -60,7 +61,14 @@
     .stepOne{
         display: flex;
         flex-direction: row;
-        align-items: center;
         margin-top: 4rem;
+        justify-content: start;
+    }
+    .invite{
+        display: flex;
+    }
+    .teamMembers{
+        display: flex;
+        flex-direction: column;
     }
 }

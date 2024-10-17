@@ -1,0 +1,40 @@
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  border: 16px solid transparent;
+  box-sizing: border-box;
+  margin-top: 78px;
+  font-family: 'Avenir', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 64px;
+  color: var(--main-text-color);
+}
+
+.sidebar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 200px;
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
+  padding: 0 16px;
+  box-sizing: border-box;
+  font-family: 'Avenir', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--main-text-color);
+}
+
+.logoText {
+  text-align: left;
+  display: flex;
+}
+
+.logoTextPurple {
+  text-align: left;
+  display: flex;
+  color: var(--main-purple);
+}
