@@ -5,6 +5,8 @@ const he = require('he');
 const { internalServerError } = require("../utils/errors");
 
 const userService = new UserService();
+
+
 const isBase64 = value => {
   return /^data:image\/[a-zA-Z]+;base64,/.test(value);
 };
@@ -113,9 +115,9 @@ const updateUserDetails = async (req, res) => {
   const userId = req.user.id;
   const inputs = req.body;
   try {
-    await userService.updateUser(userId, inputs);
+    const updatedUser = await userService.updateUser(userId, inputs);
 
-    return res.status(200).json({ message: "User updated successfully" });
+    return res.status(200).json({ updated: true, user: getUpdatedFields(inputs, updatedUser) });
   } catch (err) {
     const { statusCode, payload } = internalServerError(
       "UPDATE_USER_ERROR",
@@ -140,4 +142,12 @@ const deleteUser = async (req, res) => {
   }
 }
 
-module.exports = { getUsersList, getCurrentUser, updateUserDetails, deleteUser };
+module.exports = {
+  getUsersList,
+  getCurrentUser,
+  updateUserDetails,
+  deleteUser,
+  checkAtLeastOneField,
+  validateProfileUpdate,
+  handleValidationErrors
+};
