@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       closeButtonAction: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           isValidAction(value) {
