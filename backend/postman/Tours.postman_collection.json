@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "49232a94-4163-4b6b-bc79-2d9017404dd8",
+		"name": "Tours",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38229311"
+	},
+	"item": [
+		{
+			"name": "Fetch all Tours",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3Mjc0NjI3NTUsImV4cCI6MTcyNzQ2NjM1NX0.yD0DL-LDFC7O-jgLI_eSHtJw2L1AttsnPv8lOzGzNRw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/tour/all_tours",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tour",
+						"all_tours"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Tour",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3Mjc0NjI3NTUsImV4cCI6MTcyNzQ2NjM1NX0.yD0DL-LDFC7O-jgLI_eSHtJw2L1AttsnPv8lOzGzNRw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Tour 3\",\r\n  \"description\": \"A beautiful journey\",\r\n  \"pageTargeting\": \"equals to\",\r\n  \"theme\": \"default theme\",\r\n  \"triggeringFrequency\": \"Just once\",\r\n  \"createdBy\": 1\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/tour/add_tour",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tour",
+						"add_tour"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3Mjc0NjI3NTUsImV4cCI6MTcyNzQ2NjM1NX0.yD0DL-LDFC7O-jgLI_eSHtJw2L1AttsnPv8lOzGzNRw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Tour 1 Updated\",\r\n  \"description\": \"A beautiful journey\",\r\n  \"pageTargeting\": \"equals to\",\r\n  \"theme\": \"default theme\",\r\n  \"triggeringFrequency\": \"Just once\",\r\n  \"createdBy\": 1\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/tour/edit_tour/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tour",
+						"edit_tour",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuZXdfdXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3Mjc0NjI3NTUsImV4cCI6MTcyNzQ2NjM1NX0.yD0DL-LDFC7O-jgLI_eSHtJw2L1AttsnPv8lOzGzNRw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/tour/delete_tour/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tour",
+						"delete_tour",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
