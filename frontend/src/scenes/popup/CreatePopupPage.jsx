@@ -76,7 +76,7 @@ const CreatePopupPage = () => {
             textColor: textColor,
             buttonBackgroundColor: buttonBackgroundColor,
             buttonTextColor: buttonTextColor,
-            closeButtonAction: buttonAction.toLowerCase(),
+            closeButtonAction: buttonAction,
             header: header,
             content: content
         };

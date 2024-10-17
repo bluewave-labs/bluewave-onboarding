@@ -8,7 +8,11 @@ const PopupContent = ({ actionButtonText, setActionButtonText, setActionButtonUr
     const [buttonActionName, setButtonActionName] = useState(ACTIONS_Names.NO_ACTION);
     useEffect(() => {
         const actionTypeKey = Object.keys(ACTIONS_TYPES).find(key => ACTIONS_TYPES[key] === buttonAction)
-        setButtonActionName(ACTIONS_Names[actionTypeKey]);
+        if (actionTypeKey) {
+            setButtonActionName(ACTIONS_Names[actionTypeKey]);
+        } else {
+            setButtonActionName(ACTIONS_Names.NO_ACTION);
+        }
     }, [buttonAction]);
     const handleActionButtonText = (event) => {
         setActionButtonText(event.target.value);
@@ -22,24 +26,13 @@ const PopupContent = ({ actionButtonText, setActionButtonText, setActionButtonUr
       };
 
       const setButtonActionWithValue = (selectedAction) => {
-          switch (selectedAction) {
-              case ACTIONS_Names.NO_ACTION:
-                  setButtonAction(ACTIONS_TYPES.NO_ACTION);
-                  break;
-              case ACTIONS_Names.OPEN_URL:
-                  setButtonAction(ACTIONS_TYPES.OPEN_URL);
-                  break;
-              case ACTIONS_Names.OPEN_URL_IN_NEW_TAB:
-                  setButtonAction(ACTIONS_TYPES.OPEN_URL_IN_NEW_TAB);
-                  break;
-              default:
-                  setButtonAction(ACTIONS_TYPES.NO_ACTION);
-          }
+          const actionTypeKey = Object.keys(ACTIONS_Names).find(key => ACTIONS_Names[key] === selectedAction);
+          setButtonAction(ACTIONS_TYPES[actionTypeKey] || ACTIONS_TYPES.NO_ACTION);
       }
     return (
         <div className={styles.container}>
             <h2>Action</h2>
-            <DropdownList 
+            <DropdownList
                 actions={ACTIONS_Options}
                 onActionChange={handleActionChange}
                 selectedActionString={buttonActionName}
