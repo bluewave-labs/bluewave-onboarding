@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -11,13 +11,39 @@ import Button from "../../../components/Button/Button";
 import InviteTeamMemberModal from "../../../components/Modals/InviteTeamMemberModal/InviteTeamMemberModal";
 import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
 import { FaCheck } from "react-icons/fa";
+import { handleEditOrgNameSuccess, handleOrgDataError } from "../../../utils/settingsHelper";
+import LoadingArea from "../../../components/LoadingPage/LoadingArea";
+import { getOrgDetails } from "../../../services/settingServices";
+
 
 const TeamTab = () => {
   const [value, setValue] = React.useState('1');
   const [editOrgName, setEditOrgName] = useState(false);
   const [orgName, setOrgName] = useState('BlueWave Labs');
+  const [refetch, setRefetch] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [team, setTeam] = useState([]);
 
   const [openInviteTeamMemberModal, setOpenInviteTeamMemberModal] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(()=>true)
+        const response = await getOrgDetails();
+        if(response.status != 200) {
+          handleOrgDataError(response.data.error || response.data.message);
+        }
+        setOrgName(()=>response.data.name);
+        setTeam(()=>response.data.users);
+        setLoading(()=>false);
+      }
+      catch (error) {
+        console.error("Error fetching team details", error.message);
+        handleOrgDataError("Error fetching team details");
+      }
+    })()
+  }, [refetch])
 
   const handleInviteTeamMemberModalClose = () => {
     setOpenInviteTeamMemberModal(false);
@@ -35,8 +61,21 @@ const TeamTab = () => {
     setOpenInviteTeamMemberModal(true);
   };
 
-  return (
-    <>
+  const handleEditOrgName = async () => {
+    try {
+      const response = await updateTeamName(orgName);
+      if(response.status != 200) {
+        throw new Error(response.data.error || response.data.message);
+      }
+    }
+    catch(error) {
+
+    }
+  }
+
+  return loading
+    ? <LoadingArea />
+    : <>
       <div className={styles.organisation}>
         <h6 className={styles.nameHeading}>Organisation Name</h6>
         <div className={styles.orgNameContainer}>
@@ -55,7 +94,7 @@ const TeamTab = () => {
           />}
           {!editOrgName ?
             <VscEdit aria-label="Edit Organisation Name" className={styles.pencil} onClick={toggleEdit} /> :
-            <FaCheck aria-label="Save Organisation Name" onClick={toggleEdit} className={styles.pencil} color="green"
+            <FaCheck aria-label="Save Organisation Name" onClick={handleEditOrgName} className={styles.pencil} color="green"
             />
           }
 
@@ -105,7 +144,7 @@ const TeamTab = () => {
         <InviteTeamMemberModal open={openInviteTeamMemberModal} handleClose={handleInviteTeamMemberModalClose} />
       </div>
     </>
-  );
+  ;
 };
 
 export default TeamTab;
