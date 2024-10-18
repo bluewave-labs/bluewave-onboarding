@@ -7,11 +7,5 @@ module.exports = Object.freeze({
     ROLE: {
       ADMIN: '1',
       MEMBER: '2'
-    },
-    ACTIONS: {
-        NO_ACTION: 1,
-        OPEN_URL: 2,
-        OPEN_URL_IN_NEW_TAB: 3,
-        CLOSE_POPUP: 4,
     }
   });

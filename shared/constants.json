@@ -1,0 +1,14 @@
+{
+  "ACTIONS_TYPES": {
+    "NO_ACTION": 1,
+    "OPEN_URL": 2,
+    "OPEN_URL_IN_NEW_TAB": 3,
+    "CLOSE_POPUP": 4
+  },
+  "ACTIONS_NAMES": {
+    "NO_ACTION": "No action",
+    "OPEN_URL": "Open URL",
+    "OPEN_URL_IN_NEW_TAB": "Open URL in a new tab",
+    "CLOSE_POPUP": "Close the popup"
+  }
+}
