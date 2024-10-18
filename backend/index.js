@@ -34,7 +34,7 @@ sequelize
   .catch((err) => console.log("Error: " + err));
 
 sequelize
-  .sync({ force: true })
+  .sync({ alter: true })
   .then(() => console.log("Models synced with the database..."))
   .catch((err) => console.log("Error syncing models: " + err));
 
