@@ -3,7 +3,7 @@ import DOMPurify from "dompurify";
 import styles from "./PopupComponent.module.css"; // Use your module CSS file
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Button from "../../components/Button/Button";
-import {ACTIONS_TYPES} from "../../utils/constants.js";
+import constants from "../../../../shared/constants.json";
 
 const PopupComponent = ({
   header,
@@ -31,11 +31,11 @@ const PopupComponent = ({
   };
 
   const handleButtonClick = () => {
-    if (buttonAction === ACTIONS_TYPES.CLOSE_POPUP) {
+    if (buttonAction === constants.ACTIONS_TYPES.CLOSE_POPUP) {
       handleClose();
-    } else if (buttonAction === ACTIONS_TYPES.OPEN_URL) {
+    } else if (buttonAction === constants.ACTIONS_TYPES.OPEN_URL) {
       window.open(actionButtonUrl, '_self'); 
-    } else if (buttonAction === ACTIONS_TYPES.OPEN_URL_IN_NEW_TAB) {
+    } else if (buttonAction === constants.ACTIONS_TYPES.OPEN_URL_IN_NEW_TAB) {
       window.open(actionButtonUrl, '_blank'); 
     }
   };
