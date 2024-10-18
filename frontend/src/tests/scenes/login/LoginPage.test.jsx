@@ -18,8 +18,8 @@ describe('LoginPage', () => {
     );
 
     expect(screen.getByText('Log in to your account')).not.toBeNull();
-    expect(screen.getByLabelText('Email:')).not.toBeNull();
-    expect(screen.getByLabelText('Password:')).not.toBeNull();
+    expect(screen.getByPlaceholderText('Enter email')).not.toBeNull();
+    expect(screen.getByPlaceholderText('Enter password')).not.toBeNull();
     expect(screen.getByText("Don't have an account?")).not.toBeNull();
   });
 
@@ -34,9 +34,9 @@ describe('LoginPage', () => {
       </Router>
     );
 
-    fireEvent.change(screen.getByLabelText('Email:'), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByLabelText('Password:'), { target: { value: 'password' } });
-    fireEvent.click(screen.getByText('Sign in'));
+    fireEvent.change(screen.getByPlaceholderText('Enter email'), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText('Enter password'), { target: { value: 'password' } });
+    fireEvent.click(screen.getByText('Sign In'));
 
     expect(loginServices.login).toHaveBeenCalledWith('test@example.com', 'password');
     // Add more assertions as needed
@@ -53,9 +53,9 @@ describe('LoginPage', () => {
       </Router>
     );
 
-    fireEvent.change(screen.getByLabelText('Email:'), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByLabelText('Password:'), { target: { value: 'wrongpassword' } });
-    fireEvent.click(screen.getByText('Sign in'));
+    fireEvent.change(screen.getByPlaceholderText('Enter email'), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText('Enter password'), { target: { value: 'wrongpassword' } });
+    fireEvent.click(screen.getByText('Sign In'));
 
     expect(await screen.findByText('Invalid credentials')).not.toBeNull();
   });

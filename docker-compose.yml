@@ -15,6 +15,11 @@ services:
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
       - JWT_SECRET=${JWT_SECRET}
+      - EMAIL=${EMAIL}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_ENABLE=${EMAIL_ENABLE}
     command: >
       bash -c "if ! npx sequelize-cli db:migrate; then
         if ! npx sequelize-cli db:create; then
@@ -41,6 +46,7 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
   frontend:
     build: ./frontend
     volumes:
@@ -52,6 +58,12 @@ services:
       - NODE_ENV=production
     command: >
       bash -c "npm run build && npm run preview"
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
 
 volumes:
   pgdata:

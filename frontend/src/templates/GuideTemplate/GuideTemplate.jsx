@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import Button from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 
-const GuideTemplate = ({ title = '', handleButtonClick = () => null, activeButton = 0, leftContent = () => null, rightContent = () => null, leftAppearance = () => null, onSave= () => null }) => {
+const GuideTemplate = ({ title = '', handleButtonClick = () => null, activeButton = 0, leftContent = () => null, rightContent = () => null, leftAppearance = () => null, onSave= () => null, contentType = "/" }) => {
     const navigate = useNavigate();
     const buttons = ['Content', 'Appearance'];
     return (
@@ -14,7 +14,7 @@ const GuideTemplate = ({ title = '', handleButtonClick = () => null, activeButto
             <div className={styles.popup}>
                 <div className={styles.header}>
                     <span style={{ marginLeft: '5px' }}>{title}</span>
-                    <CloseOutlinedIcon style={{ color: '#98A2B3', fontSize: '20px' }} />
+                    <CloseOutlinedIcon style={{ color: '#98A2B3', fontSize: '20px', cursor: "pointer" }} onClick={() => navigate(`/${contentType}`)} />
                 </div>
                 <div className={styles.content}>
                     {/* Content and Appereance buttons */}

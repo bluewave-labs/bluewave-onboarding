@@ -1,5 +1,3 @@
-'use strict';
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -19,7 +17,7 @@ module.exports = {
     await queryInterface.addColumn("users", "username", {
       type: Sequelize.STRING(50),
       allowNull: false,
-      unique: true
+      defaultValue: ""
     });
   },
 };

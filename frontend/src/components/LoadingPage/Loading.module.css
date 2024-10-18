@@ -1,0 +1,36 @@
+@import url(../../styles/variables.css);
+
+.container{
+  display: flex;
+  flex-direction: column;
+  width:100vw;
+  height:100vh;
+  flex-grow: 1;
+}
+
+.loading-container {
+  display: flex;
+  flex-grow: 1;
+}
+
+.loading {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+}
+
+.loading::after {
+  content: "";
+  width: 50px;
+  height: 50px;
+  border: 10px solid #dddddd;
+  border-top-color: var(--main-purple);
+  border-radius: 50%;
+  animation: loading 1s ease infinite;
+}
+
+@keyframes loading {
+  to {
+    transform: rotate(1turn);
+  }
+}
