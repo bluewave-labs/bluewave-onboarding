@@ -1,8 +1,65 @@
 const settings = require("../../config/settings");
+const { body, validationResult } = require('express-validator');
 const UserService = require("../service/user.service");
+const he = require('he');
 const { internalServerError } = require("../utils/errors");
 
 const userService = new UserService();
+
+
+const isBase64 = value => {
+  return /^data:image\/[a-zA-Z]+;base64,/.test(value);
+};
+
+const checkAtLeastOneField = (req, res, next) => {
+  const { name, surname, picture } = req.body;
+
+  if (name === undefined && surname === undefined && picture === undefined) {
+    console.error("At least one of 'name', 'surname', or 'picture' must be provided");
+    return res.status(400).json({
+      updated: false,
+      error: "Error, no value(s) provided to update"
+    });
+  }
+
+  next();
+};
+
+const handleValidationErrors = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ updated: false, errors: errors.array() });
+  }
+  next();
+};
+
+const validateProfileUpdate = [
+  body('name').optional().isString().trim().escape(),
+  body('surname').optional().isString().trim().escape(),
+  body('picture').optional().custom(value => {
+    if (value === null) return true;
+    if (isBase64(value) || body('picture').isURL().run(value)) return true;
+    throw new Error('Picture must be either a valid URL or a base64 encoded string')
+  }).trim().escape(),
+];
+
+const getUpdatedFields = (original, updated) => {
+  const result = {};
+
+  Object.keys(original).forEach(key => {
+    if (updated[key]) {
+      if (key === 'picture') {
+        result[key] = he.decode(updated[key]); // unescape picture
+      } else {
+        result[key] = updated[key];
+      }
+    } else if (key === 'picture' && !updated[key]) { //if picture is deleted return null;
+      result[key] = null;
+    }
+  })
+
+  return result;
+}
 
 const getUsersList = async (req, res) => {
   const { page = 1, limit = 10, search = "" } = req.query;
@@ -58,9 +115,9 @@ const updateUserDetails = async (req, res) => {
   const userId = req.user.id;
   const inputs = req.body;
   try {
-    await userService.updateUser(userId, inputs);
+    const updatedUser = await userService.updateUser(userId, inputs);
 
-    return res.status(200).json({ message: "User updated successfully" });
+    return res.status(200).json({ updated: true, user: getUpdatedFields(inputs, updatedUser) });
   } catch (err) {
     const { statusCode, payload } = internalServerError(
       "UPDATE_USER_ERROR",
@@ -85,4 +142,12 @@ const deleteUser = async (req, res) => {
   }
 }
 
-module.exports = { getUsersList, getCurrentUser, updateUserDetails, deleteUser };
+module.exports = {
+  getUsersList,
+  getCurrentUser,
+  updateUserDetails,
+  deleteUser,
+  checkAtLeastOneField,
+  validateProfileUpdate,
+  handleValidationErrors
+};
