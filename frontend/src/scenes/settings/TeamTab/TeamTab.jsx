@@ -11,7 +11,7 @@ import Button from "../../../components/Button/Button";
 import InviteTeamMemberModal from "../../../components/Modals/InviteTeamMemberModal/InviteTeamMemberModal";
 import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
 import { FaCheck, FaCross, FaTimes } from "react-icons/fa";
-import { handleEditOrgNameSuccess, handleGenericError, handleRemoveTeamMemberSuccess } from "../../../utils/settingsHelper";
+import { handleChangeRoleSuccess, handleEditOrgNameSuccess, handleGenericError, handleInviteMemberSuccess, handleRemoveTeamMemberSuccess } from "../../../utils/settingsHelper";
 import LoadingArea from "../../../components/LoadingPage/LoadingArea";
 import { changeMemberRole, getOrgDetails, inviteMember, removeTeamMember, updateTeamDetails } from "../../../services/settingServices";
 import RemoveTeamMemberModal from "../../../components/Modals/RemoveTeamMemberModal/RemoveTeamMemberModal";
@@ -83,10 +83,8 @@ const TeamTab = () => {
 
   const handleRemoveTeamMember = async () => {
     try {
-      console.log("🚀 ~ handleRemoveTeamMember ~ selectedMember:", selectedMember)
       const response = await removeTeamMember(selectedMember.id);
-      
-      handleRemoveTeamMemberSuccess("Team Member Successfully Removed");
+      handleRemoveTeamMemberSuccess(response, "Team Member Successfully Removed");
       setRefetch(()=>refetch ? false : true);
     }
     catch(error) {
@@ -100,11 +98,7 @@ const TeamTab = () => {
   const handleInviteTeamMember = async (inputs) => {
     try {
       const response = await inviteMember(inputs);
-      if(response.status != 200) {
-        throw new Error(response.data.error || response.data.message);
-      }
-      // handle("Team Member Successfully Removed");
-      // setRefetch(()=>refetch ? false : true);
+      handleInviteMemberSuccess(response, "Member Invited!")
     }
     catch(error) {
       handleGenericError("Error Removing Team Member");
@@ -117,14 +111,11 @@ const TeamTab = () => {
   const handleChangeRole = async () => {
     try {
       const response = await changeMemberRole(selectedMember);
-      if(response.status != 200) {
-        throw new Error(response.data.error || response.data.message);
-      }
-      // handleRemoveTeamMemberSuccess("Team Member Successfully Removed");
+      handleChangeRoleSuccess(response, "Role Changed Successfully");
       setRefetch(()=>refetch ? false : true);
     }
     catch(error) {
-      // handleRemoveTeamMemberError("Error Removing Team Member");
+      handleGenericError("Error Changing Role");
     }
     finally {
       setOpenChangeMemberRoleModal(false);

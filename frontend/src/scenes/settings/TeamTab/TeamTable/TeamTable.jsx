@@ -9,14 +9,10 @@ import Paper from '@mui/material/Paper';
 import styles from './TeamTable.module.css';
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useAuth } from '../../../../services/authProvider';
-import DropdownList from '../../../../components/DropdownList/DropdownList';
-import { roles } from '../../../../utils/constants';
 
 export default function TeamTable({ team, setRemoveModalOpen, setChangeRoleModalOpen, setSelectedMember }) {
 
   const { userInfo } = useAuth();
-  console.log("🚀 ~ TeamTable ~ userInfo:", userInfo)
-  console.log("🚀 ~ TeamTable ~ userInfo:", userInfo)
 
   const handleRemoveMember = async (member) => {
     setSelectedMember(()=>member)

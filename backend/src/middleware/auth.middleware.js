@@ -5,12 +5,10 @@ const User = db.User;
 
 const authenticateJWT = async (req, res, next) => {
   const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
-  console.log("🚀 ~ authenticateJWT ~ token:", token)
   if (!token) return res.status(401).json({ error: "No token provided" });
 
   try {
     const decoded = verifyToken(token);
-    console.log("🚀 ~ authenticateJWT ~ decoded:", decoded)
     if (!decoded) return res.status(401).json({ error: "Invalid token" });
 
     const dbToken = await Token.findOne({ where: { token, userId: decoded.id, type: 'auth' } });

@@ -56,9 +56,7 @@ const getCurrentUser = async (req, res) => {
 
 const updateUserDetails = async (req, res) => {
   const userId = req.user.id;
-  console.log("🚀 ~ updateUserDetails ~ userId:", userId)
   const inputs = req.body;
-  console.log("🚀 ~ updateUserDetails ~ inputs:", inputs)
   try {
     await userService.updateUser(userId, inputs);
 
