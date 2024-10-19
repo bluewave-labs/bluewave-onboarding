@@ -1,4 +1,4 @@
-const { validateHexColor, validateActionButton } = require('../utils/guideHelpers');
+const { validateHexColor, validateActionButton } = require('../utils/guide.helper');
 const { validatePositionWrapper } = require('../utils/banner.helper');
 
 module.exports = (sequelize, DataTypes) => {

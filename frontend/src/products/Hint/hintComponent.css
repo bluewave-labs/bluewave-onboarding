@@ -20,17 +20,7 @@
   line-height: 24px;
 }
 
-.preview-container h3 {
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 30px;
-  text-align: left;
-  padding: 0 2rem;
-}
-
 .preview-button-container {
-  display: flex;
-  justify-content: flex-end;
   margin-top: 0.5rem;
   padding: 0 2rem;
 }

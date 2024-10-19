@@ -3,7 +3,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
-const jsonErrorMiddleware = require("./src/middleware/jsonErrorMiddleware");
+const jsonErrorMiddleware = require("./src/middleware/jsonError.middleware");
 
 // Load environment variables from .env file
 dotenv.config();

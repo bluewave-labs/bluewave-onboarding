@@ -38,7 +38,7 @@ const RichTextEditor = ({ sx = {}, previewComponent = null }) => {
   });
 
   return (
-    <div style={sx}>
+    <div style={{ position: 'relative', ...sx }}>
       {mode === "editor" ? (
         <>
           <CustomTextField
@@ -59,7 +59,12 @@ const RichTextEditor = ({ sx = {}, previewComponent = null }) => {
       ) : (
         React.cloneElement(previewComponent, { header, htmlContent })
       )}
-      <EditorTabs mode={mode} setMode={setMode} sx={{ marginTop: "1rem" }} />
+      <EditorTabs mode={mode} setMode={setMode}
+        sx={{
+          position: 'absolute',
+          top: '400px',
+          left: 0,
+        }} />
     </div>
   );
 };
