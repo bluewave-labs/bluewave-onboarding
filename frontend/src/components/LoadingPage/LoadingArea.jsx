@@ -3,9 +3,7 @@ import styles from './Loading.module.css';
 
 const LoadingArea = () => {
     return (
-
-                <div className={styles["loading"]}></div>
-  
+        <div className={styles["loading"]}></div>
     );
 };
 

@@ -1,8 +1,5 @@
 import toastEmitter, { TOAST_EMITTER_KEY } from './toastEmitter';
 
-export const handleGetUserSettings = (message) => {
-}
-
 export const handleNothingToUpdateProfile = (message) => {
     toastEmitter.emit(TOAST_EMITTER_KEY, message);
 }
