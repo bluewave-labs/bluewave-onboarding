@@ -13,7 +13,7 @@ import CustomTextField from "../../../components/TextFieldComponents/CustomTextF
 import { FaCheck, FaCross, FaTimes } from "react-icons/fa";
 import { handleEditOrgNameSuccess, handleOrgDataError, handleRemoveTeamMemberError, handleRemoveTeamMemberSuccess } from "../../../utils/settingsHelper";
 import LoadingArea from "../../../components/LoadingPage/LoadingArea";
-import { getOrgDetails, removeTeamMember, updateTeamDetails } from "../../../services/settingServices";
+import { getOrgDetails, inviteMember, removeTeamMember, updateTeamDetails } from "../../../services/settingServices";
 import RemoveTeamMemberModal from "../../../components/Modals/RemoveTeamMemberModal/RemoveTeamMemberModal";
 
 
@@ -102,6 +102,40 @@ const TeamTab = () => {
     }
   }
 
+  const handleInviteTeamMember = async (inputs) => {
+    try {
+      const response = await inviteMember(inputs);
+      if(response.status != 200) {
+        throw new Error(response.data.error || response.data.message);
+      }
+      // handle("Team Member Successfully Removed");
+      // setRefetch(()=>refetch ? false : true);
+    }
+    catch(error) {
+      // handleRemoveTeamMemberError("Error Removing Team Member");
+    }
+    finally {
+      setOpenInviteTeamMemberModal(false);
+    }
+  }
+
+  const handleChangeRole = async () => {
+    try {
+      const response = await changeMemberRole(selectedMember.id);
+      if(response.status != 200) {
+        throw new Error(response.data.error || response.data.message);
+      }
+      handleRemoveTeamMemberSuccess("Team Member Successfully Removed");
+      setRefetch(()=>refetch ? false : true);
+    }
+    catch(error) {
+      handleRemoveTeamMemberError("Error Removing Team Member");
+    }
+    finally {
+      setOpenRemoveTeamMemberModal(false);
+    }
+  }
+
   return loading
     ? <LoadingArea />
     : <>
@@ -172,7 +206,7 @@ const TeamTab = () => {
             </TabContext>
           </Box>
         </div>
-        <InviteTeamMemberModal open={openInviteTeamMemberModal} handleClose={handleInviteTeamMemberModalClose} />
+        <InviteTeamMemberModal open={openInviteTeamMemberModal} handleClose={handleInviteTeamMemberModalClose} handleInviteTeamMember={handleInviteTeamMember} />
         <RemoveTeamMemberModal open={openRemoveTeamMemberModal} setModalOpen={setOpenRemoveTeamMemberModal} selectedMember={selectedMember} handleRemoveTeamMember={handleRemoveTeamMember} />
       </div>
     </>

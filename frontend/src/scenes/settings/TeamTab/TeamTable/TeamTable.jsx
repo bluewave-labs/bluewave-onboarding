@@ -8,8 +8,12 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import styles from './TeamTable.module.css';
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useAuth } from '../../../../services/authProvider';
 
 export default function TeamTable({ team, setModalOpen, setSelectedMember }) {
+
+  const { userInfo } = useAuth();
+  console.log("🚀 ~ TeamTable ~ userInfo:", userInfo)
 
   const handleRemoveMember = async (member) => {
     setSelectedMember(()=>member)
@@ -37,7 +41,7 @@ export default function TeamTable({ team, setModalOpen, setSelectedMember }) {
               <TableCell className={styles.data}>{member.email}</TableCell>
               <TableCell className={styles.data}>{member.role}</TableCell>
               <TableCell className={styles.data}>
-                {member.role == "admin" && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveMember(member)} />}
+                {member.role == "admin" && member.id==userInfo.id && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveMember(member)} />}
               </TableCell>
             </TableRow>
           ))}

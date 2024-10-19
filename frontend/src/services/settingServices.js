@@ -43,7 +43,17 @@ export const updateTeamDetails = async (orgName) => {
 
 export const removeTeamMember = async (memberId) => {
     try {
-        const response = await apiClient.put('/team/remove', { memberId });
+        const response = await apiClient.delete('/team/remove', { memberId });
+        return response;
+    } catch (error) {
+        console.error('Error updating organisation: ', error.response);
+        throw error;
+    }
+}
+
+export const inviteMember = async (inputs) => {
+    try {
+        const response = await apiClient.post('/team/invite', { invitedEmail: inputs.email, role: inputs.role });
         return response;
     } catch (error) {
         console.error('Error updating organisation: ', error.response);

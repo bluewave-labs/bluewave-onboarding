@@ -6,6 +6,8 @@ const inviteService = new InviteService();
 const sendTeamInvite = async (req, res) => {
   const userId = req.user.id;
   const { invitedEmail, role } = req.body;
+  console.log("🚀 ~ sendTeamInvite ~ role:", role)
+  console.log("🚀 ~ sendTeamInvite ~ invitedEmail:", invitedEmail)
   try {
     await inviteService.sendInvite(userId, invitedEmail, role);
     return res.status(200).json({ message: "Invite Sent Successfully" });
