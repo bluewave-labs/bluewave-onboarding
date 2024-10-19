@@ -3,6 +3,7 @@ import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import RichTextEditor from "../../components/RichTextEditor/RichTextEditor";
 import HintLeftContent from "../../components/HintPageComponents/HintLeftContent/HintLeftContent";
 import HintLeftAppearance from "../../components/HintPageComponents/HintLeftAppearance/HintLeftAppearance";
+import HintComponent from "../../products/Hint/HintComponent";
 
 const HintPage = () => {
   const [activeButton, setActiveButton] = useState(0);
@@ -16,7 +17,7 @@ const HintPage = () => {
     setActiveButton(index);
   };
 
-  const [headerBackgroundColor, setHeaderBackgroundColor] = useState("#F8F9F8");
+  const [headerBackgroundColor, setHeaderBackgroundColor] = useState("#FFFFFF");
   const [headerColor, setHeaderColor] = useState("#101828");
   const [textColor, setTextColor] = useState("#344054");
   const [buttonBackgroundColor, setButtonBackgroundColor] = useState("#7F56D9");
@@ -54,18 +55,20 @@ const HintPage = () => {
       handleButtonClick={handleButtonClick}
       rightContent={() => (
         <RichTextEditor
-          previewBtnText={leftContentFormData.actionButtonText}
-          headerBackgroundColor={headerBackgroundColor}
-          headerColor={headerColor}
-          textColor={textColor}
-          buttonBackgroundColor={buttonBackgroundColor}
-          buttonTextColor={buttonTextColor}
           sx={{
             width: "100%",
             maxWidth: "700px",
             marginLeft: "2.5rem",
             marginTop: "1rem",
           }}
+          previewComponent={<HintComponent
+              previewBtnText={leftContentFormData.actionButtonText}
+              headerBackgroundColor={headerBackgroundColor}
+              headerColor={headerColor}
+              textColor={textColor}
+              buttonBackgroundColor={buttonBackgroundColor}
+              buttonTextColor={buttonTextColor}
+            />}
         />
       )}
       leftContent={() => (

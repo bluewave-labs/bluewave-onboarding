@@ -1,17 +1,23 @@
 .preview-container {
+  width: 70%;
+  height: 60%;
   border: 1px solid var(--light-border-color);
   margin-top: 1rem;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
 }
 
-.preview-content{
-  padding: 12px 15px;
+.preview-content {
   color: var(--second-text-color);
   font-size: 13px;
+  padding: 0 2rem;
 }
 
 .preview-content p {
-  margin: 0.5rem 0;
+  margin: 0.1rem 0;
+  line-height: 24px;
 }
 
 .preview-container h3 {
@@ -19,21 +25,16 @@
   font-weight: 600;
   line-height: 30px;
   text-align: left;
+  padding: 0 2rem;
 }
 
 .preview-button-container {
   display: flex;
   justify-content: flex-end;
-  margin-top: 5rem;
+  margin-top: 0.5rem;
+  padding: 0 2rem;
 }
 
-.header {
-  font-size: 20px;
-  font-weight: bold;
-  background-color: var(--header-background);
-  border-bottom: 1px solid var(--light-border-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
+.preview-button-container button {
+  margin: 0;
 }
