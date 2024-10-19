@@ -11,10 +11,11 @@ import Button from "../../../components/Button/Button";
 import InviteTeamMemberModal from "../../../components/Modals/InviteTeamMemberModal/InviteTeamMemberModal";
 import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
 import { FaCheck, FaCross, FaTimes } from "react-icons/fa";
-import { handleEditOrgNameSuccess, handleOrgDataError, handleRemoveTeamMemberError, handleRemoveTeamMemberSuccess } from "../../../utils/settingsHelper";
+import { handleEditOrgNameSuccess, handleGenericError, handleRemoveTeamMemberSuccess } from "../../../utils/settingsHelper";
 import LoadingArea from "../../../components/LoadingPage/LoadingArea";
-import { getOrgDetails, inviteMember, removeTeamMember, updateTeamDetails } from "../../../services/settingServices";
+import { changeMemberRole, getOrgDetails, inviteMember, removeTeamMember, updateTeamDetails } from "../../../services/settingServices";
 import RemoveTeamMemberModal from "../../../components/Modals/RemoveTeamMemberModal/RemoveTeamMemberModal";
+import ChangeMemberRoleModal from "../../../components/Modals/ChangeMemberRoleModal/ChangeMemberRoleModal";
 
 
 const TeamTab = () => {
@@ -27,8 +28,9 @@ const TeamTab = () => {
 
   const [openInviteTeamMemberModal, setOpenInviteTeamMemberModal] = useState(false);
   const [openRemoveTeamMemberModal, setOpenRemoveTeamMemberModal] = useState(false);
+  const [openChangeMemberRoleModal, setOpenChangeMemberRoleModal] = useState(false);
 
-  const [selectedMember, setSelectedMember] = useState({name:"asd"});
+  const [selectedMember, setSelectedMember] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -44,7 +46,7 @@ const TeamTab = () => {
       }
       catch (error) {
         console.error("Error fetching team details", error.message);
-        handleOrgDataError("Error fetching team details");
+        handleGenericError("Error fetching team details");
       }
     })()
   }, [refetch])
@@ -68,17 +70,11 @@ const TeamTab = () => {
   const handleEditOrgName = async () => {
     try {
       const response = await updateTeamDetails(orgName);
-      if(response.status != 200) {
-        throw new Error(response.data.error || response.data.message);
-      }
-      // originalOrgName = orgName;
-      
-      // setOrgName(()=>response.data.name);
-      // setTeam(()=>response.data.users);
+      handleEditOrgNameSuccess(response, "Team Name Changed Successfully");
+      setRefetch(()=>refetch ? false : true);
     }
     catch(error) {
-      // setOrgName(()=>originalOrgName);
-      handleOrgDataError("Error updating team name");
+      handleGenericError("Error updating team name");
     }
     finally {
       setEditOrgName(false);
@@ -87,15 +83,14 @@ const TeamTab = () => {
 
   const handleRemoveTeamMember = async () => {
     try {
+      console.log("🚀 ~ handleRemoveTeamMember ~ selectedMember:", selectedMember)
       const response = await removeTeamMember(selectedMember.id);
-      if(response.status != 200) {
-        throw new Error(response.data.error || response.data.message);
-      }
+      
       handleRemoveTeamMemberSuccess("Team Member Successfully Removed");
       setRefetch(()=>refetch ? false : true);
     }
     catch(error) {
-      handleRemoveTeamMemberError("Error Removing Team Member");
+      handleGenericError("Error Removing Team Member");
     }
     finally {
       setOpenRemoveTeamMemberModal(false);
@@ -112,7 +107,7 @@ const TeamTab = () => {
       // setRefetch(()=>refetch ? false : true);
     }
     catch(error) {
-      // handleRemoveTeamMemberError("Error Removing Team Member");
+      handleGenericError("Error Removing Team Member");
     }
     finally {
       setOpenInviteTeamMemberModal(false);
@@ -121,18 +116,18 @@ const TeamTab = () => {
 
   const handleChangeRole = async () => {
     try {
-      const response = await changeMemberRole(selectedMember.id);
+      const response = await changeMemberRole(selectedMember);
       if(response.status != 200) {
         throw new Error(response.data.error || response.data.message);
       }
-      handleRemoveTeamMemberSuccess("Team Member Successfully Removed");
+      // handleRemoveTeamMemberSuccess("Team Member Successfully Removed");
       setRefetch(()=>refetch ? false : true);
     }
     catch(error) {
-      handleRemoveTeamMemberError("Error Removing Team Member");
+      // handleRemoveTeamMemberError("Error Removing Team Member");
     }
     finally {
-      setOpenRemoveTeamMemberModal(false);
+      setOpenChangeMemberRoleModal(false);
     }
   }
 
@@ -200,14 +195,15 @@ const TeamTab = () => {
                 // onClick={handleSubmit}
                 />
               </Box>
-              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="1"><TeamTable team={team} setModalOpen={setOpenRemoveTeamMemberModal} setSelectedMember={setSelectedMember}/></TabPanel>
-              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="2"><TeamTable team={team.filter((user)=>user.role=="admin")} setModalOpen={setOpenRemoveTeamMemberModal} setSelectedMember={setSelectedMember}/></TabPanel>
-              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="3"><TeamTable team={team.filter((user) => user.role=="member")} setModalOpen={setOpenRemoveTeamMemberModal} setSelectedMember={setSelectedMember}/></TabPanel>
+              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="1"><TeamTable team={team} setRemoveModalOpen={setOpenRemoveTeamMemberModal} setChangeRoleModalOpen={setOpenChangeMemberRoleModal} setSelectedMember={setSelectedMember}/></TabPanel>
+              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="2"><TeamTable team={team.filter((user)=>user.role=="admin")} setRemoveModalOpen={setOpenRemoveTeamMemberModal} setChangeRoleModalOpen={setOpenChangeMemberRoleModal} setSelectedMember={setSelectedMember}/></TabPanel>
+              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="3"><TeamTable team={team.filter((user) => user.role=="member")} setRemoveModalOpen={setOpenRemoveTeamMemberModal} setChangeRoleModalOpen={setOpenChangeMemberRoleModal} setSelectedMember={setSelectedMember}/></TabPanel>
             </TabContext>
           </Box>
         </div>
         <InviteTeamMemberModal open={openInviteTeamMemberModal} handleClose={handleInviteTeamMemberModalClose} handleInviteTeamMember={handleInviteTeamMember} />
         <RemoveTeamMemberModal open={openRemoveTeamMemberModal} setModalOpen={setOpenRemoveTeamMemberModal} selectedMember={selectedMember} handleRemoveTeamMember={handleRemoveTeamMember} />
+        <ChangeMemberRoleModal open={openChangeMemberRoleModal} setModalOpen={setOpenChangeMemberRoleModal} selectedMember={selectedMember} handleChangeRole={handleChangeRole} />
       </div>
     </>
   ;

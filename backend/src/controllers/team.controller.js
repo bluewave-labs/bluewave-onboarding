@@ -14,6 +14,7 @@ const getTeamDetails = async (req, res) => {
     const result = {
         name: data.team.name,
         users: data.users.map((user)=> ({
+            id: user.id,
             name: user.name,
             email: user.email,
             role: settings.user.roleName[user.role],
@@ -46,7 +47,7 @@ const updateTeamDetails = async (req, res) => {
 
 const removeMember = async (req, res) => {
   const userId = req.user.id;
-  const { memberId } = req.body;
+  const { memberId } = req.params;
   try {
     await teamService.removeUserFromTeam(userId, memberId);
     return res.status(200).json({ message: "User Removed from Team Successfully" });

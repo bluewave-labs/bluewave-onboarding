@@ -21,8 +21,8 @@ const InviteTeamMemberModal = ({ open, handleClose, handleInviteTeamMember }) =>
         e.preventDefault();
         const formData = new FormData(e.target);
         handleInviteTeamMember({email: formData.get("email"), role: formData.get("role")})
+        setEmail("");
     }
-
 
     return (
         <Modal
@@ -56,7 +56,7 @@ const InviteTeamMemberModal = ({ open, handleClose, handleInviteTeamMember }) =>
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <div style={{ display: 'flex', gap: '10px' }}>
                             <Button buttonType='secondary-grey' text='Cancel' onClick={handleClose} />
-                            <Button type='submit' buttonType='' text='Send Invite' />
+                            <Button type='submit' buttonType='primary' text='Send Invite' />
                         </div>
                     </div>
                 </form>

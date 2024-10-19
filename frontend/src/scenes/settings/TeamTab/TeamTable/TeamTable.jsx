@@ -9,16 +9,24 @@ import Paper from '@mui/material/Paper';
 import styles from './TeamTable.module.css';
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useAuth } from '../../../../services/authProvider';
+import DropdownList from '../../../../components/DropdownList/DropdownList';
+import { roles } from '../../../../utils/constants';
 
-export default function TeamTable({ team, setModalOpen, setSelectedMember }) {
+export default function TeamTable({ team, setRemoveModalOpen, setChangeRoleModalOpen, setSelectedMember }) {
 
   const { userInfo } = useAuth();
+  console.log("🚀 ~ TeamTable ~ userInfo:", userInfo)
   console.log("🚀 ~ TeamTable ~ userInfo:", userInfo)
 
   const handleRemoveMember = async (member) => {
     setSelectedMember(()=>member)
-    setModalOpen(()=>true);
-  } 
+    setRemoveModalOpen(()=>true);
+  }
+
+  const handleChangeRole = async (member, role) => {
+    // setSelectedMember(()=>({...member, newRole: role}));
+    // setChangeRoleModalOpen(()=>true)
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -39,9 +47,11 @@ export default function TeamTable({ team, setModalOpen, setSelectedMember }) {
                 <span className={styles.data}>Created {member.createdAt}</span>
               </TableCell>
               <TableCell className={styles.data}>{member.email}</TableCell>
-              <TableCell className={styles.data}>{member.role}</TableCell>
               <TableCell className={styles.data}>
-                {member.role == "admin" && member.id==userInfo.id && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveMember(member)} />}
+                {member.role}
+              </TableCell>
+              <TableCell className={styles.data}>
+                {member.role == "admin" && member.id!=userInfo.id && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveMember(member)} />}
               </TableCell>
             </TableRow>
           ))}

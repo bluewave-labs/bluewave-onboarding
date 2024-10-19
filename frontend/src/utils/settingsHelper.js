@@ -20,28 +20,38 @@ export const handleProfileUpdateSuccess = (response, updateProfile) => {
     }
 };
 
-export const handleOrgDataError = (message) => {
+export const handleGenericError = (message) => {
     toastEmitter.emit(TOAST_EMITTER_KEY, message);
 }
 
-export const handleEditOrgNameSuccess = (message) => {
-    // if (response.status == 200) {
-    //     setOrgName(userData);
+export const handleEditOrgNameSuccess = (response, message) => {
+    if (response.status == 200) {
         toastEmitter.emit(TOAST_EMITTER_KEY, message);
-    // } else {
-    //     toastEmitter.emit(TOAST_EMITTER_KEY, 'Error updating profile !');
-    // }
+    } else {
+        toastEmitter.emit(TOAST_EMITTER_KEY, 'Error updating team name!');
+    }
 };
 
-export const handleRemoveTeamMemberError = (message) => {
-    toastEmitter.emit(TOAST_EMITTER_KEY, message);
-}
+export const handleRemoveTeamMemberSuccess = (response, message) => {
+    if (response.status == 200) {
+        toastEmitter.emit(TOAST_EMITTER_KEY, message);
+    } else {
+        toastEmitter.emit(TOAST_EMITTER_KEY, "Error Removing Team Member");
+    }
+};
 
-export const handleRemoveTeamMemberSuccess = (response, setOrgName) => {
-    // if (response.status == 200) {
-    //     setOrgName(userData);
-        toastEmitter.emit(TOAST_EMITTER_KEY, 'Profile updated successfully !');
-    // } else {
-    //     toastEmitter.emit(TOAST_EMITTER_KEY, 'Error updating profile !');
-    // }
+export const handleInviteMemberSuccess = (response, message) => {
+    if (response.status == 200) {
+        toastEmitter.emit(TOAST_EMITTER_KEY, message);
+    } else {
+        toastEmitter.emit(TOAST_EMITTER_KEY, "Error Inviting User");
+    }
+};
+
+export const handleChangeRoleSuccess = (response, message) => {
+    if (response.status == 200) {
+        toastEmitter.emit(TOAST_EMITTER_KEY, message);
+    } else {
+        toastEmitter.emit(TOAST_EMITTER_KEY, "Error Changing Role");
+    }
 };
