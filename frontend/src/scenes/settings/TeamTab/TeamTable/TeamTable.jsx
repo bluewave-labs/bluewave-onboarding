@@ -9,14 +9,7 @@ import Paper from '@mui/material/Paper';
 import styles from './TeamTable.module.css';
 import { RiDeleteBinLine } from "react-icons/ri";
 
-const tableData = [
-    { name: "John Connor", date: 'Created 10/4/2022', email: 'john@domain.com', role: 'Administrator', action: <RiDeleteBinLine style={{ fontSize: '20px' }} /> },
-    { name: "Adam McFadden", date: 'Created 10/4/2022', email: 'adam@domain.com', role: 'Member', action: <RiDeleteBinLine style={{ fontSize: '20px' }} /> },
-    { name: "Cris Cross", date: 'Created 10/4/2022', email: 'cris@domain.com', role: 'Member', action: <RiDeleteBinLine style={{ fontSize: '20px' }} /> },
-    { name: "Prince", date: 'Created 10/4/2022', email: 'prince@domain.com', role: 'Member', action: <RiDeleteBinLine style={{ fontSize: '20px' }} /> }
-];
-
-export default function TeamTable({ team }) {
+export default function TeamTable({ team, setModalOpen }) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650}} aria-label="simple table">
@@ -37,7 +30,9 @@ export default function TeamTable({ team }) {
               </TableCell>
               <TableCell className={styles.data}>{user.email}</TableCell>
               <TableCell className={styles.data}>{user.role}</TableCell>
-              <TableCell className={styles.data}>{user.action}</TableCell>
+              <TableCell className={styles.data}>
+                {user.role == "admin" && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => setModalOpen(() => true)} />}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

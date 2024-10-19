@@ -26,7 +26,8 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(jsonErrorMiddleware);
 
-const { sequelize } = require("./src/models");
+const { sequelize, Team } = require("./src/models");
+const config = require("./config/config");
 
 sequelize
   .authenticate()
@@ -34,7 +35,13 @@ sequelize
   .catch((err) => console.log("Error: " + err));
 
 sequelize
-  .sync({ alter: true })
+  .sync({ force: true })
+  .then(async () => {
+    await Team.findOrCreate({
+      where: { id: 1 },
+      defaults: {name: config.defaultTeamName}
+    })
+  })
   .then(() => console.log("Models synced with the database..."))
   .catch((err) => console.log("Error syncing models: " + err));
 

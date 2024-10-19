@@ -14,6 +14,7 @@ import { FaCheck, FaCross, FaTimes } from "react-icons/fa";
 import { handleEditOrgNameSuccess, handleOrgDataError } from "../../../utils/settingsHelper";
 import LoadingArea from "../../../components/LoadingPage/LoadingArea";
 import { getOrgDetails, updateTeamDetails } from "../../../services/settingServices";
+import RemoveTeamMemberModal from "../../../components/Modals/RemoveTeamMemberModal/RemoveTeamMemberModal";
 
 
 const TeamTab = () => {
@@ -25,6 +26,9 @@ const TeamTab = () => {
   const [team, setTeam] = useState([]);
 
   const [openInviteTeamMemberModal, setOpenInviteTeamMemberModal] = useState(false);
+  const [openRemoveTeamMemberModalWithId, setOpenRemoveTeamMemberModalWithId] = useState(null);
+
+  const [selectedMember, setSelectedMember] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -63,8 +67,6 @@ const TeamTab = () => {
 
   const handleEditOrgName = async () => {
     try {
-      // setLoading(()=>true);
-      console.log("🚀 ~ handleEditOrgName ~ orgName:", orgName)
       const response = await updateTeamDetails(orgName);
       if(response.status != 200) {
         throw new Error(response.data.error || response.data.message);
@@ -73,17 +75,32 @@ const TeamTab = () => {
       
       // setOrgName(()=>response.data.name);
       // setTeam(()=>response.data.users);
-      // setLoading(()=>false);
     }
     catch(error) {
       setOrgName(()=>originalOrgName);
-      console.error("Error updating team name", error.message);
       handleOrgDataError("Error updating team name");
     }
     finally {
       setEditOrgName(()=>false);
     }
   }
+
+  // const handleRemoveTeamMember = async (memberId) => {
+  //   try {
+  //     const response = await removeTeamMember(memberId);
+  //     if(response.status != 200) {
+  //       throw new Error(response.data.error || response.data.message);
+  //     }
+  //     handleRemoveTeamMemberSuccess("Team Member Successfully Removed");
+  //     setRefetch(()=>refetch ? false : true);
+  //   }
+  //   catch(error) {
+  //     handleRemoveTeamMemberError("Error Removing Team Member");
+  //   }
+  //   finally {
+  //     handleRemoveTeamMemberModalClose(()=>false);
+  //   }
+  // }
 
   return loading
     ? <LoadingArea />
@@ -149,13 +166,14 @@ const TeamTab = () => {
                 // onClick={handleSubmit}
                 />
               </Box>
-              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="1"><TeamTable team={team} /></TabPanel>
-              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="2"><TeamTable team={team.filter((user)=>user.role=="ADMIN")} /></TabPanel>
-              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="3"><TeamTable team={team.filter((user) => user.role=="MEMBER")} /></TabPanel>
+              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="1"><TeamTable team={team} setModalOpen={setOpenRemoveTeamMemberModal} setSelectedMember={setSelectedMember}/></TabPanel>
+              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="2"><TeamTable team={team.filter((user)=>user.role=="admin")} setModalOpen={setOpenRemoveTeamMemberModal} setSelectedMember={setSelectedMember}/></TabPanel>
+              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="3"><TeamTable team={team.filter((user) => user.role=="member")} setModalOpen={setOpenRemoveTeamMemberModal} setSelectedMember={setSelectedMember}/></TabPanel>
             </TabContext>
           </Box>
         </div>
         <InviteTeamMemberModal open={openInviteTeamMemberModal} handleClose={handleInviteTeamMemberModalClose} />
+        <RemoveTeamMemberModal open={openRemoveTeamMemberModal} setModalOpen={setOpenRemoveTeamMemberModal} />
       </div>
     </>
   ;
