@@ -10,10 +10,10 @@ import TeamTable from "./TeamTable/TeamTable";
 import Button from "../../../components/Button/Button";
 import InviteTeamMemberModal from "../../../components/Modals/InviteTeamMemberModal/InviteTeamMemberModal";
 import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaCross, FaTimes } from "react-icons/fa";
 import { handleEditOrgNameSuccess, handleOrgDataError } from "../../../utils/settingsHelper";
 import LoadingArea from "../../../components/LoadingPage/LoadingArea";
-import { getOrgDetails } from "../../../services/settingServices";
+import { getOrgDetails, updateTeamDetails } from "../../../services/settingServices";
 
 
 const TeamTab = () => {
@@ -63,13 +63,25 @@ const TeamTab = () => {
 
   const handleEditOrgName = async () => {
     try {
-      const response = await updateTeamName(orgName);
+      // setLoading(()=>true);
+      console.log("🚀 ~ handleEditOrgName ~ orgName:", orgName)
+      const response = await updateTeamDetails(orgName);
       if(response.status != 200) {
         throw new Error(response.data.error || response.data.message);
       }
+      // originalOrgName = orgName;
+      
+      // setOrgName(()=>response.data.name);
+      // setTeam(()=>response.data.users);
+      // setLoading(()=>false);
     }
     catch(error) {
-
+      setOrgName(()=>originalOrgName);
+      console.error("Error updating team name", error.message);
+      handleOrgDataError("Error updating team name");
+    }
+    finally {
+      setEditOrgName(()=>false);
     }
   }
 
@@ -94,8 +106,10 @@ const TeamTab = () => {
           />}
           {!editOrgName ?
             <VscEdit aria-label="Edit Organisation Name" className={styles.pencil} onClick={toggleEdit} /> :
-            <FaCheck aria-label="Save Organisation Name" onClick={handleEditOrgName} className={styles.pencil} color="green"
-            />
+            <>
+              <FaCheck aria-label="Save Organisation Name" onClick={handleEditOrgName} className={styles.pencil} color="green" />
+              <FaTimes aria-label="Close Edit Panel" onClick={()=>setEditOrgName(false)} className={styles.pencil} color="black" />
+            </>
           }
 
         </div>
@@ -135,9 +149,9 @@ const TeamTab = () => {
                 // onClick={handleSubmit}
                 />
               </Box>
-              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="1"><TeamTable /></TabPanel>
-              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="2">Item Two</TabPanel>
-              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="3">Item Three</TabPanel>
+              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="1"><TeamTable team={team} /></TabPanel>
+              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="2"><TeamTable team={team.filter((user)=>user.role=="ADMIN")} /></TabPanel>
+              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="3"><TeamTable team={team.filter((user) => user.role=="MEMBER")} /></TabPanel>
             </TabContext>
           </Box>
         </div>

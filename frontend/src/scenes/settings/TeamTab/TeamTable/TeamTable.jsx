@@ -16,7 +16,7 @@ const tableData = [
     { name: "Prince", date: 'Created 10/4/2022', email: 'prince@domain.com', role: 'Member', action: <RiDeleteBinLine style={{ fontSize: '20px' }} /> }
 ];
 
-export default function TeamTable() {
+export default function TeamTable({ team }) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650}} aria-label="simple table">
@@ -29,15 +29,15 @@ export default function TeamTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tableData.map((data, index) => (
+          {team.map((user, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row" className={styles.nameCol}>
-                {data.name}
-                <span className={styles.data}>{data.date}</span>
+                {user.name}
+                <span className={styles.data}>Created {user.createdAt}</span>
               </TableCell>
-              <TableCell className={styles.data}>{data.email}</TableCell>
-              <TableCell className={styles.data}>{data.role}</TableCell>
-              <TableCell className={styles.data}>{data.action}</TableCell>
+              <TableCell className={styles.data}>{user.email}</TableCell>
+              <TableCell className={styles.data}>{user.role}</TableCell>
+              <TableCell className={styles.data}>{user.action}</TableCell>
             </TableRow>
           ))}
         </TableBody>

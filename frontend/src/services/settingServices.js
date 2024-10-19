@@ -31,9 +31,9 @@ export const getOrgDetails = async () => {
     }
 }
 
-export const editOrgName = async (name) => {
+export const updateTeamDetails = async (orgName) => {
     try {
-        const response = await apiClient.put('/team/update', name);
+        const response = await apiClient.put('/team/update', { name: orgName });
         return response;
     } catch (error) {
         console.error('Error updating organisation: ', error.response);

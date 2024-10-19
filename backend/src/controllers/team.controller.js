@@ -16,7 +16,8 @@ const getTeamDetails = async (req, res) => {
         users: data.users.map((user)=> ({
             name: user.name,
             email: user.email,
-            role: settings.user.roleName[user.role]
+            role: settings.user.roleName[user.role],
+            createdAt: new Intl.DateTimeFormat('en-US').format(user.createdAt)
         })),
     }
     return res.status(200).json(result);
@@ -30,10 +31,9 @@ const getTeamDetails = async (req, res) => {
 };
 
 const updateTeamDetails = async (req, res) => {
-    const userId = req.user.id;
     const { name } = req.body;
     try {
-      await teamService.updateTeam(userId, name);
+      await teamService.updateTeam(name);
       return res.status(200).json({ message: "Team Details Updated Successfully" });
     } catch (err) {
       const { statusCode, payload } = internalServerError(
