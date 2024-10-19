@@ -24,11 +24,24 @@ export const handleOrgDataError = (message) => {
     toastEmitter.emit(TOAST_EMITTER_KEY, message);
 }
 
-export const handleEditOrgNameSuccess = (response, setOrgName) => {
-    if (response.status == 200) {
-        setOrgName(userData);
+export const handleEditOrgNameSuccess = (message) => {
+    // if (response.status == 200) {
+    //     setOrgName(userData);
+        toastEmitter.emit(TOAST_EMITTER_KEY, message);
+    // } else {
+    //     toastEmitter.emit(TOAST_EMITTER_KEY, 'Error updating profile !');
+    // }
+};
+
+export const handleRemoveTeamMemberError = (message) => {
+    toastEmitter.emit(TOAST_EMITTER_KEY, message);
+}
+
+export const handleRemoveTeamMemberSuccess = (response, setOrgName) => {
+    // if (response.status == 200) {
+    //     setOrgName(userData);
         toastEmitter.emit(TOAST_EMITTER_KEY, 'Profile updated successfully !');
-    } else {
-        toastEmitter.emit(TOAST_EMITTER_KEY, 'Error updating profile !');
-    }
+    // } else {
+    //     toastEmitter.emit(TOAST_EMITTER_KEY, 'Error updating profile !');
+    // }
 };

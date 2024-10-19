@@ -7,40 +7,23 @@ import styles from './RemoveTeamMemberModal.module.scss';
 import CustomTextField from '../../TextFieldComponents/CustomTextField/CustomTextField';
 import DropdownList from '../../DropdownList/DropdownList';
 
-const RemoveTeamMemberModal = ({ open, setModalOpen, actions }) => {
-
-    const [email, setEmail] = useState('');
-    const [role, setRole] = useState(actions?.[0]?.value || '');
-
-    const handleActionChange = (role) => {
-        setRole(role);
-    }
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        // post formData
-    }
-
-
+const RemoveTeamMemberModal = ({ open, setModalOpen, selectedMember, handleRemoveTeamMember }) => {
     return (
         <Modal
             open={open}
             onClose={() => setModalOpen(false)}
-            aria-labelledby="invite-member-avatar-modal"
-            aria-describedby="invite-member-description"
+            aria-labelledby="remove-member-avatar-modal"
+            aria-describedby="remove-member-description"
         >
             <Box className={styles.box}>
-                <form onSubmit={onSubmit}>
-                <h3 id="delete-modal-title">Really Delete this account ?</h3>
+                <h3 id="delete-modal-title">Do you really want to remove {selectedMember?.name}?</h3>
                 <p id="delete-modal-description">If you delete this account, they will no longer be able to sign in. Deleting your account is permanent and non-recoverable action.</p>
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <div style={{ display: 'flex', gap: '10px' }}>
                             <Button buttonType='secondary-grey' text='Cancel' onClick={() => setModalOpen(false)} />
-                            <Button type='submit' buttonType='' text='Send Invite' />
+                            <Button buttonType='' text='Send Invite' onClick={handleRemoveTeamMember} />
                         </div>
                     </div>
-                </form>
             </Box>
         </Modal>
     )

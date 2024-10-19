@@ -40,3 +40,13 @@ export const updateTeamDetails = async (orgName) => {
         throw error;
     }
 }
+
+export const removeTeamMember = async (memberId) => {
+    try {
+        const response = await apiClient.put('/team/remove', { memberId });
+        return response;
+    } catch (error) {
+        console.error('Error updating organisation: ', error.response);
+        throw error;
+    }
+}

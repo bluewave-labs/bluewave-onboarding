@@ -11,9 +11,9 @@ import Button from "../../../components/Button/Button";
 import InviteTeamMemberModal from "../../../components/Modals/InviteTeamMemberModal/InviteTeamMemberModal";
 import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
 import { FaCheck, FaCross, FaTimes } from "react-icons/fa";
-import { handleEditOrgNameSuccess, handleOrgDataError } from "../../../utils/settingsHelper";
+import { handleEditOrgNameSuccess, handleOrgDataError, handleRemoveTeamMemberError, handleRemoveTeamMemberSuccess } from "../../../utils/settingsHelper";
 import LoadingArea from "../../../components/LoadingPage/LoadingArea";
-import { getOrgDetails, updateTeamDetails } from "../../../services/settingServices";
+import { getOrgDetails, removeTeamMember, updateTeamDetails } from "../../../services/settingServices";
 import RemoveTeamMemberModal from "../../../components/Modals/RemoveTeamMemberModal/RemoveTeamMemberModal";
 
 
@@ -26,9 +26,9 @@ const TeamTab = () => {
   const [team, setTeam] = useState([]);
 
   const [openInviteTeamMemberModal, setOpenInviteTeamMemberModal] = useState(false);
-  const [openRemoveTeamMemberModalWithId, setOpenRemoveTeamMemberModalWithId] = useState(null);
+  const [openRemoveTeamMemberModal, setOpenRemoveTeamMemberModal] = useState(false);
 
-  const [selectedMember, setSelectedMember] = useState(null);
+  const [selectedMember, setSelectedMember] = useState({name:"asd"});
 
   useEffect(() => {
     (async () => {
@@ -77,30 +77,30 @@ const TeamTab = () => {
       // setTeam(()=>response.data.users);
     }
     catch(error) {
-      setOrgName(()=>originalOrgName);
+      // setOrgName(()=>originalOrgName);
       handleOrgDataError("Error updating team name");
     }
     finally {
-      setEditOrgName(()=>false);
+      setEditOrgName(false);
     }
   }
 
-  // const handleRemoveTeamMember = async (memberId) => {
-  //   try {
-  //     const response = await removeTeamMember(memberId);
-  //     if(response.status != 200) {
-  //       throw new Error(response.data.error || response.data.message);
-  //     }
-  //     handleRemoveTeamMemberSuccess("Team Member Successfully Removed");
-  //     setRefetch(()=>refetch ? false : true);
-  //   }
-  //   catch(error) {
-  //     handleRemoveTeamMemberError("Error Removing Team Member");
-  //   }
-  //   finally {
-  //     handleRemoveTeamMemberModalClose(()=>false);
-  //   }
-  // }
+  const handleRemoveTeamMember = async () => {
+    try {
+      const response = await removeTeamMember(selectedMember.id);
+      if(response.status != 200) {
+        throw new Error(response.data.error || response.data.message);
+      }
+      handleRemoveTeamMemberSuccess("Team Member Successfully Removed");
+      setRefetch(()=>refetch ? false : true);
+    }
+    catch(error) {
+      handleRemoveTeamMemberError("Error Removing Team Member");
+    }
+    finally {
+      setOpenRemoveTeamMemberModal(false);
+    }
+  }
 
   return loading
     ? <LoadingArea />
@@ -173,7 +173,7 @@ const TeamTab = () => {
           </Box>
         </div>
         <InviteTeamMemberModal open={openInviteTeamMemberModal} handleClose={handleInviteTeamMemberModalClose} />
-        <RemoveTeamMemberModal open={openRemoveTeamMemberModal} setModalOpen={setOpenRemoveTeamMemberModal} />
+        <RemoveTeamMemberModal open={openRemoveTeamMemberModal} setModalOpen={setOpenRemoveTeamMemberModal} selectedMember={selectedMember} handleRemoveTeamMember={handleRemoveTeamMember} />
       </div>
     </>
   ;

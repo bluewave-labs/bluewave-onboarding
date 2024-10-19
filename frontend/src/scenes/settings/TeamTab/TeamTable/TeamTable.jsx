@@ -9,7 +9,13 @@ import Paper from '@mui/material/Paper';
 import styles from './TeamTable.module.css';
 import { RiDeleteBinLine } from "react-icons/ri";
 
-export default function TeamTable({ team, setModalOpen }) {
+export default function TeamTable({ team, setModalOpen, setSelectedMember }) {
+
+  const handleRemoveMember = async (member) => {
+    setSelectedMember(()=>member)
+    setModalOpen(()=>true);
+  } 
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650}} aria-label="simple table">
@@ -22,16 +28,16 @@ export default function TeamTable({ team, setModalOpen }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {team.map((user, index) => (
+          {team.map((member, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row" className={styles.nameCol}>
-                {user.name}
-                <span className={styles.data}>Created {user.createdAt}</span>
+                {member.name}
+                <span className={styles.data}>Created {member.createdAt}</span>
               </TableCell>
-              <TableCell className={styles.data}>{user.email}</TableCell>
-              <TableCell className={styles.data}>{user.role}</TableCell>
+              <TableCell className={styles.data}>{member.email}</TableCell>
+              <TableCell className={styles.data}>{member.role}</TableCell>
               <TableCell className={styles.data}>
-                {user.role == "admin" && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => setModalOpen(() => true)} />}
+                {member.role == "admin" && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveMember(member)} />}
               </TableCell>
             </TableRow>
           ))}
