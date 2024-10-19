@@ -9,6 +9,14 @@
   word-wrap: break-word;
 }
 
+.preview-container h3 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+  text-align: left;
+  padding: 0 2rem;
+}
+
 .preview-content {
   color: var(--second-text-color);
   font-size: 13px;
