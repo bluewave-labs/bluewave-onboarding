@@ -16,4 +16,10 @@
 .data {
     font-size: 13px ;
     color: var(--second-text-color) !important;
+
+}
+
+.role{
+    align-items: center;
+    display: flex;
 }

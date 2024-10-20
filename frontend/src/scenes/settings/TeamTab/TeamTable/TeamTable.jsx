@@ -9,14 +9,15 @@ import Paper from '@mui/material/Paper';
 import styles from './TeamTable.module.css';
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useAuth } from '../../../../services/authProvider';
+import DropdownMenu from '../../../../components/DropdownMenu/DropdownMenu';
 
 export default function TeamTable({ team, setRemoveModalOpen, setChangeRoleModalOpen, setSelectedMember }) {
 
   const { userInfo } = useAuth();
 
   const handleRemoveMember = async (member) => {
-    setSelectedMember(()=>member)
-    setRemoveModalOpen(()=>true);
+    setSelectedMember(() => member)
+    setRemoveModalOpen(() => true);
   }
 
   const handleChangeRole = async (member, role) => {
@@ -26,7 +27,7 @@ export default function TeamTable({ team, setRemoveModalOpen, setChangeRoleModal
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650}} aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow className={styles.tableHeader}>
             <TableCell className={styles.heading}>NAME</TableCell>
@@ -44,10 +45,16 @@ export default function TeamTable({ team, setRemoveModalOpen, setChangeRoleModal
               </TableCell>
               <TableCell className={styles.data}>{member.email}</TableCell>
               <TableCell className={styles.data}>
-                {member.role}
+                <div className={styles.role}>
+                  {member.role}
+                  {/* Change onClick below  */}
+                  <DropdownMenu
+                    menuItems={[{ text: 'Admin', onClick: {} }, { text: 'Member', onClick: {} }]}
+                    direction={'right'} />
+                </div>
               </TableCell>
               <TableCell className={styles.data}>
-                {member.role == "admin" && member.id!=userInfo.id && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveMember(member)} />}
+                {member.role == "admin" && member.id != userInfo.id && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveMember(member)} />}
               </TableCell>
             </TableRow>
           ))}
