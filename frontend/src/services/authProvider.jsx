@@ -24,7 +24,7 @@ const authReducer = (state, action) => {
                     ...state.userInfo,
                     ...action.payload,
                 };
-                updatedUserInfo = { ...updatedUserInfo, fullName: `${updatedUserInfo.name} ${updatedUserInfo.surname}` };
+                updatedUserInfo = { ...updatedUserInfo, fullName: [updatedUserInfo.name, updatedUserInfo.surname].filter(Boolean).join(' ') };
                 localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
                 return { isLoggedIn: true, userInfo: updatedUserInfo };
             }

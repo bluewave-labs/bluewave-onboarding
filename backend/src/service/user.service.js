@@ -41,7 +41,7 @@ class UserService {
       });
     }
     catch (err) {
-      throw new Error("Error retreiving users list");
+      throw new Error("Error retrieving users list");
     }
   }
 
