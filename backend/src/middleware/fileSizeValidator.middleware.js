@@ -1,7 +1,7 @@
 const { MAX_FILE_SIZE } = require('../utils/constants');
 
 const fileSizeValidator = (req, res, next) => {
-    const contentLength = parseInt(req.headers['content-length'], 10);
+    const contentLength = Number(req.headers['content-length']);
     
     if (isNaN(contentLength)) {
         return res.status(400).json({
