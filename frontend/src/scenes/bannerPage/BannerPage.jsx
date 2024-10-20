@@ -7,6 +7,7 @@ import BannerPreview from '../../components/BannerPageComponents/BannerPreview/B
 import { addBanner, getBannerById, editBanner } from '../../services/bannerServices';
 import { useNavigate, useLocation } from 'react-router-dom';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+import {emitToastError} from '../../utils/guideHelpers'
 
 const BannerPage = () => {
     const navigate = useNavigate();
@@ -40,17 +41,13 @@ const BannerPage = () => {
 
                     console.log('Get banner successful:', bannerData);
                 } catch (error) {
-                    if (error.response && error.response.data) {
-                        console.error('An error occurred:', error.response.data.errors[0].msg);
-                    } else {
-                        console.log('An error occurred. Please check your network connection and try again.');
-                    }
+                    emitToastError(error)
                 }
             };
 
             fetchBannerData();
         }
-    }, [location.state?.isEdit, location.state?.id]);
+    }, [location.state]);
 
     const onSave = async () => {
         const bannerData = {
@@ -63,54 +60,47 @@ const BannerPage = () => {
         };
         try {
             const response = location.state?.isEdit
-            ? await editBanner(location.state?.id, bannerData)
-            : await addBanner(bannerData);
+                ? await editBanner(location.state?.id, bannerData)
+                : await addBanner(bannerData);
             const toastMessage = location.state?.isEdit ? 'You edited this banner' : 'New banner saved'
             toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
             navigate('/banner');
         } catch (error) {
-            if (error.response && error.response.data) {
-                console.error('An error occurred:', error.response.data.errors[0].msg);
-            } else {
-                console.log('An error occurred. Please check your network connection and try again.');
-            }
+            emitToastError(error)
         }
     }
 
     return (
-        <div >
-            <HomePageTemplate>
-                <GuideTemplate title='New banner'
-                    activeButton={activeButton}
-                    handleButtonClick={handleButtonClick}
-                    onSave={onSave}
-                    rightContent={() =>
-                        <BannerPreview
-                            backgroundColor={backgroundColor}
-                            color={fontColor}
-                            isTopPosition={isTopPosition}
-                            bannerText={bannerText}
-                            setBannerText={setBannerText}
-                        />}
-                    leftContent={() =>
-                        <BannerLeftContent
-                            setIsTopPosition={setIsTopPosition}
-                            isTopPosition={isTopPosition}
-                            url={url}
-                            setUrl={setUrl}
-                            setButtonAction={setButtonAction}
-                            buttonAction={buttonAction}
-                        />}
-                    leftAppearance={() => (
-                        <BannerLeftAppearance
-                            backgroundColor={backgroundColor}
-                            setBackgroundColor={setBackgroundColor}
-                            fontColor={fontColor}
-                            setFontColor={setFontColor}
-                        />
-                    )} />
-            </HomePageTemplate>
-        </div>
+
+        <GuideTemplate title={location.state?.isEdit ? 'Edit Banner' : 'New Banner'}
+            activeButton={activeButton}
+            handleButtonClick={handleButtonClick}
+            onSave={onSave}
+            rightContent={() =>
+                <BannerPreview
+                    backgroundColor={backgroundColor}
+                    color={fontColor}
+                    isTopPosition={isTopPosition}
+                    bannerText={bannerText}
+                    setBannerText={setBannerText}
+                />}
+            leftContent={() =>
+                <BannerLeftContent
+                    setIsTopPosition={setIsTopPosition}
+                    isTopPosition={isTopPosition}
+                    url={url}
+                    setUrl={setUrl}
+                    setButtonAction={setButtonAction}
+                    buttonAction={buttonAction}
+                />}
+            leftAppearance={() => (
+                <BannerLeftAppearance
+                    backgroundColor={backgroundColor}
+                    setBackgroundColor={setBackgroundColor}
+                    fontColor={fontColor}
+                    setFontColor={setFontColor}
+                />
+            )} />
     );
 };
 

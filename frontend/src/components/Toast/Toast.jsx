@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import styles from './Toast.module.scss';
-import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+import React, { useState, useEffect } from 'react';
 import ToastItem from './ToastItem';
 import { defaultToastOptions, MAXIMUM_TOAST_COUNT } from './constant';
+import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+import styles from './Toast.module.scss';
 
 const Toast = () => {
   const [toasts, setToasts] = useState([]);
-  const [options, setOptions] = useState(defaultToastOptions);
 
   useEffect(() => {
-    const handleNewToast = (message, options) => {
-      const newToast = { message: `${message}`, id: Date.now() };
+    const handleNewToast = (toastMessage) => {
+      const newToast = {
+        id: `${Date.now()}-${Math.random()}`,
+        message: toastMessage,
+        duration: defaultToastOptions.duration,
+      };
       setToasts((prevToasts) => {
-        const newArr = [...prevToasts, newToast];
-        return prevToasts.length < MAXIMUM_TOAST_COUNT ? newArr : newArr.slice(1);
+        const updatedToasts = [...prevToasts, newToast];
+        return updatedToasts.length > MAXIMUM_TOAST_COUNT
+          ? updatedToasts.slice(1)
+          : updatedToasts;
       });
-      options && setOptions({...defaultToastOptions, ...options})
-      setTimeout(() => {
-        setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== newToast.id));
-      }, 3000 + 500);
     };
 
     toastEmitter.on(TOAST_EMITTER_KEY, handleNewToast);
@@ -28,24 +29,14 @@ const Toast = () => {
     };
   }, []);
 
-  const closeToast = (id) => {
-    setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id))
-  }
-
-  const containerStyle = {
-    top: options.top,
-  }
+  const handleRemoveToast = (id) => {
+    setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
+  };
 
   return (
-    <div className={styles.toastContainer} style={containerStyle}>
+    <div className={styles.toastContainer}>
       {toasts.map((toast) => (
-        <ToastItem 
-          key={toast?.id} 
-          id={toast.id} 
-          message={toast.message} 
-          closeToast={closeToast} 
-          options={options}
-        />
+        <ToastItem key={toast.id} toast={toast} removeToast={handleRemoveToast} />
       ))}
     </div>
   );
