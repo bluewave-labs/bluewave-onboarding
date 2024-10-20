@@ -13,7 +13,7 @@ module.exports = {
           name: "demoUser1",
           email: "demo1@example.com",
           password: hashedPassword,
-          role: userRole.MEMBER,
+          role: userRole.ADMIN,
           createdAt: new Date(),
         },
         {
