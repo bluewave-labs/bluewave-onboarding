@@ -1,42 +1,66 @@
-import React from 'react';
-import { List, ListItemButton, ListItemText, Paper, ListItemIcon } from '@mui/material';
-import './DropdownMenu.css';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import { useNavigate } from 'react-router-dom';
-import { logout } from '../../services/loginServices';
-import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
-import { useAuth } from '../../services/authProvider';
+import React, { useState } from 'react';
+import DropdownMenuList from './DropdownMenuList/DropdownMenuList';
+import styles from './DropdownMenu.module.css';
+import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import PropTypes from 'prop-types';
 
-const DropdownMenu = () => {
-    const navigate = useNavigate();
-    const { logoutAuth } = useAuth();
+const DropdownMenu = ({ menuItems, direction = 'up' }) => {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    const handleLogoutClick = async () => {
-        await logout();
-        logoutAuth();
-        toastEmitter.emit(TOAST_EMITTER_KEY, 'Logout successful');
-        navigate('/');
+    const handleDropdownClick = () => {
+        setIsDropdownOpen((prev) => !prev);
     };
 
-    const menuItems = [
-        { text: 'Settings', icon: <SettingsOutlinedIcon />, onClick: () => navigate('/settings') },
-        { text: 'Logout', icon: <LogoutOutlinedIcon />, onClick: handleLogoutClick },
-    ];
+    const renderOpenArrowIcon = () => {
+        switch (direction) {
+            case 'up':
+                return <KeyboardArrowUpIcon />;
+            case 'down':
+                return <KeyboardArrowDownOutlinedIcon />;
+            case 'left':
+                return <KeyboardArrowLeftIcon />;
+            case 'right':
+                return <KeyboardArrowRightIcon />;
+            default:
+                return <KeyboardArrowDownOutlinedIcon />;
+        }
+    };
+
+    const renderClosedArrowIcon = () => {
+        switch (direction) {
+            case 'up':
+                return < KeyboardArrowDownOutlinedIcon />;
+            case 'down':
+                return <KeyboardArrowUpIcon />;
+            case 'left':
+                return < KeyboardArrowRightIcon />;
+            case 'right':
+                return <KeyboardArrowLeftIcon />;
+            default:
+                return <KeyboardArrowUpIcon />;
+        }
+    };
 
     return (
-        <Paper className="dropdown-menu" elevation={3}>
-            <List className="dropdown-list">
-                {menuItems.map(({ text, icon, onClick }, index) => (
-                    <ListItemButton key={index} className="dropdown-item" onClick={onClick}>
-                        <ListItemIcon>{icon}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItemButton>
-                ))}
-            </List>
-        </Paper>
+        <button className={styles["dropdownButton"]} onClick={handleDropdownClick}>
+            {isDropdownOpen ? (
+                <>
+                    {renderOpenArrowIcon()}
+                    <DropdownMenuList menuItems={menuItems} direction={direction}/>
+                </>
+            ) :
+                <>{renderClosedArrowIcon()}</>
+            }
+        </button>
     );
+};
+
+DropdownMenu.propTypes = {
+    menuItems: PropTypes.array.isRequired,
+    direction: PropTypes.oneOf(['up', 'down', 'left', 'right']),
 };
 
 export default DropdownMenu;
