@@ -18,7 +18,7 @@ const mockHints = [
 
 const HintDefaultPage = () => {
   const navigate = useNavigate();
-  
+
   return (
     <DefaultPageTemplate
       getItems={() => mockHints}

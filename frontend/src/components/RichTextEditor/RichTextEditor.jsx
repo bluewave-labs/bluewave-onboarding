@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import "./RichTextEditor.css";
 import { useEditor, EditorContent } from "@tiptap/react";
 import { StarterKit } from "@tiptap/starter-kit";
@@ -7,38 +8,16 @@ import Link from "@tiptap/extension-link";
 import BulletList from "@tiptap/extension-bullet-list";
 import OrderedList from "@tiptap/extension-ordered-list";
 import Toolbar from "./Toolbar/EditorToolbar";
-import PopupComponent from "../../products/Popup/PopupComponent";
 import EditorTabs from "./Tabs/EditorTabs";
 import CustomTextField from "../TextFieldComponents/CustomTextField/CustomTextField";
 
-const RichTextEditor = ({
-  previewBtnText,
-  content: initialContent,
-  setContent: initialSetContent,
-  header: initialHeader,
-  setHeader: initialSetHeader,
-  headerBackgroundColor,
-  headerColor,
-  textColor,
-  buttonBackgroundColor,
-  buttonTextColor,
-  popupSize,
-  sx,
-}) => {
+const RichTextEditor = ({ sx = {}, previewComponent = null }) => {
   const [htmlContent, setHtmlContent] = useState("");
   const [mode, setMode] = useState("editor");
-  const [content, setContent] = useState(initialContent ?? "");
-  const [header, setHeader] = useState(initialHeader ?? "");
-
-  useEffect(() => {
-    if (initialSetContent) initialSetContent(content);
-  }, [content]);
+  const [header, setHeader] = useState("");
 
   const handleHeaderChange = (e) => {
-    const newHeader = e.target.value;
-    setHeader(newHeader);
-    if (initialSetHeader) initialSetHeader(newHeader);
-    console.log(header);
+    setHeader(e.target.value);
   };
 
   const editor = useEditor({
@@ -78,17 +57,7 @@ const RichTextEditor = ({
           </div>
         </>
       ) : (
-        <PopupComponent
-          header={header}
-          content={htmlContent}
-          previewBtnText={previewBtnText}
-          headerBackgroundColor={headerBackgroundColor}
-          headerColor={headerColor}
-          buttonBackgroundColor={buttonBackgroundColor}
-          buttonTextColor={buttonTextColor}
-          textColor={textColor}
-          popupSize={popupSize}
-        />
+        React.cloneElement(previewComponent, { header, htmlContent })
       )}
       <EditorTabs mode={mode} setMode={setMode}
         sx={{
@@ -98,6 +67,11 @@ const RichTextEditor = ({
         }} />
     </div>
   );
+};
+
+RichTextEditor.propTypes = {
+  sx: PropTypes.object,
+  previewComponent: PropTypes.node.isRequired,
 };
 
 export default RichTextEditor;

@@ -7,8 +7,6 @@
 
 .popupContent {
   padding: 20px 25px;
-  color: var(--second-text-color);
-  font-size: 13px;
 }
 
 .centered {
@@ -28,9 +26,10 @@
   font-weight: 600;
   line-height: 30px;
   text-align: left;
+  padding: 0 2rem;
 }
 
-.popupContentContainer{
+.popupContentContainer {
   justify-content: space-between;
   display: flex;
   flex-direction: column;
