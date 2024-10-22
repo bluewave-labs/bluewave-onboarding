@@ -32,11 +32,11 @@ const DropdownMenu = ({ menuItems, direction = 'up' }) => {
     const renderClosedArrowIcon = () => {
         switch (direction) {
             case 'up':
-                return < KeyboardArrowDownOutlinedIcon />;
+                return <KeyboardArrowDownOutlinedIcon />;
             case 'down':
                 return <KeyboardArrowUpIcon />;
             case 'left':
-                return < KeyboardArrowRightIcon />;
+                return <KeyboardArrowRightIcon />;
             case 'right':
                 return <KeyboardArrowLeftIcon />;
             default:

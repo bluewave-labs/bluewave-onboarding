@@ -68,7 +68,7 @@ const InviteTeamMemberModal = ({ open, handleClose, handleInviteTeamMember }) =>
 InviteTeamMemberModal.propTypes = {
     open: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
-    actions: PropTypes.array.isRequired,
+    handleInviteTeamMember: PropTypes.func.isRequired,
 };
 
 export default InviteTeamMemberModal;

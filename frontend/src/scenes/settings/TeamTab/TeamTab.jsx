@@ -42,11 +42,13 @@ const TeamTab = () => {
         }
         setOrgName(()=>response.data.name);
         setTeam(()=>response.data.users);
-        setLoading(()=>false);
       }
       catch (error) {
         console.error("Error fetching team details", error.message);
         handleGenericError("Error fetching team details");
+      }
+      finally {
+        setLoading(false);
       }
     })()
   }, [refetch])
@@ -71,7 +73,7 @@ const TeamTab = () => {
     try {
       const response = await updateTeamDetails(orgName);
       handleEditOrgNameSuccess(response, "Team Name Changed Successfully");
-      setRefetch(()=>refetch ? false : true);
+      setRefetch(refetch=>!refetch);
     }
     catch(error) {
       handleGenericError("Error updating team name");
@@ -85,7 +87,7 @@ const TeamTab = () => {
     try {
       const response = await removeTeamMember(selectedMember.id);
       handleRemoveTeamMemberSuccess(response, "Team Member Successfully Removed");
-      setRefetch(()=>refetch ? false : true);
+      setRefetch(refetch=>!refetch);
     }
     catch(error) {
       handleGenericError("Error Removing Team Member");
@@ -101,7 +103,7 @@ const TeamTab = () => {
       handleInviteMemberSuccess(response, "Member Invited!")
     }
     catch(error) {
-      handleGenericError("Error Removing Team Member");
+      handleGenericError("Error Inviting Member");
     }
     finally {
       setOpenInviteTeamMemberModal(false);
@@ -112,7 +114,7 @@ const TeamTab = () => {
     try {
       const response = await changeMemberRole(selectedMember);
       handleChangeRoleSuccess(response, "Role Changed Successfully");
-      setRefetch(()=>refetch ? false : true);
+      setRefetch(refetch=>!refetch);
     }
     catch(error) {
       handleGenericError("Error Changing Role");

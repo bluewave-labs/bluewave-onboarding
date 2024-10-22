@@ -7,17 +7,21 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../services/loginServices';
-import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+import { handleGenericError } from '../../utils/settingsHelper';
 
 function UserProfileSidebar() {
     const { userInfo, logoutAuth } = useAuth();
     const navigate = useNavigate();
 
     const handleLogoutClick = async () => {
-        await logout();
-        logoutAuth();
-        toastEmitter.emit(TOAST_EMITTER_KEY, 'Logout successful');
-        navigate('/');
+        try {
+            await logout();
+            logoutAuth();
+            navigate('/');
+        }
+        catch(error) {
+            handleGenericError("Error logging out");
+        }
     };
 
     const menuItems = [

@@ -9,7 +9,7 @@ import UploadModal from "../../../components/Modals/UploadImageModal/UploadModal
 import { deleteAccount, updateUser } from "../../../services/settingServices";
 import { handleProfileUpdateSuccess, handleNothingToUpdateProfile, handleGenericError } from "../../../utils/settingsHelper";
 import CircularProgress from '@mui/material/CircularProgress';
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const ProfileTab = () => {
   const navigate = useNavigate();

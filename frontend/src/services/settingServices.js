@@ -5,18 +5,18 @@ export const updateUser = async (userDetails) => {
         const response = await apiClient.put('/users/update', userDetails);
         return response;
     } catch (error) {
-        console.error('Error updating profile: ', error.response);
+        console.error('Error updating profile: ', error.message);
         throw error;
     }
 }
 
 export const getUser = async () => {
     try {
-        const response = await apiClient.put('/users/current-user');
+        const response = await apiClient.get('/users/current-user');
         return response;
     }
     catch(error) {
-        console.error('Error fetching profile: ', error.response);
+        console.error('Error fetching profile: ', error.message);
         throw error;
     }
 }
@@ -36,7 +36,7 @@ export const updateTeamDetails = async (orgName) => {
         const response = await apiClient.put('/team/update', { name: orgName });
         return response;
     } catch (error) {
-        console.error('Error updating organisation: ', error.response);
+        console.error('Error updating organisation: ', error.message);
         throw error;
     }
 }
@@ -46,7 +46,7 @@ export const removeTeamMember = async (memberId) => {
         const response = await apiClient.delete(`/team/remove/${memberId}`);
         return response;
     } catch (error) {
-        console.error('Error removing member: ', error.response);
+        console.error('Error removing member: ', error.message);
         throw error;
     }
 }
@@ -56,7 +56,7 @@ export const inviteMember = async (inputs) => {
         const response = await apiClient.post('/team/invite', { invitedEmail: inputs.email, role: inputs.role });
         return response;
     } catch (error) {
-        console.error('Error inviting member: ', error.response);
+        console.error('Error inviting member: ', error.message);
         throw error;
     }
 }
@@ -66,7 +66,7 @@ export const changeMemberRole = async (inputs) => {
         const response = await apiClient.put('/team/change-role', { memberId: inputs.id, role: inputs.newRole });
         return response;
     } catch (error) {
-        console.error('Error changing role: ', error.response);
+        console.error('Error changing role: ', error.message);
         throw error;
     }
 }
@@ -76,7 +76,7 @@ export const deleteAccount = async () => {
         const response = await apiClient.delete('/users/delete');
         return response;
     } catch (error) {
-        console.error('Error deleteing accont: ', error.response);
+        console.error('Error deleteing accont: ', error.message);
         throw error;
     }
 }
