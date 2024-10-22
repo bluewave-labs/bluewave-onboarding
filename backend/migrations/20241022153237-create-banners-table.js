@@ -1,5 +1,3 @@
-'use strict';
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -11,18 +9,12 @@ module.exports = {
         allowNull: false
       },
       closeButtonAction: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          isIn: [["no action", "open url", "open url in a new tab"]]
-        }
+        type: Sequelize.ENUM("no action", "open url", "open url in a new tab"),
+        allowNull: false
       },
       position: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          isIn: [["top", "bottom"]]
-        }
+        type: Sequelize.ENUM("top", "bottom"),
+        allowNull: false
       },
       url: {
         type: Sequelize.STRING,
@@ -53,7 +45,10 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
       }
-    })
+    });
+
+    await queryInterface.addIndex('banners', ['position']);
+    await queryInterface.addIndex('banners', ['created_by']);
   },
 
   async down (queryInterface, Sequelize) {

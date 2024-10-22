@@ -1,5 +1,3 @@
-'use strict';
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -11,11 +9,8 @@ module.exports = {
         allowNull: false
       },
       action: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          isIn: [["no action", "open url", "open url in a new tab"]]
-        }
+        type: Sequelize.ENUM('no action', 'open url', 'open url in a new tab'),
+        allowNull: false
       },
       actionButtonUrl: {
         type: Sequelize.STRING,
@@ -30,11 +25,8 @@ module.exports = {
         allowNull: true
       },
       tooltipPlacement: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          isIn: [["top", "right", "bottom", "left"]]
-        }
+        type: Sequelize.ENUM("top", "right", "bottom", "left"),
+        allowNull: false
       },
       hintContent: {
         type: Sequelize.STRING,
