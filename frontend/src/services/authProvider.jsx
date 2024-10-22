@@ -23,7 +23,6 @@ const authReducer = (state, action) => {
                     ...state.userInfo,
                     ...action.payload,
                 };
-                updatedUserInfo = { ...updatedUserInfo, fullName: `${updatedUserInfo.name} ${updatedUserInfo.surname}` };
                 localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
                 return { isLoggedIn: true, userInfo: updatedUserInfo };
             }
@@ -51,10 +50,8 @@ export const AuthProvider = ({ children }) => {
                         dispatch({ type: 'LOGIN' });
                     } else {
                         const userData = response.data.user;
-                        const fullName = userData.surname ? `${userData.name} ${userData.surname}` : userData.name;
-                        const payload = { fullName, name: userData.name, surname: userData.surname, email: userData.email };
-                        localStorage.setItem('userInfo', JSON.stringify(payload));
-                        dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload });
+                        localStorage.setItem('userInfo', JSON.stringify(userData));
+                        dispatch({ type: 'LOGIN_AND_SET_USER_INFO', userData });
                     }
                 } else {
                     dispatch({ type: 'LOGOUT' });
@@ -62,6 +59,7 @@ export const AuthProvider = ({ children }) => {
                 }
             } catch (error) {
                 localStorage.removeItem('authToken');
+                localStorage.removeItem('userInfo');
                 dispatch({ type: 'LOGOUT' });
             } finally {
                 setIsFetching(false);

@@ -10,7 +10,7 @@ const Toast = () => {
   useEffect(() => {
     const handleNewToast = (toastMessage) => {
       const newToast = {
-        id: `${Date.now()}-${Math.random()}`,
+        id: Date.now() + Math.floor(Math.random() * 1000),
         message: toastMessage,
         duration: defaultToastOptions.duration,
       };
