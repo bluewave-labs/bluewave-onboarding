@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: settings.user.role.admin,
         allowNull: false,
       },
+      picture: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
