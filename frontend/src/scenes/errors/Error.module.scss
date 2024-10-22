@@ -17,12 +17,12 @@
     .infoHeader {
       font-weight: 600;
       color: var(--main-text-color);
-      font-size: 16px;
+      font-size: var(--font-header);
       line-height: 30px;
     }
 
     .infoText {
-      font-size: 13px;
+      font-size: var(--font-regular);
       font-weight: 400;
       line-height: 23px;
     }

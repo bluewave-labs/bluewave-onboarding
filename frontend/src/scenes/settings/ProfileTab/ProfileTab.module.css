@@ -37,7 +37,7 @@
 }
 
 .label {
-    font-size: 13px;
+    font-size: var(--font-regular);
     font-weight: 700;
     line-height: 20px;
     text-align: left;
@@ -48,7 +48,7 @@
 .supportText {
     margin: 0;
     color: var(--second-text-color);
-    font-size: 13px;
+    font-size: var(--font-regular);
     font-weight: 400;
     line-height: 20px;
     margin-top: 6px;

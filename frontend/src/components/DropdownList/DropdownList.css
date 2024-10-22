@@ -1,7 +1,7 @@
 .select {
     width: 241px;
     height: 34px;
-    font-size: 13px !important;
+    font-size: var(--font-regular) !important;
     border-radius: 8px !important;
 }
 
@@ -10,7 +10,7 @@
 }
 
 .menuItem {
-    font-size: 13px !important;
+    font-size: var(--font-regular) !important;
 }
 
 .MuiMenuItem-root.Mui-selected {
