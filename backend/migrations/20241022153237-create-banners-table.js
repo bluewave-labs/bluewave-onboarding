@@ -18,7 +18,10 @@ module.exports = {
       },
       url: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
+        validate: {
+          isUrl: true
+        }
       },
       fontColor: {
         type: Sequelize.STRING,
