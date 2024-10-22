@@ -37,9 +37,6 @@ const TeamTab = () => {
       try {
         setLoading(()=>true)
         const response = await getOrgDetails();
-        if(response.status != 200) {
-          handleOrgDataError(response.data.error || response.data.message);
-        }
         setOrgName(()=>response.data.name);
         setTeam(()=>response.data.users);
       }
