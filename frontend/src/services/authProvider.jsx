@@ -14,6 +14,7 @@ const authReducer = (state, action) => {
         case 'LOGOUT':
             return { ...state, isLoggedIn: false, userInfo: null };
         case 'SET_USER_INFO':
+            localStorage.setItem('userInfo', JSON.stringify(action.payload));
             return { ...state, userInfo: action.payload };
         case 'LOGIN_AND_SET_USER_INFO':
             localStorage.setItem('userInfo', JSON.stringify(action.payload));
