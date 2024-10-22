@@ -11,7 +11,7 @@
     color: var(--main-text-color);
     font-weight: 600;
     margin-bottom: 15px;
-    font-size: 16px;
+    font-size: var(--font-header);
 }
 
 .list{
@@ -24,7 +24,7 @@
 .listText{
     color: var(--main-text-color);
     font-weight: 400;
-    font-size: 13px;
+    font-size: var(--font-regular);
     margin-bottom: 10px;
     list-style-type: none;
 }

@@ -1,7 +1,7 @@
 .editor-container {
   border: 1px solid var(--light-border-color);
   color: var(--main-text-color);
-  font-size: 13px;
+  font-size: var(--font-regular);
   border-radius: 8px;
   padding-top: 1rem;
   margin-top: 1rem;

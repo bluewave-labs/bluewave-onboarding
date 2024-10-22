@@ -9,7 +9,7 @@
   .smallText {
     font-weight: 400;
     line-height: 20px;
-    font-size: 11px;
+    font-size: var(--font-informative);
     color: var(--second-text-color);
     margin-bottom: 20px;
   }
