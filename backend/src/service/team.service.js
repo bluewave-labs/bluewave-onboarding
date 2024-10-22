@@ -69,6 +69,7 @@ class TeamService {
     }
 
     async updateUserRole(memberId, role) {
+        console.log("🚀 ~ TeamService ~ updateUserRole ~ role:", role)
         try {
             const member = await User.findOne({
                 where: { id: memberId }

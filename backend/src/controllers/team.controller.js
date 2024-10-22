@@ -60,10 +60,9 @@ const removeMember = async (req, res) => {
 }
 
 const changeRole = async (req, res) => {
-  const userId = req.user.id;
   const { memberId, role } = req.body;
   try {
-    await teamService.updateUserRole(userId, memberId, role);
+    await teamService.updateUserRole(memberId, role);
     return res.status(200).json({ message: "User Role Updated Successfully" });
   } catch (err) {
     const { statusCode, payload } = internalServerError(

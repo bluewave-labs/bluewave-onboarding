@@ -41,7 +41,7 @@ export default function TeamTable({ team, setRemoveModalOpen, setChangeRoleModal
           {team.map((member, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row" className={styles.nameCol}>
-                {member.name}
+                {userInfo.id == member.id ? <b>YOU</b> : member.name}
                 <span className={styles.data}>Created {member.createdAt}</span>
               </TableCell>
               <TableCell className={styles.data}>{member.email}</TableCell>
