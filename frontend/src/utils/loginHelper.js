@@ -1,8 +1,8 @@
 import toastEmitter, { TOAST_EMITTER_KEY } from './toastEmitter';
 
 export const handleAuthSuccess = (response, loginAuth, navigate) => {
-    const { name, surname, email } = response.user;
-    const payload = { name, surname, email };
+    const { name, surname, email, picture } = response.data.user;
+    const payload = { name, surname, email, picture };
     // Emit toast notification
     toastEmitter.emit(TOAST_EMITTER_KEY, 'Login successful');
 
