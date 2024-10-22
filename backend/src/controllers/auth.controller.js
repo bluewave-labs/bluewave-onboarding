@@ -30,8 +30,8 @@ const register = async (req, res) => {
 
       const transaction = await sequelize.transaction();
       try {
+        newUser = await User.create({ name, surname, email, password: hashedPassword, role: invite.role }, { transaction });
         await invite.destroy({ transaction });
-        newUser = await User.create({ name, surname, email, password: hashedPassword, role: settings.user.role.admin }, { transaction });
         await transaction.commit();
       }
       catch(err) {

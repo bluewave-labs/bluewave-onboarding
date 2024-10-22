@@ -16,7 +16,7 @@ const ChangeMemberRoleModal = ({ open, setModalOpen, selectedMember, handleChang
         >
             <Box className={styles.box}>
                 <h3 id="delete-modal-title">Confirm role change</h3>
-                <p id="delete-modal-description">Role of {selectedMember?.name} would be changed from {setModalOpen?.role} to {setModalOpen?.newRole}</p>
+                <p id="delete-modal-description">Role of {selectedMember?.name} would be changed from {selectedMember?.role} to {selectedMember?.newRole}</p>
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <div style={{ display: 'flex', gap: '10px' }}>
                             <Button buttonType='secondary-grey' text='Cancel' onClick={() => setModalOpen(false)} />

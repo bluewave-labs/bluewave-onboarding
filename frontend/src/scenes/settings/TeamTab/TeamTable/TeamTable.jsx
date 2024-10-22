@@ -10,6 +10,7 @@ import styles from './TeamTable.module.css';
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useAuth } from '../../../../services/authProvider';
 import DropdownMenu from '../../../../components/DropdownMenu/DropdownMenu';
+import { roles } from '../../../../utils/constants';
 
 export default function TeamTable({ team, setRemoveModalOpen, setChangeRoleModalOpen, setSelectedMember }) {
 
@@ -20,9 +21,9 @@ export default function TeamTable({ team, setRemoveModalOpen, setChangeRoleModal
     setRemoveModalOpen(() => true);
   }
 
-  const handleChangeRole = async (member, role) => {
-    // setSelectedMember(()=>({...member, newRole: role}));
-    // setChangeRoleModalOpen(()=>true)
+  const handleChangeRole = async (e, index) => {
+    setSelectedMember(()=>({...team[index], newRole: e.target.innerText}));
+    setChangeRoleModalOpen(()=>true)
   }
 
   return (
@@ -47,14 +48,16 @@ export default function TeamTable({ team, setRemoveModalOpen, setChangeRoleModal
               <TableCell className={styles.data}>
                 <div className={styles.role}>
                   {member.role}
-                  {/* Change onClick below  */}
+                  {userInfo.role == "admin" &&
                   <DropdownMenu
-                    menuItems={[{ text: 'Admin', onClick: {} }, { text: 'Member', onClick: {} }]}
-                    direction={'right'} />
+                    menuItems={roles.filter(role=>role!=member.role).map(role => ({ text: role, onClick: handleChangeRole }))}
+                    direction={'right'} 
+                  />
+                  }
                 </div>
               </TableCell>
               <TableCell className={styles.data}>
-                {member.role == "admin" && member.id != userInfo.id && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveMember(member)} />}
+                {userInfo.role == "admin" && member.id != userInfo.id && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveMember(member)} />}
               </TableCell>
             </TableRow>
           ))}

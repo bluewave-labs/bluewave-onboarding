@@ -14,7 +14,7 @@ const DropdownMenuList = ({ menuItems, direction='up' }) => {
         <Paper className={`dropdownMenu ${className}`} elevation={3}>
             <List className="dropdownList">
                 {menuItems.map(({ text, icon, onClick }, index) => (
-                    <ListItemButton key={index} className="dropdownItem" onClick={onClick}>
+                    <ListItemButton key={index} className="dropdownItem" onClick={(e) => onClick(e, index)}>
                         {icon && <ListItemIcon>{icon}</ListItemIcon>}
                         <ListItemText primary={text} />
                     </ListItemButton>
