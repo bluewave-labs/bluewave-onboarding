@@ -4,7 +4,7 @@ import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import classNames from 'classnames';
-import { formatFileSize, getFileExtension } from '../../utils/fileFunctions';
+import { formatFileSize, getFileExtension } from '../../utils/generalHelper';
 
 const FileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);

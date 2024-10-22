@@ -14,6 +14,7 @@ const authReducer = (state, action) => {
         case 'LOGOUT':
             return { ...state, isLoggedIn: false, userInfo: null };
         case 'SET_USER_INFO':
+            localStorage.setItem('userInfo', JSON.stringify(action.payload));
             return { ...state, userInfo: action.payload };
         case 'LOGIN_AND_SET_USER_INFO':
             localStorage.setItem('userInfo', JSON.stringify(action.payload));
@@ -24,7 +25,6 @@ const authReducer = (state, action) => {
                     ...state.userInfo,
                     ...action.payload,
                 };
-                updatedUserInfo = { ...updatedUserInfo, fullName: [updatedUserInfo.name, updatedUserInfo.surname].filter(Boolean).join(' ') };
                 localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
                 return { isLoggedIn: true, userInfo: updatedUserInfo };
             }
@@ -51,9 +51,8 @@ export const AuthProvider = ({ children }) => {
                     if (state.userInfo) {
                         dispatch({ type: 'LOGIN' });
                     } else {
-                        const userData = response.data.user;
-                        const fullName = userData.surname ? `${userData.name} ${userData.surname}` : userData.name;
-                        const payload = { fullName, name: userData.name, surname: userData.surname, email: userData.email };
+                        const { name, surname, email } = response.data.user;
+                        const payload = { name, surname, email };
                         localStorage.setItem('userInfo', JSON.stringify(payload));
                         dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload });
                     }
@@ -63,6 +62,7 @@ export const AuthProvider = ({ children }) => {
                 }
             } catch (error) {
                 localStorage.removeItem('authToken');
+                localStorage.removeItem('userInfo');
                 dispatch({ type: 'LOGOUT' });
             } finally {
                 setIsFetching(false);
