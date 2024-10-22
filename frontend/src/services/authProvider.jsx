@@ -51,9 +51,10 @@ export const AuthProvider = ({ children }) => {
                     if (state.userInfo) {
                         dispatch({ type: 'LOGIN' });
                     } else {
-                        const userData = response.data.user;
-                        localStorage.setItem('userInfo', JSON.stringify(userData));
-                        dispatch({ type: 'LOGIN_AND_SET_USER_INFO', userData });
+                        const { name, surname, email } = response.data.user;
+                        const payload = { name, surname, email };
+                        localStorage.setItem('userInfo', JSON.stringify(payload));
+                        dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload });
                     }
                 } else {
                     dispatch({ type: 'LOGOUT' });
