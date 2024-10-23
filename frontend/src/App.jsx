@@ -20,6 +20,7 @@ import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
+import BannerComponent from "./products/Banner/BannerComponent";
 
 const App = () => {
 
@@ -40,6 +41,16 @@ const App = () => {
         </Route>
 
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/b" element={<BannerComponent
+          backgroundColor="#FF5733" // A vibrant orange-red background color
+          fontColor="#FFFFFF" // White font color for the text
+          isTopPosition={true} // Indicates the banner should be positioned at the top (if relevant)
+          bannerText="Welcome to our Fall Sale! Click here to shop now."
+          url="https://example.com/sale" // URL to open when the banner is clicked
+          buttonAction="open url in new page" // Action to open the link in a new tab
+          isReal={true} // Allows the banner to be dismissible if clicked to close
+        />
+        } />
         <Route path="/signup" element={<CreateAccountPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<PasswordResetPage />} />
@@ -51,7 +62,7 @@ const App = () => {
         <Route path="/banner/create" element={<BannerPage />} />
         <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
         <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
-        <Route path="/popup" element={<Private Component={PopupDefaultPage }/>} />
+        <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
         <Route path="/link" element={<LinksDefaultPage />} />
         <Route path="/tour" element={<ToursDefaultPage />} />
         <Route path="/hint/create" element={<CreateHintPage />} />
