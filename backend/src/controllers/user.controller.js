@@ -59,8 +59,9 @@ const updateUserDetails = async (req, res) => {
   const inputs = req.body;
   try {
     await userService.updateUser(userId, inputs);
+    const user = await userService.getUser(userId);
 
-    return res.status(200).json({ message: "User updated successfully" });
+    return res.status(200).json({ message: "User updated successfully", user: {id: user.id, name: user.name, surname: user.surname, email: user.email, role: settings.user.roleName[user.role]} });
   } catch (err) {
     const { statusCode, payload } = internalServerError(
       "UPDATE_USER_ERROR",
