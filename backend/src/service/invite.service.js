@@ -35,6 +35,15 @@ class InviteService {
             throw new Error(`Error Sending Invite ~ ${err.message}`);
         }
     }
+
+    async getAllInvites()  {
+        try {
+          const invites = await Invite.findAll();
+          return invites;
+        } catch (error) {
+          throw new Error('Error fetching invites: ' + error.message);
+        }
+      };
 }
 
 module.exports = InviteService;
