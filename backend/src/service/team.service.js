@@ -7,6 +7,15 @@ const Invite = db.Invite;
 const sequelize = db.sequelize;
 
 class TeamService {
+    async createTeam(name) {
+        try {
+            const team = await Team.create({ name });
+            return team;
+        } catch (err) {
+            throw new Error("Error creating Team.");
+        }
+    }
+
     async getTeam() {
         try {
             const team = await Team.findOne({
@@ -16,6 +25,17 @@ class TeamService {
             return {team, users};
         }
         catch(err) {
+            throw new Error("Error retrieving Team");
+        }
+    }
+
+    async getTeamByName(name) {
+        try {
+            const team = await Team.findOne({
+                where: { name },
+            })
+            return team;
+        } catch (err) {
             throw new Error("Error retrieving Team");
         }
     }

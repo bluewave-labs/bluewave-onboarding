@@ -4,6 +4,26 @@ const { internalServerError } = require("../utils/errors");
 
 const teamService = new TeamService();
 
+const setOrganisation = async (req, res) => {
+  const { name } = req.body;
+  try {
+    // validation
+    const orgExists = await teamService.getTeamByName(name);
+    if (orgExists) {
+      return res.status(400).json({ error: "Organisation already exists" });
+    }
+
+    const team = await teamService.createTeam(name);
+    return res.status(201).json({ team });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "CREATE_TEAM_ERROR",
+      err.message,
+    );
+    res.status(statusCode).json(payload);
+  }
+};
+
 const getTeamDetails = async (req, res) => {
   try {
     const data = await teamService.getTeam();
@@ -73,4 +93,4 @@ const changeRole = async (req, res) => {
   }
 }
 
-module.exports = { getTeamDetails, updateTeamDetails, removeMember, changeRole };
+module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, removeMember, changeRole };
