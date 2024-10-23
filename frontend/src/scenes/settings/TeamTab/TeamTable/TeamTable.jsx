@@ -8,18 +8,27 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import styles from './TeamTable.module.css';
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useAuth } from '../../../../services/authProvider';
+import DropdownMenu from '../../../../components/DropdownMenu/DropdownMenu';
+import { roles } from '../../../../utils/constants';
 
-const tableData = [
-    { name: "John Connor", date: 'Created 10/4/2022', email: 'john@domain.com', role: 'Administrator', action: <RiDeleteBinLine style={{ fontSize: '20px' }} /> },
-    { name: "Adam McFadden", date: 'Created 10/4/2022', email: 'adam@domain.com', role: 'Member', action: <RiDeleteBinLine style={{ fontSize: '20px' }} /> },
-    { name: "Cris Cross", date: 'Created 10/4/2022', email: 'cris@domain.com', role: 'Member', action: <RiDeleteBinLine style={{ fontSize: '20px' }} /> },
-    { name: "Prince", date: 'Created 10/4/2022', email: 'prince@domain.com', role: 'Member', action: <RiDeleteBinLine style={{ fontSize: '20px' }} /> }
-];
+export default function TeamTable({ team, setRemoveModalOpen, setChangeRoleModalOpen, setSelectedMember }) {
 
-export default function TeamTable() {
+  const { userInfo } = useAuth();
+
+  const handleRemoveMember = async (member) => {
+    setSelectedMember(() => member)
+    setRemoveModalOpen(() => true);
+  }
+
+  const handleChangeRole = async (e, index) => {
+    setSelectedMember(()=>({...team[index], newRole: e.target.innerText}));
+    setChangeRoleModalOpen(()=>true)
+  }
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650}} aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow className={styles.tableHeader}>
             <TableCell className={styles.heading}>NAME</TableCell>
@@ -29,15 +38,27 @@ export default function TeamTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tableData.map((data, index) => (
+          {team.map((member, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row" className={styles.nameCol}>
-                {data.name}
-                <span className={styles.data}>{data.date}</span>
+                {userInfo.id == member.id ? <b>YOU</b> : member.name}
+                <span className={styles.data}>Created {member.createdAt}</span>
               </TableCell>
-              <TableCell className={styles.data}>{data.email}</TableCell>
-              <TableCell className={styles.data}>{data.role}</TableCell>
-              <TableCell className={styles.data}>{data.action}</TableCell>
+              <TableCell className={styles.data}>{member.email}</TableCell>
+              <TableCell className={styles.data}>
+                <div className={styles.role}>
+                  {member.role}
+                  {userInfo.role == "admin" &&
+                  <DropdownMenu
+                    menuItems={roles.filter(role=>role!=member.role).map(role => ({ text: role, onClick: handleChangeRole }))}
+                    direction={'right'} 
+                  />
+                  }
+                </div>
+              </TableCell>
+              <TableCell className={styles.data}>
+                {userInfo.role == "admin" && member.id != userInfo.id && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveMember(member)} />}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

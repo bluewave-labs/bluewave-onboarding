@@ -25,8 +25,7 @@ class TeamService {
             await Team.update({
                 name: name
             },{
-                where: {},
-                limit: 1
+                where: {}
             });
         }
         catch(error) {

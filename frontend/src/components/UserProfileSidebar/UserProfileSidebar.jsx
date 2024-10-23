@@ -1,20 +1,33 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../services/authProvider';
 import Avatar from '../Avatar/Avatar';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import DropdownMenu from '../DropdownMenu/DropdownMenu'; // Adjusted import
 import styles from './UserProfileSidebar.module.css';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../services/loginServices';
+import { handleGenericError } from '../../utils/settingsHelper';
 
 function UserProfileSidebar() {
+    const { userInfo, logoutAuth } = useAuth();
+    const navigate = useNavigate();
 
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-    const { userInfo } = useAuth();
-
-    const handleDropdownClick = () => {
-        setIsDropdownOpen(!isDropdownOpen);
+    const handleLogoutClick = async () => {
+        try {
+            await logout();
+            logoutAuth();
+            navigate('/');
+        }
+        catch(error) {
+            handleGenericError("Error logging out");
+        }
     };
+
+    const menuItems = [
+        { text: 'Settings', icon: <SettingsOutlinedIcon />, onClick: () => navigate('/settings') },
+        { text: 'Logout', icon: <LogoutOutlinedIcon />, onClick: handleLogoutClick },
+    ];
 
     return (
         <div className={styles["user-info"]}>
@@ -25,11 +38,9 @@ function UserProfileSidebar() {
                     <div className={styles["user-role"]}>{userInfo?.role}</div>
                 </div>
             </div>
-            <button className={styles["dropdown-button"]} onClick={handleDropdownClick}>
-                {isDropdownOpen ? <>< KeyboardArrowUpIcon /><DropdownMenu /></> : <KeyboardArrowDownOutlinedIcon />}
-            </button>
+            <DropdownMenu menuItems={menuItems} />
         </div>
-    )
+    );
 }
 
 export default UserProfileSidebar;

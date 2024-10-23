@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -10,14 +10,45 @@ import TeamTable from "./TeamTable/TeamTable";
 import Button from "../../../components/Button/Button";
 import InviteTeamMemberModal from "../../../components/Modals/InviteTeamMemberModal/InviteTeamMemberModal";
 import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaCross, FaTimes } from "react-icons/fa";
+import { handleChangeRoleSuccess, handleEditOrgNameSuccess, handleGenericError, handleInviteMemberSuccess, handleRemoveTeamMemberSuccess } from "../../../utils/settingsHelper";
+import LoadingArea from "../../../components/LoadingPage/LoadingArea";
+import { changeMemberRole, getOrgDetails, inviteMember, removeTeamMember, updateTeamDetails } from "../../../services/settingServices";
+import RemoveTeamMemberModal from "../../../components/Modals/RemoveTeamMemberModal/RemoveTeamMemberModal";
+import ChangeMemberRoleModal from "../../../components/Modals/ChangeMemberRoleModal/ChangeMemberRoleModal";
+
 
 const TeamTab = () => {
   const [value, setValue] = React.useState('1');
   const [editOrgName, setEditOrgName] = useState(false);
   const [orgName, setOrgName] = useState('BlueWave Labs');
+  const [refetch, setRefetch] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [team, setTeam] = useState([]);
 
   const [openInviteTeamMemberModal, setOpenInviteTeamMemberModal] = useState(false);
+  const [openRemoveTeamMemberModal, setOpenRemoveTeamMemberModal] = useState(false);
+  const [openChangeMemberRoleModal, setOpenChangeMemberRoleModal] = useState(false);
+
+  const [selectedMember, setSelectedMember] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(()=>true)
+        const response = await getOrgDetails();
+        setOrgName(()=>response.data.name);
+        setTeam(()=>response.data.users);
+      }
+      catch (error) {
+        console.error("Error fetching team details", error.message);
+        handleGenericError("Error fetching team details");
+      }
+      finally {
+        setLoading(false);
+      }
+    })()
+  }, [refetch])
 
   const handleInviteTeamMemberModalClose = () => {
     setOpenInviteTeamMemberModal(false);
@@ -35,8 +66,64 @@ const TeamTab = () => {
     setOpenInviteTeamMemberModal(true);
   };
 
-  return (
-    <>
+  const handleEditOrgName = async () => {
+    try {
+      const response = await updateTeamDetails(orgName);
+      handleEditOrgNameSuccess(response, "Team Name Changed Successfully");
+      setRefetch(refetch=>!refetch);
+    }
+    catch(error) {
+      handleGenericError("Error updating team name");
+    }
+    finally {
+      setEditOrgName(false);
+    }
+  }
+
+  const handleRemoveTeamMember = async () => {
+    try {
+      const response = await removeTeamMember(selectedMember.id);
+      handleRemoveTeamMemberSuccess(response, "Team Member Successfully Removed");
+      setRefetch(refetch=>!refetch);
+    }
+    catch(error) {
+      handleGenericError("Error Removing Team Member");
+    }
+    finally {
+      setOpenRemoveTeamMemberModal(false);
+    }
+  }
+
+  const handleInviteTeamMember = async (inputs) => {
+    try {
+      const response = await inviteMember(inputs);
+      handleInviteMemberSuccess(response, "Member Invited!")
+    }
+    catch(error) {
+      handleGenericError("Error Inviting Member");
+    }
+    finally {
+      setOpenInviteTeamMemberModal(false);
+    }
+  }
+
+  const handleChangeRole = async () => {
+    try {
+      const response = await changeMemberRole(selectedMember);
+      handleChangeRoleSuccess(response, "Role Changed Successfully");
+      setRefetch(refetch=>!refetch);
+    }
+    catch(error) {
+      handleGenericError("Error Changing Role");
+    }
+    finally {
+      setOpenChangeMemberRoleModal(false);
+    }
+  }
+
+  return loading
+    ? <LoadingArea />
+    : <>
       <div className={styles.organisation}>
         <h6 className={styles.nameHeading}>Organisation Name</h6>
         <div className={styles.orgNameContainer}>
@@ -55,8 +142,10 @@ const TeamTab = () => {
           />}
           {!editOrgName ?
             <VscEdit aria-label="Edit Organisation Name" className={styles.pencil} onClick={toggleEdit} /> :
-            <FaCheck aria-label="Save Organisation Name" onClick={toggleEdit} className={styles.pencil} color="green"
-            />
+            <>
+              <FaCheck aria-label="Save Organisation Name" onClick={handleEditOrgName} className={styles.pencil} color="green" />
+              <FaTimes aria-label="Close Edit Panel" onClick={()=>setEditOrgName(false)} className={styles.pencil} color="black" />
+            </>
           }
 
         </div>
@@ -96,16 +185,18 @@ const TeamTab = () => {
                 // onClick={handleSubmit}
                 />
               </Box>
-              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="1"><TeamTable /></TabPanel>
-              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="2">Item Two</TabPanel>
-              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="3">Item Three</TabPanel>
+              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="1"><TeamTable team={team} setRemoveModalOpen={setOpenRemoveTeamMemberModal} setChangeRoleModalOpen={setOpenChangeMemberRoleModal} setSelectedMember={setSelectedMember}/></TabPanel>
+              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="2"><TeamTable team={team.filter((user)=>user.role=="admin")} setRemoveModalOpen={setOpenRemoveTeamMemberModal} setChangeRoleModalOpen={setOpenChangeMemberRoleModal} setSelectedMember={setSelectedMember}/></TabPanel>
+              <TabPanel sx={{ padding: 0, marginTop: '1.2rem' }} value="3"><TeamTable team={team.filter((user) => user.role=="member")} setRemoveModalOpen={setOpenRemoveTeamMemberModal} setChangeRoleModalOpen={setOpenChangeMemberRoleModal} setSelectedMember={setSelectedMember}/></TabPanel>
             </TabContext>
           </Box>
         </div>
-        <InviteTeamMemberModal open={openInviteTeamMemberModal} handleClose={handleInviteTeamMemberModalClose} />
+        <InviteTeamMemberModal open={openInviteTeamMemberModal} handleClose={handleInviteTeamMemberModalClose} handleInviteTeamMember={handleInviteTeamMember} />
+        <RemoveTeamMemberModal open={openRemoveTeamMemberModal} setModalOpen={setOpenRemoveTeamMemberModal} selectedMember={selectedMember} handleRemoveTeamMember={handleRemoveTeamMember} />
+        <ChangeMemberRoleModal open={openChangeMemberRoleModal} setModalOpen={setOpenChangeMemberRoleModal} selectedMember={selectedMember} handleChangeRole={handleChangeRole} />
       </div>
     </>
-  );
+  ;
 };
 
 export default TeamTab;
