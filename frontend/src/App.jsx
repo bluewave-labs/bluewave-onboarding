@@ -51,7 +51,7 @@ const App = () => {
         <Route path="/banner/create" element={<BannerPage />} />
         <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
         <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
-        <Route path="/popup" element={<Private Component={PopupDefaultPage }/>} />
+        <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
         <Route path="/link" element={<LinksDefaultPage />} />
         <Route path="/tour" element={<ToursDefaultPage />} />
         <Route path="/hint/create" element={<CreateHintPage />} />
