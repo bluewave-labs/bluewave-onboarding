@@ -1,6 +1,7 @@
+import { AUTH_TYPE } from './constants';
 import toastEmitter, { TOAST_EMITTER_KEY } from './toastEmitter';
 
-export const handleAuthSuccess = (response, loginAuth, navigate) => {
+export const handleAuthSuccess = (authType, response, loginAuth, navigate) => {
     const userData = response.user;
     const fullName = userData.surname ? `${userData.name} ${userData.surname}` : userData.name;
     const payload = { fullName, name: userData.name, surname: userData.surname, email: userData.email, picture: userData?.picture };
@@ -11,6 +12,11 @@ export const handleAuthSuccess = (response, loginAuth, navigate) => {
     // Update authentication state
     loginAuth(payload);
 
-    // Navigate to the home page
-    navigate('/');
+    // navigation based upon auth type
+    if (authType === AUTH_TYPE.LOGIN) { 
+        navigate('/');
+    }
+    if (authType === AUTH_TYPE.SIGNUP) { 
+        navigate('/progress-steps');
+    }
 };
