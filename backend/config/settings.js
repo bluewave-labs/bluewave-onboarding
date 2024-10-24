@@ -1,4 +1,4 @@
-const constants = require("../src/utils/constants");
+const constants = require("../src/utils/constants.helper");
 const userRole = constants.ROLE;
 
 module.exports = {
