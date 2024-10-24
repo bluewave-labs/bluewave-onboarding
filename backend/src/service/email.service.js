@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const handlebars = require('handlebars');
 const fs = require('fs');
 const path = require('path');
-const { API_BASE_URL } = require('../utils/constants');
+const { API_BASE_URL } = require('../utils/constants.helper');
 
 const emailEnabled = process.env.EMAIL_ENABLE === 'true';
 

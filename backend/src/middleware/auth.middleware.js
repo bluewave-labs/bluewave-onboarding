@@ -1,4 +1,4 @@
-const { verifyToken } = require("../utils/jwt");
+const { verifyToken } = require("../utils/jwt.helper");
 const db = require("../models");
 const Token = db.Token;
 const User = db.User;
