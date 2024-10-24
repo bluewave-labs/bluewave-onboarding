@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const jsonErrorMiddleware = require("./src/middleware/jsonError.middleware");
 const fileSizeValidator = require('./src/middleware/fileSizeValidator.middleware');
-const { MAX_FILE_SIZE } = require('./src/utils/constants');
+const { MAX_FILE_SIZE } = require('./src/utils/constants.helper');
 
 // Load environment variables from .env file
 dotenv.config();

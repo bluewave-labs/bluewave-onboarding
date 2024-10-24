@@ -1,5 +1,5 @@
 const popupService = require("../service/popup.service");
-const { internalServerError } = require("../utils/errors");
+const { internalServerError } = require("../utils/errors.helper");
 const { isValidHexColor, checkColorFields, validateCloseButtonAction } = require("../utils/guide.helper");
 const db = require("../models");
 const Popup = db.Popup;
