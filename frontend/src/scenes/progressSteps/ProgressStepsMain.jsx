@@ -3,12 +3,30 @@ import ProgressSteps from '../../components/ProgressSteps/ProgressSteps';
 import styles from './ProgressStepsMain.module.scss';
 import Button from '../../components/Button/Button';
 import CheckboxHRM from '../../components/Checkbox/CheckboxHRM';
+import TeamMembersList from '../../components/ProgressSteps/TeamMemberList/TeamMembersList';
+import { useNavigate } from "react-router-dom";
 
 const ProgressStepsMain = () => {
+    const navigate = useNavigate();
     const NUMBER_OF_STEPS = 4;
     const [step, setStep] = useState(1);
-    const [teamMembersEmails, setTeamMembersEmails] = useState('');
+    const [teamMembersEmails, setTeamMembersEmails] = useState([]);
     const [organizationName, setOrganizationName] = useState('');
+    const [emailInput, setEmailInput] = useState('');
+
+    const addMember = (newMemberEmail) => {
+        setTeamMembersEmails((prevEmails) => [...prevEmails, newMemberEmail]);
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            if (emailInput != '') {
+                addMember(emailInput);
+                setEmailInput('')
+            }
+
+        }
+    };
 
     const content = [
         {
@@ -30,13 +48,13 @@ const ProgressStepsMain = () => {
     ];
 
     const increaseStep = () => {
-        if (step < NUMBER_OF_STEPS){
+        if (step < NUMBER_OF_STEPS) {
             setStep(step => step + 1);
         }
     }
 
     const decreaseStep = () => {
-        if (step > 1){
+        if (step > 1) {
             setStep(step => step - 1);
         }
     }
@@ -49,14 +67,22 @@ const ProgressStepsMain = () => {
         return (
             <>
                 <div className={styles.stepOne}>
-                    <CheckboxHRM style={{ marginRight: '1rem' }} />
-                    <h4>Invite team members</h4>
-                    <input
-                        type="text"
-                        placeholder='ex. john@bluewavelabs.ca, rita@bluewavelabs.ca'
-                        value={teamMembersEmails}
-                        onChange={handleTeamMembersEmailsChange}
-                    />
+                    <div className={styles.invite}>
+                        <CheckboxHRM style={{ marginRight: '1rem' }} />
+                        <h4 style={{ marginTop: '4px' }}>Invite team members</h4>
+                    </div>
+
+                    <div className={styles.teamMembers}>
+                        <input
+                            type="text"
+                            placeholder="ex. type john@bluewavelabs.ca and press enter"
+                            value={emailInput}
+                            onChange={(e) => setEmailInput(e.target.value)}
+                            onKeyDown={handleKeyPress}
+                        />
+                        <TeamMembersList members={teamMembersEmails} setMembers={setTeamMembersEmails} />
+                    </div>
+
                 </div>
                 <div className={styles.buttons}>
                     <Button text='Next' sx={{ width: '107px', borderRadius: '10px !important' }} onClick={increaseStep} />
@@ -99,8 +125,8 @@ const ProgressStepsMain = () => {
     const fourthPage = () => {
         return (
             <>
-                <div className={styles.buttons}>
-                    <Button text='Sweet' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={increaseStep} />
+                <div className={styles.buttons}>      
+                    <Button text='Sweet' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={() =>navigate("/")} />
                 </div>
             </>
         )

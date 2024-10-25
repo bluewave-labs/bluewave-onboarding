@@ -27,21 +27,31 @@ const CustomTextField = ({
   textFieldMargin = "normal",
   type = "text",
   required = false,
-  style
+  style,
+  labelSubText,
+  disabled = false,
+  autofocus = false
 }) => {
   return (
     <div style={style}>
-      {!checkCircleIconVisible && <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>}
+      {!checkCircleIconVisible &&
+        <div>
+          <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
+          {labelSubText && <InputLabel sx={{ fontWeight: '400', fontSize: '13px', margin: 0 }}>{labelSubText}</InputLabel>}
+        </div>
+      }
       {checkCircleIconVisible &&
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           {displayCheckCircleIcon && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
           <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
+          {labelSubText && <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelSubText}</InputLabel>}
         </div>
       }
       <TextField
         id={id}
         type={type}
         name={name}
+        autoFocus={autofocus}
         required={Boolean(required)}
         className="textField"
         sx={{ width: TextFieldWidth }}
@@ -54,6 +64,7 @@ const CustomTextField = ({
         multiline={multiline}
         rows={rows}
         helperText={helperText}
+        disabled={disabled}
         InputProps={{
           startAdornment: startAdornment,
           endAdornment: endAdornment,
