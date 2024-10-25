@@ -4,7 +4,13 @@ const Link = db.Link;
 class LinkService {
   async getAllLinks() {
     return await Link.findAll({
-      include: [{ model: db.User, as: "creator" }],
+      include: [
+        {
+          model: db.User,
+          as: "creator",
+          attributes: { exclude: ["password"] },
+        },
+      ],
     });
   }
 
@@ -13,7 +19,13 @@ class LinkService {
       where: {
         createdBy: userId,
       },
-      include: [{ model: db.User, as: "creator" }],
+      include: [
+        {
+          model: db.User,
+          as: "creator",
+          attributes: { exclude: ["password"] },
+        },
+      ],
     });
   }
 
@@ -41,7 +53,13 @@ class LinkService {
     try {
       return await Link.findOne({
         where: { id: linkId },
-        include: [{ model: db.User, as: "creator" }],
+        include: [
+          {
+            model: db.User,
+            as: "creator",
+            attributes: { exclude: ["password"] },
+          },
+        ],
       });
     } catch (error) {
       throw new Error("Error retrieving link by ID");

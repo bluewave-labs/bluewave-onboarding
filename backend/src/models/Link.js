@@ -1,4 +1,4 @@
-export const URL_REGEX = /[(http(s)?)?://(www\.)?a-zA-Z0-9@:%\._+~#=]{2,256}\.[a-z]{2,6}\b([-\d@:%_+\.~#?&//=]*)/gi;
+const { URL_REGEX } = require("../utils/link.helper");
 
 /**
  *
@@ -32,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
       order: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        autoIncrement: true,
       },
       createdBy: {
         type: DataTypes.INTEGER,
@@ -46,13 +45,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       tableName: "link",
       timestamps: false,
-      validate: {
-        orderWithinRange() {
-          if (this.order > this.id) {
-            throw new Error('Order can\'t be bigger than the number of items')
-          }
-        }
-      }
     }
   );
 

@@ -1,9 +1,6 @@
 const linkService = require("../service/link.service");
 const { internalServerError } = require("../utils/errors");
-const { isValidHexColor, checkColorFields } = require("../utils/guideHelpers");
-const db = require("../models");
-const { URL_REGEX } = require("../models/Link");
-const Link = db.Link;
+const { URL_REGEX } = require("../utils/link.helper");
 
 const validateUrl = (value) => {
   return URL_REGEX.test(value);
@@ -12,7 +9,7 @@ const validateUrl = (value) => {
 class LinkController {
   async addLink(req, res) {
     const userId = req.user.id;
-    const { title, url } = req.body;
+    const { title, url, order } = req.body;
 
     if (!title || !url) {
       return res.status(400).json({
@@ -23,6 +20,12 @@ class LinkController {
     if (validateUrl(title) || !validateUrl(url)) {
       return res.status(400).json({
         errors: [{ msg: "Invalid value for title or url" }],
+      });
+    }
+    const allLinks = await linkService.getLinksByUserId(userId);
+    if (order > allLinks.length + 1) {
+      return res.status(400).json({
+        errors: [{ msg: "Invalid value for order" }],
       });
     }
 
@@ -71,7 +74,8 @@ class LinkController {
   async editLink(req, res) {
     try {
       const { id } = req.params;
-      const { title, url } = req.body;
+      const userId = req.user.id;
+      const { title, url, order } = req.body;
 
       if (!title || !url) {
         return res.status(400).json({
@@ -82,6 +86,13 @@ class LinkController {
       if (validateUrl(title) || !validateUrl(url)) {
         return res.status(400).json({
           errors: [{ msg: "Invalid value for title or url" }],
+        });
+      }
+
+      const allLinks = await linkService.getLinksByUserId(userId);
+      if (order > allLinks.length) {
+        return res.status(400).json({
+          errors: [{ msg: "Invalid value for order" }],
         });
       }
 
