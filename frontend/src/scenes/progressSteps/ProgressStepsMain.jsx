@@ -5,6 +5,7 @@ import Button from '../../components/Button/Button';
 import CheckboxHRM from '../../components/Checkbox/CheckboxHRM';
 import TeamMembersList from '../../components/ProgressSteps/TeamMemberList/TeamMembersList';
 import { useNavigate } from "react-router-dom";
+import { sendInvites, setOrganization } from '../../services/teamServices';
 
 const ProgressStepsMain = () => {
     const navigate = useNavigate();
@@ -13,6 +14,10 @@ const ProgressStepsMain = () => {
     const [teamMembersEmails, setTeamMembersEmails] = useState([]);
     const [organizationName, setOrganizationName] = useState('');
     const [emailInput, setEmailInput] = useState('');
+    const [err, setErr] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
 
     const addMember = (newMemberEmail) => {
         setTeamMembersEmails((prevEmails) => [...prevEmails, newMemberEmail]);
@@ -59,6 +64,23 @@ const ProgressStepsMain = () => {
         }
     }
 
+    const sendInvitesAndSetOrgName = async () => {
+        try {
+            const inviteResponse = await sendInvites(teamMembersEmails);
+            const orgSetResponse = await setOrganization(organizationName);
+            setLoading(false);
+            navigate('/');
+        } catch (err) {
+            setErr(true);
+            setLoading(false);
+            if (err.response?.data?.error) {
+                setErrorMessage(err.response.data.error);
+            } else {
+                setErrorMessage('An error occurred. Please try again.');
+            }
+        }
+    }
+
     const firstPage = () => {
         const handleTeamMembersEmailsChange = (event) => {
             setTeamMembersEmails(event.target.value);
@@ -82,7 +104,6 @@ const ProgressStepsMain = () => {
                         />
                         <TeamMembersList members={teamMembersEmails} setMembers={setTeamMembersEmails} />
                     </div>
-
                 </div>
                 <div className={styles.buttons}>
                     <Button text='Next' sx={{ width: '107px', borderRadius: '10px !important' }} onClick={increaseStep} />
@@ -126,7 +147,7 @@ const ProgressStepsMain = () => {
         return (
             <>
                 <div className={styles.buttons}>      
-                    <Button text='Sweet' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={() =>navigate("/")} />
+                    <Button text='Sweet' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={() => sendInvitesAndSetOrgName()} disabled={loading}/>
                 </div>
             </>
         )
