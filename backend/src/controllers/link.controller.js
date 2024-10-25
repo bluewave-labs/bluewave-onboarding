@@ -23,14 +23,14 @@ class LinkController {
       });
     }
     const allLinks = await linkService.getLinksByUserId(userId);
-    if (order > allLinks.length + 1) {
+    if (order && order > allLinks.length + 1) {
       return res.status(400).json({
         errors: [{ msg: "Invalid value for order" }],
       });
     }
 
     try {
-      const newLinkData = { ...req.body, createdBy: userId };
+      const newLinkData = { ...req.body, order: req.body.order || allLinks.length, createdBy: userId };
       const newPopup = await linkService.createLink(newLinkData);
       res.status(201).json(newPopup);
     } catch (err) {
@@ -90,7 +90,7 @@ class LinkController {
       }
 
       const allLinks = await linkService.getLinksByUserId(userId);
-      if (order > allLinks.length) {
+      if (order && order > allLinks.length) {
         return res.status(400).json({
           errors: [{ msg: "Invalid value for order" }],
         });
