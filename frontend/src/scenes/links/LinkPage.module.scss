@@ -1,0 +1,40 @@
+.container {
+  flex-grow: 1;
+  align-self: stretch;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  background-color: #f8f9f8;
+  border-bottom: 1px solid #d0d5dd;
+  padding: 1.125rem 1.56rem;
+
+  & h2 {
+    margin: 0;
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem 1.56rem;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+  }
+}
+
+.preview {
+  flex-grow: 1;
+  padding: 16px;
+}
+
+.link {
+  text-decoration: none;
+  cursor: pointer;
+}

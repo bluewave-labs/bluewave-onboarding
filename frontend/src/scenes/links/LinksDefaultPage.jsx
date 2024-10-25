@@ -1,22 +1,37 @@
-import CreateActivityButton from "../../components/Button/CreateActivityButton/CreateActivityButton"
-import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
+import React, { useState } from "react";
+import CreateActivityButton from "../../components/Button/CreateActivityButton/CreateActivityButton";
 import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
+import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
+import LinksPage from "./LinksPage";
 
 const LinksDefaultPage = () => {
-    const style = {
-        "display": "flex",
-        "flex-direction": "column",
-        "width": "100%",
-        "justify-content": "center",
-        "align-items": "center",
-    }
-    return (
-            <div style={style}>
-                <ParagraphCSS />
-                <CreateActivityButton type={ACTIVITY_TYPES.HELPERLINKS} />
-            </div>
-    )
-}
+  const [showLinksPage, setShowLinksPage] = useState(false);
 
-export default LinksDefaultPage
+  const style = {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  };
 
+  return (
+    <div style={style}>
+      {showLinksPage ? (
+        <LinksPage items={[]} />
+      ) : (
+        <>
+          <ParagraphCSS />
+          <CreateActivityButton
+            type={ACTIVITY_TYPES.HELPERLINKS}
+            onClick={() => {
+              setShowLinksPage(true);
+            }}
+          />
+        </>
+      )}
+    </div>
+  );
+};
+
+export default LinksDefaultPage;

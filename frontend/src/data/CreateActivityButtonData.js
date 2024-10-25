@@ -42,7 +42,7 @@ export const activityData = {
       "Help them understand a specific feature",
       "Guide them to your knowledgebase",
     ],
-    buttonText: "Create a hint",
+    buttonText: "Create a link",
   },
   [ACTIVITY_TYPES.TOURS]: {
     heading: "Use tours to",
