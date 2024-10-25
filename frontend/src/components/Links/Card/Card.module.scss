@@ -1,0 +1,60 @@
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+
+  &__container {
+    flex-grow: 1;
+    margin-right: 2rem;
+    max-width: 312px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+
+  &__icon {
+    width: 12px;
+    height: 12px;
+    color: var(--main-purple);
+  }
+
+  &__info h4 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--main-text-color);
+  }
+
+  &__info p {
+    margin: 2px 0 0 33px;
+    font-size: 14px;
+    color: var(--second-text-color);
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+
+  &__actions .MuiIconButton-root {
+    color: var(--main-text-color);
+  }
+}
