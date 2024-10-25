@@ -1,4 +1,6 @@
 /** @type {import('sequelize-cli').Migration} */
+const { validateHexColor, validateActionButton } = require('../src/utils/guide.helper');
+const { validatePositionWrapper } = require('../src/utils/banner.helper');
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('banners', {
@@ -9,29 +11,46 @@ module.exports = {
         allowNull: false
       },
       closeButtonAction: {
-        type: Sequelize.ENUM("no action", "open url", "open url in a new tab"),
-        allowNull: false
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          isValidAction(value) {
+            validateActionButton(value);
+          },
+        }
       },
       position: {
-        type: Sequelize.ENUM("top", "bottom"),
-        allowNull: false
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          isValidPosition(value) {
+            validatePositionWrapper(value);
+          },
+        }
       },
       url: {
         type: Sequelize.STRING,
-        allowNull: true,
-        validate: {
-          isUrl: true
-        }
+        allowNull: true
       },
       fontColor: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "#FFFFFF"
+        defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+              validateHexColor(value, 'fontColor');
+          },
+        }
       },
       backgroundColor: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "#FFFFFF"
+        defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+              validateHexColor(value, 'fontColor');
+          },
+        }
       },
       bannerText: {
         type: Sequelize.STRING,

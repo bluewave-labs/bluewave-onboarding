@@ -1,4 +1,5 @@
 /** @type {import('sequelize-cli').Migration} */
+const { validateHexColor } = require("../src/utils/guide.helper");
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('hints', {
@@ -41,27 +42,52 @@ module.exports = {
       headerBackgroundColor: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "#FFFFFF"
+        defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+            validateHexColor(value, "headerBackgroundColor");
+          },
+        }
       },
       headerColor: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "#000000"
+        defaultValue: "#000000",
+        validate: {
+          isHexColor(value) {
+            validateHexColor(value, "headerBackgroundColor");
+          },
+        }
       },
       textColor: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "#000000"
+        defaultValue: "#000000",
+        validate: {
+          isHexColor(value) {
+            validateHexColor(value, "headerBackgroundColor");
+          },
+        }
       },
       buttonBackgroundColor: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "#FFFFFF"
+        defaultValue: "#FFFFFF",
+        validate: {
+          isHexColor(value) {
+            validateHexColor(value, "headerBackgroundColor");
+          },
+        }
       },
       buttonTextColor: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "#000000"  
+        defaultValue: "#000000",
+        validate: {
+          isHexColor(value) {
+            validateHexColor(value, "headerBackgroundColor");
+          },
+        }
       },
       createdBy: {
         type: Sequelize.INTEGER,
