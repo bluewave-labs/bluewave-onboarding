@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
     dialect: envConfig.dialect,
     port: envConfig.port,
     logging: envConfig.logging,
-  },
+  }
 );
 
 const db = {};
@@ -27,10 +27,13 @@ db.Popup = require("./Popup.js")(sequelize, Sequelize.DataTypes);
 db.Token = require("./Token.js")(sequelize, Sequelize.DataTypes);
 db.PopupLog = require("./PopupLog.js")(sequelize, Sequelize.DataTypes);
 db.Banner = require("./Banner.js")(sequelize, Sequelize.DataTypes);
+db.Link = require("./Link.js")(sequelize, Sequelize.DataTypes);
 
 // Define associations here
 db.User.hasMany(db.Popup, { foreignKey: "createdBy", as: "popups" });
 db.Popup.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
+db.User.hasMany(db.Link, { foreignKey: "createdBy", as: "links" });
+db.Link.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
 
 db.User.hasMany(db.Banner, { foreignKey: "createdBy", as: "banners" });
 db.Banner.belongsTo(db.User, { foreignKey: "createdBy", as: "creator" });
