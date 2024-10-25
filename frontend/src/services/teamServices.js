@@ -1,4 +1,4 @@
-import { ROLE } from "../../../backend/src/utils/constants";
+import { ROLE } from "../utils/constants";
 import { apiClient } from "./apiClient";
 
 const baseEndpoint = "team/";
