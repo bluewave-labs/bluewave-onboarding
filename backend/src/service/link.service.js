@@ -8,7 +8,7 @@ class LinkService {
     });
   }
 
-  async getLinks(userId) {
+  async getLinksByUserId(userId) {
     return await Link.findAll({
       where: {
         createdBy: userId,

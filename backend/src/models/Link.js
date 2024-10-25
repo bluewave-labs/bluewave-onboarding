@@ -1,3 +1,5 @@
+export const URL_REGEX = /[(http(s)?)?://(www\.)?a-zA-Z0-9@:%\._+~#=]{2,256}\.[a-z]{2,6}\b([-\d@:%_+\.~#?&//=]*)/gi;
+
 /**
  *
  * @param {import('sequelize').Sequelize} sequelize
@@ -17,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          not: /[(http(s)?)?://(www\.)?a-zA-Z0-9@:%\._+~#=]{2,256}\.[a-z]{2,6}\b([-\d@:%_+\.~#?&//=]*)/gi,
+          not: URL_REGEX,
         },
       },
       url: {
