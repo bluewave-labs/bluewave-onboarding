@@ -1,6 +1,9 @@
 const { MAX_FILE_SIZE } = require('../utils/constants');
 
 const fileSizeValidator = (req, res, next) => {
+    if(req.method !== 'POST' && req.method !== 'PUT') {
+        return next();
+    }
     const contentLength = Number(req.headers['content-length']);
     
     if (isNaN(contentLength)) {
