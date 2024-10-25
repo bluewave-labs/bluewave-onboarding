@@ -1,3 +1,4 @@
+import { ROLE } from "../../../backend/src/utils/constants";
 import { apiClient } from "./apiClient";
 
 const baseEndpoint = "team/";
@@ -8,7 +9,7 @@ export const sendInvites = async (memberEmails) => {
       memberEmails.map(async (email) => {
         const response = await apiClient.post(baseEndpoint + "invite", {
           invitedEmail: email,
-          role: 'member'
+          role: ROLE.MEMBER,
         });
         return response.data;
       })
@@ -25,7 +26,7 @@ export const setOrganization = async (name) => {
     const response = await apiClient.post(baseEndpoint + "set-organisation", {
       name
     })
-    console.log(response.data);
+    return response.data;
   } catch (err) {
     console.error('Error setting organization: ', err.response);
     throw err;

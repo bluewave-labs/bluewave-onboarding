@@ -14,3 +14,8 @@ export const AUTH_TYPE = {
   LOGIN: 'login',
   SIGNUP: 'signup',
 }
+
+export const ROLE = {
+  ADMIN: '1',
+  MEMBER: '2'
+}
