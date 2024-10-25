@@ -11,8 +11,8 @@ const setOrganisation = async (req, res) => {
       return res.status(400).json({ error: 'Organisation name is required and must be a non-empty string' });
     }
 
-    name = name.trim();
-    const orgExists = await teamService.getTeamByName(name);
+    let sanitizedOrgName = name.trim();
+    const orgExists = await teamService.getTeamByName(sanitizedOrgName);
     if (orgExists) {
       return res.status(400).json({ error: "Organisation already exists" });
     }

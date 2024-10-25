@@ -14,7 +14,7 @@ const ProgressStepsMain = () => {
     const [teamMembersEmails, setTeamMembersEmails] = useState([]);
     const [organizationName, setOrganizationName] = useState('');
     const [emailInput, setEmailInput] = useState('');
-    const [err, setErr] = useState(false);
+    const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -66,12 +66,24 @@ const ProgressStepsMain = () => {
 
     const sendInvitesAndSetOrgName = async () => {
         try {
-            const inviteResponse = await sendInvites(teamMembersEmails);
-            const orgSetResponse = await setOrganization(organizationName);
+            setError(false);
+            setLoading(true);
+            let inviteResponse, orgSetResponse;
+
+            if (organizationName === '' && teamMembersEmails.length > 0) { 
+                inviteResponse = await sendInvites(teamMembersEmails);
+            }
+            else if (organizationName !== '' && teamMembersEmails.length === 0) { 
+                orgSetResponse = await setOrganization(organizationName);
+            } else {
+                inviteResponse = await sendInvites(teamMembersEmails);
+                orgSetResponse = await setOrganization(organizationName);
+            }
+
             setLoading(false);
             navigate('/');
         } catch (err) {
-            setErr(true);
+            setError(true);
             setLoading(false);
             if (err.response?.data?.error) {
                 setErrorMessage(err.response.data.error);
