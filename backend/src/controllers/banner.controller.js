@@ -27,7 +27,8 @@ class BannerController {
     }
 
     const colorFields = { fontColor, backgroundColor };
-    checkColorFields(colorFields, res);
+    const colorCheck = checkColorFieldsFail(colorFields, res)
+    if(colorCheck){return colorCheck};
 
     try {
       const newBannerData = { ...req.body, createdBy: userId };
@@ -97,16 +98,9 @@ class BannerController {
           .json({ errors: [{ msg: "Invalid value for closeButtonAction" }] });
       }
   
-      const colorFields = ["fontColor", "backgroundColor"];
-       for (const field of colorFields) {
-         if (req.body[field] && !isValidHexColor(req.body[field])) {
-           return res
-             .status(400)
-             .json({
-               errors: [{ msg: `${field} must be a valid hex color code` }],
-             });
-         }
-       }
+      const colorFields = { fontColor, backgroundColor };
+      const colorCheck = checkColorFieldsFail(colorFields, res)
+      if(colorCheck){return colorCheck};
   
       const updatedBanner = await bannerService.updateBanner(id, req.body);
       res.status(200).json(updatedBanner);

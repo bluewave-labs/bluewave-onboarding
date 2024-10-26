@@ -9,7 +9,7 @@ const validateHexColor = (value, fieldName) => {
     }
 };
 
-const checkColorFields = (colorFields, res) => {
+const checkColorFieldsFail = (colorFields, res) => {
   for (const [field, value] of Object.entries(colorFields)) {
     if (value && !isValidHexColor(value)) {
       return res.status(400).json({
@@ -17,7 +17,7 @@ const checkColorFields = (colorFields, res) => {
       });
     }
   }
-  return true;
+  return false;
 };
 
 const validateCloseButtonAction = (value) => {
@@ -34,7 +34,7 @@ const validateActionButton = (value) => {
 module.exports = {
     isValidHexColor,
     validateHexColor,
-    checkColorFields,
+    checkColorFieldsFail,
     validateCloseButtonAction,
     validateActionButton
 };
