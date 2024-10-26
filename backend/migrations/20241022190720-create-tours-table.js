@@ -1,9 +1,3 @@
-const {
-  validateTriggeringFrequency,
-  validatePageTargeting,
-  validateTheme,
-} = require("../src/utils/tour.helper");
-
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('tours', {
@@ -27,36 +21,15 @@ module.exports = {
       },
       pageTargeting: {
         type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          customValidator(value) {
-            if (!validatePageTargeting(value)) {
-              throw new Error("Invalid page targeting value");
-            }
-          },
-        }
+        allowNull: false
       },
       theme: {
         type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          customValidator(value) {
-            if (!validateTheme(value)) {
-              throw new Error("Invalid theme value");
-            }
-          },
-        }
+        allowNull: false
       },
       triggeringFrequency: {
         type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          customValidator(value) {
-            if (!validateTriggeringFrequency(value)) {
-              throw new Error("Invalid triggering frequency");
-            }
-          },
-        }
+        allowNull: false
       },
       createdBy: {
         type: Sequelize.INTEGER,
