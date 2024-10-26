@@ -1,6 +1,6 @@
 const settings = require("../../config/settings");
 const TeamService = require("../service/team.service");
-const { internalServerError } = require("../utils/errors");
+const { internalServerError } = require("../utils/errors.helper");
 
 const teamService = new TeamService();
 
