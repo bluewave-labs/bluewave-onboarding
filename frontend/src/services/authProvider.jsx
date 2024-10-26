@@ -14,6 +14,7 @@ const authReducer = (state, action) => {
         case 'LOGOUT':
             return { ...state, isLoggedIn: false, userInfo: null };
         case 'SET_USER_INFO':
+            localStorage.setItem('userInfo', JSON.stringify(action.payload));
             return { ...state, userInfo: action.payload };
         case 'LOGIN_AND_SET_USER_INFO':
             localStorage.setItem('userInfo', JSON.stringify(action.payload));
@@ -24,7 +25,6 @@ const authReducer = (state, action) => {
                     ...state.userInfo,
                     ...action.payload,
                 };
-                updatedUserInfo = { ...updatedUserInfo, fullName: [updatedUserInfo.name, updatedUserInfo.surname].filter(Boolean).join(' ') };
                 localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
                 return { isLoggedIn: true, userInfo: updatedUserInfo };
             }
@@ -48,9 +48,8 @@ export const AuthProvider = ({ children }) => {
                 }
                 const response = await apiClient.get('/users/current-user');
                 if (response.status === 200 && response.data.user) {
-                    const userData = response.data.user;
-                    const fullName = userData.surname ? `${userData.name} ${userData.surname}` : userData.name;
-                    const payload = { id: userData.id, fullName, name: userData.name, surname: userData.surname, email: userData.email, role: userData.role };
+                    const { id, name, surname, email, role } = response.data.user;
+                    const payload = { id, name, surname, email, role };
                     localStorage.setItem('userInfo', JSON.stringify(payload));
                     dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload });
                 } else {
@@ -58,6 +57,7 @@ export const AuthProvider = ({ children }) => {
                 }
             } catch (error) {
                 localStorage.removeItem('authToken');
+                localStorage.removeItem('userInfo');
                 dispatch({ type: 'LOGOUT' });
             } finally {
                 setIsFetching(false);

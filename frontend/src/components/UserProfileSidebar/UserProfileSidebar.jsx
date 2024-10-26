@@ -8,6 +8,7 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../services/loginServices';
 import { handleGenericError } from '../../utils/settingsHelper';
+import { getFullName } from '../../utils/generalHelper';
 
 function UserProfileSidebar() {
     const { userInfo, logoutAuth } = useAuth();
@@ -22,6 +23,13 @@ function UserProfileSidebar() {
         catch(error) {
             handleGenericError("Error logging out");
         }
+    }
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const fullName = getFullName(userInfo);
+
+    const handleDropdownClick = () => {
+        setIsDropdownOpen(!isDropdownOpen);
     };
 
     const menuItems = [
@@ -34,7 +42,7 @@ function UserProfileSidebar() {
             <div className={styles['user-details-container']}>
                 <Avatar src={userInfo?.picture || "/vendetta.png"} alt="User" size="medium" />
                 <div className={styles["user-details"]}>
-                    <div className={styles["user-name"]}>{userInfo?.fullName}</div>
+                    <div className={styles["user-name"]}>{fullName}</div>
                     <div className={styles["user-role"]}>{userInfo?.role}</div>
                 </div>
             </div>

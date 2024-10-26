@@ -44,7 +44,7 @@ const ForgotPasswordPage = () => {
           placeholder='Enter your email'
           textFieldMargin='none'
           TextFieldWidth="full"
-          required="true"
+          required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />

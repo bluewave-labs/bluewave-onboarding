@@ -1,4 +1,4 @@
-const { MAX_FILE_SIZE } = require('../utils/constants');
+const { MAX_FILE_SIZE } = require('../utils/constants.helper');
 
 const fileSizeValidator = (req, res, next) => {
     if(req.method !== 'POST' && req.method !== 'PUT') {
