@@ -4,9 +4,9 @@ const User = db.User;
 const Token = db.Token;
 const Invite = db.Invite;
 const sequelize = db.sequelize;
-const { generateToken, verifyToken } = require("../utils/jwt");
+const { generateToken, verifyToken } = require("../utils/jwt.helper");
 const crypto = require('crypto');
-const { TOKEN_LIFESPAN } = require('../utils/constants');
+const { TOKEN_LIFESPAN } = require('../utils/constants.helper');
 const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.service');
 const settings = require("../../config/settings");
 const he = require('he');
@@ -31,8 +31,8 @@ const register = async (req, res) => {
 
       const transaction = await sequelize.transaction();
       try {
+        newUser = await User.create({ name, surname, email, password: hashedPassword, role: invite.role }, { transaction });
         await invite.destroy({ transaction });
-        newUser = await User.create({ name, surname, email, password: hashedPassword, role: settings.user.role.admin }, { transaction });
         await transaction.commit();
       }
       catch (err) {

@@ -11,7 +11,7 @@ import TeamTab from "./TeamTab/TeamTab";
 
 
 export default function Settings() {
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState("1");  
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

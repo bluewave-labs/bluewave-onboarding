@@ -1,6 +1,6 @@
 import React from "react";
 import DefaultPageTemplate from "../../templates/DefaultPageTemplate/DefaultPageTemplate";
-import { ACTIVITY_TYPES_INFO } from "../../data/GuideMainPageData";
+import { ACTIVITY_TYPES_INFO } from "../../data/guideMainPageData";
 import { useNavigate } from "react-router";
 
 const mockHints = [
