@@ -48,6 +48,7 @@ module.exports = {
     });
 
     await queryInterface.addIndex('banners', ['position']);
+    await queryInterface.addIndex('banners', ['createdBy']);
   },
 
   async down (queryInterface, Sequelize) {
