@@ -9,11 +9,11 @@ module.exports = {
         allowNull: false
       },
       closeButtonAction: {
-        type: Sequelize.STRING,
+        type: Sequelize.Sequelize.ENUM("no action", "open url", "open url in a new tab"),
         allowNull: false
       },
       position: {
-        type: Sequelize.STRING,
+        type: Sequelize.Sequelize.ENUM("top", "bottom"),
         allowNull: false
       },
       url: {
