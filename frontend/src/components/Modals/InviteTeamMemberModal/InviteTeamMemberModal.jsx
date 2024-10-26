@@ -54,7 +54,7 @@ const InviteTeamMemberModal = ({ open, handleClose, actions }) => {
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <div style={{ display: 'flex', gap: '10px' }}>
                             <Button buttonType='secondary-grey' text='Cancel' onClick={handleClose} />
-                            <Button type='submit' buttonType='' text='Send Invite' />
+                            <Button type='submit' text='Send Invite' />
                         </div>
                     </div>
                 </form>
