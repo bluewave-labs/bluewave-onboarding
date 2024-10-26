@@ -1,9 +1,9 @@
 import React from "react";
-import DateDisplay from "../../components/HomePageComponents/DateDisplay/DateDisplay";
-import UserTitle from "../../components/HomePageComponents/UserTitle/UserTitle";
+import DateDisplay from "./HomePageComponents/DateDisplay/DateDisplay";
+import UserTitle from "./HomePageComponents/UserTitle/UserTitle";
 import styles from "./Dashboard.module.scss";
-import StatisticCardList from "../../components/HomePageComponents/StatisticCardsList/StatisticCardsList";
-import CreateActivityButtonList from "../../components/HomePageComponents/CreateActivityButtonList/CreateActivityButtonList";
+import StatisticCardList from "./HomePageComponents/StatisticCardsList/StatisticCardsList";
+import CreateActivityButtonList from "./HomePageComponents/CreateActivityButtonList/CreateActivityButtonList";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = ({ name }) => {

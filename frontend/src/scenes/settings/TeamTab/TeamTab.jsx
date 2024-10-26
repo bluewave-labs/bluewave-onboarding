@@ -4,18 +4,21 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
+import { FaCheck, FaTimes } from "react-icons/fa";
 import { VscEdit } from "react-icons/vsc";
+
 import styles from './TeamTab.module.css';
 import TeamTable from "./TeamTable/TeamTable";
 import Button from "../../../components/Button/Button";
-import InviteTeamMemberModal from "../../../components/Modals/InviteTeamMemberModal/InviteTeamMemberModal";
 import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
-import { FaCheck, FaCross, FaTimes } from "react-icons/fa";
-import { handleChangeRoleSuccess, handleEditOrgNameSuccess, handleGenericError, handleInviteMemberSuccess, handleRemoveTeamMemberSuccess } from "../../../utils/settingsHelper";
 import LoadingArea from "../../../components/LoadingPage/LoadingArea";
+
+import { handleChangeRoleSuccess, handleEditOrgNameSuccess, handleGenericError, handleInviteMemberSuccess, handleRemoveTeamMemberSuccess } from "../../../utils/settingsHelper";
 import { changeMemberRole, getOrgDetails, inviteMember, removeTeamMember, updateTeamDetails } from "../../../services/settingServices";
-import RemoveTeamMemberModal from "../../../components/Modals/RemoveTeamMemberModal/RemoveTeamMemberModal";
-import ChangeMemberRoleModal from "../../../components/Modals/ChangeMemberRoleModal/ChangeMemberRoleModal";
+
+import InviteTeamMemberModal from "../Modals/InviteTeamMemberModal/InviteTeamMemberModal";
+import RemoveTeamMemberModal from "../Modals/RemoveTeamMemberModal/RemoveTeamMemberModal";
+import ChangeMemberRoleModal from "../Modals/ChangeMemberRoleModal/ChangeMemberRoleModal";
 
 
 const TeamTab = () => {

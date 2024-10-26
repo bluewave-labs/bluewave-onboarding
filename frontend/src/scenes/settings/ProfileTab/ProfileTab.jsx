@@ -4,12 +4,14 @@ import styles from "./ProfileTab.module.css";
 import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
 import Button from "../../../components/Button/Button";
 import { useAuth } from "../../../services/authProvider";
-import DeleteConfirmationModal from "../../../components/Modals/DeleteConfirmationModal/DeleteConfirmationModal";
-import UploadModal from "../../../components/Modals/UploadImageModal/UploadModal";
+import DeleteConfirmationModal from "../Modals/DeleteConfirmationModal/DeleteConfirmationModal";
 import { deleteAccount, updateUser } from "../../../services/settingServices";
 import { handleProfileUpdateSuccess, handleNothingToUpdateProfile, handleGenericError } from "../../../utils/settingsHelper";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from "react-router-dom";
+
+import UploadModal from "../Modals/UploadImageModal/UploadModal";
+
 
 const ProfileTab = () => {
   const navigate = useNavigate();
