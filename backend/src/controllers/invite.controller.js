@@ -22,8 +22,9 @@ const getAllInvites = async (req, res) => {
   try {
     const invites = await inviteService.getAllInvites();
     return res.status(200).json({
+      invites,
       success: true,
-      data: invites,
+      message: "Invites Retrieved Successfully"
     });
   } catch (error) {
     return res.status(500).json({

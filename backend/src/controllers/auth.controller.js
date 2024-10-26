@@ -82,7 +82,7 @@ const login = async (req, res) => {
     const token = generateToken({ id: user.id, email: user.email });
     await Token.create({ token, userId: user.id, type: 'auth' });
 
-    res.status(200).json({ user: { id: user.id, name: user.name, surname: user.surname, email: user.email, role: settings.user.roleName[user.role], picture: he.decode(user.picture || '') }, token });
+    res.status(200).json({ user: { id: user.id, name: user.name, surname: user.surname, email: user.email, role: settings.user.roleName[user.role], picture: user.picture ? he.decode(user.picture) : '' }, token });
   } catch (error) {
     console.error("Error logging in user:", error);
     res.status(500).json({ error: "Internal Server Error" });
