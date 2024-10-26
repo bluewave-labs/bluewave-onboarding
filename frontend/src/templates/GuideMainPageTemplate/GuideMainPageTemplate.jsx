@@ -1,11 +1,11 @@
 import React from 'react';
-import List from '../../components/TourComponents/List/List';
-import ContentArea from '../../components/TourComponents/ContentArea/ContentArea';
-import ContentHeader from '../../components/TourComponents/ContentHeader/ContentHeader';
-import ConfirmationPopup from '../../components/TourComponents/ConfirmationPopup/ConfirmationPopup';
+import List from './GuideMainPageComponents/List/List';
+import ContentArea from './GuideMainPageComponents/ContentArea/ContentArea';
+import ContentHeader from './GuideMainPageComponents/ContentHeader/ContentHeader';
+import ConfirmationPopup from './GuideMainPageComponents/ConfirmationPopup/ConfirmationPopup';
 import Button from '../../components/Button/Button';
 import './GuideMainPageTemplate.css';
-import { activityInfoData } from '../../data/GuideMainPageData';
+import { activityInfoData } from '../../data/guideMainPageData';
 
 const GuideMainPageTemplate = ({ items, handleDelete, isPopupOpen, handleClosePopup, type, onClick }) => {
 
