@@ -4,7 +4,7 @@ const {
   validateTriggeringFrequency,
   validatePageTargeting,
   validateTheme,
-} = require("../utils/tour_helpers");
+} = require("../utils/tour.helper");
 
 class TourController {
   async addTour(req, res) {
