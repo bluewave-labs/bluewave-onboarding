@@ -28,7 +28,8 @@ app.use(bodyParser.json({ limit: MAX_FILE_SIZE }));
 app.use(jsonErrorMiddleware);
 app.use(fileSizeValidator);
 
-const { sequelize } = require("./src/models");
+const { sequelize, Team } = require("./src/models");
+const config = require("./config/config");
 
 sequelize
   .authenticate()
@@ -37,6 +38,12 @@ sequelize
 
 sequelize
   .sync({ force: true })
+  .then(async () => {
+    await Team.findOrCreate({
+      where: { id: 1 },
+      defaults: {name: config.defaultTeamName}
+    })
+  })
   .then(() => console.log("Models synced with the database..."))
   .catch((err) => console.log("Error syncing models: " + err));
 

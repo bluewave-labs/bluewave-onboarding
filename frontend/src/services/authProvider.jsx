@@ -48,17 +48,12 @@ export const AuthProvider = ({ children }) => {
                 }
                 const response = await apiClient.get('/users/current-user');
                 if (response.status === 200 && response.data.user) {
-                    if (state.userInfo) {
-                        dispatch({ type: 'LOGIN' });
-                    } else {
-                        const { name, surname, email } = response.data.user;
-                        const payload = { name, surname, email };
-                        localStorage.setItem('userInfo', JSON.stringify(payload));
-                        dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload });
-                    }
+                    const { id, name, surname, email, role } = response.data.user;
+                    const payload = { id, name, surname, email, role };
+                    localStorage.setItem('userInfo', JSON.stringify(payload));
+                    dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload });
                 } else {
                     dispatch({ type: 'LOGOUT' });
-
                 }
             } catch (error) {
                 localStorage.removeItem('authToken');

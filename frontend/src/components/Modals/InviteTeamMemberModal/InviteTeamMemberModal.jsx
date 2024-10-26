@@ -6,11 +6,12 @@ import Button from '../../Button/Button';
 import styles from './InviteTeamMemberModal.module.scss';
 import CustomTextField from '../../TextFieldComponents/CustomTextField/CustomTextField';
 import DropdownList from '../../DropdownList/DropdownList';
+import { roles } from '../../../utils/constants';
 
-const InviteTeamMemberModal = ({ open, handleClose, actions }) => {
+const InviteTeamMemberModal = ({ open, handleClose, handleInviteTeamMember }) => {
 
     const [email, setEmail] = useState('');
-    const [role, setRole] = useState(actions?.[0]?.value || '');
+    const [role, setRole] = useState(roles?.[0] || '');
 
     const handleActionChange = (role) => {
         setRole(role);
@@ -19,9 +20,9 @@ const InviteTeamMemberModal = ({ open, handleClose, actions }) => {
     const onSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        // post formData
+        handleInviteTeamMember({email: formData.get("email"), role: formData.get("role")})
+        setEmail("");
     }
-
 
     return (
         <Modal
@@ -47,14 +48,15 @@ const InviteTeamMemberModal = ({ open, handleClose, actions }) => {
                     />
                     <DropdownList
                         name="role"
-                        actions={actions}
+                        actions={roles}
                         onActionChange={handleActionChange}
                         selectedActionString={role}
-                        className={styles.select} />
+                        className={styles.select} 
+                    />
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <div style={{ display: 'flex', gap: '10px' }}>
                             <Button buttonType='secondary-grey' text='Cancel' onClick={handleClose} />
-                            <Button type='submit' text='Send Invite' />
+                            <Button type='submit' buttonType='primary' text='Send Invite' />
                         </div>
                     </div>
                 </form>
@@ -66,7 +68,7 @@ const InviteTeamMemberModal = ({ open, handleClose, actions }) => {
 InviteTeamMemberModal.propTypes = {
     open: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
-    actions: PropTypes.array.isRequired,
+    handleInviteTeamMember: PropTypes.func.isRequired,
 };
 
 export default InviteTeamMemberModal;
