@@ -47,9 +47,9 @@ const HintPage = () => {
   ];
 
   return (
-
     <GuideTemplate
       title="New Hint"
+      contentType="hint" 
       activeButton={activeButton}
       handleButtonClick={handleButtonClick}
       rightContent={() => (

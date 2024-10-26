@@ -53,7 +53,7 @@
 
 .list-item-info h4 {
   margin: 0;
-  font-size: 16px;
+  font-size: var(--font-header);
   color: var(--main-text-color);
 }
 

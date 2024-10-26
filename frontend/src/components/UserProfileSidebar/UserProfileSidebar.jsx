@@ -5,12 +5,14 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import styles from './UserProfileSidebar.module.css';
+import { getFullName } from '../../utils/generalHelper';
 
 function UserProfileSidebar() {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const { userInfo } = useAuth();
+    const fullName = getFullName(userInfo);
 
     const handleDropdownClick = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -19,9 +21,9 @@ function UserProfileSidebar() {
     return (
         <div className={styles["user-info"]}>
             <div className={styles['user-details-container']}>
-                <Avatar src="/vendetta.png" alt="User" size="medium" />
+                <Avatar src={userInfo?.picture || "/vendetta.png"} alt="User" size="medium" />
                 <div className={styles["user-details"]}>
-                    <div className={styles["user-name"]}>{userInfo?.fullName}</div>
+                    <div className={styles["user-name"]}>{fullName}</div>
                     <div className={styles["user-role"]}>{userInfo?.role}</div>
                 </div>
             </div>

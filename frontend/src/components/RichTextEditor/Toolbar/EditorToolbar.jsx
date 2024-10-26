@@ -1,39 +1,105 @@
-import React, { useEffect, useState } from "react";
-import "react-quill/dist/quill.snow.css";
-import { Box } from "@mui/material";
+import React, { useState } from "react";
 import "./EditorToolbar.css";
+import { Button } from "@mui/material";
+import {
+  FormatBold,
+  FormatItalic,
+  InsertLink,
+  FormatListBulleted,
+  FormatListNumbered,
+  Title,
+} from "@mui/icons-material";
+import LinkDialog from "../EditorLinkDialog/LinkDialog";
 
-const EditorToolbar = () => {
-  const [isLinkTooltipVisible, setIsLinkTooltipVisible] = useState(false);
+const Toolbar = ({ editor }) => {
+  const [open, setOpen] = useState(false);
+  const [url, setUrl] = useState("");
+  const [isLinkActive, setIsLinkActive] = useState(false);
 
-  const toggleLinkTooltip = () => {
-    setIsLinkTooltipVisible(!isLinkTooltipVisible);
+  if (!editor) {
+    return null;
+  }
+
+  const handleClickOpen = () => {
+    const currentLink = editor.getAttributes("link").href;
+    setUrl(currentLink || "");
+    setOpen(true);
+    setIsLinkActive(!!currentLink);
   };
 
-  // remove default placeholder from quill link tooltip input
-  useEffect(() => {
-    const linkInput = document.querySelector(
-      'input[data-link="https://quilljs.com"]'
-    );
-    if (linkInput) {
-      linkInput.removeAttribute("placeholder");
+  const handleClose = () => {
+    setOpen(false);
+    setUrl("");
+  };
+
+  const handleInsertLink = () => {
+    if (url) {
+      editor
+        .chain()
+        .focus()
+        .extendMarkRange("link")
+        .setLink({ href: url })
+        .run();
+    } else {
+      editor.chain().focus().unsetLink().run();
     }
-  }, [isLinkTooltipVisible]);
+    handleClose();
+  };
+
+  const handleOpenLink = () => {
+    window.open(url, "_blank");
+    handleClose();
+  };
 
   return (
-    <Box id="toolbar">
-      <select className="ql-header" defaultValue="">
-        <option value="1">Heading 1</option>
-        <option value="2">Heading 2</option>
-        <option value="">Normal</option>
-      </select>
-      <button className="ql-bold"></button>
-      <button className="ql-italic"></button>
-      <button className="ql-link" onClick={toggleLinkTooltip}></button>
-      <button className="ql-list" value="bullet"></button>
-      <button className="ql-list" value="ordered"></button>
-    </Box>
+    <div className="toolbar-container">
+      <Button
+        onClick={() => editor.chain().focus().toggleBold().run()}
+        disabled={!editor.can().chain().focus().toggleBold().run()}
+      >
+        <FormatBold />
+      </Button>
+      <Button
+        onClick={() => editor.chain().focus().toggleItalic().run()}
+        disabled={!editor.can().chain().focus().toggleItalic().run()}
+      >
+        <FormatItalic />
+      </Button>
+      <Button
+        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+        disabled={
+          !editor.can().chain().focus().toggleHeading({ level: 2 }).run()
+        }
+      >
+        <Title />
+      </Button>
+      <Button onClick={handleClickOpen}>
+        <InsertLink />
+      </Button>
+      <Button
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        disabled={!editor.can().chain().focus().toggleBulletList().run()}
+      >
+        <FormatListBulleted />
+      </Button>
+      <Button
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        disabled={!editor.can().chain().focus().toggleOrderedList().run()}
+      >
+        <FormatListNumbered />
+      </Button>
+
+      <LinkDialog
+        open={open}
+        handleClose={handleClose}
+        url={url}
+        setUrl={setUrl}
+        isLinkActive={isLinkActive}
+        handleInsertLink={handleInsertLink}
+        handleOpenLink={handleOpenLink}
+      />
+    </div>
   );
 };
 
-export default EditorToolbar;
+export default Toolbar;

@@ -91,7 +91,7 @@ function LoginPage() {
           <CustomLink text="Forgot Password" url="/forgot-password" />
         </div>
       </div>
-      <button className={styles["sign-in-button"]} type="submit">
+      <button className={styles["sign-in-button"]} type="submit" disabled={loading}>
         {loading ? <CircularProgress size={12} color="inherit" /> : 'Sign In'}
       </button>
       <div className={styles["sign-up-link"]}>

@@ -98,7 +98,7 @@ function CreateAccountPage() {
           placeholder='Enter your name'
           textFieldMargin='none'
           TextFieldWidth="full"
-          required="true"
+          required
           value={formData.name}
           onChange={handleInputChange}
         />
@@ -115,7 +115,7 @@ function CreateAccountPage() {
           placeholder='Enter your surname'
           textFieldMargin='none'
           TextFieldWidth="full"
-          required="true"
+          required
           value={formData.surname}
           onChange={handleInputChange}
         />
@@ -132,7 +132,7 @@ function CreateAccountPage() {
           placeholder='Enter your email'
           textFieldMargin='none'
           TextFieldWidth="full"
-          required="true"
+          required
           value={formData.email}
           onChange={handleInputChange}
         />
@@ -150,7 +150,7 @@ function CreateAccountPage() {
           placeholder='Create your password'
           textFieldMargin='none'
           TextFieldWidth="full"
-          required="true"
+          required
           value={formData.password}
           onChange={handleInputChange}
         />
@@ -165,7 +165,7 @@ function CreateAccountPage() {
         Must contain one special character
       </div>
 
-      <button className={styles["create-account-button"]} type="submit">
+      <button className={styles["create-account-button"]} type="submit" disabled={loading}>
         {loading ? <CircularProgress size={12} color="inherit" /> : "Get started"}
       </button>
       <div className={styles["sign-up-link"]}>
