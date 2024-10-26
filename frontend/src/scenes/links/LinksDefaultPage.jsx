@@ -1,5 +1,5 @@
 import CreateActivityButton from "../../components/Button/CreateActivityButton/CreateActivityButton"
-import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
+import { ACTIVITY_TYPES } from "../../data/createActivityButtonData";
 import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
 
 const LinksDefaultPage = () => {

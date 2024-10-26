@@ -22,6 +22,6 @@ router.post("/invite", authenticateJWT, accessGuard(teamPermissions.invite), sen
 router.put("/update", authenticateJWT, accessGuard(teamPermissions.update), updateTeamDetails);
 router.put("/change-role", authenticateJWT, accessGuard(teamPermissions.changeRole), changeRole);
 
-router.delete("/remove", authenticateJWT, accessGuard(teamPermissions.removeUser), removeMember);
+router.delete("/remove/:memberId", authenticateJWT, accessGuard(teamPermissions.removeUser), removeMember);
 router.get('/get-all-invites', authenticateJWT, accessGuard(teamPermissions.removeUser), getAllInvites);
 module.exports = router;

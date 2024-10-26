@@ -4,14 +4,17 @@ import styles from "./ProfileTab.module.css";
 import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
 import Button from "../../../components/Button/Button";
 import { useAuth } from "../../../services/authProvider";
-import DeleteConfirmationModal from "../../../components/Modals/DeleteConfirmationModal/DeleteConfirmationModal";
-import UploadModal from "../../../components/Modals/UploadImageModal/UploadModal";
-import { updateUser } from "../../../services/settingServices";
-import { handleProfileUpdateSuccess, handleNothingToUpdateProfile } from "../../../utils/settingsHelper";
+import DeleteConfirmationModal from "../Modals/DeleteConfirmationModal/DeleteConfirmationModal";
+import { deleteAccount, updateUser } from "../../../services/settingServices";
+import { handleProfileUpdateSuccess, handleNothingToUpdateProfile, handleGenericError } from "../../../utils/settingsHelper";
 import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from "react-router-dom";
+
+import UploadModal from "../Modals/UploadImageModal/UploadModal";
+
 
 const ProfileTab = () => {
-
+  const navigate = useNavigate();
   const { userInfo, updateProfile } = useAuth();
 
   const [formData, setFormData] = useState({
@@ -101,6 +104,17 @@ const ProfileTab = () => {
       setLoading(false);
     }
   };
+
+  const handleDelete = async () => {
+    try {
+      await deleteAccount();
+      localStorage.removeItem('authToken');
+      navigate("/login")
+    }
+    catch(error) {
+      handleGenericError("Error Deleting Account")
+    }
+  }
 
   return (
     <>
@@ -196,7 +210,7 @@ const ProfileTab = () => {
         </p>
         <Button onClick={() => setOpenDeleteAccountModal(!openDeleteAccountModal)} text="Delete Account" buttonType="error" style={{ padding: '6px  20px', marginTop: '35px' }} />
       </div>
-      <DeleteConfirmationModal open={openDeleteAccountModal} handleClose={handleDeleteAccountModalClose} />
+      <DeleteConfirmationModal open={openDeleteAccountModal} handleClose={handleDeleteAccountModalClose} handleDelete={handleDelete} />
       <UploadModal
         handleUpload={handleImageUpload}
         uploadedFile={uploadedFile}

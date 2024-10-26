@@ -9,8 +9,8 @@ import SetNewPasswordPage from "./scenes/login/SetNewPassword";
 import Private from "./components/Private";
 import ProgressStepsMain from "./scenes/progressSteps/ProgressStepsMain";
 import Settings from "./scenes/settings/Settings";
-import BannerPage from "./scenes/bannerPage/BannerPage";
-import BannerDefaultPage from "./scenes/bannerPage/BannerDefaultPage";
+import BannerPage from "./scenes/banner/CreateBannerPage";
+import BannerDefaultPage from "./scenes/banner/BannerDefaultPage";
 import LinksDefaultPage from "./scenes/links/LinksDefaultPage";
 import ToursDefaultPage from "./scenes/tours/ToursDefaultPage";
 import PopupDefaultPage from "./scenes/popup/PopupDefaultPage";
@@ -51,7 +51,7 @@ const App = () => {
         <Route path="/banner/create" element={<BannerPage />} />
         <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
         <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
-        <Route path="/popup" element={<Private Component={PopupDefaultPage }/>} />
+        <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
         <Route path="/link" element={<LinksDefaultPage />} />
         <Route path="/tour" element={<ToursDefaultPage />} />
         <Route path="/hint/create" element={<CreateHintPage />} />
