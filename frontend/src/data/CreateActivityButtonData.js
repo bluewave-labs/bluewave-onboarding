@@ -6,6 +6,7 @@ export const ACTIVITY_TYPES = {
   TOURS: "tours",
 };
 
+
 export const activityData = {
   [ACTIVITY_TYPES.HINTS]: {
     heading: "Use hints to",

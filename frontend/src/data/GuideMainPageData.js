@@ -6,6 +6,7 @@ export const ACTIVITY_TYPES_INFO = {
     TOURS: "tours",
 };
 
+
 export const activityInfoData = {
     [ACTIVITY_TYPES_INFO.POPUPS]: {
         heading: "What is a popup?",
