@@ -1,5 +1,5 @@
 const linkService = require("../service/link.service");
-const { internalServerError } = require("../utils/errors");
+const { internalServerError } = require("../utils/errors.helper");
 const { URL_REGEX } = require("../utils/link.helper");
 
 const validateUrl = (value) => {

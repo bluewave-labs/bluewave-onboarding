@@ -1,10 +1,6 @@
-import { Link } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import CardContainer from "../../components/Links/Card";
-import Card from "../../components/Links/Card/Card";
 import Preview from "../../components/Links/Preview";
-import Settings from "../../components/Settings/Settings";
-import ConfirmationPopup from "../../components/TourComponents/ConfirmationPopup/ConfirmationPopup";
+import LinkContent from "./LinkContent";
 import s from "./LinkPage.module.scss";
 
 const demoItems = [
@@ -65,21 +61,29 @@ const LinksPage = ({ items }) => {
       </div>
       <div className={s.body}>
         <div className={s.body__header}>
-          <button onClick={() => setShowAppearance(false)}>Content</button>
-          <button onClick={() => setShowAppearance(true)}>Appearance</button>
+          <button
+            className={`${s["body__header--btn"]} ${
+              !showAppearance ? s.active : ""
+            }`}
+            onClick={() => setShowAppearance(false)}
+          >
+            Content
+          </button>
+          <button
+            className={`${s["body__header--btn"]} ${
+              showAppearance ? s.active : ""
+            }`}
+            onClick={() => setShowAppearance(true)}
+          >
+            Appearance
+          </button>
         </div>
         <div className={s.body__content}>
-          {showAppearance ? null : (
-            <CardContainer>
-              <h3 className={s.body__title}>Link items</h3>
-              {listItems.map((item) => (
-                <Card {...item} key={item.id} toggleSettings={toggleSettings} />
-              ))}
-              <Link className={s.link} onClick={toggleSettings}>
-                + Add new link
-              </Link>
-            </CardContainer>
-          )}
+          <LinkContent
+            showAppearance={showAppearance}
+            listItems={listItems}
+            toggleSettings={toggleSettings}
+          />
           <div className={s.preview}>
             <Preview items={listItems} />
           </div>
@@ -87,17 +91,7 @@ const LinksPage = ({ items }) => {
       </div>
 
       {/* Settings Component - Position and Animation */}
-      {showSettings && (
-        <div className='settings-container'>
-          <Settings onClose={toggleSettings} />
-        </div>
-      )}
-
-      <ConfirmationPopup
-        open={isPopupOpen}
-        onConfirm={handleDelete}
-        onCancel={handleClosePopup}
-      />
+      {showSettings && <div className='settings-container'></div>}
     </div>
   );
 };

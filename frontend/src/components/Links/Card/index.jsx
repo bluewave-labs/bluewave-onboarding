@@ -1,9 +1,10 @@
+import { List } from "@mui/material";
 import PropTypes from "prop-types";
 import React from "react";
-import s from "./Card.module.scss"
+import s from "./Card.module.scss";
 
 const CardContainer = ({ children }) => {
-  return <div className={s.card__container}>{children}</div>;
+  return <List className={s.card__container}>{children}</List>;
 };
 
 CardContainer.propTypes = {
