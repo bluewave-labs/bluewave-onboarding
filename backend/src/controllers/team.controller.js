@@ -5,14 +5,14 @@ const { internalServerError } = require("../utils/errors");
 const teamService = new TeamService();
 
 const setOrganisation = async (req, res) => {
-  const { name } = req.body;
+  let { name } = req.body;
   try {
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
       return res.status(400).json({ error: 'Organisation name is required and must be a non-empty string' });
     }
 
-    let sanitizedOrgName = name.trim();
-    const orgExists = await teamService.getTeamByName(sanitizedOrgName);
+    name = name.trim();
+    const orgExists = await teamService.getTeamByName(name);
     if (orgExists) {
       return res.status(400).json({ error: "Organisation already exists" });
     }
