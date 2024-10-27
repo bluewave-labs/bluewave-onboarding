@@ -7,9 +7,9 @@ class InviteService {
     async sendInvite(userId, invitedEmail, role) {
         try {
             const invitedUser = await User.findOne({
-                where: {email: invitedEmail}
+                where: { email: invitedEmail }
             })
-            if(invitedUser) {
+            if (invitedUser) {
                 throw new Error("Invited User already exists in team")
             }
 
@@ -17,7 +17,7 @@ class InviteService {
                 where: { invitedEmail: invitedEmail }
             });
 
-            if(existingInvite) {
+            if (existingInvite) {
                 await existingInvite.update({
                     invitedBy: userId,
                     role: settings.user.role[role],
@@ -31,10 +31,19 @@ class InviteService {
                 });
             }
         }
-        catch(err) {
+        catch (err) {
             throw new Error(`Error Sending Invite ~ ${err.message}`);
         }
     }
+
+    async getAllInvites() {
+        try {
+            const invites = await Invite.findAll();
+            return invites;
+        } catch (error) {
+            throw new Error('Failed to fetch invites');
+        }
+    };
 }
 
 module.exports = InviteService;
