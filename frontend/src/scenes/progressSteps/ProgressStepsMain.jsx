@@ -5,6 +5,7 @@ import Button from '../../components/Button/Button';
 import CheckboxHRM from '../../components/Checkbox/CheckboxHRM';
 import TeamMembersList from './ProgressSteps/TeamMemberList/TeamMembersList';
 import { useNavigate } from "react-router-dom";
+import { sendInvites, setOrganization } from '../../services/teamServices';
 
 const ProgressStepsMain = () => {
     const navigate = useNavigate();
@@ -13,6 +14,38 @@ const ProgressStepsMain = () => {
     const [teamMembersEmails, setTeamMembersEmails] = useState([]);
     const [organizationName, setOrganizationName] = useState('');
     const [emailInput, setEmailInput] = useState('');
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const sendInvitesAndSetOrgName = async () => {
+        try {
+            setError(false);
+            setLoading(true);
+            let inviteResponse, orgSetResponse;
+
+            if (organizationName === '' && teamMembersEmails.length > 0) {
+                inviteResponse = await sendInvites(teamMembersEmails);
+            }
+            else if (organizationName !== '' && teamMembersEmails.length === 0) {
+                orgSetResponse = await setOrganization(organizationName);
+            } else {
+                inviteResponse = await sendInvites(teamMembersEmails);
+                orgSetResponse = await setOrganization(organizationName);
+            }
+
+            setLoading(false);
+            navigate('/');
+        } catch (err) {
+            setError(true);
+            setLoading(false);
+            if (err.response?.data?.error) {
+                setErrorMessage(err.response.data.error);
+            } else {
+                setErrorMessage('An error occurred. Please try again.');
+            }
+        }
+    }
 
     const addMember = (newMemberEmail) => {
         setTeamMembersEmails((prevEmails) => [...prevEmails, newMemberEmail]);
@@ -125,8 +158,8 @@ const ProgressStepsMain = () => {
     const fourthPage = () => {
         return (
             <>
-                <div className={styles.buttons}>      
-                    <Button text='Sweet' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={() =>navigate("/")} />
+                <div className={styles.buttons}>
+                    <Button text='Sweet' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={() => sendInvitesAndSetOrgName()} disabled={loading}/>
                 </div>
             </>
         )
