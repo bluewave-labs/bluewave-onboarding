@@ -14,10 +14,6 @@ const setOrganisation = async (req, res) => {
       return res.status(400).json({ error: 'Organisation name is required and should be a non-empty string' });
     }
 
-    if (!name || typeof name !== 'string' || name.trim().length === 0) {
-      return res.status(400).json({ error: 'Organisation name is required and should be a non-empty string' });
-    }
-
     name = name.trim();
     if (name.length > MAX_ORG_NAME_LENGTH) {
       return res.status(400).json({ error: `Organisation name cannot exceed ${MAX_ORG_NAME_LENGTH} characters` });
