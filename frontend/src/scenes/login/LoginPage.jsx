@@ -25,7 +25,7 @@ function LoginPage() {
     setLoading(true);
     try {
       const response = await login(email, password);
-      handleAuthSuccess(AUTH_TYPE.LOGIN, response, loginAuth, navigate)
+      handleAuthSuccess(response, loginAuth, navigate, AUTH_TYPE.LOGIN);
       setLoading(false);
     } catch (error) {
       setLoginError(true);

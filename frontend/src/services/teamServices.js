@@ -4,6 +4,16 @@ import { apiClient } from './apiClient';
 const baseEndpoint = "team/";
 
 export const sendInvites = async (memberEmails) => {
+  if (!memberEmails?.length) {
+    throw new Error('No email addresses provided');
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const invalidEmails = memberEmails.filter(email => !emailRegex.test(email));
+  if (invalidEmails.length) {
+    throw new Error(`Invalid email addresses: ${invalidEmails.join(', ')}`);
+  }
+
   try {
     const response = await Promise.all(
       memberEmails.map(async (email) => {

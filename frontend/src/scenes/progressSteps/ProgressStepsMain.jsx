@@ -6,6 +6,7 @@ import CheckboxHRM from '../../components/Checkbox/CheckboxHRM';
 import TeamMembersList from './ProgressSteps/TeamMemberList/TeamMembersList';
 import { useNavigate } from "react-router-dom";
 import { sendInvites, setOrganization } from '../../services/teamServices';
+import { CircularProgress } from '@mui/material';
 
 const ProgressStepsMain = () => {
     const navigate = useNavigate();
@@ -23,6 +24,13 @@ const ProgressStepsMain = () => {
             setError(false);
             setLoading(true);
             let inviteResponse, orgSetResponse;
+            const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            if (!teamMembersEmails.every(isValidEmail)) {
+                setError(true);
+                setErrorMessage('Please check email formats');
+                return;
+
+            }
 
             if (organizationName === '' && teamMembersEmails.length > 0) {
                 inviteResponse = await sendInvites(teamMembersEmails);
@@ -33,6 +41,9 @@ const ProgressStepsMain = () => {
                 inviteResponse = await sendInvites(teamMembersEmails);
                 orgSetResponse = await setOrganization(organizationName);
             }
+
+            console.log(inviteResponse);
+            console.log(orgSetResponse);
 
             setLoading(false);
             navigate('/');
@@ -127,6 +138,7 @@ const ProgressStepsMain = () => {
     const secondPage = () => {
         return (
             <div className={styles.buttons}>
+                <Button text='Previous' buttonType='secondary-grey' sx={{ width: '174px', borderRadius: '10px !important' }} onClick={decreaseStep}/>
                 <Button text='Install now - it’s easy' buttonType='secondary-grey' sx={{ width: '174px', borderRadius: '10px !important' }} />
                 <Button text='I will do it later' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={increaseStep} />
             </div>
@@ -149,6 +161,7 @@ const ProgressStepsMain = () => {
                     />
                 </div>
                 <div className={styles.buttons}>
+                    <Button text='Previous' buttonType='secondary-grey' sx={{ width: '174px', borderRadius: '10px !important' }} onClick={decreaseStep}/>
                     <Button text='Next' sx={{ width: '107px', borderRadius: '10px !important' }} onClick={increaseStep} />
                 </div>
             </>
@@ -159,7 +172,10 @@ const ProgressStepsMain = () => {
         return (
             <>
                 <div className={styles.buttons}>
-                    <Button text='Sweet' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={() => sendInvitesAndSetOrgName()} disabled={loading}/>
+                    {error && <div className={styles.errorMessage}>{errorMessage}</div>}
+                    <Button text='Previous' buttonType='secondary-grey' sx={{ width: '174px', borderRadius: '10px !important' }} onClick={decreaseStep}/>
+                    <Button text='Sweet' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={() => sendInvitesAndSetOrgName()} disabled={loading} startIcon={loading ? <CircularProgress size={20} /> : null}
+                    />
                 </div>
             </>
         )

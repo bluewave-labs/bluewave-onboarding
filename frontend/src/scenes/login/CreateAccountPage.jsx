@@ -68,7 +68,7 @@ function CreateAccountPage() {
 
     try {
       const response = await signUp(userData);
-      handleAuthSuccess(AUTH_TYPE.SIGNUP, response, loginAuth, navigate)
+      handleAuthSuccess(response, loginAuth, navigate, AUTH_TYPE.SIGNUP);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -79,6 +79,7 @@ function CreateAccountPage() {
           setError('An error occurred. Please try again.');
         }
       } else {
+        console.log(error);
         setError('An error occurred. Please check your network connection and try again.');
       }
     }
