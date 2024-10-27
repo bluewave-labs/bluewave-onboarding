@@ -8,8 +8,11 @@ const sequelize = db.sequelize;
 
 class TeamService {
     async createTeam(name) {
+        const transaction = await sequelize.transaction();
+
         try {
-            const team = await Team.create({ name });
+            const team = await Team.create({ name }, { transaction });
+            await transaction.commit();
             return team;
         } catch (err) {
             throw new Error("Error creating Team.");
@@ -23,18 +26,6 @@ class TeamService {
             });
             const users = await User.findAll();
             return {team, users};
-        }
-        catch(err) {
-            throw new Error("Error retrieving Team");
-        }
-    }
-
-    async getTeamByName(name) {
-        try {
-            const team = await Team.findOne({
-                where: { name }
-            });
-            return team;
         }
         catch(err) {
             throw new Error("Error retrieving Team");
