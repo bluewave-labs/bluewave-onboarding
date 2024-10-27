@@ -9,3 +9,7 @@ export const APP_TITLE = 'Bluewave Onboarding';
 export const SUPPORT_EMAIL = 'support@bluewave.com';
 
 export const roles = ["admin", "member"]
+export const AUTH_TYPE = {
+  LOGIN: 'login',
+  SIGNUP: 'signup',
+};
