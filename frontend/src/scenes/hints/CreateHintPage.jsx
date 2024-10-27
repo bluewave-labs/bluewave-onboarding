@@ -50,7 +50,7 @@ const HintPage = () => {
   return (
     <GuideTemplate
       title="New Hint"
-      contentType="hint" 
+      contentType="hint"
       activeButton={activeButton}
       handleButtonClick={handleButtonClick}
       rightContent={() => (
@@ -61,14 +61,20 @@ const HintPage = () => {
             marginLeft: "2.5rem",
             marginTop: "1rem",
           }}
-          previewComponent={<HintComponent
-              previewBtnText={leftContentFormData.actionButtonText}
-              headerBackgroundColor={headerBackgroundColor}
-              headerColor={headerColor}
-              textColor={textColor}
-              buttonBackgroundColor={buttonBackgroundColor}
-              buttonTextColor={buttonTextColor}
-            />}
+          previewComponent={({ header, content }) => {
+            return (
+              <HintComponent
+                header={header}
+                content={content}
+                previewBtnText={leftContentFormData.actionButtonText}
+                headerBackgroundColor={headerBackgroundColor}
+                headerColor={headerColor}
+                textColor={textColor}
+                buttonBackgroundColor={buttonBackgroundColor}
+                buttonTextColor={buttonTextColor}
+              />
+            );
+          }}
         />
       )}
       leftContent={() => (

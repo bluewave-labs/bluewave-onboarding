@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
 import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
+import PopupComponent from "../../products/Popup/PopupComponent";
 import PopupAppearance from '../../components/PopupPageComponents/PopupAppearance/PopupAppearance';
 import PopupContent from '../../components/PopupPageComponents/PopupContent/PopupContent';
 import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
@@ -101,41 +102,54 @@ const CreatePopupPage = () => {
     };
 
     return (
-        <GuideTemplate title={location.state?.isEdit ? 'Edit Popup' : 'New Popup'}
-            activeButton={activeButton}
-            handleButtonClick={handleButtonClick}
-            onSave={onSave}
-            rightContent={() =>
-                <RichTextEditor
-                    header={header}
-                    content={content}
-                    setHeader={setHeader}
-                    setContent={setContent}
-                    previewBtnText={actionButtonText}
-                    headerBackgroundColor={headerBackgroundColor}
-                    headerColor={headerColor}
-                    textColor={textColor}
-                    buttonBackgroundColor={buttonBackgroundColor}
-                    buttonTextColor={buttonTextColor}
-                    popupSize={popupSize}
-                    sx={{ width: "100%", maxWidth: '700px', marginLeft: '2.5rem', marginTop: '1rem' }}
-                />}
-            leftContent={() =>
-                <PopupContent
-                    actionButtonUrl={actionButtonUrl}
-                    setActionButtonText={setActionButtonText}
-                    setActionButtonUrl={setActionButtonUrl}
-                    actionButtonText={actionButtonText}
-                    setButtonAction={setButtonAction}
-                    buttonAction={buttonAction}
-                />}
-            leftAppearance={() => (
-                <PopupAppearance
-                    data={stateList}
-                    setPopupSize={setPopupSize}
-                    popupSize={popupSize}
-                />
-            )} />
+      <GuideTemplate
+        title={location.state?.isEdit ? "Edit Popup" : "New Popup"}
+        activeButton={activeButton}
+        handleButtonClick={handleButtonClick}
+        onSave={onSave}
+        rightContent={() => (
+          <RichTextEditor
+            previewComponent={({header, content}) => (
+              <PopupComponent
+                header={header}
+                content={content}
+                setHeader={setHeader}
+                setContent={setContent}
+                previewBtnText={actionButtonText}
+                headerBackgroundColor={headerBackgroundColor}
+                headerColor={headerColor}
+                textColor={textColor}
+                buttonBackgroundColor={buttonBackgroundColor}
+                buttonTextColor={buttonTextColor}
+                popupSize={popupSize}
+              />
+            )}
+            sx={{
+              width: "100%",
+              maxWidth: "700px",
+              marginLeft: "2.5rem",
+              marginTop: "1rem",
+            }}
+          />
+        )}
+        leftContent={() => (
+          <PopupContent
+            actionButtonUrl={actionButtonUrl}
+            setActionButtonText={setActionButtonText}
+            setActionButtonUrl={setActionButtonUrl}
+            actionButtonText={actionButtonText}
+            setButtonAction={setButtonAction}
+            buttonAction={buttonAction}
+          />
+        )}
+        leftAppearance={() => (
+          <PopupAppearance
+            data={stateList}
+            setPopupSize={setPopupSize}
+            popupSize={popupSize}
+          />
+        )}
+      />
     );
 };
 

@@ -5,7 +5,7 @@ import Button from "../../components/Button/Button";
 
 const HintComponent = ({
   header,
-  htmlContent,
+  content,
   previewBtnText,
   headerBackgroundColor,
   headerColor,
@@ -30,7 +30,7 @@ const HintComponent = ({
         <div
           className="preview-content"
           style={{ color: textColor }}
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlContent) }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
         />
         <div className="preview-button-container">
           {previewBtnText && (

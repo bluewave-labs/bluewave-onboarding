@@ -16,6 +16,8 @@ const RichTextEditor = ({ sx = {}, previewComponent = null }) => {
   const [mode, setMode] = useState("editor");
   const [header, setHeader] = useState("");
 
+  const Preview = previewComponent;
+
   const handleHeaderChange = (e) => {
     setHeader(e.target.value);
   };
@@ -57,7 +59,7 @@ const RichTextEditor = ({ sx = {}, previewComponent = null }) => {
           </div>
         </>
       ) : (
-        React.cloneElement(previewComponent, { header, htmlContent })
+        <Preview header={header} content={htmlContent} />
       )}
       <EditorTabs mode={mode} setMode={setMode}
         sx={{

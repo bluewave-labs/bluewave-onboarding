@@ -1,12 +1,14 @@
 .preview-container {
-  width: 70%;
-  height: 60%;
+  width: 100%;
+  max-width: 400px;
+  max-height: 250px;
   border: 1px solid var(--light-border-color);
   margin-top: 1rem;
   overflow: auto;
   display: flex;
   flex-direction: column;
   word-wrap: break-word;
+  box-sizing: border-box;
 }
 
 .preview-container h3 {
@@ -31,6 +33,8 @@
 .preview-button-container {
   margin-top: 0.5rem;
   padding: 0 2rem;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .preview-button-container button {
