@@ -10,10 +10,16 @@
 .nameCol {
     display: flex !important;
     flex-direction: column;
-    font-size: 13px ;
+    font-size: var(--font-regular) ;
 }
 
 .data {
-    font-size: 13px ;
+    font-size: var(--font-regular) ;
     color: var(--second-text-color) !important;
+
+}
+
+.role{
+    align-items: center;
+    display: flex;
 }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import ProgressSteps from '../../components/ProgressSteps/ProgressSteps';
+import ProgressSteps from './ProgressSteps/ProgressSteps';
 import styles from './ProgressStepsMain.module.scss';
 import Button from '../../components/Button/Button';
 import CheckboxHRM from '../../components/Checkbox/CheckboxHRM';
-import TeamMembersList from '../../components/ProgressSteps/TeamMemberList/TeamMembersList';
+import TeamMembersList from './ProgressSteps/TeamMemberList/TeamMembersList';
 import { useNavigate } from "react-router-dom";
 import { sendInvites, setOrganization } from '../../services/teamServices';
 

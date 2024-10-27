@@ -99,7 +99,7 @@ function CreateAccountPage() {
           placeholder='Enter your name'
           textFieldMargin='none'
           TextFieldWidth="full"
-          required="true"
+          required
           value={formData.name}
           onChange={handleInputChange}
         />
@@ -116,7 +116,7 @@ function CreateAccountPage() {
           placeholder='Enter your surname'
           textFieldMargin='none'
           TextFieldWidth="full"
-          required="true"
+          required
           value={formData.surname}
           onChange={handleInputChange}
         />
@@ -133,7 +133,7 @@ function CreateAccountPage() {
           placeholder='Enter your email'
           textFieldMargin='none'
           TextFieldWidth="full"
-          required="true"
+          required
           value={formData.email}
           onChange={handleInputChange}
         />
@@ -151,7 +151,7 @@ function CreateAccountPage() {
           placeholder='Create your password'
           textFieldMargin='none'
           TextFieldWidth="full"
-          required="true"
+          required
           value={formData.password}
           onChange={handleInputChange}
         />

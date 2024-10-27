@@ -8,14 +8,10 @@ export const API_BASE_URL = 'http://localhost:3000/api/';
 export const APP_TITLE = 'Bluewave Onboarding';
 export const SUPPORT_EMAIL = 'support@bluewave.com';
 
-
 // Auth type enum
 export const AUTH_TYPE = {
   LOGIN: 'login',
   SIGNUP: 'signup',
 }
+export const roles = ["admin", "member"]
 
-export const ROLE = {
-  ADMIN: 'admin',
-  MEMBER: 'member'
-}

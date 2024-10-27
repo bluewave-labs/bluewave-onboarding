@@ -1,5 +1,6 @@
 const tourService = require("../service/tour.service");
 const { internalServerError } = require("../utils/errors");
+const { internalServerError } = require("../utils/errors.helper");
 const {
   validateTriggeringFrequency,
   validatePageTargeting,
