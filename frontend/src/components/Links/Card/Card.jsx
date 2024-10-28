@@ -11,16 +11,26 @@ import React from "react";
 
 import s from "./Card.module.scss";
 
-const Card = ({ id, title, url, order, toggleSettings }) => {
+const Card = ({
+  id,
+  title,
+  url,
+  order,
+  toggleSettings,
+  onDragStart,
+  onDragEnd,
+  index,
+  x,
+  y,
+  dragging,
+  draggingItemIndex,
+  onDrag,
+}) => {
   const onClick = () => {
     toggleSettings({ id, title, url, order });
   };
 
   const onDelete = () => {};
-
-  const onDrag = () => {};
-
-  const onDragEnd = (e) => {};
 
   return (
     <ListItem
@@ -45,8 +55,22 @@ const Card = ({ id, title, url, order, toggleSettings }) => {
           </SvgIcon>
         </IconButton>
       }
+      style={{
+        position:
+          dragging && draggingItemIndex === index ? "absolute" : "relative",
+        top: draggingItemIndex === index ? `${y}px` : "initial",
+        left: draggingItemIndex === index ? `${x}px` : "initial",
+        cursor: dragging ? "grabbing" : "grab",
+        zIndex: dragging && draggingItemIndex === index ? "10000" : "0",
+        backgroundColor: "#fff"
+      }}
     >
-      <ListItemAvatar>
+      <ListItemAvatar
+        onMouseDown={(e) => onDragStart(e, index)}
+        onMouseUp={onDragEnd}
+        onMouseMove={onDrag}
+        onDrop={onDragEnd}
+      >
         <IconButton style={{ fontSize: "1rem" }}>
           <SvgIcon className={s.card__icon} fontSize='1'>
             <svg
@@ -76,6 +100,16 @@ Card.propTypes = {
   title: PropTypes.string,
   url: PropTypes.string,
   id: PropTypes.number,
+  order: PropTypes.number,
+  onDragStart: PropTypes.func,
+  onDrag: PropTypes.func,
+  toogleSettings: PropTypes.func,
+  draggingItemIndex: PropTypes.number,
+  onDragEnd: PropTypes.func,
+  index: PropTypes.number,
+  x: PropTypes.number,
+  y: PropTypes.number,
+  dragging: PropTypes.bool,
 };
 
 export default Card;
