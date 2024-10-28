@@ -1,18 +1,23 @@
 import { Link } from "@mui/material";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CardContainer from "../../components/Links/Card";
 import Card from "../../components/Links/Card/Card";
 import { updateLink } from "../../services/linkService";
 import s from "./LinkPage.module.scss";
 
-const LinkContent = ({ listItems, toggleSettings, setItems }) => {
+const LinkContent = ({ items, toggleSettings, setItems }) => {
   const [draggingItemIndex, setDraggingItemIndex] = useState(null);
   const [dragging, setDragging] = useState(false);
+  const [isPopupOpen, setPopupOpen] = useState(false);
 
-  useEffect(() => {
-    if (listItems.some(it => !it.x || !it.y)) setItems(listItems.map((it) => ({ ...it, x: 0, y: 0 })));
-  }, [listItems]);
+  const handleDelete = () => {
+    setPopupOpen(false);
+  };
+
+  const handleClosePopup = () => {
+    setPopupOpen(false);
+  };
 
   const handleDragStart = (e, index) => {
     setDraggingItemIndex(index);
@@ -38,16 +43,19 @@ const LinkContent = ({ listItems, toggleSettings, setItems }) => {
     const { x, y, ...draggedItem } = items[draggedItemIndex];
     setDraggingItemIndex(null);
     setDragging(false);
-    const newList = items.sort((a, b) => b.y - a.y)
+    const newList = items.sort((a, b) => b.y - a.y);
     setItems(newList);
-    updateLink({...draggedItem, order: newList.findIndex(it => it.id === draggedItem.id)});
+    updateLink({
+      ...draggedItem,
+      order: newList.findIndex((it) => it.id === draggedItem.id) + 1,
+    });
   };
 
   return (
     <div className={s.body__links}>
       <h3 className={s.body__title}>Link items</h3>
       <CardContainer>
-        {listItems.map((item, i) => (
+        {items.map((item, i) => (
           <Card
             {...item}
             key={item.id}
@@ -77,15 +85,18 @@ const LinkContent = ({ listItems, toggleSettings, setItems }) => {
 };
 
 LinkContent.propTypes = {
-  listItems: PropTypes.arrayOf(
+  items: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,
       url: PropTypes.string,
       id: PropTypes.number,
       order: PropTypes.number,
+      x: PropTypes.number,
+      y: PropTypes.number,
     })
   ),
   toggleSettings: PropTypes.func,
+  setItems: PropTypes.func,
 };
 
 export default LinkContent;

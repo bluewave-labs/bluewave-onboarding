@@ -1,0 +1,93 @@
+@use "../../../styles/globals.scss" as *;
+
+.settings {
+  box-shadow: 0px 8px 8px -4px var(--shadow-one);
+  box-shadow: 0px 20px 24px -4px var(--shadow-two);
+  border: 1px solid #d0d5dd;
+  width: 460px;
+  position: absolute;
+  background-color: #fff;
+  height: 99.5vh;
+  right: 0;
+  top: 0;
+
+  &__header {
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 1.25rem;
+    background-color: var(--header-background);
+    border-bottom: 1px solid var(--light-border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &--title {
+      margin-left: 0.313rem;
+    }
+  }
+
+  &__content {
+    padding: 1rem 1.563rem;
+
+    &--text {
+      margin-bottom: 0.625rem;
+
+      font-family: Inter;
+      font-size: 0.813rem;
+      font-weight: 400;
+      line-height: 1.54;
+    }
+
+    &--label {
+      display: flex;
+      flex-direction: column;
+      max-width: 100%;
+      margin: 0;
+
+      &.last {
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        & .MuiSwitch-check {
+          background-color: var(--main-purple);
+        }
+
+        & .MuiSwitch-track {
+          background-color: rgba(var(--main-purple-rgb), 0.5);
+        }
+
+        & > span {
+          margin-left: 0.625rem;
+          cursor: pointer;
+
+          font-family: Inter;
+          font-size: 0.813rem;
+          font-weight: 400;
+          line-height: 1.54;
+        }
+      }
+    }
+
+    &--input {
+      max-width: 100%;
+      padding: 0.313rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--light-border-color);
+      box-shadow: 0px 1px 2px 0px #1018280d;
+      height: 1.4rem;
+      border-radius: 0.5rem;
+    }
+    &--obs {
+      display: block;
+      margin-bottom: 1.75rem;
+      max-width: 100%;
+
+      font-family: Inter;
+      white-space: wrap;
+      font-size: 0.688rem;
+      font-weight: 400;
+      line-height: 1.45;
+    }
+  }
+}

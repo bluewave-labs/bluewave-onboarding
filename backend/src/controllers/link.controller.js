@@ -30,7 +30,12 @@ class LinkController {
     }
 
     try {
-      const newLinkData = { ...req.body, order: req.body.order || allLinks.length, createdBy: userId };
+      const newLinkData = {
+        ...req.body,
+        order: req.body.order || allLinks.length,
+        createdBy: userId,
+        target: req.body.target || "_blank",
+      };
       const newPopup = await linkService.createLink(newLinkData);
       res.status(201).json(newPopup);
     } catch (err) {

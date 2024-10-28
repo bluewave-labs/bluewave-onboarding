@@ -33,6 +33,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      target: {
+        type: DataTypes.STRING,
+        validate: {
+          isIn: ["_blank", "_self", "_parent", "_top"],
+        },
+        defaultValue: "_blank",
+      },
       createdBy: {
         type: DataTypes.INTEGER,
         allowNull: false,

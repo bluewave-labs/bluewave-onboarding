@@ -6,6 +6,7 @@ export const createLink = async (link) => {
       title: link.title,
       url: link.url,
       order: link.order,
+      target: link.target ? "_blank" :  "_self"
     });
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
@@ -28,10 +29,11 @@ export const getLinks = async () => {
 
 export const updateLink = async (link) => {
   try {
-    const response = await apiClient.put(`/link/${link.id}`, {
+    const response = await apiClient.put(`/link/edit_link/${link.id}`, {
       title: link.title,
       url: link.url,
       order: link.order,
+      target: link.target ? "_blank" :  "_self"
     });
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
