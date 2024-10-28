@@ -6,13 +6,12 @@ import Card from "../../components/Links/Card/Card";
 import { updateLink } from "../../services/linkService";
 import s from "./LinkPage.module.scss";
 
-const LinkContent = ({ listItems, toggleSettings }) => {
-  const [items, setItems] = useState([]);
+const LinkContent = ({ listItems, toggleSettings, setItems }) => {
   const [draggingItemIndex, setDraggingItemIndex] = useState(null);
   const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
-    setItems(listItems.map((it) => ({ ...it, x: 0, y: 0 })));
+    if (listItems.some(it => !it.x || !it.y)) setItems(listItems.map((it) => ({ ...it, x: 0, y: 0 })));
   }, [listItems]);
 
   const handleDragStart = (e, index) => {
@@ -37,10 +36,8 @@ const LinkContent = ({ listItems, toggleSettings }) => {
   const handleDragEnd = () => {
     const draggedItemIndex = draggingItemIndex;
     const { x, y, ...draggedItem } = items[draggedItemIndex];
-    console.log({ draggedItem });
     setDraggingItemIndex(null);
     setDragging(false);
-    console.log({ items });
     const newList = items.sort((a, b) => b.y - a.y)
     setItems(newList);
     updateLink({...draggedItem, order: newList.findIndex(it => it.id === draggedItem.id)});
@@ -50,7 +47,7 @@ const LinkContent = ({ listItems, toggleSettings }) => {
     <div className={s.body__links}>
       <h3 className={s.body__title}>Link items</h3>
       <CardContainer>
-        {items.map((item, i) => (
+        {listItems.map((item, i) => (
           <Card
             {...item}
             key={item.id}

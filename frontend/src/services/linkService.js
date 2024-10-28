@@ -1,8 +1,8 @@
-import authClient from "./loginServices";
+import { apiClient } from "./apiClient";
 
-export const updateLink = async (link) => {
+export const createLink = async (link) => {
   try {
-    const response = await authClient.put(`/link/${link.id}`, {
+    const response = await apiClient.post(`/link/add_link`, {
       title: link.title,
       url: link.url,
       order: link.order,
@@ -11,6 +11,43 @@ export const updateLink = async (link) => {
     return response.data;
   } catch (error) {
     console.error("Update Link error:", error.response);
+    throw error;
+  }
+}
+
+export const getLinks = async () => {
+  try {
+    const response = await apiClient.get(`/link/links`);
+    if (response.status >= 400) throw new Error(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Update Link error:", error.response);
+    throw error;
+  }
+};
+
+export const updateLink = async (link) => {
+  try {
+    const response = await apiClient.put(`/link/${link.id}`, {
+      title: link.title,
+      url: link.url,
+      order: link.order,
+    });
+    if (response.status >= 400) throw new Error(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Update Link error:", error.response);
+    throw error;
+  }
+};
+
+export const deleteLink = async (id) => {
+  try {
+    const response = await apiClient.delete(`/link/delete_link/${id}`);
+    if (response.status >= 400) throw new Error(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Delete Link error:", error.response);
     throw error;
   }
 };

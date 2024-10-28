@@ -1,40 +1,19 @@
+import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import Preview from "../../components/Links/Preview";
+import { createLink } from "../../services/linkService";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
-import LinkContent from "./LinkContent";
 import LinkAppearance from "./LinkAppearance";
+import LinkContent from "./LinkContent";
 
-const demoItems = [
-  {
-    title: "Portfolio",
-    url: "https://portfolio-v3-brown.vercel.app/",
-    order: 2,
-    id: 1,
-  },
-  {
-    title: "Blue Wave",
-    url: "https://bluewavelabs.ca",
-    order: 1,
-    id: 2,
-  },
-  {
-    title: "Sequelize",
-    url: "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
-    order: 3,
-    id: 3,
-  },
-];
 
-const LinksPage = ({ items }) => {
+
+const LinksPage = ({ items, setItems }) => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [showDemoItems, setShowDemoItems] = useState(false);
   const [showSettings, setShowSettings] = useState(false); // New state for showing settings
   const [activeBtn, setActiveBtn] = useState(0);
   const [linkToEdit, setLinkToEdit] = useState({});
-
-  useEffect(() => {
-    setShowDemoItems(items.length === 0);
-  }, [items]);
 
   const handleDelete = () => {
     setPopupOpen(false);
@@ -51,25 +30,41 @@ const LinksPage = ({ items }) => {
     }
   };
 
-  const listItems = (showDemoItems ? demoItems : items).sort(
-    (a, b) => a.order - b.order
-  );
-
-  return (
-    <GuideTemplate
-      title='New helper link'
-      activeButton={activeBtn}
-      handleButtonClick={setActiveBtn}
-      rightContent={() => <Preview items={listItems} />}
-      leftContent={() => (
-        <LinkContent
-          listItems={listItems}
-          toggleSettings={toggleSettings}
-        />
-      )}
-      leftAppearance={() => <LinkAppearance />}
+  const rightContent = () => <Preview items={items} />;
+  const leftContent = () => (
+    <LinkContent
+      listItems={items}
+      setItems={setItems}
+      toggleSettings={toggleSettings}
     />
   );
+  const leftAppearance = () => <LinkAppearance />;
+
+  return (
+    <>
+      <GuideTemplate
+        title='New helper link'
+        activeButton={activeBtn}
+        handleButtonClick={setActiveBtn}
+        rightContent={rightContent}
+        leftContent={leftContent}
+        leftAppearance={leftAppearance}
+      />
+      {showSettings && <div>Settings</div>}
+    </>
+  );
+};
+
+LinksPage.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      url: PropTypes.string,
+      id: PropTypes.number,
+      order: PropTypes.number,
+    })
+  ),
+  setItems: PropTypes.func,
 };
 
 export default LinksPage;

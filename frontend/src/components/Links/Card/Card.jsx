@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import s from "./Card.module.scss";
+import { deleteLink } from "../../../services/linkService";
 
 const Card = ({
   id,
@@ -30,12 +31,17 @@ const Card = ({
     toggleSettings({ id, title, url, order });
   };
 
-  const onDelete = () => {};
+  const onDelete = async () => {
+    const deleted = await deleteLink(id);
+    if (deleted) {
+      location.reload();
+    }
+  };
 
   return (
     <ListItem
       secondaryAction={
-        <IconButton style={{ fontSize: "0.6rem" }}>
+        <IconButton style={{ fontSize: "0.6rem" }} onClick={onDelete}>
           <SvgIcon fontSize='1'>
             <svg
               width='9'
@@ -103,7 +109,7 @@ Card.propTypes = {
   order: PropTypes.number,
   onDragStart: PropTypes.func,
   onDrag: PropTypes.func,
-  toogleSettings: PropTypes.func,
+  toggleSettings: PropTypes.func,
   draggingItemIndex: PropTypes.number,
   onDragEnd: PropTypes.func,
   index: PropTypes.number,
