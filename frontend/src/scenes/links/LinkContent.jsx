@@ -4,8 +4,8 @@ import CardContainer from "../../components/Links/Card";
 import Card from "../../components/Links/Card/Card";
 import s from "./LinkPage.module.scss";
 
-const LinkContent = ({ showAppearance, listItems, toggleSettings }) => {
-  return showAppearance ? null : (
+const LinkContent = ({ listItems, toggleSettings }) => {
+  return (
     <div className={s.body__links}>
       <h3 className={s.body__title}>Link items</h3>
       <CardContainer>
@@ -18,8 +18,8 @@ const LinkContent = ({ showAppearance, listItems, toggleSettings }) => {
           component='button'
           fontSize='0.785rem'
           lineHeight={1.43}
-          margin='0 0 0 1rem'
           display='inline-block'
+          style={{ margin: "0 0 0 1.4rem" }}
         >
           + Add new link
         </Link>
@@ -29,13 +29,14 @@ const LinkContent = ({ showAppearance, listItems, toggleSettings }) => {
 };
 
 LinkContent.propTypes = {
-  showAppearance: PropTypes.bool,
-  listItems: PropTypes.arrayOf({
-    title: PropTypes.string,
-    url: PropTypes.string,
-    id: PropTypes.number,
-    order: PropTypes.number,
-  }),
+  listItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      url: PropTypes.string,
+      id: PropTypes.number,
+      order: PropTypes.number,
+    })
+  ),
   toggleSettings: PropTypes.func,
 };
 

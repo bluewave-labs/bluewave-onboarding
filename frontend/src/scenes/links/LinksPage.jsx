@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Preview from "../../components/Links/Preview";
+import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import LinkContent from "./LinkContent";
-import s from "./LinkPage.module.scss";
+import LinkAppearance from "./LinkAppearance";
 
 const demoItems = [
   {
@@ -28,7 +29,7 @@ const LinksPage = ({ items }) => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [showDemoItems, setShowDemoItems] = useState(false);
   const [showSettings, setShowSettings] = useState(false); // New state for showing settings
-  const [showAppearance, setShowAppearance] = useState(false);
+  const [activeBtn, setActiveBtn] = useState(0);
   const [linkToEdit, setLinkToEdit] = useState({});
 
   useEffect(() => {
@@ -55,44 +56,19 @@ const LinksPage = ({ items }) => {
   );
 
   return (
-    <div className={s.container}>
-      <div className={s.header}>
-        <h2>New helper link</h2>
-      </div>
-      <div className={s.body}>
-        <div className={s.body__header}>
-          <button
-            className={`${s["body__header--btn"]} ${
-              !showAppearance ? s.active : ""
-            }`}
-            onClick={() => setShowAppearance(false)}
-          >
-            Content
-          </button>
-          <button
-            className={`${s["body__header--btn"]} ${
-              showAppearance ? s.active : ""
-            }`}
-            onClick={() => setShowAppearance(true)}
-          >
-            Appearance
-          </button>
-        </div>
-        <div className={s.body__content}>
-          <LinkContent
-            showAppearance={showAppearance}
-            listItems={listItems}
-            toggleSettings={toggleSettings}
-          />
-          <div className={s.preview}>
-            <Preview items={listItems} />
-          </div>
-        </div>
-      </div>
-
-      {/* Settings Component - Position and Animation */}
-      {showSettings && <div className='settings-container'></div>}
-    </div>
+    <GuideTemplate
+      title='New helper link'
+      activeButton={activeBtn}
+      handleButtonClick={setActiveBtn}
+      rightContent={() => <Preview items={listItems} />}
+      leftContent={() => (
+        <LinkContent
+          listItems={listItems}
+          toggleSettings={toggleSettings}
+        />
+      )}
+      leftAppearance={() => <LinkAppearance />}
+    />
   );
 };
 
