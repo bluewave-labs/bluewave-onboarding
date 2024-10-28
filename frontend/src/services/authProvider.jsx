@@ -7,34 +7,71 @@ export const useAuth = () => {
     return useContext(AuthContext);
 };
 
+// HTML entity decoder function
+const decodeHtmlEntities = (str) => {
+    if (!str) return str;
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = str;
+    return textarea.value;
+};
+
+// Function to handle user data processing
+const processUserData = (userData) => {
+    return {
+        ...userData,
+        picture: userData.picture ? decodeHtmlEntities(userData.picture) : null
+    };
+};
+
 const authReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN':
             return { ...state, isLoggedIn: true };
         case 'LOGOUT':
             return { ...state, isLoggedIn: false, userInfo: null };
-        case 'SET_USER_INFO':
-            localStorage.setItem('userInfo', JSON.stringify(action.payload));
-            return { ...state, userInfo: action.payload };
-        case 'LOGIN_AND_SET_USER_INFO':
-            localStorage.setItem('userInfo', JSON.stringify(action.payload));
-            return { isLoggedIn: true, userInfo: action.payload };
-        case 'UPDATE_AND_SET_UPDATED_USER_INFO':
-            {
-                let updatedUserInfo = {
-                    ...state.userInfo,
-                    ...action.payload,
-                };
-                localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
-                return { isLoggedIn: true, userInfo: updatedUserInfo };
-            }
+        case 'SET_USER_INFO': {
+            const processedData = processUserData(action.payload);
+            localStorage.setItem('userInfo', JSON.stringify(processedData));
+            return { ...state, userInfo: processedData };
+        }
+        case 'LOGIN_AND_SET_USER_INFO': {
+            const processedData = processUserData(action.payload);
+            localStorage.setItem('userInfo', JSON.stringify(processedData));
+            return { isLoggedIn: true, userInfo: processedData };
+        }
+        case 'UPDATE_AND_SET_UPDATED_USER_INFO': {
+            const updatedUserInfo = processUserData({
+                ...state.userInfo,
+                ...action.payload,
+            });
+            localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
+            return { isLoggedIn: true, userInfo: updatedUserInfo };
+        }
         default:
             return state;
     }
 };
 
 export const AuthProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(authReducer, { isLoggedIn: false, userInfo: JSON.parse(localStorage.getItem('userInfo')) || null });
+    // Decoding any existing stored data on initial load
+    const getInitialState = () => {
+        const storedData = localStorage.getItem('userInfo');
+        if (storedData) {
+            try {
+                const parsedData = JSON.parse(storedData);
+                return { 
+                    isLoggedIn: false, 
+                    userInfo: processUserData(parsedData)
+                };
+            } catch (e) {
+                console.error('Error parsing stored user data:', e);
+                return { isLoggedIn: false, userInfo: null };
+            }
+        }
+        return { isLoggedIn: false, userInfo: null };
+    };
+
+    const [state, dispatch] = useReducer(authReducer, getInitialState());
     const [isFetching, setIsFetching] = useState(true);
 
     useEffect(() => {
@@ -48,9 +85,8 @@ export const AuthProvider = ({ children }) => {
                 }
                 const response = await apiClient.get('/users/current-user');
                 if (response.status === 200 && response.data.user) {
-                    const { id, name, surname, email, role } = response.data.user;
-                    const payload = { id, name, surname, email, role };
-                    localStorage.setItem('userInfo', JSON.stringify(payload));
+                    const { id, name, surname, email, role, picture } = response.data.user;
+                    const payload = { id, name, surname, email, role, picture };
                     dispatch({ type: 'LOGIN_AND_SET_USER_INFO', payload });
                 } else {
                     dispatch({ type: 'LOGOUT' });
@@ -63,7 +99,6 @@ export const AuthProvider = ({ children }) => {
                 setIsFetching(false);
             }
         };
-
         fetchUser();
     }, []);
 
@@ -73,14 +108,21 @@ export const AuthProvider = ({ children }) => {
 
     const updateProfile = (userInfo) => {
         dispatch({ type: 'UPDATE_AND_SET_UPDATED_USER_INFO', payload: userInfo });
-    }
+    };
 
     const logoutAuth = () => {
         dispatch({ type: 'LOGOUT' });
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn: state.isLoggedIn, loginAuth, logoutAuth, updateProfile, userInfo: state.userInfo, isFetching }}>
+        <AuthContext.Provider value={{ 
+            isLoggedIn: state.isLoggedIn, 
+            loginAuth, 
+            logoutAuth, 
+            updateProfile, 
+            userInfo: state.userInfo, 
+            isFetching 
+        }}>
             {children}
         </AuthContext.Provider>
     );

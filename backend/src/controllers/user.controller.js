@@ -95,8 +95,8 @@ const getCurrentUser = async (req, res) => {
   try {
     const user = await userService.getUser(userId);
     if (user){
-      const { id, name, surname, email, role } = user;
-      return res.status(200).json({ user: { id, name, surname, email, role: settings.user.roleName[role] } });
+      const { id, name, surname, email, role, picture } = user;
+      return res.status(200).json({ user: { id, name, surname, email, role: settings.user.roleName[role], picture } });
     }
     else{
       return res.status(400).json({ error: "User not found" });

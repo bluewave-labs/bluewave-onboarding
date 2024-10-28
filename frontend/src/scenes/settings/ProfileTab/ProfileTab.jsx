@@ -16,13 +16,13 @@ import UploadModal from "../Modals/UploadImageModal/UploadModal";
 const ProfileTab = () => {
   const navigate = useNavigate();
   const { userInfo, updateProfile } = useAuth();
-
+ 
   const [formData, setFormData] = useState({
     name: userInfo.name || "",
     surname: userInfo.surname || "",
-    picture: ""
+    picture: userInfo.picture || ""
   });
-
+ 
   const [loading, setLoading] = useState(false);
 
   const [openDeleteAccountModal, setOpenDeleteAccountModal] = useState(false);
@@ -75,14 +75,17 @@ const ProfileTab = () => {
         const base64Data = reader.result;
         try {
           const response = await updateUser({ picture: base64Data });
+          
           handleProfileUpdateSuccess(response, updateProfile);
+          handleUploadImageModalClose();
         } catch (e) {
-          console.error('Error Updating image');
+          console.error('Error Updating image:', e);
         }
       }
       reader.readAsDataURL(uploadedFile);
     }
   }
+
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -111,7 +114,7 @@ const ProfileTab = () => {
       localStorage.removeItem('authToken');
       navigate("/login")
     }
-    catch(error) {
+    catch (error) {
       handleGenericError("Error Deleting Account")
     }
   }
@@ -179,6 +182,7 @@ const ProfileTab = () => {
                 This photo will be displayed on your profile page.
               </p>
               <div className={styles.photoOptions}>
+
                 <Avatar src={userInfo?.picture || "/vendetta.png"} alt="User" size="large" />
                 <div>
                   {loading ?
@@ -223,3 +227,4 @@ const ProfileTab = () => {
 };
 
 export default ProfileTab;
+
