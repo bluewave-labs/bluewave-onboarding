@@ -18,7 +18,10 @@ const Settings = ({ onClose }) => {
       const parsedLink = JSON.parse(linkSaved);
       const newState = {
         ...parsedLink,
-        target: typeof parsedLink.target === "string" ? parsedLink.target === "_blank" : parsedLink.target,
+        target:
+          typeof parsedLink.target === "string"
+            ? parsedLink.target === "_blank"
+            : parsedLink.target,
       };
       setState(newState);
     } else {
@@ -52,10 +55,13 @@ const Settings = ({ onClose }) => {
     <div className={s.settings}>
       <div className={s.settings__header}>
         <span className={s["settings__header--title"]}>Add new link</span>
-        <CloseOutlinedIcon
-          onClick={handleClose}
-          style={{ color: "#98A2B3", fontSize: "20px", cursor: "pointer" }}
-        />
+        <div className={s["settings__header--right"]}>
+          <span className={s["settings__header--info"]}>Auto-saved</span>
+          <CloseOutlinedIcon
+            onClick={handleClose}
+            style={{ color: "#98A2B3", fontSize: "20px", cursor: "pointer" }}
+          />
+        </div>
       </div>
       <div className={s.settings__content}>
         <label htmlFor='title' className={s["settings__content--label"]}>

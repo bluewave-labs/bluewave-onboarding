@@ -12,8 +12,6 @@
   top: 0;
 
   &__header {
-    font-size: 1.25rem;
-    font-weight: bold;
     padding: 1.25rem;
     background-color: var(--header-background);
     border-bottom: 1px solid var(--light-border-color);
@@ -22,7 +20,23 @@
     align-items: center;
 
     &--title {
+      font-size: 1.25rem;
+      font-weight: bold;
       margin-left: 0.313rem;
+    }
+
+    &--right {
+      display: flex;
+      align-items: center;
+
+      & span {
+        margin-right: 22px;
+
+        font-family: Inter;
+        font-size: 0.688rem;
+        font-weight: 400;
+        line-height: 1.45;
+      }
     }
   }
 
