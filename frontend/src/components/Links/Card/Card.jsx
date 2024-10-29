@@ -9,14 +9,11 @@ import {
 import PropTypes from "prop-types";
 import React from "react";
 
-import s from "./Card.module.scss";
 import { deleteLink } from "../../../services/linkService";
+import s from "./Card.module.scss";
 
 const Card = ({
-  id,
-  title,
-  url,
-  order,
+  card,
   toggleSettings,
   onDragStart,
   onDragEnd,
@@ -27,6 +24,7 @@ const Card = ({
   draggingItemIndex,
   onDrag,
 }) => {
+  const { id, title, url, order } = card;
   const onClick = () => {
     toggleSettings({ id, title, url, order });
   };
@@ -40,6 +38,7 @@ const Card = ({
 
   return (
     <ListItem
+      onClick={() => toggleSettings(card)}
       secondaryAction={
         <IconButton style={{ fontSize: "0.6rem" }} onClick={onDelete}>
           <SvgIcon fontSize='1'>
@@ -68,7 +67,7 @@ const Card = ({
         left: draggingItemIndex === index ? `${x}px` : "initial",
         cursor: dragging ? "grabbing" : "grab",
         zIndex: dragging && draggingItemIndex === index ? "10000" : "0",
-        backgroundColor: "#fff"
+        backgroundColor: "#fff",
       }}
     >
       <ListItemAvatar
@@ -103,10 +102,12 @@ const Card = ({
 };
 
 Card.propTypes = {
-  title: PropTypes.string,
-  url: PropTypes.string,
-  id: PropTypes.number,
-  order: PropTypes.number,
+  card: PropTypes.shape({
+    title: PropTypes.string,
+    url: PropTypes.string,
+    id: PropTypes.number,
+    order: PropTypes.number,
+  }),
   onDragStart: PropTypes.func,
   onDrag: PropTypes.func,
   toggleSettings: PropTypes.func,

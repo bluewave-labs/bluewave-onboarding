@@ -57,7 +57,7 @@ const LinkContent = ({ items, toggleSettings, setItems }) => {
       <CardContainer>
         {items.map((item, i) => (
           <Card
-            {...item}
+            card={item}
             key={item.id}
             toggleSettings={toggleSettings}
             onDragStart={handleDragStart}
@@ -69,7 +69,7 @@ const LinkContent = ({ items, toggleSettings, setItems }) => {
           />
         ))}
         <Link
-          onClick={toggleSettings}
+          onClick={() => toggleSettings()}
           underline='hover'
           component='button'
           fontSize='0.785rem'

@@ -11,10 +11,10 @@ import './Switch.css';
  * 
  * - value<String>: Standard input value attribute
  */
-export default function Switch({id, name, value, enabled}) {
+export default function Switch({id, name, value, enabled, onChange}) {
     return (
         <label class="switch">
-            <input type="checkbox" id={id} name={name} value={value} disabled={!enabled} />
+            <input type="checkbox" id={id} name={name} value={value} disabled={!enabled} checked={value} onChange={onChange} />
             <span class="slider round"></span>
         </label>
     );

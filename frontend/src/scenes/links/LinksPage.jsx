@@ -51,10 +51,10 @@ const LinksPage = () => {
     if (showSettings) {
       renderLinks();
     }
-    setShowSettings(!showSettings); // Toggle the settings visibility
-    if (link) {
+    if (!showSettings && link) {
       localStorage.setItem("newLink", JSON.stringify(link));
     }
+    setShowSettings(!showSettings); // Toggle the settings visibility
   };
 
   const rightContent = () => <Preview items={items} />;
@@ -77,7 +77,7 @@ const LinksPage = () => {
         leftContent={leftContent}
         leftAppearance={leftAppearance}
       />
-      {showSettings && <Settings onClose={toggleSettings} />}
+      {showSettings && <Settings onClose={() => toggleSettings()} />}
     </>
   );
 };

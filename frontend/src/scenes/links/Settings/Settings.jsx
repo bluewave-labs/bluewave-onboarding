@@ -15,25 +15,32 @@ const Settings = ({ onClose }) => {
   useEffect(() => {
     const linkSaved = localStorage.getItem("newLink");
     if (linkSaved) {
-      setState(JSON.parse(linkSaved));
+      const parsedLink = JSON.parse(linkSaved);
+      const newState = {
+        ...parsedLink,
+        target: typeof parsedLink.target === "string" ? parsedLink.target === "_blank" : parsedLink.target,
+      };
+      setState(newState);
+    } else {
+      setState({ title: "", url: "", target: true });
     }
   }, []);
 
   const handleChange = ({ target }) => {
     const { name } = target;
     let { value } = target;
-    if (target.name === "target") value = target.checked;
+    //if (target.name === "target") value = target.checked;
     setState((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleClose = async () => {
-    if (state.id) {
+    if (state.id && state.title.trim() && state.url.trim()) {
       await updateLink(state);
-      localStorage.removeItem('newLink')
+      localStorage.removeItem("newLink");
       onClose();
     } else if (state.title.trim() && state.url.trim()) {
       await createLink(state);
-      localStorage.removeItem('newLink')
+      localStorage.removeItem("newLink");
       onClose();
     } else {
       localStorage.setItem("newLink", JSON.stringify(state));
@@ -88,7 +95,7 @@ const Settings = ({ onClose }) => {
             id='switch'
             name='target'
             onChange={handleChange}
-            enabled={state.target}
+            value={state.target}
           />
           <span>Open in a new tab</span>
         </label>
