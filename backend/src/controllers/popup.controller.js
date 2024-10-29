@@ -1,9 +1,8 @@
 const popupService = require("../service/popup.service");
 const { internalServerError } = require("../utils/errors.helper");
-const { isValidHexColor, checkColorFields, validateCloseButtonAction } = require("../utils/guide.helper");
-const db = require("../models");
-const Popup = db.Popup;
+const {validateCloseButtonAction } = require("../utils/guide.helper");
 const { validatePopupSize } = require("../utils/popup.helper");
+const { checkColorFieldsFail } =require("../utils/guide.helper");
 
 class PopupController {
   async addPopup(req, res) {
