@@ -1,6 +1,6 @@
 const HintService = require("../service/hint.service");
-const { internalServerError } = require("../utils/errors");
-const validateHintData = require("../utils/hintValidation");
+const { internalServerError } = require("../utils/errors.helper");
+const validateHintData = require("../utils/hint.helper");
 const db = require("../models");
 const Hint = db.Hint;
 

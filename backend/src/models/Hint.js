@@ -1,4 +1,4 @@
-const { validateHexColor } = require("../utils/guideHelpers");
+const { validateHexColor } = require("../utils/guide.helper");
 
 module.exports = (sequelize, DataTypes) => {
   const Hint = sequelize.define(

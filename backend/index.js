@@ -3,7 +3,9 @@ const cors = require("cors");
 const helmet = require("helmet");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
-const jsonErrorMiddleware = require("./src/middleware/jsonErrorMiddleware");
+const jsonErrorMiddleware = require("./src/middleware/jsonError.middleware");
+const fileSizeValidator = require('./src/middleware/fileSizeValidator.middleware');
+const { MAX_FILE_SIZE } = require('./src/utils/constants.helper');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -22,11 +24,12 @@ const app = express();
 
 app.use(cors());
 app.use(helmet());
-app.use(express.json());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: MAX_FILE_SIZE }));
 app.use(jsonErrorMiddleware);
+// app.use(fileSizeValidator);
 
-const { sequelize } = require("./src/models");
+const { sequelize, Team } = require("./src/models");
+const config = require("./config/config");
 
 sequelize
   .authenticate()
@@ -35,6 +38,12 @@ sequelize
 
 sequelize
   .sync({ force: true })
+  .then(async () => {
+    await Team.findOrCreate({
+      where: { id: 1 },
+      defaults: {name: config.defaultTeamName}
+    })
+  })
   .then(() => console.log("Models synced with the database..."))
   .catch((err) => console.log("Error syncing models: " + err));
 
