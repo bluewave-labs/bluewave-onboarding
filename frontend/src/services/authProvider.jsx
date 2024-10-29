@@ -10,9 +10,11 @@ export const useAuth = () => {
 // HTML entity decoder function
 const decodeHtmlEntities = (str) => {
     if (!str) return str;
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = str;
-    return textarea.value;
+    const parser = new DOMParser();
+    const dom = parser.parseFromString(
+        `<!doctype html><body>${str}`, 'text/html'
+    );
+    return dom.body.textContent;
 };
 
 // Function to handle user data processing
