@@ -5,19 +5,13 @@ import CardContainer from "../../components/Links/Card";
 import Card from "../../components/Links/Card/Card";
 import { updateLink } from "../../services/linkService";
 import s from "./LinkPage.module.scss";
+import Popup from "./Popup/Popup";
 
 const LinkContent = ({ items, toggleSettings, setItems }) => {
   const [draggingItemIndex, setDraggingItemIndex] = useState(null);
   const [dragging, setDragging] = useState(false);
-  const [isPopupOpen, setPopupOpen] = useState(false);
-
-  const handleDelete = () => {
-    setPopupOpen(false);
-  };
-
-  const handleClosePopup = () => {
-    setPopupOpen(false);
-  };
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const handleDragStart = (e, index) => {
     setDraggingItemIndex(index);
@@ -52,35 +46,47 @@ const LinkContent = ({ items, toggleSettings, setItems }) => {
   };
 
   return (
-    <div className={s.body__links}>
-      <h3 className={s.body__title}>Link items</h3>
-      <CardContainer>
-        {items.map((item, i) => (
-          <Card
-            card={item}
-            key={item.id}
-            toggleSettings={toggleSettings}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-            onDrag={handleDrag}
-            index={i}
-            dragging={dragging}
-            draggingItemIndex={draggingItemIndex}
-          />
-        ))}
-        <Link
-          onClick={() => toggleSettings()}
-          underline='hover'
-          component='button'
-          fontSize='0.785rem'
-          lineHeight={1.43}
-          display='inline-block'
-          style={{ margin: "0 0 0 1.4rem" }}
-        >
-          + Add new link
-        </Link>
-      </CardContainer>
-    </div>
+    <>
+      <div className={s.body__links}>
+        <h3 className={s.body__title}>Link items</h3>
+        <CardContainer>
+          {items.map((item, i) => (
+            <Card
+              card={item}
+              key={item.id}
+              toggleSettings={toggleSettings}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+              onDrag={handleDrag}
+              index={i}
+              dragging={dragging}
+              draggingItemIndex={draggingItemIndex}
+              onDelete={() => {
+                setItemToDelete(item.id);
+                setIsPopupOpen(true);
+              }}
+            />
+          ))}
+          <Link
+            onClick={toggleSettings}
+            underline='hover'
+            component='button'
+            fontSize='0.785rem'
+            lineHeight={1.43}
+            display='inline-block'
+            style={{ margin: "0 0 0 1.4rem" }}
+          >
+            + Add new link
+          </Link>
+        </CardContainer>
+      </div>
+      <Popup
+        isPopupOpen={isPopupOpen}
+        setPopupOpen={setIsPopupOpen}
+        itemToDelete={itemToDelete}
+        setItems={setItems}
+      />
+    </>
   );
 };
 

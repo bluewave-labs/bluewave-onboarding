@@ -36,18 +36,18 @@ const Settings = ({ onClose }) => {
     setState((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleClose = async () => {
+  const handleClose = async (e) => {
     if (state.id && state.title.trim() && state.url.trim()) {
       await updateLink(state);
       localStorage.removeItem("newLink");
-      onClose();
+      onClose(e);
     } else if (state.title.trim() && state.url.trim()) {
       await createLink(state);
       localStorage.removeItem("newLink");
-      onClose();
+      onClose(e);
     } else {
       localStorage.setItem("newLink", JSON.stringify(state));
-      onClose();
+      onClose(e);
     }
   };
 

@@ -9,38 +9,26 @@ import {
 import PropTypes from "prop-types";
 import React from "react";
 
-import { deleteLink } from "../../../services/linkService";
 import s from "./Card.module.scss";
 
 const Card = ({
   card,
+  index,
+  dragging,
+  draggingItemIndex,
   toggleSettings,
   onDragStart,
   onDragEnd,
-  index,
-  x,
-  y,
-  dragging,
-  draggingItemIndex,
   onDrag,
+  onDelete,
 }) => {
-  const { id, title, url, order } = card;
-  const onClick = () => {
-    toggleSettings({ id, title, url, order });
-  };
-
-  const onDelete = async () => {
-    const deleted = await deleteLink(id);
-    if (deleted) {
-      location.reload();
-    }
-  };
+  const { id, title, x, y } = card;
 
   return (
     <ListItem
-      onClick={() => toggleSettings(card)}
+      onClick={(e) => toggleSettings(e, card)}
       secondaryAction={
-        <IconButton style={{ fontSize: "0.6rem" }} onClick={onDelete}>
+        <IconButton style={{ fontSize: "0.6rem" }} onClick={onDelete} id="delete">
           <SvgIcon fontSize='1'>
             <svg
               width='9'
@@ -75,6 +63,7 @@ const Card = ({
         onMouseUp={onDragEnd}
         onMouseMove={onDrag}
         onDrop={onDragEnd}
+        id="drag"
       >
         <IconButton style={{ fontSize: "1rem" }}>
           <SvgIcon className={s.card__icon} fontSize='1'>
@@ -107,15 +96,16 @@ Card.propTypes = {
     url: PropTypes.string,
     id: PropTypes.number,
     order: PropTypes.number,
+    x: PropTypes.number,
+    y: PropTypes.number,
   }),
   onDragStart: PropTypes.func,
   onDrag: PropTypes.func,
   toggleSettings: PropTypes.func,
   draggingItemIndex: PropTypes.number,
   onDragEnd: PropTypes.func,
+  onDelete: PropTypes.func,
   index: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number,
   dragging: PropTypes.bool,
 };
 

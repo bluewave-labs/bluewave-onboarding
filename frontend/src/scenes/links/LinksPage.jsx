@@ -47,7 +47,8 @@ const LinksPage = () => {
     }
   }, []);
 
-  const toggleSettings = (link = null) => {
+  const toggleSettings = (e, link = null) => {
+    if (e.target.closest("#delete") || e.target.closest("#drag")) return;
     if (showSettings) {
       renderLinks();
     }
@@ -77,7 +78,7 @@ const LinksPage = () => {
         leftContent={leftContent}
         leftAppearance={leftAppearance}
       />
-      {showSettings && <Settings onClose={() => toggleSettings()} />}
+      {showSettings && <Settings onClose={toggleSettings} />}
     </>
   );
 };
