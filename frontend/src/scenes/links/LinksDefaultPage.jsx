@@ -1,6 +1,6 @@
-import CreateActivityButton from "../../components/Button/CreateActivityButton/CreateActivityButton"
+import CreateActivityButton from "@components/Button/CreateActivityButton/CreateActivityButton"
 import { ACTIVITY_TYPES } from "../../data/createActivityButtonData";
-import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
+import ParagraphCSS from "@components/ParagraphCSS/ParagraphCSS";
 
 const LinksDefaultPage = () => {
     const style = {

@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './BannerLeftContent.module.scss';
-import DropdownList from '../../../../components/DropdownList/DropdownList';
-import CustomTextField from '../../../../components/TextFieldComponents/CustomTextField/CustomTextField';
-import RadioButton from '../../../../components/RadioButton/RadioButton';
+import DropdownList from '@components/DropdownList/DropdownList';
+import CustomTextField from '@components/TextFieldComponents/CustomTextField/CustomTextField';
+import RadioButton from '@components/RadioButton/RadioButton';
 
 const BannerLeftContent = ({ setIsTopPosition, url, setUrl, setButtonAction, isTopPosition, buttonAction }) => {
     const handleSetUrl = (event) => {

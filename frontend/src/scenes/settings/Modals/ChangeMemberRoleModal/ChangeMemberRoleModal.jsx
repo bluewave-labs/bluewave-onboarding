@@ -2,7 +2,7 @@ import { React } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import Button from '../../../../components/Button/Button';
+import Button from '@components/Button/Button';
 import styles from './ChangeMemberRoleModal.module.scss';
 
 const ChangeMemberRoleModal = ({ open, setModalOpen, selectedMember, handleChangeRole }) => {

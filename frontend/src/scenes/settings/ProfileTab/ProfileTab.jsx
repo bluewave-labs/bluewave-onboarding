@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Avatar from "../../../components/Avatar/Avatar";
+import Avatar from "@components/Avatar/Avatar";
 import styles from "./ProfileTab.module.css";
-import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
-import Button from "../../../components/Button/Button";
+import CustomTextField from "@components/TextFieldComponents/CustomTextField/CustomTextField";
+import Button from "@components/Button/Button";
 import { useAuth } from "../../../services/authProvider";
 import DeleteConfirmationModal from "../Modals/DeleteConfirmationModal/DeleteConfirmationModal";
 import { deleteAccount, updateUser } from "../../../services/settingServices";

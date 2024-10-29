@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import ParagraphCSS from '../../components/ParagraphCSS/ParagraphCSS';
+import ParagraphCSS from '@components/ParagraphCSS/ParagraphCSS';
 import GuideMainPageTemplate from '../GuideMainPageTemplate/GuideMainPageTemplate';
-import CreateActivityButton from '../../components/Button/CreateActivityButton/CreateActivityButton';
+import CreateActivityButton from '@components/Button/CreateActivityButton/CreateActivityButton';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 import './DefaultPageTemplate.css'
 

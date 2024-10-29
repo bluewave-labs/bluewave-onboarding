@@ -29,5 +29,10 @@ export default defineConfig({
         inline: ['mui-color-input']
       },
     },
+  },
+  resolve: {
+    alias: {
+      '@components': '/src/components'
+    }
   }
 });

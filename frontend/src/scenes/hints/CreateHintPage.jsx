@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
-import RichTextEditor from "../../components/RichTextEditor/RichTextEditor";
-import HintLeftContent from "../../components/HintPageComponents/HintLeftContent/HintLeftContent";
-import HintLeftAppearance from "../../components/HintPageComponents/HintLeftAppearance/HintLeftAppearance";
+import RichTextEditor from "@components/RichTextEditor/RichTextEditor";
+import HintLeftContent from "@components/HintPageComponents/HintLeftContent/HintLeftContent";
+import HintLeftAppearance from "@components/HintPageComponents/HintLeftAppearance/HintLeftAppearance";
 
 const HintPage = () => {
   const [activeButton, setActiveButton] = useState(0);
