@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import CardContainer from "../../components/Links/Card";
 import Card from "../../components/Links/Card/Card";
+import Popup from "../../components/Links/Popup/Popup";
 import { updateLink } from "../../services/linkService";
 import s from "./LinkPage.module.scss";
-import Popup from "./Popup/Popup";
 
 const LinkContent = ({ items, toggleSettings, setItems }) => {
   const [draggingItemIndex, setDraggingItemIndex] = useState(null);

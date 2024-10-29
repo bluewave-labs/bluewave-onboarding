@@ -1,7 +1,7 @@
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import Switch from "../../../components/Switch/Switch";
+import Switch from "../../Switch/Switch";
 import { createLink, updateLink } from "../../../services/linkService";
 import s from "./Settings.module.scss";
 

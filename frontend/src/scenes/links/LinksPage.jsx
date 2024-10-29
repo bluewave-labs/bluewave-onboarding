@@ -4,7 +4,7 @@ import { getLinks } from "../../services/linkService";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import LinkAppearance from "./LinkAppearance";
 import LinkContent from "./LinkContent";
-import Settings from "./Settings/Settings";
+import Settings from "../../components/Links/Settings/Settings";
 
 const demoItems = [
   {
