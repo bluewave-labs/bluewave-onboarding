@@ -1,5 +1,4 @@
 const bcrypt = require("bcryptjs");
-const { validationResult } = require('express-validator');
 const db = require("../models");
 const User = db.User;
 const Token = db.Token;
@@ -10,26 +9,11 @@ const crypto = require('crypto');
 const { TOKEN_LIFESPAN } = require('../utils/constants.helper');
 const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.service');
 const settings = require("../../config/settings");
-const {
-  registerValidation,
-  loginValidation,
-  forgetPasswordValidation,
-  resetPasswordValidation
-} = require('../utils/auth.helper');
 
 const findUserByEmail = async (email) => {
   return await User.findOne({ where: { email } });
 };
 
-const handleValidationErrors = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  next();
-};
-
-const isTestingEnv = process.env.NODE_ENV === 'test';
 const register = async (req, res) => {
   try {
     const { name, surname, email, password } = req.body;
@@ -171,10 +155,10 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { 
-  register: [registerValidation, handleValidationErrors, register],
-  login: [loginValidation, handleValidationErrors, login],
+module.exports = {
+  register,
+  login,
   logout,
-  forgetPassword: [forgetPasswordValidation, handleValidationErrors, forgetPassword],
-  resetPassword: [resetPasswordValidation, handleValidationErrors, resetPassword]
+  forgetPassword,
+  resetPassword
 };
