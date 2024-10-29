@@ -6,7 +6,8 @@ const {
   changeRole 
 } = require("../controllers/team.controller");
 const {
-    sendTeamInvite 
+    sendTeamInvite ,
+    getAllInvites
 } = require("../controllers/invite.controller");
 const authenticateJWT = require("../middleware/auth.middleware");
 const accessGuard = require("../middleware/accessGuard.middleware");
@@ -22,5 +23,5 @@ router.put("/update", authenticateJWT, accessGuard(teamPermissions.update), upda
 router.put("/change-role", authenticateJWT, accessGuard(teamPermissions.changeRole), changeRole);
 
 router.delete("/remove/:memberId", authenticateJWT, accessGuard(teamPermissions.removeUser), removeMember);
-
+router.get('/get-all-invites', authenticateJWT, accessGuard(teamPermissions.removeUser), getAllInvites);
 module.exports = router;

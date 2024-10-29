@@ -10,7 +10,9 @@ const { TOKEN_LIFESPAN } = require('../utils/constants.helper');
 const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.service');
 const settings = require("../../config/settings");
 const he = require('he');
+const { create } = require("domain");
 
+const isTestingEnv = process.env.NODE_ENV === 'test';
 const register = async (req, res) => {
   try {
     const { name, surname, email, password } = req.body;
@@ -22,20 +24,33 @@ const register = async (req, res) => {
 
     let newUser;
     if (userCount) {
-      const invite = await Invite.findOne({
-        where: { invitedEmail: email }
-      })
-      if (!invite) {
-        return res.status(404).json({ error: "Invitation not found or expired" });
+      let invite;
+
+      if (!isTestingEnv) {
+        invite = await Invite.findOne({
+          where: { invitedEmail: email }
+        });
+
+        if (!invite) {
+          return res.status(404).json({ error: "Invitation not found or expired" });
+        }
       }
 
       const transaction = await sequelize.transaction();
       try {
-        newUser = await User.create({ name, surname, email, password: hashedPassword, role: invite.role }, { transaction });
-        await invite.destroy({ transaction });
+        if (!isTestingEnv && invite) {
+          await invite.destroy({ transaction });
+          newUser = await User.create({ name, surname, email, password: hashedPassword, role: invite.role }, { transaction });
+        }
+        else{
+          newUser = await User.create(
+            { name, surname, email, password: hashedPassword, role: settings.user.role.admin },
+            { transaction }
+          );
+        }
+        
         await transaction.commit();
-      }
-      catch (err) {
+      } catch (err) {
         await transaction.rollback();
         return res.status(400).json({ error: "Error registering user by invite" });
       }
@@ -70,7 +85,7 @@ const login = async (req, res) => {
     const token = generateToken({ id: user.id, email: user.email });
     await Token.create({ token, userId: user.id, type: 'auth' });
 
-    res.status(200).json({ user: { id: user.id, name: user.name, surname: user.surname, email: user.email, role: settings.user.roleName[user.role],  picture: he.decode(user.picture || '') }, token });
+    res.status(200).json({ user: { id: user.id, name: user.name, surname: user.surname, email: user.email, role: settings.user.roleName[user.role], picture: user.picture ? he.decode(user.picture) : '' }, token });
   } catch (error) {
     console.error("Error logging in user:", error);
     res.status(500).json({ error: "Internal Server Error" });

@@ -18,4 +18,20 @@ const sendTeamInvite = async (req, res) => {
   }
 };
 
-module.exports = { sendTeamInvite };
+const getAllInvites = async (req, res) => {
+  try {
+    const invites = await inviteService.getAllInvites();
+    return res.status(200).json({
+      invites,
+      success: true,
+      message: "Invites Retrieved Successfully"
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { sendTeamInvite, getAllInvites };

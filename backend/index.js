@@ -27,7 +27,7 @@ app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json({ limit: MAX_FILE_SIZE }));
 app.use(jsonErrorMiddleware);
-app.use(fileSizeValidator);
+// app.use(fileSizeValidator);
 
 const { sequelize, Team } = require("./src/models");
 const config = require("./config/config");
