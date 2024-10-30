@@ -7,7 +7,7 @@ import Popup from "../../components/Links/Popup/Popup";
 import { updateLink } from "../../services/linkService";
 import s from "./LinkPage.module.scss";
 
-const LinkContent = ({ items, toggleSettings, setItems }) => {
+const LinkContent = ({ items, toggleSettings, setItems, helperId }) => {
   const [draggingItemIndex, setDraggingItemIndex] = useState(null);
   const [dragging, setDragging] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -85,6 +85,7 @@ const LinkContent = ({ items, toggleSettings, setItems }) => {
         setPopupOpen={setIsPopupOpen}
         itemToDelete={itemToDelete}
         setItems={setItems}
+        helperId={helperId}
       />
     </>
   );
@@ -103,6 +104,7 @@ LinkContent.propTypes = {
   ),
   toggleSettings: PropTypes.func,
   setItems: PropTypes.func,
+  helperId: PropTypes.number,
 };
 
 export default LinkContent;

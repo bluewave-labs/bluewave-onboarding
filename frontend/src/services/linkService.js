@@ -2,7 +2,7 @@ import { apiClient } from "./apiClient";
 
 export const createLink = async (link) => {
   try {
-    const response = await apiClient.post(`/link/add_link`, {
+    const response = await apiClient.post(`/link`, {
       title: link.title,
       url: link.url,
       order: link.order,
@@ -16,9 +16,9 @@ export const createLink = async (link) => {
   }
 }
 
-export const getLinks = async () => {
+export const getLinks = async (helperId) => {
   try {
-    const response = await apiClient.get(`/link/links`);
+    const response = await apiClient.get(`/link?helperId=${helperId}`);
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {
@@ -29,7 +29,7 @@ export const getLinks = async () => {
 
 export const updateLink = async (link) => {
   try {
-    const response = await apiClient.put(`/link/edit_link/${link.id}`, {
+    const response = await apiClient.put(`/link/${link.id}`, {
       title: link.title,
       url: link.url,
       order: link.order,
@@ -45,7 +45,7 @@ export const updateLink = async (link) => {
 
 export const deleteLink = async (id) => {
   try {
-    const response = await apiClient.delete(`/link/delete_link/${id}`);
+    const response = await apiClient.delete(`/link/${id}`);
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {

@@ -3,9 +3,15 @@ import PropTypes from "prop-types";
 import { deleteLink, getLinks } from "../../../services/linkService";
 import s from "./Popup.module.scss";
 
-const Popup = ({ isPopupOpen, setPopupOpen, setItems, itemToDelete }) => {
+const Popup = ({
+  isPopupOpen,
+  setPopupOpen,
+  setItems,
+  itemToDelete,
+  helperId,
+}) => {
   const renderLinks = () =>
-    getLinks().then((data) => {
+    getLinks(helperId).then((data) => {
       setItems(
         data
           .map((it) => ({ ...it, x: 0, y: 0 }))
@@ -64,6 +70,7 @@ Popup.propTypes = {
   setPopupOpen: PropTypes.func,
   setItems: PropTypes.func,
   itemToDelete: PropTypes.number,
+  helperId: PropTypes.number,
 };
 
 export default Popup;

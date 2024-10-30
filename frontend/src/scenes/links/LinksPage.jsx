@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Preview from "../../components/Links/Preview";
+import Settings from "../../components/Links/Settings/Settings";
 import { getLinks } from "../../services/linkService";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import LinkAppearance from "./LinkAppearance";
 import LinkContent from "./LinkContent";
-import Settings from "../../components/Links/Settings/Settings";
 
 const demoItems = [
   {
@@ -31,9 +31,10 @@ const LinksPage = () => {
   const [activeBtn, setActiveBtn] = useState(0);
   const [showSettings, setShowSettings] = useState(false);
   const [items, setItems] = useState([]);
+  const [helper, setHelper] = useState({});
 
   const renderLinks = () =>
-    getLinks().then((data) => {
+    getLinks(helper.id).then((data) => {
       setItems(
         data
           .map((it) => ({ ...it, x: 0, y: 0 }))
@@ -42,7 +43,7 @@ const LinksPage = () => {
     });
 
   useEffect(() => {
-    if (!items?.length) {
+    if (helper.id) {
       renderLinks();
     }
   }, []);
@@ -64,6 +65,7 @@ const LinksPage = () => {
       items={items}
       setItems={setItems}
       toggleSettings={toggleSettings}
+      helperId={helper.id}
     />
   );
   const leftAppearance = () => <LinkAppearance />;
