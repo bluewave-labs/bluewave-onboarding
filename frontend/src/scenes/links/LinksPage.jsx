@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import Preview from "../../components/Links/Preview";
 import Settings from "../../components/Links/Settings/Settings";
@@ -27,11 +28,10 @@ const demoItems = [
   },
 ];
 
-const LinksPage = () => {
+const LinksPage = ({ helper, setHelper }) => {
   const [activeBtn, setActiveBtn] = useState(0);
   const [showSettings, setShowSettings] = useState(false);
   const [items, setItems] = useState([]);
-  const [helper, setHelper] = useState({});
 
   const renderLinks = () =>
     getLinks(helper.id).then((data) => {
@@ -83,6 +83,17 @@ const LinksPage = () => {
       {showSettings && <Settings onClose={toggleSettings} />}
     </>
   );
+};
+
+LinksPage.propTypes = {
+  helper: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    headerBackgroundColor: PropTypes.string,
+    linkFontColor: PropTypes.string,
+    iconColor: PropTypes.string,
+  }),
+  setHelper: PropTypes.func,
 };
 
 export default LinksPage;
