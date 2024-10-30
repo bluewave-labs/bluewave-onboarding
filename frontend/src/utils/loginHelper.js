@@ -1,7 +1,8 @@
 import { AUTH_TYPE } from './constants';
+import { getTeamCount } from '../services/teamServices';
 import toastEmitter, { TOAST_EMITTER_KEY } from './toastEmitter';
 
-export const handleAuthSuccess = (response, loginAuth, navigate, authType) => {
+export const handleAuthSuccess = (response, loginAuth, navigate) => {
     const { name, surname, email, picture } = response.user;
     const payload = { name, surname, email, picture };
     // Emit toast notification
@@ -10,10 +11,14 @@ export const handleAuthSuccess = (response, loginAuth, navigate, authType) => {
     // Update authentication state
     loginAuth(payload);
 
-    if (authType === AUTH_TYPE.LOGIN) {
-        navigate('/')
-    }
-    if (authType === AUTH_TYPE.SIGNUP) {
-        navigate('/progress-steps');
-    }
+    getTeamCount()
+        .then(response => {
+            const { teamCount } = response;
+            if (teamCount === 0) {
+                navigate('/progress-steps');
+            } else {
+                navigate('/');
+            }
+        })
+        .catch(err => console.error(err));
 };

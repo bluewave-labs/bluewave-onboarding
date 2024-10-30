@@ -29,12 +29,33 @@ const setOrganisation = async (req, res) => {
     }
 
     const newOrg = await teamService.createTeam(name);
-    return res.status(200).json({
-      message: 'Organisation created successfully',})
+    return res.status(201).json({
+      status: 201,
+      message: 'Organisation created successfully',
+      data: {
+        id: newOrg.id,
+        name: newOrg.name,
+        createdAt: new Intl.DateTimeFormat('en-US').format(newOrg.createdAt)
+      }
+    });
   } catch (err) {
     const { statusCode, payload } = internalServerError(
-      'CREATE_TEAM_ERROR',
+      'CREATE_ORG_ERROR',
       err.message
+    );
+    console.log(err);
+    res.status(statusCode).json(payload);
+  }
+};
+
+const getTeamCount = async (req, res) => {
+  try {
+    const teamCount = await Team.count();
+    return res.status(200).json({ teamCount });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "GET_TEAM_COUNT_ERROR",
+      err.message,
     );
     res.status(statusCode).json(payload);
   }
@@ -109,4 +130,4 @@ const changeRole = async (req, res) => {
   }
 }
 
-module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, removeMember, changeRole };
+module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, removeMember, changeRole, getTeamCount };

@@ -9,7 +9,3 @@ export const APP_TITLE = 'Bluewave Onboarding';
 export const SUPPORT_EMAIL = 'support@bluewave.com';
 
 export const roles = Object.freeze(["admin", "member"]);
-export const AUTH_TYPE = Object.freeze({
-  LOGIN: 'login',
-  SIGNUP: 'signup'
-});

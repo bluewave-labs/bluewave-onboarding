@@ -9,7 +9,6 @@ import { handleAuthSuccess } from '../../utils/loginHelper';
 import { useAuth } from '../../services/authProvider';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo/Logo';
-import { AUTH_TYPE } from '../../utils/constants';
 
 function CreateAccountPage() {
   const [formData, setFormData] = useState({ name: '', surname: '', email: '', password: '' });
@@ -68,7 +67,7 @@ function CreateAccountPage() {
 
     try {
       const response = await signUp(userData);
-      handleAuthSuccess(response, loginAuth, navigate, AUTH_TYPE.SIGNUP);
+      handleAuthSuccess(response, loginAuth, navigate);
       setLoading(false);
     } catch (error) {
       setLoading(false);

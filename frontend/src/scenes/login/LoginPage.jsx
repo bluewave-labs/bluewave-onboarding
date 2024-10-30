@@ -8,7 +8,7 @@ import { handleAuthSuccess } from '../../utils/loginHelper';
 import { useAuth } from '../../services/authProvider';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo/Logo';
-import { AUTH_TYPE } from '../../utils/constants';
+
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ function LoginPage() {
     setLoading(true);
     try {
       const response = await login(email, password);
-      handleAuthSuccess(response, loginAuth, navigate, AUTH_TYPE.LOGIN);
+      handleAuthSuccess(response, loginAuth, navigate);
       setLoading(false);
     } catch (error) {
       setLoginError(true);

@@ -1,37 +1,8 @@
-import { roles } from '../utils/constants';
 import { apiClient } from './apiClient';
 
 const baseEndpoint = "team/";
 
-export const sendInvites = async (memberEmails) => {
-  if (!memberEmails?.length) {
-    throw new Error('No email addresses provided');
-  }
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const invalidEmails = memberEmails.filter(email => !emailRegex.test(email));
-  if (invalidEmails.length) {
-    throw new Error(`Invalid email addresses: ${invalidEmails.join(', ')}`);
-  }
-
-  try {
-    const response = await Promise.all(
-      memberEmails.map(async (email) => {
-        const response = await apiClient.post(baseEndpoint + "invite", {
-          invitedEmail: email,
-          role: roles[1],
-        });
-        return response.data;
-      })
-    );
-    return response;
-  } catch (err) {
-    console.error('Error sending invites: ', err.response);
-    throw err;
-  }
-};
-
-export const setOrganization = async (name) => {
+export const setOrganisation = async (name) => {
   try {
     const response = await apiClient.post(baseEndpoint + "set-organisation", {
       name
@@ -42,3 +13,13 @@ export const setOrganization = async (name) => {
     throw err;
   }
 };
+
+export const getTeamCount = async () => {
+  try {
+    const response = await apiClient.get(baseEndpoint + "/count");
+    return response.data;
+  } catch (err) {
+    console.error('Error getting team count: ', err);
+    throw err;
+  }
+}
