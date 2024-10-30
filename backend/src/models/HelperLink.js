@@ -7,8 +7,8 @@ const { URL_REGEX } = require("../utils/link.helper");
  * @returns
  */
 module.exports = (sequelize, DataTypes) => {
-  const Link = sequelize.define(
-    "Link",
+  const HelperLink = sequelize.define(
+    "HelperLink",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -22,42 +22,57 @@ module.exports = (sequelize, DataTypes) => {
           not: URL_REGEX,
         },
       },
-      url: {
+      headerBackgroundColor: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: "#D0D5DD",
         validate: {
-          isUrl: true,
+          isHexColor(value) {
+            validateHexColor(value, "headerBackgroundColor");
+          },
         },
       },
-      order: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      target: {
+      linkFontColor: {
         type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "#D0D5DD",
         validate: {
-          isIn: ["_blank", "_self", "_parent", "_top"],
+          isHexColor(value) {
+            validateHexColor(value, "linkFontColor");
+          },
         },
-        defaultValue: "_blank",
       },
-      helper: {
+      iconColor: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "#D0D5DD",
+        validate: {
+          isHexColor(value) {
+            validateHexColor(value, "iconColor");
+          },
+        },
+      },
+      createdBy: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "helper_link",
+          model: "users",
           key: "id",
         },
       },
     },
     {
-      tableName: "link",
+      tableName: "helper_link",
       timestamps: false,
     }
   );
 
-  Link.associate = (models) => {
-    Link.belongsTo(models.HelperLink, { foreignKey: "id", as: "helper" });
+  HelperLink.associate = (models) => {
+    HelperLink.belongsTo(models.User, {
+      foreignKey: "createdBy",
+      as: "creator",
+    });
   };
 
-  return Link;
+  return HelperLink;
 };
