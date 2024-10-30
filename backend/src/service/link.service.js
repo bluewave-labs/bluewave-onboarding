@@ -16,7 +16,7 @@ class LinkService {
   async getLinksByHelperId(helperId) {
     return await Link.findAll({
       where: {
-        createdBy: helperId,
+        helperId,
       },
       include: [
         {

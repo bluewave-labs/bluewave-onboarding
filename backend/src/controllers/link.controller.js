@@ -32,7 +32,7 @@ class LinkController {
       const newLinkData = {
         ...req.body,
         order: req.body.order || allLinks.length,
-        helper: helperId,
+        helperId,
         target: req.body.target || "_blank",
       };
       const newPopup = await linkService.createLink(newLinkData);
