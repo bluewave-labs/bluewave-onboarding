@@ -4,11 +4,19 @@ const authenticateJWT = require("../middleware/auth.middleware");
 
 const router = express.Router();
 
-router.post("/add_link", authenticateJWT, linkController.addLink);
-router.delete("/delete_link/:id", authenticateJWT, linkController.deleteLink);
-router.put("/edit_link/:id", authenticateJWT, linkController.editLink);
-router.get("/all_links", authenticateJWT, linkController.getAllLinks);
-router.get("/links", authenticateJWT, linkController.getLinksByUserId);
-router.get("/get_link/:id", authenticateJWT, linkController.getLinksById);
+router.use(authenticateJWT);
+
+router
+  .route("/")
+  .post(linkController.addLink)
+  .get(linkController.getLinksByHelperId);
+
+router.route("/all_links").get(linkController.getAllLinks);
+
+router
+  .route("/:id")
+  .get(linkController.getLinksById)
+  .put(linkController.editLink)
+  .delete(linkController.deleteLink);
 
 module.exports = router;

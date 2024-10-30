@@ -6,24 +6,22 @@ class LinkService {
     return await Link.findAll({
       include: [
         {
-          model: db.User,
-          as: "creator",
-          attributes: { exclude: ["password"] },
+          model: db.HelperLink,
+          as: "helper",
         },
       ],
     });
   }
 
-  async getLinksByUserId(userId) {
+  async getLinksByHelperId(helperId) {
     return await Link.findAll({
       where: {
-        createdBy: userId,
+        createdBy: helperId,
       },
       include: [
         {
-          model: db.User,
-          as: "creator",
-          attributes: { exclude: ["password"] },
+          model: db.HelperLink,
+          as: "helper",
         },
       ],
     });
@@ -55,9 +53,8 @@ class LinkService {
         where: { id: linkId },
         include: [
           {
-            model: db.User,
-            as: "creator",
-            attributes: { exclude: ["password"] },
+            model: db.HelperLink,
+            as: "helper",
           },
         ],
       });

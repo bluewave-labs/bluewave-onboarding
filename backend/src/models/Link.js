@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         defaultValue: "_blank",
       },
-      helper: {
+      helperId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Link.associate = (models) => {
-    Link.belongsTo(models.HelperLink, { foreignKey: "id", as: "helper" });
+    Link.belongsTo(models.HelperLink, { foreignKey: "helperId", as: "helper" });
   };
 
   return Link;

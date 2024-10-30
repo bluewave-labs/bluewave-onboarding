@@ -8,8 +8,7 @@ const validateUrl = (value) => {
 
 class LinkController {
   async addLink(req, res) {
-    const userId = req.user.id;
-    const { title, url, order } = req.body;
+    const { title, url, order, helperId } = req.body;
 
     if (!title || !url) {
       return res.status(400).json({
@@ -22,7 +21,7 @@ class LinkController {
         errors: [{ msg: "Invalid value for title or url" }],
       });
     }
-    const allLinks = await linkService.getLinksByUserId(userId);
+    const allLinks = await linkService. getLinksByHelperId(helperId);
     if (order && order > allLinks.length + 1) {
       return res.status(400).json({
         errors: [{ msg: "Invalid value for order" }],
@@ -33,7 +32,7 @@ class LinkController {
       const newLinkData = {
         ...req.body,
         order: req.body.order || allLinks.length,
-        createdBy: userId,
+        helper: helperId,
         target: req.body.target || "_blank",
       };
       const newPopup = await linkService.createLink(newLinkData);
@@ -79,8 +78,7 @@ class LinkController {
   async editLink(req, res) {
     try {
       const { id } = req.params;
-      const userId = req.user.id;
-      const { title, url, order } = req.body;
+      const { title, url, order, helperId } = req.body;
 
       if (!title || !url) {
         return res.status(400).json({
@@ -94,7 +92,7 @@ class LinkController {
         });
       }
 
-      const allLinks = await linkService.getLinksByUserId(userId);
+      const allLinks = await linkService.getLinksByHelperId(helperId);
       if (order && order > allLinks.length) {
         return res.status(400).json({
           errors: [{ msg: "Invalid value for order" }],
@@ -125,10 +123,10 @@ class LinkController {
     }
   }
 
-  async getLinksByUserId(req, res) {
+  async getLinksByHelperId(req, res) {
     try {
-      const userId = req.user.id;
-      const links = await linkService.getLinksByUserId(userId);
+      const { helperId } = req.query
+      const links = await linkService.getLinksByHelperId(helperId);
       res.status(200).json(links);
     } catch (err) {
       const { statusCode, payload } = internalServerError(
