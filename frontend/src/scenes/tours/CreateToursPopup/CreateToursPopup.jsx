@@ -1,9 +1,9 @@
 import { useState, React } from 'react';
 import styles from './CreateToursPopup.module.scss';
-import Switch from '../../../components/Switch/Switch'
+import Switch from '@components/Switch/Switch'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import DropdownList from '../../../components/DropdownList/DropdownList';
-import CustomTextField from '../../../components/TextFieldComponents/CustomTextField/CustomTextField'
+import DropdownList from '@components/DropdownList/DropdownList';
+import CustomTextField from '@components/TextFieldComponents/CustomTextField/CustomTextField'
 
 const CreateToursPopup = ({ onClose }) => {
 

@@ -1,9 +1,8 @@
 const bannerService = require("../service/banner.service.js");
 const { internalServerError } = require("../utils/errors.helper");
-const { isValidHexColor, checkColorFields, validateCloseButtonAction } = require("../utils/guide.helper");
+const { validateCloseButtonAction } = require("../utils/guide.helper");
 const { validatePosition } = require("../utils/banner.helper");
-const db = require("../models/index.js"); 
-const Banner = db.Banner;
+const { checkColorFieldsFail } =require("../utils/guide.helper");
 
 class BannerController {
   async addBanner(req, res) {

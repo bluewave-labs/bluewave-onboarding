@@ -3,9 +3,9 @@ import styles from './Login.module.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { forgotPassword } from '../../services/loginServices'; // Make sure this function is properly implemented
 import { useNavigate } from 'react-router-dom';
-import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
+import CustomTextField from '@components/TextFieldComponents/CustomTextField/CustomTextField';
 import CircularProgress from '@mui/material/CircularProgress';
-import Logo from '../../components/Logo/Logo';
+import Logo from '@components/Logo/Logo';
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate();
