@@ -25,44 +25,36 @@ const ProgressStepsMain = () => {
     const [orgErrorMessage, setOrgErrorMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isValidEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
     const isValidOrgName = (orgName) => orgName.length > 0;
 
     const sendInvitesAndSetOrgName = async () => {
         try {
             setError(false);
             setLoading(true);
-            let inviteResponse, orgSetResponse;
+            const orgResponse = await setOrganisation(organizationName);
 
-            if (teamMembersEmails.length === 0) {
-                orgSetResponse = await setOrganisation(organizationName);
-            } else {
-                orgSetResponse = await setOrganisation(organizationName);
-                if (orgSetResponse.status === 201) {
-                    inviteResponse = await sendInvites(teamMembersEmails);
-                    if (!inviteResponse.every(response => response.status === 200)) {
-                        setError(true);
-                        setLoading(false);
-                        setErrorMessage("An error occurred while sending invites. Please try again.");
-                    } else {
-                        setError(false);
-                        setLoading(false);
-                        navigate('/');
-                    }
-                } else {
+            if (orgResponse.status !== 201) {
+                setError(true);
+                setLoading(false);
+                setErrorMessage('Failed to set organization');
+            }
+            if (teamMembersEmails.length > 0) {
+                const inviteResponses = await sendInvites(teamMembersEmails);
+                if (!inviteResponses.every(response => response.status === 200)) {
                     setError(true);
                     setLoading(false);
-                    setErrorMessage("An error occurred while setting the organization. Please try again.");
+                    setErrorMessage('Failed to send some invites');
                 }
             }
+
+            setError(false);
+            setLoading(false);
+            navigate('/');
         } catch (err) {
             setError(true);
             setLoading(false);
-            if (err.response?.data?.error) {
-                setErrorMessage(err.response.data.error);
-            } else {
-                setErrorMessage('An error occurred. Please try again.');
-            }
+            setErrorMessage('Unable to complete setup. Please try again.');
         }
     }
 
@@ -73,14 +65,6 @@ const ProgressStepsMain = () => {
     const onEmailInputChange = (event) => {
         const email = event.target.value;
         setEmailInput(email);
-
-        // if (!isValidEmail(email)) {
-        //     setEmailError(true);
-        //     setEmailErrorMessage('Please enter a valid email.');
-        // } else {
-        //     setEmailError(false);
-        //     setEmailErrorMessage('');
-        // }
     }
 
     const handleKeyPress = (event) => {
