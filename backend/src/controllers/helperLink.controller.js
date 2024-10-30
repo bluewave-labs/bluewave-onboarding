@@ -1,11 +1,6 @@
 const helperService = require("../service/helperLink.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { validateHexColor } = require("../utils/guide.helper");
-const { URL_REGEX } = require("../utils/link.helper");
-
-const validateUrl = (value) => {
-  return URL_REGEX.test(value);
-};
 
 class LinkController {
   async addHelper(req, res) {
@@ -18,15 +13,15 @@ class LinkController {
       });
     }
 
-    if (
-      (headerBackgroundColor && !validateHexColor(headerBackgroundColor)) ||
-      (linkFontColor && !validateHexColor(linkFontColor)) ||
-      (iconColor && !validateHexColor(iconColor))
-    ) {
+    try {
+      validateHexColor(headerBackgroundColor, "headerBackgroundColor");
+      validateHexColor(linkFontColor, "linkFontColor");
+      validateHexColor(iconColor, "iconColor");
+    } catch (e) {
       return res.status(400).json({
         errors: [
           {
-            msg: "Invalid value for headerBackgroundColor, linkFontColor or iconColor",
+            msg: e.message,
           },
         ],
       });
@@ -96,15 +91,15 @@ class LinkController {
         });
       }
 
-      if (
-        (headerBackgroundColor && !validateHexColor(headerBackgroundColor)) ||
-        (linkFontColor && !validateHexColor(linkFontColor)) ||
-        (iconColor && !validateHexColor(iconColor))
-      ) {
+      try {
+        validateHexColor(headerBackgroundColor, "headerBackgroundColor");
+        validateHexColor(linkFontColor, "linkFontColor");
+        validateHexColor(iconColor, "iconColor");
+      } catch (e) {
         return res.status(400).json({
           errors: [
             {
-              msg: "Invalid value for headerBackgroundColor, linkFontColor or iconColor",
+              msg: e.message,
             },
           ],
         });

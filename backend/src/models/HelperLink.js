@@ -1,4 +1,4 @@
-const { URL_REGEX } = require("../utils/link.helper");
+const { validateHexColor } = require("../utils/guide.helper");
 
 /**
  *
@@ -18,9 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       title: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          not: URL_REGEX,
-        },
       },
       headerBackgroundColor: {
         type: DataTypes.STRING,

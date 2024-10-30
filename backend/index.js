@@ -60,7 +60,7 @@ app.use('/api/team', teamRoutes);
 app.use('/api/hint', hint);
 app.use('/api/tour', tourRoutes);
 app.use('/api/link', linkRoutes);
-app.use('/api/helper-links', helperLinkRoutes);
+app.use('/api/helper-link', helperLinkRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
