@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import Preview from "../../components/Links/Preview";
 import Settings from "../../components/Links/Settings/Settings";
-import { createHelper } from "../../services/helperLinkService";
+import { createHelper, updateHelper } from "../../services/helperLinkService";
 import { getLinks } from "../../services/linkService";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import LinkAppearance from "./LinkAppearance";
@@ -30,7 +30,7 @@ const demoItems = [
   },
 ];
 
-const NewLinksPopup = ({ helper, setHelper }) => {
+const NewLinksPopup = ({ helper, setHelper, setShowNewLinksPopup }) => {
   const [activeBtn, setActiveBtn] = useState(0);
   const [showSettings, setShowSettings] = useState(false);
   const [items, setItems] = useState([]);
@@ -56,6 +56,13 @@ const NewLinksPopup = ({ helper, setHelper }) => {
       createNewHelper();
     }
   }, [helper]);
+
+  const handleSaveHelper = async () => {
+    const newHelper = await updateHelper({ ...helper });
+    if (newHelper) {
+      setShowNewLinksPopup(false);
+    }
+  };
 
   const toggleSettings = (e, link = null) => {
     if (e.target.closest("#delete") || e.target.closest("#drag")) return;
@@ -90,6 +97,7 @@ const NewLinksPopup = ({ helper, setHelper }) => {
         rightContent={rightContent}
         leftContent={leftContent}
         leftAppearance={leftAppearance}
+        onSave={handleSaveHelper}
       />
       {showSettings && (
         <Settings onClose={toggleSettings} helperId={helper.id} />
@@ -107,6 +115,7 @@ NewLinksPopup.propTypes = {
     iconColor: PropTypes.string,
   }),
   setHelper: PropTypes.func,
+  setShowNewLinksPopup: PropTypes.func,
 };
 
 export default NewLinksPopup;

@@ -103,19 +103,12 @@ class LinkController {
   async editHelper(req, res) {
     try {
       const { id } = req.params;
-      const tokenId = req.user.id;
-      const { title, headerBackgroundColor, linkFontColor, iconColor, userId } =
+      const { title, headerBackgroundColor, linkFontColor, iconColor } =
         req.body;
 
       if (!title) {
         return res.status(400).json({
           errors: [{ msg: "title is required" }],
-        });
-      }
-
-      if (userId !== tokenId) {
-        return res.status(401).json({
-          errors: [{ msg: "User not authorized to edit this helper" }],
         });
       }
 
