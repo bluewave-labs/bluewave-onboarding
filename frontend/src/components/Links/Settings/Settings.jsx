@@ -24,16 +24,14 @@ const Settings = ({ onClose, helperId }) => {
             ? parsedLink.target === "_blank"
             : parsedLink.target,
       };
-      setState(newState);
+      setState({ ...newState, helperId });
     } else {
       setState({ title: "", url: "", target: true, helperId });
     }
   }, []);
 
   const handleChange = ({ target }) => {
-    const { name } = target;
-    let { value } = target;
-    //if (target.name === "target") value = target.checked;
+    const { name, value } = target;
     setState((prev) => ({ ...prev, [name]: value }));
   };
 

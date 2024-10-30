@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       headerBackgroundColor: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "#D0D5DD",
+        defaultValue: "#F8F9F8",
         validate: {
           isHexColor(value) {
             validateHexColor(value, "headerBackgroundColor");
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       linkFontColor: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "#D0D5DD",
+        defaultValue: "#344054",
         validate: {
           isHexColor(value) {
             validateHexColor(value, "linkFontColor");
@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       iconColor: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "#D0D5DD",
+        defaultValue: "#7F56D9",
         validate: {
           isHexColor(value) {
             validateHexColor(value, "iconColor");
