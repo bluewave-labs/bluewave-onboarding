@@ -9,5 +9,7 @@ module.exports = Object.freeze({
       ADMIN: '1',
       MEMBER: '2'
     },
-  });
+    MAX_ORG_NAME_LENGTH: 100,
+    ORG_NAME_REGEX: /^[a-zA-Z0-9\s\-_&.]+$/,
+  }); 
   

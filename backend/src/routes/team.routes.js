@@ -1,6 +1,8 @@
 const express = require("express");
 const { 
-  getTeamDetails, 
+  setOrganisation,
+  getTeamDetails,
+  getTeamCount,
   updateTeamDetails, 
   removeMember, 
   changeRole 
@@ -17,7 +19,9 @@ const router = express.Router();
 const teamPermissions = settings.team.permissions;
 
 router.get("/details", authenticateJWT, getTeamDetails);
+router.get("/count", authenticateJWT, getTeamCount);
 
+router.post("/set-organisation", authenticateJWT, accessGuard(teamPermissions.setOrg), setOrganisation);
 router.post("/invite", authenticateJWT, accessGuard(teamPermissions.invite), sendTeamInvite);
 router.put("/update", authenticateJWT, accessGuard(teamPermissions.update), updateTeamDetails);
 router.put("/change-role", authenticateJWT, accessGuard(teamPermissions.changeRole), changeRole);

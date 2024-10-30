@@ -8,7 +8,11 @@ const sendTeamInvite = async (req, res) => {
   const { invitedEmail, role } = req.body;
   try {
     await inviteService.sendInvite(userId, invitedEmail, role);
-    return res.status(200).json({ message: "Invite Sent Successfully" });
+    return res.status(200).json({
+      status: 200,
+      message: 'Invite sent successfully',
+      data: null,
+    });
   } catch (err) {
     const { statusCode, payload } = internalServerError(
       "SEND_INVITE_ERROR",
