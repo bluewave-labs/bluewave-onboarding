@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
-import CreateActivityButton from "../../components/Button/CreateActivityButton/CreateActivityButton";
-import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
-import { ACTIVITY_TYPES } from "../../data/createActivityButtonData";
+import { ACTIVITY_TYPES_INFO } from "../../data/guideMainPageData";
 import { getHelpers } from "../../services/helperLinkService";
-import HelperLinksPage from "./HelperLinkPage";
-import LinksPage from "./LinksPage";
+import DefaultPageTemplate from "../../templates/DefaultPageTemplate/DefaultPageTemplate";
+import NewLinksPopup from "./NewLinksPopup";
 
 const LinksDefaultPage = () => {
-  const [showLinksPage, setShowLinksPage] = useState(false);
   const [helpers, setHelpers] = useState([]);
   const [currentHelper, setCurrentHelper] = useState({});
+  const [showNewLinkPopup, setShowNewLinkPopup] = useState(false);
 
   useEffect(() => {
-    getHelpers().then((data) => {
-      setHelpers(data);
-    });
+    getHelpers().then(setHelpers);
   }, []);
 
   const style = {
@@ -23,34 +19,23 @@ const LinksDefaultPage = () => {
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+    position: "relative",
   };
-
-  const Content = () =>
-    helpers.length ? (
-      <HelperLinksPage
-        helpers={helpers}
-        setCurrentHelper={setCurrentHelper}
-        setHelpers={setHelpers}
-        setShowLinksPage={setShowLinksPage}
-      />
-    ) : (
-      <LinksPage helper={currentHelper} setHelper={setCurrentHelper} />
-    );
 
   return (
     <div style={style}>
-      {showLinksPage ? (
-        <Content />
-      ) : (
-        <>
-          <ParagraphCSS />
-          <CreateActivityButton
-            type={ACTIVITY_TYPES.HELPERLINKS}
-            onClick={() => {
-              setShowLinksPage(true);
-            }}
-          />
-        </>
+      <DefaultPageTemplate
+        getItems={() => helpers}
+        deleteItem={() => {}}
+        navigateToCreate={() => setShowNewLinkPopup(true)}
+        itemType={ACTIVITY_TYPES_INFO.HELPERLINKS}
+        itemTypeInfo={ACTIVITY_TYPES_INFO.HELPERLINKS}
+        getItemDetails={(helper) => ({
+          title: helper.title,
+        })}
+      />
+      {showNewLinkPopup && (
+        <NewLinksPopup helper={currentHelper} setHelper={setCurrentHelper} />
       )}
     </div>
   );

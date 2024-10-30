@@ -6,7 +6,8 @@ export const createLink = async (link) => {
       title: link.title,
       url: link.url,
       order: link.order,
-      target: link.target ? "_blank" :  "_self"
+      target: link.target ? "_blank" : "_self",
+      helperId: link.helperId,
     });
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
@@ -14,7 +15,7 @@ export const createLink = async (link) => {
     console.error("Update Link error:", error.response);
     throw error;
   }
-}
+};
 
 export const getLinks = async (helperId) => {
   try {
@@ -33,7 +34,8 @@ export const updateLink = async (link) => {
       title: link.title,
       url: link.url,
       order: link.order,
-      target: link.target ? "_blank" :  "_self"
+      target: link.target ? "_blank" : "_self",
+      helperId: link.helperId
     });
     if (response.status >= 400) throw new Error(response.data);
     return response.data;

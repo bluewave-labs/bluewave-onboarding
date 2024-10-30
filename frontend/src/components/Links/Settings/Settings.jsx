@@ -1,15 +1,16 @@
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import Switch from "../../Switch/Switch";
 import { createLink, updateLink } from "../../../services/linkService";
+import Switch from "../../Switch/Switch";
 import s from "./Settings.module.scss";
 
-const Settings = ({ onClose }) => {
+const Settings = ({ onClose, helperId }) => {
   const [state, setState] = useState({
     title: "",
     url: "",
     target: true,
+    helperId,
   });
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const Settings = ({ onClose }) => {
       };
       setState(newState);
     } else {
-      setState({ title: "", url: "", target: true });
+      setState({ title: "", url: "", target: true, helperId });
     }
   }, []);
 
@@ -112,6 +113,7 @@ const Settings = ({ onClose }) => {
 
 Settings.propTypes = {
   onClose: PropTypes.func,
+  helperId: PropTypes.func,
 };
 
 export default Settings;

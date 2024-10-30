@@ -21,7 +21,7 @@ class LinkController {
         errors: [{ msg: "Invalid value for title or url" }],
       });
     }
-    const allLinks = await linkService. getLinksByHelperId(helperId);
+    const allLinks = await linkService.getLinksByHelperId(helperId);
     if (order && order > allLinks.length + 1) {
       return res.status(400).json({
         errors: [{ msg: "Invalid value for order" }],
@@ -125,7 +125,7 @@ class LinkController {
 
   async getLinksByHelperId(req, res) {
     try {
-      const { helperId } = req.query
+      const { helperId } = req.query;
       const links = await linkService.getLinksByHelperId(helperId);
       res.status(200).json(links);
     } catch (err) {

@@ -13,18 +13,46 @@ class LinkController {
       });
     }
 
-    try {
-      validateHexColor(headerBackgroundColor, "headerBackgroundColor");
-      validateHexColor(linkFontColor, "linkFontColor");
-      validateHexColor(iconColor, "iconColor");
-    } catch (e) {
-      return res.status(400).json({
-        errors: [
-          {
-            msg: e.message,
-          },
-        ],
-      });
+    if (headerBackgroundColor) {
+      try {
+        validateHexColor(headerBackgroundColor, "headerBackgroundColor");
+      } catch (e) {
+        return res.status(400).json({
+          errors: [
+            {
+              msg: e.message,
+            },
+          ],
+        });
+      }
+    }
+
+    if (linkFontColor) {
+      try {
+        validateHexColor(linkFontColor, "linkFontColor");
+      } catch (e) {
+        return res.status(400).json({
+          errors: [
+            {
+              msg: e.message,
+            },
+          ],
+        });
+      }
+    }
+
+    if (iconColor) {
+      try {
+        validateHexColor(iconColor, "iconColor");
+      } catch (e) {
+        return res.status(400).json({
+          errors: [
+            {
+              msg: e.message,
+            },
+          ],
+        });
+      }
     }
 
     try {

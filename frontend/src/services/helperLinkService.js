@@ -10,6 +10,16 @@ export const getHelpers = async () => {
     throw error;
   }
 };
+export const getHelperById = async (id) => {
+  try {
+    const response = await apiClient.get(`/helper-link/${id}`);
+    if (response.status >= 400) throw new Error(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Update helper link error:", error.response);
+    throw error;
+  }
+};
 
 export const createHelper = async (helper) => {
   try {
