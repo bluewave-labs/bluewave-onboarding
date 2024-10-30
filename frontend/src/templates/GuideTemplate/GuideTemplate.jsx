@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import styles from './GuideTemplate.module.scss';
 import classNames from 'classnames';
-import Button from '../../components/Button/Button';
+import Button from '@components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 
 const GuideTemplate = ({ title = '', handleButtonClick = () => null, activeButton = 0, leftContent = () => null, rightContent = () => null, leftAppearance = () => null, onSave= () => null, contentType = "/" }) => {

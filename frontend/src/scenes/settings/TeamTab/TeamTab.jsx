@@ -9,9 +9,9 @@ import { VscEdit } from "react-icons/vsc";
 
 import styles from './TeamTab.module.css';
 import TeamTable from "./TeamTable/TeamTable";
-import Button from "../../../components/Button/Button";
-import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
-import LoadingArea from "../../../components/LoadingPage/LoadingArea";
+import Button from "@components/Button/Button";
+import CustomTextField from "@components/TextFieldComponents/CustomTextField/CustomTextField";
+import LoadingArea from "@components/LoadingPage/LoadingArea";
 
 import { handleChangeRoleSuccess, handleEditOrgNameSuccess, handleGenericError, handleInviteMemberSuccess, handleRemoveTeamMemberSuccess } from "../../../utils/settingsHelper";
 import { changeMemberRole, getOrgDetails, inviteMember, removeTeamMember, updateTeamDetails } from "../../../services/settingServices";

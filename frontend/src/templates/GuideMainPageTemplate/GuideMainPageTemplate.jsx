@@ -3,7 +3,7 @@ import List from './GuideMainPageComponents/List/List';
 import ContentArea from './GuideMainPageComponents/ContentArea/ContentArea';
 import ContentHeader from './GuideMainPageComponents/ContentHeader/ContentHeader';
 import ConfirmationPopup from './GuideMainPageComponents/ConfirmationPopup/ConfirmationPopup';
-import Button from '../../components/Button/Button';
+import Button from '@components/Button/Button';
 import './GuideMainPageTemplate.css';
 import { activityInfoData } from '../../data/guideMainPageData';
 

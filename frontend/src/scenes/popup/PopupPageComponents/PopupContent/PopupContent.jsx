@@ -1,7 +1,7 @@
 import { React } from 'react';
 import styles from './PopupContent.module.scss';
-import DropdownList from '../../../../components/DropdownList/DropdownList';
-import CustomTextField from '../../../../components/TextFieldComponents/CustomTextField/CustomTextField';
+import DropdownList from '@components/DropdownList/DropdownList';
+import CustomTextField from '@components/TextFieldComponents/CustomTextField/CustomTextField';
 
 const PopupContent = ({ actionButtonText, setActionButtonText, setActionButtonUrl, buttonAction, actionButtonUrl, setButtonAction }) => {
     const handleActionButtonText = (event) => {

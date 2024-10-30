@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
-import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
+import CustomTextField from '@components/TextFieldComponents/CustomTextField/CustomTextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import { login } from '../../services/loginServices';
-import CustomLink from '../../components/CustomLink/CustomLink';
+import CustomLink from '@components/CustomLink/CustomLink';
 import { handleAuthSuccess } from '../../utils/loginHelper';
 import { useAuth } from '../../services/authProvider';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../../components/Logo/Logo';
+import Logo from '@components/Logo/Logo';
 
 function LoginPage() {
   const [email, setEmail] = useState('');

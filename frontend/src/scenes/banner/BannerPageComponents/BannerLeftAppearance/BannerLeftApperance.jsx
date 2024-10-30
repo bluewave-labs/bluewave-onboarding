@@ -1,6 +1,6 @@
 import { React } from 'react';
 import styles from './BannerLeftApperance.module.scss';
-import ColorTextField from '../../../../components/ColorTextField/ColorTextField';
+import ColorTextField from '@components/ColorTextField/ColorTextField';
 
 const BannerLeftAppearance = ({ backgroundColor, setBackgroundColor, fontColor, setFontColor }) => {
 

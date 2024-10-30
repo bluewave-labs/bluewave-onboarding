@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
-import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
+import RichTextEditor from '@components/RichTextEditor/RichTextEditor';
 import PopupAppearance from './PopupPageComponents/PopupAppearance/PopupAppearance';
 import PopupContent from './PopupPageComponents/PopupContent/PopupContent';
 import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
