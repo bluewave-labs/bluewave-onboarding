@@ -20,6 +20,7 @@ const teamRoutes = require('./src/routes/team.routes');
 const hint = require('./src/routes/hint.routes');
 const tourRoutes = require('./src/routes/tour.routes');
 const linkRoutes = require('./src/routes/link.routes');
+const helperLinkRoutes = require('./src/routes/helperLink.routes');
 
 const app = express();
 
@@ -59,6 +60,7 @@ app.use('/api/team', teamRoutes);
 app.use('/api/hint', hint);
 app.use('/api/tour', tourRoutes);
 app.use('/api/link', linkRoutes);
+app.use('/api/helper-links', helperLinkRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
