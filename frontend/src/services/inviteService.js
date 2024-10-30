@@ -17,7 +17,7 @@ export const sendInvites = async (memberEmails) => {
   try {
     const response = await Promise.all(
       memberEmails.map(async (email) => {
-        const response = await apiClient.post(baseEndpoint + "invite", {
+        const response = await apiClient.post(`${baseEndpoint}/invite`, {
           invitedEmail: email,
           role: roles[1],
         });

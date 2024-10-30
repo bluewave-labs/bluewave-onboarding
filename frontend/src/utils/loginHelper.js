@@ -1,4 +1,3 @@
-import { AUTH_TYPE } from './constants';
 import { getTeamCount } from '../services/teamServices';
 import toastEmitter, { TOAST_EMITTER_KEY } from './toastEmitter';
 
@@ -13,8 +12,8 @@ export const handleAuthSuccess = (response, loginAuth, navigate) => {
 
     getTeamCount()
         .then(response => {
-            const { teamCount } = response;
-            if (teamCount === 0) {
+            const { teamExists } = response;
+            if (!teamExists) {
                 navigate('/progress-steps');
             } else {
                 navigate('/');

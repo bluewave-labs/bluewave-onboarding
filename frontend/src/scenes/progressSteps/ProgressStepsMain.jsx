@@ -34,20 +34,27 @@ const ProgressStepsMain = () => {
             setLoading(true);
             let inviteResponse, orgSetResponse;
 
-            if (organizationName === '' && teamMembersEmails.length > 0) {
-                inviteResponse = await sendInvites(teamMembersEmails);
-            }
-            else if (organizationName !== '' && teamMembersEmails.length === 0) {
+            if (teamMembersEmails.length === 0) {
                 orgSetResponse = await setOrganisation(organizationName);
             } else {
                 orgSetResponse = await setOrganisation(organizationName);
                 if (orgSetResponse.status === 201) {
                     inviteResponse = await sendInvites(teamMembersEmails);
+                    if (!inviteResponse.every(response => response.status === 200)) {
+                        setError(true);
+                        setLoading(false);
+                        setErrorMessage("An error occurred while sending invites. Please try again.");
+                    } else {
+                        setError(false);
+                        setLoading(false);
+                        navigate('/');
+                    }
+                } else {
+                    setError(true);
+                    setLoading(false);
+                    setErrorMessage("An error occurred while setting the organization. Please try again.");
                 }
             }
-
-            setLoading(false);
-            navigate('/');
         } catch (err) {
             setError(true);
             setLoading(false);
@@ -67,22 +74,29 @@ const ProgressStepsMain = () => {
         const email = event.target.value;
         setEmailInput(email);
 
-        if (!isValidEmail(email)) {
-            setEmailError(true);
-            setEmailErrorMessage('Please enter a valid email.');
-        } else {
-            setEmailError(false);
-            setEmailErrorMessage('');
-        }
+        // if (!isValidEmail(email)) {
+        //     setEmailError(true);
+        //     setEmailErrorMessage('Please enter a valid email.');
+        // } else {
+        //     setEmailError(false);
+        //     setEmailErrorMessage('');
+        // }
     }
 
     const handleKeyPress = (event) => {
+        const email = event.target.value;
+        setEmailInput(email);
+
         if (event.key === 'Enter') {
             if (emailInput != '' && isValidEmail(emailInput)) {
+                setEmailError(false);
+                setEmailErrorMessage('');
                 addMember(emailInput);
                 setEmailInput('')
+            } else {
+                setEmailError(true);
+                setEmailErrorMessage('Please enter a valid email.');
             }
-
         }
     };
 
@@ -117,6 +131,17 @@ const ProgressStepsMain = () => {
         }
     }
 
+    const handleOrgNameEmpty = () => {
+        if (!organizationName.trim()) {
+            setOrgError(true);
+            setOrgErrorMessage('An organization name is required.');
+        } else {
+            setOrgError(false);
+            setOrgErrorMessage('');
+            increaseStep();
+        }
+    };
+
     const firstPage = () => {
         return (
             <>
@@ -137,7 +162,7 @@ const ProgressStepsMain = () => {
 
                 </div>
                 <div className={styles.buttons}>
-                    <Button text='Next' sx={{ width: '107px', borderRadius: '10px !important' }} onClick={increaseStep} disabled={emailError} />
+                    <Button text='Next' sx={{ width: '107px', borderRadius: '10px !important' }} onClick={increaseStep} />
                 </div>
             </>
         )
@@ -181,7 +206,7 @@ const ProgressStepsMain = () => {
                 {orgError && <div className={styles.errorMessage}>{orgErrorMessage}</div>}
                 <div className={styles.buttons}>
                     <Button text='Previous' buttonType='secondary-grey' sx={{ width: '174px', borderRadius: '10px !important' }} onClick={decreaseStep} />
-                    <Button text='Next' sx={{ width: '107px', borderRadius: '10px !important' }} onClick={increaseStep} disabled={orgError} />
+                    <Button text='Next' sx={{ width: '107px', borderRadius: '10px !important' }} onClick={handleOrgNameEmpty} disabled={orgError} />
                 </div>
             </>
         )
@@ -192,7 +217,7 @@ const ProgressStepsMain = () => {
             <>
                 <div className={styles.buttons}>
                     <Button text='Previous' buttonType='secondary-grey' sx={{ width: '174px', borderRadius: '10px !important' }} onClick={decreaseStep} />
-                    <Button text='Sweet' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={() => sendInvitesAndSetOrgName()} startIcon={loading ? <CircularProgress size={20} /> : null}
+                    <Button text='Sweet' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={() => sendInvitesAndSetOrgName()} startIcon={loading ? <CircularProgress size={12} color="inherit" /> : null}
                     />
                     {error && <div className={styles.errorMessage}>{errorMessage}</div>}
                 </div>

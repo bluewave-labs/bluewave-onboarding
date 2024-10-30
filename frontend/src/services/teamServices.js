@@ -4,7 +4,7 @@ const baseEndpoint = "team/";
 
 export const setOrganisation = async (name) => {
   try {
-    const response = await apiClient.post(baseEndpoint + "set-organisation", {
+    const response = await apiClient.post(`${baseEndpoint}/set-organisation`, {
       name
     })
     return response.data;
@@ -16,7 +16,7 @@ export const setOrganisation = async (name) => {
 
 export const getTeamCount = async () => {
   try {
-    const response = await apiClient.get(baseEndpoint + "/count");
+    const response = await apiClient.get(`${baseEndpoint}/count`);
     return response.data;
   } catch (err) {
     console.error('Error getting team count: ', err);
