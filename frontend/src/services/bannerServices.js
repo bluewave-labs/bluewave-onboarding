@@ -13,7 +13,7 @@ export const addBanner = async (bannerData) => {
 
 export const getBanners = async () => {
   try {
-    const response = await apiClient.get('/banner/banners');
+    const response = await apiClient.get('/banner/all_banners');
     return response.data;
   } catch (error) {
     console.error('Get Banners error:', error);

@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { IconButton, useTheme } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CircleIcon from '@mui/icons-material/Circle';
 import './ListItem.css';
+import { useAuth } from '../../../../../services/authProvider';
 
 const ListItem = ({ title, text, id, onClick, onDelete, onEdit }) => {
   const theme = useTheme();
+  const { userInfo } = useAuth();
+  const role =  userInfo.role;
 
   return (
     <div className="list-item" onClick={onClick}>
@@ -23,12 +26,12 @@ const ListItem = ({ title, text, id, onClick, onDelete, onEdit }) => {
         {id && <p className="item-id">ID: {id}</p>}
       </div>
       <div className="list-item-actions">
-        <IconButton onClick={onEdit}>
-          <EditIcon />
-        </IconButton>
-        <IconButton onClick={onDelete}>
+        {role === 'admin' && <IconButton onClick={onEdit}>
+          {<EditIcon />}
+        </IconButton>}
+        {role === 'admin' && <IconButton onClick={onDelete}>
           <DeleteIcon />
-        </IconButton>
+        </IconButton>}
       </div>
     </div>
   );
