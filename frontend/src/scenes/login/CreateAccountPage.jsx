@@ -90,14 +90,6 @@ function CreateAccountPage() {
       <Logo />
       <h2>Create an account</h2>
 
-      {serverErrors.length > 0 && (
-        <div className={styles["error-message"]}>
-          {serverErrors.map((error, index) => (
-            <div key={index}>{error}</div>
-          ))}
-        </div>
-      )}
-
       <div className={styles["form-group"]}>
         <CustomTextField
           id="name"
@@ -210,6 +202,14 @@ function CreateAccountPage() {
         />
         Must contain one special character
       </div>
+
+      {serverErrors.length > 0 && (
+        <div className={styles["error-message"]}>
+          {serverErrors.map((error, index) => (
+            <div key={index}>{error}</div>
+          ))}
+        </div>
+      )}
 
       <button
         className={styles["create-account-button"]}

@@ -43,7 +43,7 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
                 if(load){
                     setLoading(true); 
                 }
-                const data = await getItems();
+                const {data} = await getItems();
                 setItems(data);
             } catch (error) {
                 console.error(`Failed to fetch ${itemType.toLowerCase()}s:`, error);
@@ -61,6 +61,7 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
         onDelete: () => handleOpenPopup(item.id),
         onEdit: () => navigateToCreate({ state: { isEdit: true, id: item.id } }),
     })), [items, getItemDetails, handleOpenPopup, navigateToCreate]);
+    console.log(mappedItems)
 
     return (
         <>

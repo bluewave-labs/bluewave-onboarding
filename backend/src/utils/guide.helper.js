@@ -9,16 +9,16 @@ const validateHexColor = (value, fieldName) => {
     }
 };
 
-const checkColorFieldsFail = (colorFields, res) => {
+const checkColorFieldsFail = (colorFields) => {
+  const errors = [];
+  
   for (const [field, value] of Object.entries(colorFields)) {
     if (value && !isValidHexColor(value)) {
-      return res.status(400).json({
-        errors: [{ msg: `${field} must be a valid hex color code` }],
-      });
+      errors.push({ msg: `${field} must be a valid hex color code` });
     }
   }
-  return false;
-};
+  
+  return errors.length > 0 ? errors : null;}
 
 const validateCloseButtonAction = (value) => {
   const validActions = ["no action", "open url", "open url in a new tab"];
