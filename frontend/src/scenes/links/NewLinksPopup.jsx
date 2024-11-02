@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Preview from "../../components/Links/Preview";
 import Settings from "../../components/Links/Settings/Settings";
-import { createHelper, updateHelper } from "../../services/helperLinkService";
+import { createHelper } from "../../services/helperLinkService";
 import { getLinks } from "../../services/linkService";
+import { HelperLinkContext } from "../../services/linksProvider";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import LinkAppearance from "./LinkAppearance";
 import LinkContent from "./LinkContent";
@@ -30,63 +31,37 @@ const demoItems = [
   },
 ];
 
-const NewLinksPopup = ({ helper, setHelper, setShowNewLinksPopup }) => {
+const NewLinksPopup = ({ helper, setShowNewLinksPopup }) => {
   const [activeBtn, setActiveBtn] = useState(0);
-  const [showSettings, setShowSettings] = useState(false);
-  const [items, setItems] = useState([]);
+
+  const { setHelper, links, setLinks, showSettings, toggleSettings } =
+    useContext(HelperLinkContext);
 
   const renderLinks = async () => {
     const data = await getLinks(helper.id);
-    setItems(
+    setLinks(
       data
         .map((it) => ({ ...it, x: 0, y: 0 }))
         .sort((a, b) => a.order - b.order)
     );
   };
 
-  const createNewHelper = async () => {
-    const data = await createHelper({ title: "Help center" });
-    setHelper(data);
-  };
-
   useEffect(() => {
     if (helper.id) {
       renderLinks();
-    } else {
-      createNewHelper();
     }
   }, [helper]);
 
   const handleSaveHelper = async () => {
-    const newHelper = await updateHelper({ ...helper });
+    const newHelper = await createHelper({ ...helper });
     if (newHelper) {
       setShowNewLinksPopup(false);
     }
   };
 
-  const toggleSettings = (e, link = null) => {
-    if (e.target.closest("#delete") || e.target.closest("#drag")) return;
-    if (showSettings) {
-      renderLinks();
-    }
-    if (!showSettings && link) {
-      localStorage.setItem("newLink", JSON.stringify(link));
-    }
-    setShowSettings(!showSettings); // Toggle the settings visibility
-  };
-
-  const rightContent = () => <Preview items={items} helper={helper} />;
-  const leftContent = () => (
-    <LinkContent
-      items={items}
-      setItems={setItems}
-      toggleSettings={toggleSettings}
-      helperId={helper.id}
-    />
-  );
-  const leftAppearance = () => (
-    <LinkAppearance helper={helper} setHelper={setHelper} />
-  );
+  const rightContent = () => <Preview />;
+  const leftContent = () => <LinkContent />;
+  const leftAppearance = () => <LinkAppearance />;
 
   return (
     <div className={s.new__container}>
@@ -99,9 +74,7 @@ const NewLinksPopup = ({ helper, setHelper, setShowNewLinksPopup }) => {
         leftAppearance={leftAppearance}
         onSave={handleSaveHelper}
       />
-      {showSettings && (
-        <Settings onClose={toggleSettings} helperId={helper.id} />
-      )}
+      {showSettings && <Settings />}
     </div>
   );
 };

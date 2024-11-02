@@ -2,11 +2,14 @@ import { default as CloseRoundedIcon } from "@mui/icons-material/CloseRounded";
 import SupportIcon from "@mui/icons-material/Support";
 import { SvgIcon } from "@mui/material";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useContext } from "react";
+import { HelperLinkContext } from "../../../services/linksProvider";
 import s from "./Preview.module.scss";
 
-const Preview = ({ items, helper }) => {
-  const {title, headerBackgroundColor, linkFontColor, iconColor} = helper;
+const Preview = () => {
+  const { links, helper } = useContext(HelperLinkContext);
+
+  const { title, headerBackgroundColor, linkFontColor, iconColor } = helper;
   return (
     <div className={s.preview}>
       <h2 className={s.preview__title}>Preview</h2>
@@ -20,7 +23,7 @@ const Preview = ({ items, helper }) => {
           <CloseRoundedIcon style={{ color: "#98A2B3", fontSize: "20px" }} />
         </div>
         <ul className={s["preview__card--links"]}>
-          {items
+          {links
             .sort((a, b) => a.order - b.order)
             .map((it) => (
               <li key={it.id} className={s["preview__card--item"]}>
@@ -65,25 +68,6 @@ const Preview = ({ items, helper }) => {
       </div>
     </div>
   );
-};
-
-Preview.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      url: PropTypes.string,
-      order: PropTypes.number,
-      target: PropTypes.string,
-    })
-  ),
-  helper: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    headerBackgroundColor: PropTypes.string,
-    linkFontColor: PropTypes.string,
-    iconColor: PropTypes.string,
-  }),
 };
 
 export default Preview;

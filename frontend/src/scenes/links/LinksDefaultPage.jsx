@@ -5,6 +5,7 @@ import {
   getHelperById,
   getHelpers,
 } from "../../services/helperLinkService";
+import HelperLinkProvider from "../../services/linksProvider";
 import DefaultPageTemplate from "../../templates/DefaultPageTemplate/DefaultPageTemplate";
 import NewLinksPopup from "./NewLinksPopup";
 
@@ -22,31 +23,33 @@ const LinksDefaultPage = () => {
   };
 
   return (
-    <div style={style}>
-      <DefaultPageTemplate
-        getItems={() => getHelpers()}
-        deleteItem={deleteHelper}
-        navigateToCreate={async ({ state }) => {
-          if (state.isEdit) {
-            const data = await getHelperById(state.id);
-            setCurrentHelper(data);
-          }
-          setShowNewLinkPopup(true);
-        }}
-        itemType={ACTIVITY_TYPES_INFO.HELPERLINKS}
-        itemTypeInfo={ACTIVITY_TYPES_INFO.HELPERLINKS}
-        getItemDetails={(helper) => ({
-          title: helper.title,
-        })}
-      />
-      {showNewLinkPopup && (
-        <NewLinksPopup
-          helper={currentHelper}
-          setHelper={setCurrentHelper}
-          setShowNewLinksPopup={setShowNewLinkPopup}
+    <HelperLinkProvider>
+      <div style={style}>
+        <DefaultPageTemplate
+          getItems={() => getHelpers()}
+          deleteItem={deleteHelper}
+          navigateToCreate={async ({ state }) => {
+            if (state && state.isEdit) {
+              const data = await getHelperById(state.id);
+              setCurrentHelper(data);
+            }
+            setShowNewLinkPopup(true);
+          }}
+          itemType={ACTIVITY_TYPES_INFO.HELPERLINKS}
+          itemTypeInfo={ACTIVITY_TYPES_INFO.HELPERLINKS}
+          getItemDetails={(helper) => ({
+            title: helper.title,
+          })}
         />
-      )}
-    </div>
+        {showNewLinkPopup && (
+          <NewLinksPopup
+            currentHelper={currentHelper}
+            setHelper={setCurrentHelper}
+            setShowNewLinksPopup={setShowNewLinkPopup}
+          />
+        )}
+      </div>
+    </HelperLinkProvider>
   );
 };
 

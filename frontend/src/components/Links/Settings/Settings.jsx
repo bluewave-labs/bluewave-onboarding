@@ -1,52 +1,65 @@
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import { createLink, updateLink } from "../../../services/linkService";
+import { useContext, useEffect, useState } from "react";
+import { HelperLinkContext } from "../../../services/linksProvider";
 import Switch from "../../Switch/Switch";
 import s from "./Settings.module.scss";
 
-const Settings = ({ onClose, helperId }) => {
-  const [state, setState] = useState({
-    title: "",
-    url: "",
-    target: true,
-    helperId,
-  });
+const defaultState = {
+  title: "",
+  url: "",
+  target: true,
+  helperId: null,
+  x: 0,
+  y: 0,
+};
 
+const Settings = () => {
+  const { toggleSettings, helper, linkToEdit, setLinks, setLinkToEdit } =
+    useContext(HelperLinkContext);
+  const [oldLink] = useState(linkToEdit);
+  const [state, setState] = useState(defaultState);
+
+  const getTarget = (target) => {
+    if (typeof target === "boolean") return target;
+    return target === "_blank";
+  };
   useEffect(() => {
-    const linkSaved = localStorage.getItem("newLink");
-    if (linkSaved) {
-      const parsedLink = JSON.parse(linkSaved);
+    if (linkToEdit) {
       const newState = {
-        ...parsedLink,
-        target:
-          typeof parsedLink.target === "string"
-            ? parsedLink.target === "_blank"
-            : parsedLink.target,
+        ...linkToEdit,
+        target: getTarget(linkToEdit.target),
+        helperId: helper.id,
       };
-      setState({ ...newState, helperId });
+      setState(newState);
     } else {
-      setState({ title: "", url: "", target: true, helperId });
+      setState(defaultState);
     }
   }, []);
 
   const handleChange = ({ target }) => {
-    const { name, value } = target;
+    const { name } = target;
+    let { value } = target;
+    if (name === "target") value = target.checked;
     setState((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleClose = async (e) => {
-    if (state.id && state.title.trim() && state.url.trim()) {
-      await updateLink(state);
-      localStorage.removeItem("newLink");
-      onClose(e);
-    } else if (state.title.trim() && state.url.trim()) {
-      await createLink(state);
-      localStorage.removeItem("newLink");
-      onClose(e);
+    if (state.title.trim() && !state.url.trim()) {
+      toggleSettings(e);
+      setLinkToEdit(null);
+      return;
+    }
+    if (linkToEdit) {
+      setLinks((prev) =>
+        prev.map((it) =>
+          it.title === oldLink.title && it.url === oldLink.url ? state : it
+        )
+      );
+      setLinkToEdit(null);
+      toggleSettings(e);
     } else {
-      localStorage.setItem("newLink", JSON.stringify(state));
-      onClose(e);
+      setLinks((prev) => [...prev, state]);
+      toggleSettings(e);
     }
   };
 
@@ -107,11 +120,6 @@ const Settings = ({ onClose, helperId }) => {
       </div>
     </div>
   );
-};
-
-Settings.propTypes = {
-  onClose: PropTypes.func,
-  helperId: PropTypes.func,
 };
 
 export default Settings;

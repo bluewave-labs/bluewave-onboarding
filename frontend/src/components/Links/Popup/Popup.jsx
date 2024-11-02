@@ -1,30 +1,24 @@
 import { Button, Modal } from "@mui/material";
-import PropTypes from "prop-types";
-import { deleteLink, getLinks } from "../../../services/linkService";
+import { useContext } from "react";
+import { HelperLinkContext } from "../../../services/linksProvider";
 import s from "./Popup.module.scss";
 
-const Popup = ({
-  isPopupOpen,
-  setPopupOpen,
-  setItems,
-  itemToDelete,
-  helperId,
-}) => {
-  const renderLinks = () =>
-    getLinks(helperId).then((data) => {
-      setItems(
-        data
-          .map((it) => ({ ...it, x: 0, y: 0 }))
-          .sort((a, b) => a.order - b.order)
-      );
-    });
+const Popup = () => {
+  const {
+    isPopupOpen,
+    setPopupOpen,
+    setLinks,
+    itemToDelete,
+    links,
+    deletedLinks,
+    setItemToDelete,
+  } = useContext(HelperLinkContext);
 
   const handleClosePopup = async () => {
     setPopupOpen(false);
-    const deleted = await deleteLink(itemToDelete);
-    if (deleted) {
-      renderLinks();
-    }
+    setLinks(links.map((it) => it.id !== itemToDelete.id));
+    deletedLinks((prev) => [...prev, itemToDelete]);
+    setItemToDelete(null);
   };
   return (
     <Modal
@@ -63,14 +57,6 @@ const Popup = ({
       </div>
     </Modal>
   );
-};
-
-Popup.propTypes = {
-  isPopupOpen: PropTypes.bool,
-  setPopupOpen: PropTypes.func,
-  setItems: PropTypes.func,
-  itemToDelete: PropTypes.number,
-  helperId: PropTypes.number,
 };
 
 export default Popup;

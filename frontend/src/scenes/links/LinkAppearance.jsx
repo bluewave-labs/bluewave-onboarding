@@ -1,4 +1,5 @@
-import PropTypes from "prop-types";
+import { useContext } from "react";
+import { HelperLinkContext } from "../../services/linksProvider";
 import s from "./LinkPage.module.scss";
 
 const mapClass = {
@@ -7,7 +8,9 @@ const mapClass = {
   iconColor: "icon",
 };
 
-const LinkAppearance = ({ helper, setHelper }) => {
+const LinkAppearance = () => {
+  const { helper, setHelper } = useContext(HelperLinkContext);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setHelper((prev) => ({ ...prev, [name]: value }));
@@ -91,17 +94,6 @@ const LinkAppearance = ({ helper, setHelper }) => {
       </label>
     </div>
   );
-};
-
-LinkAppearance.propTypes = {
-  helper: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    headerBackgroundColor: PropTypes.string,
-    linkFontColor: PropTypes.string,
-    iconColor: PropTypes.string,
-  }),
-  setHelper: PropTypes.func,
 };
 
 export default LinkAppearance;

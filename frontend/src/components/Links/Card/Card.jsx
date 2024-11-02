@@ -7,8 +7,9 @@ import {
 } from "@mui/material";
 
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useContext, useMemo } from "react";
 
+import { HelperLinkContext } from "../../../services/linksProvider";
 import s from "./Card.module.scss";
 
 const Card = ({
@@ -16,19 +17,41 @@ const Card = ({
   index,
   dragging,
   draggingItemIndex,
-  toggleSettings,
   onDragStart,
   onDragEnd,
   onDrag,
-  onDelete,
 }) => {
-  const { id, title, x, y } = card;
+  const { toggleSettings, setItemToDelete, setIsPopupOpen } =
+    useContext(HelperLinkContext);
+  const { title, x, y } = card;
+
+  const onDelete = () => {
+    setItemToDelete(card);
+    setIsPopupOpen(true);
+  };
+
+  const style = useMemo(
+    () => ({
+      position:
+        dragging && draggingItemIndex === index ? "absolute" : "relative",
+      top: draggingItemIndex === index ? `${y}px` : "initial",
+      left: draggingItemIndex === index ? `${x}px` : "initial",
+      cursor: dragging ? "grabbing" : "grab",
+      zIndex: dragging && draggingItemIndex === index ? "10000" : "0",
+      backgroundColor: "#fff",
+    }),
+    [dragging, draggingItemIndex, index]
+  );
 
   return (
     <ListItem
       onClick={(e) => toggleSettings(e, card)}
       secondaryAction={
-        <IconButton style={{ fontSize: "0.6rem" }} onClick={onDelete} id="delete">
+        <IconButton
+          style={{ fontSize: "0.6rem" }}
+          onClick={onDelete}
+          id='delete'
+        >
           <SvgIcon fontSize='1'>
             <svg
               width='9'
@@ -48,22 +71,14 @@ const Card = ({
           </SvgIcon>
         </IconButton>
       }
-      style={{
-        position:
-          dragging && draggingItemIndex === index ? "absolute" : "relative",
-        top: draggingItemIndex === index ? `${y}px` : "initial",
-        left: draggingItemIndex === index ? `${x}px` : "initial",
-        cursor: dragging ? "grabbing" : "grab",
-        zIndex: dragging && draggingItemIndex === index ? "10000" : "0",
-        backgroundColor: "#fff",
-      }}
+      style={style}
     >
       <ListItemAvatar
         onMouseDown={(e) => onDragStart(e, index)}
         onMouseUp={onDragEnd}
         onMouseMove={onDrag}
         onDrop={onDragEnd}
-        id="drag"
+        id='drag'
       >
         <IconButton style={{ fontSize: "1rem" }}>
           <SvgIcon className={s.card__icon} fontSize='1'>
@@ -101,12 +116,10 @@ Card.propTypes = {
   }),
   onDragStart: PropTypes.func,
   onDrag: PropTypes.func,
-  toggleSettings: PropTypes.func,
   draggingItemIndex: PropTypes.number,
   onDragEnd: PropTypes.func,
   onDelete: PropTypes.func,
   index: PropTypes.number,
-  dragging: PropTypes.bool,
 };
 
 export default Card;
