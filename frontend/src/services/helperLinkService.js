@@ -6,7 +6,7 @@ export const getHelpers = async () => {
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {
-    console.error("Update helper link error:", error.response);
+    console.error("Get helper link error:", error.response);
     throw error;
   }
 };
@@ -16,7 +16,7 @@ export const getHelperById = async (id) => {
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {
-    console.error("Update helper link error:", error.response);
+    console.error("Get helper link error:", error.response);
     throw error;
   }
 };
@@ -29,7 +29,7 @@ export const createHelper = async (helper) => {
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {
-    console.error("Update helper link error:", error.response);
+    console.error("Create helper link error:", error.response);
     throw error;
   }
 };

@@ -2,12 +2,6 @@ import { useContext } from "react";
 import { HelperLinkContext } from "../../services/linksProvider";
 import s from "./LinkPage.module.scss";
 
-const mapClass = {
-  headerBackgroundColor: "header",
-  linkFontColor: "link",
-  iconColor: "icon",
-};
-
 const LinkAppearance = () => {
   const { helper, setHelper } = useContext(HelperLinkContext);
 

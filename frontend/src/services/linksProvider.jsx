@@ -1,6 +1,25 @@
+import PropTypes from "prop-types";
 import { createContext, useMemo, useState } from "react";
+import { getLinks } from "./linkService";
 
-export const HelperLinkContext = createContext({});
+export const HelperLinkContext = createContext({
+  helper: {},
+  setHelper: (helper) => {},
+  links: [],
+  setLinks: (links) => {},
+  showSettings: false,
+  setShowSettings: (showSettings) => {},
+  toggleSettings: (e, link) => {},
+  itemToDelete: null,
+  setItemToDelete: (link) => {},
+  isPopupOpen: false,
+  setIsPopupOpen: (openPopup) => {},
+  deletedLinks: [],
+  setDeletedLinks: (deletedLinks) => {},
+  linkToEdit: null,
+  setLinkToEdit: (link) => {},
+  renderLinks: () => {},
+});
 
 const HelperLinkProvider = ({ children }) => {
   const [helper, setHelper] = useState({});
@@ -13,13 +32,24 @@ const HelperLinkProvider = ({ children }) => {
 
   const toggleSettings = (e, link = null) => {
     if (e.target.closest("#delete") || e.target.closest("#drag")) return;
-    if (showSettings) {
-      renderLinks();
-    }
+
     if (!showSettings && link) {
-      localStorage.setItem("newLink", JSON.stringify(link));
+      setLinkToEdit(link);
     }
     setShowSettings(!showSettings); // Toggle the settings visibility
+  };
+
+  const renderLinks = async () => {
+    if (helper.id) {
+      const data = await getLinks(helper.id);
+      setLinks(
+        data
+          .map((it) => ({ ...it, x: 0, y: 0 }))
+          .sort((a, b) => a.order - b.order)
+      );
+    } else {
+      renderLinks();
+    }
   };
 
   const value = useMemo(
@@ -39,6 +69,7 @@ const HelperLinkProvider = ({ children }) => {
       setDeletedLinks,
       linkToEdit,
       setLinkToEdit,
+      renderLinks,
     }),
     [helper, links, showSettings, isPopupOpen, linkToEdit]
   );
@@ -47,6 +78,10 @@ const HelperLinkProvider = ({ children }) => {
       {children}
     </HelperLinkContext.Provider>
   );
+};
+
+HelperLinkProvider.propTypes = {
+  children: PropTypes.node,
 };
 
 export default HelperLinkProvider;

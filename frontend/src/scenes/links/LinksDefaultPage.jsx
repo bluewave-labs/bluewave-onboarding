@@ -11,6 +11,7 @@ import NewLinksPopup from "./NewLinksPopup";
 
 const LinksDefaultPage = () => {
   const [currentHelper, setCurrentHelper] = useState({});
+  const [currentLinks, setCurrentLinks] = useState([]);
   const [showNewLinkPopup, setShowNewLinkPopup] = useState(false);
 
   const style = {
@@ -26,12 +27,24 @@ const LinksDefaultPage = () => {
     <HelperLinkProvider>
       <div style={style}>
         <DefaultPageTemplate
-          getItems={() => getHelpers()}
+          getItems={getHelpers}
           deleteItem={deleteHelper}
           navigateToCreate={async ({ state }) => {
-            if (state && state.isEdit) {
-              const data = await getHelperById(state.id);
+            if (state?.isEdit) {
+              const { links, ...data } = await getHelperById(state.id);
               setCurrentHelper(data);
+              setCurrentLinks(
+                links
+                  .map((it) => ({ ...it, x: 0, y: 0 }))
+                  .sort((a, b) => a.order - b.order)
+              );
+            } else {
+              setCurrentHelper({
+                title: "",
+                headerBackgroundColor: "#F8F9F8",
+                linkFontColor: "#344054",
+                iconColor: "#7F56D9",
+              });
             }
             setShowNewLinkPopup(true);
           }}
@@ -39,11 +52,15 @@ const LinksDefaultPage = () => {
           itemTypeInfo={ACTIVITY_TYPES_INFO.HELPERLINKS}
           getItemDetails={(helper) => ({
             title: helper.title,
+            headerBackgroundColor: helper.headerBackgroundColor,
+            linkFontColor: helper.linkFontColor,
+            iconColor: helper.iconColor,
           })}
         />
         {showNewLinkPopup && (
           <NewLinksPopup
             currentHelper={currentHelper}
+            currentLinks={currentLinks}
             setHelper={setCurrentHelper}
             setShowNewLinksPopup={setShowNewLinkPopup}
           />

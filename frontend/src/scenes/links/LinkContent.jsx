@@ -49,7 +49,7 @@ const LinkContent = () => {
           {links.map((item, i) => (
             <Card
               card={item}
-              key={item.id}
+              key={item.title}
               onDragStart={handleDragStart}
               onDragEnd={handleDragEnd}
               onDrag={handleDrag}

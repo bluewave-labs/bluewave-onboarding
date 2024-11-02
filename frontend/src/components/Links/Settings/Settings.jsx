@@ -23,6 +23,7 @@ const Settings = () => {
     if (typeof target === "boolean") return target;
     return target === "_blank";
   };
+
   useEffect(() => {
     if (linkToEdit) {
       const newState = {
@@ -44,7 +45,7 @@ const Settings = () => {
   };
 
   const handleClose = async (e) => {
-    if (state.title.trim() && !state.url.trim()) {
+    if (!state.title.trim() && !state.url.trim()) {
       toggleSettings(e);
       setLinkToEdit(null);
       return;

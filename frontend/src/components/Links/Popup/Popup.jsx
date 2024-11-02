@@ -6,24 +6,29 @@ import s from "./Popup.module.scss";
 const Popup = () => {
   const {
     isPopupOpen,
-    setPopupOpen,
+    setIsPopupOpen,
     setLinks,
     itemToDelete,
     links,
-    deletedLinks,
+    setDeletedLinks,
     setItemToDelete,
   } = useContext(HelperLinkContext);
 
   const handleClosePopup = async () => {
-    setPopupOpen(false);
-    setLinks(links.map((it) => it.id !== itemToDelete.id));
-    deletedLinks((prev) => [...prev, itemToDelete]);
+    setIsPopupOpen(false);
+    setLinks(
+      links.filter(
+        (it) => it.title !== itemToDelete.title && it.url !== itemToDelete.url
+      )
+    );
+    setDeletedLinks((prev) => [...prev, itemToDelete]);
     setItemToDelete(null);
   };
+
   return (
     <Modal
       open={isPopupOpen}
-      onClose={() => setPopupOpen(false)}
+      onClose={() => setIsPopupOpen(false)}
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'
     >

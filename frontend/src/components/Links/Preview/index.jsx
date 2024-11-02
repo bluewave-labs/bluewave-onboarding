@@ -1,7 +1,6 @@
 import { default as CloseRoundedIcon } from "@mui/icons-material/CloseRounded";
 import SupportIcon from "@mui/icons-material/Support";
 import { SvgIcon } from "@mui/material";
-import PropTypes from "prop-types";
 import React, { useContext } from "react";
 import { HelperLinkContext } from "../../../services/linksProvider";
 import s from "./Preview.module.scss";
@@ -10,6 +9,12 @@ const Preview = () => {
   const { links, helper } = useContext(HelperLinkContext);
 
   const { title, headerBackgroundColor, linkFontColor, iconColor } = helper;
+
+  const getTarget = (target) => {
+    if (typeof target === "string") return target;
+    return target ? "_blank" : "_self";
+  };
+
   return (
     <div className={s.preview}>
       <h2 className={s.preview__title}>Preview</h2>
@@ -26,7 +31,7 @@ const Preview = () => {
           {links
             .sort((a, b) => a.order - b.order)
             .map((it) => (
-              <li key={it.id} className={s["preview__card--item"]}>
+              <li key={`preview-${it.title}`} className={s["preview__card--item"]}>
                 <SvgIcon className={s["preview__card--icon"]} fontSize='1'>
                   <svg
                     width='16'
@@ -53,7 +58,7 @@ const Preview = () => {
                 </SvgIcon>
                 <a
                   href={it.url}
-                  target={it.target}
+                  target={getTarget(it.target)}
                   rel='noreferrer'
                   style={{ color: linkFontColor }}
                 >

@@ -65,6 +65,10 @@ class HelperLinkService {
               exclude: ["password"],
             },
           },
+          {
+            model: db.Link,
+            as: "links",
+          },
         ],
       });
     } catch (error) {

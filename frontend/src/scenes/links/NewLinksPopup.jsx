@@ -2,8 +2,8 @@ import PropTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
 import Preview from "../../components/Links/Preview";
 import Settings from "../../components/Links/Settings/Settings";
-import { createHelper } from "../../services/helperLinkService";
-import { getLinks } from "../../services/linkService";
+import { createHelper, updateHelper } from "../../services/helperLinkService";
+import { createLink, deleteLink, updateLink } from "../../services/linkService";
 import { HelperLinkContext } from "../../services/linksProvider";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import LinkAppearance from "./LinkAppearance";
@@ -31,30 +31,63 @@ const demoItems = [
   },
 ];
 
-const NewLinksPopup = ({ helper, setShowNewLinksPopup }) => {
+const NewLinksPopup = ({
+  currentHelper,
+  setShowNewLinksPopup,
+  currentLinks,
+}) => {
   const [activeBtn, setActiveBtn] = useState(0);
 
-  const { setHelper, links, setLinks, showSettings, toggleSettings } =
+  const { showSettings, helper, setHelper, links, deletedLinks, setLinks } =
     useContext(HelperLinkContext);
 
-  const renderLinks = async () => {
-    const data = await getLinks(helper.id);
-    setLinks(
-      data
-        .map((it) => ({ ...it, x: 0, y: 0 }))
-        .sort((a, b) => a.order - b.order)
-    );
+  useEffect(() => {
+    setHelper(currentHelper);
+    if (currentLinks.length) {
+      setLinks(currentLinks);
+    }
+  }, []);
+
+  const createNewLink = async (it) => {
+    return await createLink(it);
   };
 
-  useEffect(() => {
-    if (helper.id) {
-      renderLinks();
-    }
-  }, [helper]);
+  const updateOldLink = async (it) => {
+    return await updateLink(it);
+  };
+
+  const deleteCurrLink = async (it) => {
+    return await deleteLink(it);
+  };
 
   const handleSaveHelper = async () => {
-    const newHelper = await createHelper({ ...helper });
-    if (newHelper) {
+    let newHelper;
+    let createdLinks;
+    if (helper.id) {
+      newHelper = await updateHelper(helper);
+      createdLinks = await Promise.all(
+        links.map(async (it) => {
+          if (it.id) return await updateOldLink({ ...it, helperId: helper.id });
+          return await createNewLink({ ...it, helperId: helper.id });
+        })
+      );
+      if (deletedLinks.length) {
+        await Promise.all(
+          deleteCurrLink.map(async (it) =>
+            deleteCurrLink({ ...it, helperId: helper.id })
+          )
+        );
+      }
+    } else {
+      newHelper = await createHelper({ ...helper });
+      createdLinks = await Promise.all(
+        links.map(async (it) => {
+          return await createNewLink({ ...it, helperId: newHelper.id });
+        })
+      );
+    }
+
+    if (newHelper && createdLinks) {
       setShowNewLinksPopup(false);
     }
   };
@@ -80,14 +113,23 @@ const NewLinksPopup = ({ helper, setShowNewLinksPopup }) => {
 };
 
 NewLinksPopup.propTypes = {
-  helper: PropTypes.shape({
+  currentHelper: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string,
     headerBackgroundColor: PropTypes.string,
     linkFontColor: PropTypes.string,
     iconColor: PropTypes.string,
   }),
-  setHelper: PropTypes.func,
+  currentLinks: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string,
+      url: PropTypes.string,
+      target: PropTypes.string,
+      x: PropTypes.number,
+      y: PropTypes.number,
+    })
+  ),
   setShowNewLinksPopup: PropTypes.func,
 };
 
