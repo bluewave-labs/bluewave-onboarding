@@ -28,7 +28,7 @@ const HintPage = () => {
 
   const [actionButtonUrl, setActionButtonUrl] = useState("https://");
   const [actionButtonText, setActionButtonText] = useState("");
-  const [action, seAction] = useState('No action');
+  const [action, setAction] = useState('No action');
   const [targetElement, setTargetElement] = useState(".element");
   const [tooltipPlacement, setTooltipPlacement] = useState("Top");
 
@@ -139,7 +139,7 @@ const HintPage = () => {
           actionButtonUrl={actionButtonUrl}
           setActionButtonUrl={setActionButtonUrl}
           action={action}
-          setAction={seAction}
+          setAction={setAction}
           targetElement={targetElement}
           setTargetElement={setTargetElement}
           tooltipPlacement={tooltipPlacement}
