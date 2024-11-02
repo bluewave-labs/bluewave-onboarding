@@ -10,7 +10,7 @@ const LinkContent = () => {
   const [draggingItemIndex, setDraggingItemIndex] = useState(null);
   const [dragging, setDragging] = useState(false);
 
-  const { links, toggleSettings, setLinks, setItemToDelete } =
+  const { links, toggleSettings, setLinks } =
     useContext(HelperLinkContext);
 
   const handleDragStart = (e, index) => {
@@ -33,11 +33,9 @@ const LinkContent = () => {
   };
 
   const handleDragEnd = () => {
-    const draggedItemIndex = draggingItemIndex;
-    const { x, y, ...draggedItem } = items[draggedItemIndex];
     setDraggingItemIndex(null);
     setDragging(false);
-    const newList = items.sort((a, b) => b.y - a.y);
+    const newList = links.sort((a, b) => b.y - a.y);
     setLinks(newList);
   };
 
