@@ -5,6 +5,10 @@ import Button from '@components/Button/Button';
 import CheckboxHRM from '@components/Checkbox/CheckboxHRM';
 import TeamMembersList from './ProgressSteps/TeamMemberList/TeamMembersList';
 import { useNavigate } from "react-router-dom";
+import { setOrganisation } from '../../services/teamServices';
+import { sendInvites } from '../../services/inviteService';
+import { CircularProgress } from '@mui/material';
+
 
 const ProgressStepsMain = () => {
     const navigate = useNavigate();
@@ -13,18 +17,70 @@ const ProgressStepsMain = () => {
     const [teamMembersEmails, setTeamMembersEmails] = useState([]);
     const [organizationName, setOrganizationName] = useState('');
     const [emailInput, setEmailInput] = useState('');
+    const [emailError, setEmailError] = useState(false);
+    const [orgError, setOrgError] = useState(false);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [emailErrorMessage, setEmailErrorMessage] = useState('');
+    const [orgErrorMessage, setOrgErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const isValidEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+    const isValidOrgName = (orgName) => orgName.length > 0;
+
+    const sendInvitesAndSetOrgName = async () => {
+        try {
+            setError(false);
+            setLoading(true);
+            const orgResponse = await setOrganisation(organizationName);
+
+            if (orgResponse.status !== 201) {
+                setError(true);
+                setLoading(false);
+                setErrorMessage('Failed to set organization');
+            }
+            if (teamMembersEmails.length > 0) {
+                const inviteResponses = await sendInvites(teamMembersEmails);
+                if (!inviteResponses.every(response => response.status === 200)) {
+                    setError(true);
+                    setLoading(false);
+                    setErrorMessage('Failed to send some invites');
+                }
+            }
+
+            setError(false);
+            setLoading(false);
+            navigate('/');
+        } catch (err) {
+            setError(true);
+            setLoading(false);
+            setErrorMessage('Unable to complete setup. Please try again.');
+        }
+    }
 
     const addMember = (newMemberEmail) => {
         setTeamMembersEmails((prevEmails) => [...prevEmails, newMemberEmail]);
     };
 
+    const onEmailInputChange = (event) => {
+        const email = event.target.value;
+        setEmailInput(email);
+    }
+
     const handleKeyPress = (event) => {
+        const email = event.target.value;
+        setEmailInput(email);
+
         if (event.key === 'Enter') {
-            if (emailInput != '') {
+            if (emailInput != '' && isValidEmail(emailInput)) {
+                setEmailError(false);
+                setEmailErrorMessage('');
                 addMember(emailInput);
                 setEmailInput('')
+            } else {
+                setEmailError(true);
+                setEmailErrorMessage('Please enter a valid email.');
             }
-
         }
     };
 
@@ -59,27 +115,32 @@ const ProgressStepsMain = () => {
         }
     }
 
-    const firstPage = () => {
-        const handleTeamMembersEmailsChange = (event) => {
-            setTeamMembersEmails(event.target.value);
+    const handleOrgNameEmpty = () => {
+        if (!organizationName.trim()) {
+            setOrgError(true);
+            setOrgErrorMessage('An organization name is required.');
+        } else {
+            setOrgError(false);
+            setOrgErrorMessage('');
+            increaseStep();
         }
+    };
 
+    const firstPage = () => {
         return (
             <>
                 <div className={styles.stepOne}>
-                    <div className={styles.invite}>
-                        <CheckboxHRM style={{ marginRight: '1rem' }} />
-                        <h4 style={{ marginTop: '4px' }}>Invite team members</h4>
-                    </div>
+                    <h4 style={{ marginTop: '4px' }}>Invite team members</h4>
 
                     <div className={styles.teamMembers}>
                         <input
-                            type="text"
+                            type="email"
                             placeholder="ex. type john@bluewavelabs.ca and press enter"
                             value={emailInput}
-                            onChange={(e) => setEmailInput(e.target.value)}
+                            onChange={onEmailInputChange}
                             onKeyDown={handleKeyPress}
                         />
+                        {emailError && <div className={styles.errorMessage}>{emailErrorMessage}</div>}
                         <TeamMembersList members={teamMembersEmails} setMembers={setTeamMembersEmails} />
                     </div>
 
@@ -94,6 +155,7 @@ const ProgressStepsMain = () => {
     const secondPage = () => {
         return (
             <div className={styles.buttons}>
+                <Button text='Previous' buttonType='secondary-grey' sx={{ width: '174px', borderRadius: '10px !important' }} onClick={decreaseStep} />
                 <Button text='Install now - it’s easy' buttonType='secondary-grey' sx={{ width: '174px', borderRadius: '10px !important' }} />
                 <Button text='I will do it later' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={increaseStep} />
             </div>
@@ -101,7 +163,16 @@ const ProgressStepsMain = () => {
     }
 
     const handleOrganizationNameChange = (event) => {
-        setOrganizationName(event.target.value);
+        const org = event.target.value;
+        setOrganizationName(org);
+
+        if (!isValidOrgName(org)) {
+            setOrgError(true);
+            setOrgErrorMessage('Organisation name cannot be empty.')
+        } else {
+            setOrgError(false);
+            setOrgErrorMessage('');
+        }
     }
 
     const thirdPage = () => {
@@ -110,13 +181,16 @@ const ProgressStepsMain = () => {
                 <div className={styles.stepOne}>
                     <input
                         type="text"
-                        placeholder='ex. Acme corp.'
+                        placeholder="ex. Acme corp"
                         value={organizationName}
                         onChange={handleOrganizationNameChange}
                     />
+
                 </div>
+                {orgError && <div className={styles.errorMessage}>{orgErrorMessage}</div>}
                 <div className={styles.buttons}>
-                    <Button text='Next' sx={{ width: '107px', borderRadius: '10px !important' }} onClick={increaseStep} />
+                    <Button text='Previous' buttonType='secondary-grey' sx={{ width: '174px', borderRadius: '10px !important' }} onClick={decreaseStep} />
+                    <Button text='Next' sx={{ width: '107px', borderRadius: '10px !important' }} onClick={handleOrgNameEmpty} disabled={orgError} />
                 </div>
             </>
         )
@@ -125,8 +199,11 @@ const ProgressStepsMain = () => {
     const fourthPage = () => {
         return (
             <>
-                <div className={styles.buttons}>      
-                    <Button text='Sweet' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={() =>navigate("/")} />
+                <div className={styles.buttons}>
+                    <Button text='Previous' buttonType='secondary-grey' sx={{ width: '174px', borderRadius: '10px !important' }} onClick={decreaseStep} />
+                    <Button text='Sweet' sx={{ width: '148px', borderRadius: '10px !important' }} onClick={() => sendInvitesAndSetOrgName()} startIcon={loading ? <CircularProgress size={12} color="inherit" /> : null}
+                    />
+                    {error && <div className={styles.errorMessage}>{errorMessage}</div>}
                 </div>
             </>
         )

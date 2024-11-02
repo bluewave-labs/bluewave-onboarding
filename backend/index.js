@@ -40,12 +40,6 @@ sequelize
 
 sequelize
   .sync({ force: true })
-  .then(async () => {
-    await Team.findOrCreate({
-      where: { id: 1 },
-      defaults: {name: config.defaultTeamName}
-    })
-  })
   .then(() => console.log("Models synced with the database..."))
   .catch((err) => console.log("Error syncing models: " + err));
 

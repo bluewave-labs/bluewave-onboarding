@@ -9,6 +9,7 @@ import { useAuth } from '../../services/authProvider';
 import { useNavigate } from 'react-router-dom';
 import Logo from '@components/Logo/Logo';
 
+
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,7 +25,7 @@ function LoginPage() {
     setLoading(true);
     try {
       const response = await login(email, password);
-      handleAuthSuccess(response, loginAuth, navigate)
+      handleAuthSuccess(response, loginAuth, navigate);
       setLoading(false);
     } catch (error) {
       setLoginError(true);
