@@ -1,5 +1,5 @@
 const { internalServerError } = require('./errors.helper');
-const { isValidHexColor, checkColorFieldsFail, validateCloseButtonAction } = require("./guide.helper");
+const { checkColorFieldsFail, validateCloseButtonAction } = require("./guide.helper");
 
 const validatePosition = (value) => {
   const validPositions = ["top", "bottom"];

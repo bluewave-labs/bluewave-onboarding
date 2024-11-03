@@ -31,7 +31,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters")
-    .matches(/[!@#$%^&*-_]/, "Password must contain at least one special character"),
+    .matches(/[!@#$%^&*(),.?":{}|<>=\-_]/, "Password must contain at least one special character"),
 });
 
 function CreateAccountPage() {

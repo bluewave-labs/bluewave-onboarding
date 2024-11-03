@@ -6,7 +6,7 @@ const registerValidation = [
   body("password")
     .isLength({ min: 8 })
     .withMessage("Must be atleast 8 characters")
-    .matches(/[!@#$%^&*(),.?":{}|<>]/)
+    .matches(/[!@#$%^&*(),.?":{}|<>=\-_]/)
     .withMessage("Must contain one special character"),
 ];
 

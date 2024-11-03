@@ -7,6 +7,7 @@ const validateHintData = ({
   textColor,
   buttonBackgroundColor,
   buttonTextColor,
+  tooltipPlacement
 }) => {
   const errors = [];
 
@@ -20,6 +21,15 @@ const validateHintData = ({
   if (!validActions.includes(action)) {
     errors.push({ msg: "Invalid value for action" });
     return errors;
+  }
+
+  if (!tooltipPlacement) {
+    errors.push({ msg: "tooltipPlacement is required" });
+  } else {
+    const validPlacements = ['top', 'bottom', 'left', 'right']; // Add valid placements
+    if (!validPlacements.includes(tooltipPlacement)) {
+      errors.push({ msg: "Invalid tooltip placement" });
+    }
   }
 
   // Validate color fields
@@ -40,4 +50,13 @@ const validateHintData = ({
   return errors;
 };
 
-module.exports = validateHintData;
+const validateId = (id) => {
+  if (Number.isNaN(Number(id)) || !id || id.trim() === "") {
+    return [{ msg: "Invalid hint ID" }];
+  }
+  return [];
+};
+
+
+module.exports = {validateHintData:validateHintData,validateId:validateId
+}
