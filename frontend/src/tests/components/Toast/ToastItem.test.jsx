@@ -4,7 +4,11 @@ import ToastItem from '../../../components/Toast/ToastItem';
 
 describe('ToastItem', () => {
   const mockRemoveToast = vi.fn();
-  const mockToast = { id: 1, message: 'Test Toast', duration: 1000 };
+  const mockToast = {
+    id: `${Date.now()}-${Math.random()}`,
+    message: toastMessage,
+    duration: defaultToastOptions.duration,
+  };
 
   it('renders toast message correctly', () => {
     render(<ToastItem toast={mockToast} removeToast={mockRemoveToast} />);

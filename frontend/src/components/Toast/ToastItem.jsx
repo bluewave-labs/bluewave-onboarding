@@ -42,6 +42,7 @@ const ToastItem = ({ toast, removeToast }) => {
 
 ToastItem.propTypes = {
   toast: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
     duration: PropTypes.number,
   }).isRequired,
