@@ -6,17 +6,11 @@ const router = express.Router();
 
 router.use(authenticateJWT);
 
-router
-  .route("/")
-  .post(linkController.addLink)
-  .get(linkController.getLinksByHelperId);
-
+router.route("/add_link").post(linkController.addLink);
+router.route("/get_links").get(linkController.getLinksByHelperId);
 router.route("/all_links").get(linkController.getAllLinks);
-
-router
-  .route("/:id")
-  .get(linkController.getLinksById)
-  .put(linkController.editLink)
-  .delete(linkController.deleteLink);
+router.route("/get_link/:id").get(linkController.getLinksById);
+router.route("/edit_link/:id").put(linkController.editLink);
+router.route("/delete_link/:id").delete(linkController.deleteLink);
 
 module.exports = router;
