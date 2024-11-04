@@ -19,7 +19,10 @@ module.exports = {
       removeUser: [userRole.ADMIN],
       update: [userRole.ADMIN],
       changeRole: [userRole.ADMIN],
-      setOrg: [userRole.ADMIN]
+      setOrg: [userRole.ADMIN],
+      popups: [userRole.ADMIN],
+      hints: [userRole.ADMIN],
+      banners: [userRole.ADMIN],
     }
   }
 };

@@ -76,8 +76,9 @@ class BannerController {
   async editBanner(req, res) {
     try {
       const { id } = req.params;
+      const { fontColor, backgroundColor, url, position, closeButtonAction, bannerText } = req.body;
   
-      if (!req.body.position || !req.body.closeButtonAction) {
+      if (!position || !closeButtonAction) {
         return res
           .status(400)
           .json({
@@ -85,13 +86,13 @@ class BannerController {
           });
       }
   
-      if (!validatePosition(req.body.position)) {
+      if (!validatePosition(position)) {
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid value for position" }] });
       }
   
-      if (!validateCloseButtonAction(req.body.closeButtonAction)) {
+      if (!validateCloseButtonAction(closeButtonAction)) {
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid value for closeButtonAction" }] });

@@ -54,8 +54,6 @@ const CreatePopupPage = () => {
                     setActionButtonText(popupData.actionButtonText || 'Take me to subscription page');
                     setButtonAction(popupData.closeButtonAction || 'No action');
                     setPopupSize(popupData.popupSize || 'Small');
-
-                    console.log('Get popup successful:', popupData);
                 } catch (error) {
                     emitToastError(error);
                 }

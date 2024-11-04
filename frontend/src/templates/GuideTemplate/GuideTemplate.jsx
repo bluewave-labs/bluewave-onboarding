@@ -14,7 +14,7 @@ const GuideTemplate = ({ title = '', handleButtonClick = () => null, activeButto
             <div className={styles.popup}>
                 <div className={styles.header}>
                     <span style={{ marginLeft: '5px' }}>{title}</span>
-                    <CloseOutlinedIcon style={{ color: '#98A2B3', fontSize: '20px', cursor: "pointer" }} onClick={() => navigate(`/${contentType}`)} />
+                    <CloseOutlinedIcon style={{ color: '#98A2B3', fontSize: '20px', cursor: "pointer" }} onClick={() => navigate(`${contentType}`)} />
                 </div>
                 <div className={styles.content}>
                     {/* Content and Appereance buttons */}
