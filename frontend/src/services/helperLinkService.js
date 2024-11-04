@@ -2,7 +2,7 @@ import { apiClient } from "./apiClient";
 
 export const getHelpers = async () => {
   try {
-    const response = await apiClient.get(`/helper-link`);
+    const response = await apiClient.get(`/helper-link/get_helpers`);
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {
@@ -12,7 +12,7 @@ export const getHelpers = async () => {
 };
 export const getHelperById = async (id) => {
   try {
-    const response = await apiClient.get(`/helper-link/${id}`);
+    const response = await apiClient.get(`/helper-link/get_helper/${id}`);
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {
@@ -23,7 +23,7 @@ export const getHelperById = async (id) => {
 
 export const createHelper = async (helper) => {
   try {
-    const response = await apiClient.post(`/helper-link`, {
+    const response = await apiClient.post(`/helper-link/add_helper`, {
       title: helper.title,
     });
     if (response.status >= 400) throw new Error(response.data);
@@ -36,7 +36,7 @@ export const createHelper = async (helper) => {
 
 export const updateHelper = async (helper) => {
   try {
-    const response = await apiClient.put(`/helper-link/${helper.id}`, {
+    const response = await apiClient.put(`/helper-link/edit_helper/${helper.id}`, {
       title: helper.title,
       headerBackgroundColor: helper.headerBackgroundColor,
       linkFontColor: helper.linkFontColor,
@@ -53,7 +53,7 @@ export const updateHelper = async (helper) => {
 
 export const deleteHelper = async (id) => {
   try {
-    const response = await apiClient.delete(`/helper-link/${id}`);
+    const response = await apiClient.delete(`/helper-link/delete_helper/${id}`);
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {
