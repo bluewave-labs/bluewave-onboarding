@@ -5,6 +5,7 @@ import GuideMainPageTemplate from '../GuideMainPageTemplate/GuideMainPageTemplat
 import CreateActivityButton from '@components/Button/CreateActivityButton/CreateActivityButton';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 import './DefaultPageTemplate.css'
+import { useAuth } from '../../services/authProvider';
 
 const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType, itemTypeInfo, getItemDetails }) => {
     const [items, setItems] = useState([]);
@@ -13,6 +14,8 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
     const [itemDeleted, setItemDeleted] = useState(false);
     const [loading, setLoading] = useState(true);
     const [load, setLoad] = useState(true)
+    const { userInfo } = useAuth();
+    const role = userInfo.role;
 
     const handleDelete = async () => {
         try {
@@ -70,8 +73,8 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
                 <div className={`fade-in`}>
                     {items.length === 0 ? (
                         <div className={'placeholder-style'}>
-                            <ParagraphCSS />
-                            <CreateActivityButton type={itemType} onClick={navigateToCreate} />
+                            {role === 'admin' && <ParagraphCSS />}
+                            {role === 'admin' && <CreateActivityButton type={itemType} onClick={navigateToCreate} />}
                         </div>
                     ) : (
                         <GuideMainPageTemplate

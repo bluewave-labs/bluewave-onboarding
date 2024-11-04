@@ -2,8 +2,8 @@ import { getTeamCount } from '../services/teamServices';
 import toastEmitter, { TOAST_EMITTER_KEY } from './toastEmitter';
 
 export const handleAuthSuccess = (response, loginAuth, navigate) => {
-    const { name, surname, email, picture } = response.user;
-    const payload = { name, surname, email, picture };
+    const { id, name, surname, email, role, picture } = response.user;
+    const payload = { id, name, surname, email, role, picture };
     // Emit toast notification
     toastEmitter.emit(TOAST_EMITTER_KEY, 'Login successful');
 
