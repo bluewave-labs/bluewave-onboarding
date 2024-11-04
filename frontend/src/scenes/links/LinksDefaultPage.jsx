@@ -26,43 +26,44 @@ const LinksDefaultPage = () => {
   return (
     <HelperLinkProvider>
       <div style={style}>
-        <DefaultPageTemplate
-          getItems={getHelpers}
-          deleteItem={deleteHelper}
-          navigateToCreate={async ({ state }) => {
-            if (state?.isEdit) {
-              const { links, ...data } = await getHelperById(state.id);
-              setCurrentHelper(data);
-              setCurrentLinks(
-                links
-                  .map((it) => ({ ...it, x: 0, y: 0 }))
-                  .sort((a, b) => a.order - b.order)
-              );
-            } else {
-              setCurrentHelper({
-                title: "",
-                headerBackgroundColor: "#F8F9F8",
-                linkFontColor: "#344054",
-                iconColor: "#7F56D9",
-              });
-            }
-            setShowNewLinkPopup(true);
-          }}
-          itemType={ACTIVITY_TYPES_INFO.HELPERLINKS}
-          itemTypeInfo={ACTIVITY_TYPES_INFO.HELPERLINKS}
-          getItemDetails={(helper) => ({
-            title: helper.title,
-            headerBackgroundColor: helper.headerBackgroundColor,
-            linkFontColor: helper.linkFontColor,
-            iconColor: helper.iconColor,
-          })}
-        />
-        {showNewLinkPopup && (
+        {showNewLinkPopup ? (
           <NewLinksPopup
             currentHelper={currentHelper}
             currentLinks={currentLinks}
             setHelper={setCurrentHelper}
             setShowNewLinksPopup={setShowNewLinkPopup}
+          />
+        ) : (
+          <DefaultPageTemplate
+            getItems={getHelpers}
+            deleteItem={deleteHelper}
+            navigateToCreate={async ({ state }) => {
+              if (state?.isEdit) {
+                const { links, ...data } = await getHelperById(state.id);
+                setCurrentHelper(data);
+                setCurrentLinks(
+                  links
+                    .map((it) => ({ ...it, x: 0, y: 0 }))
+                    .sort((a, b) => a.order - b.order)
+                );
+              } else {
+                setCurrentHelper({
+                  title: "",
+                  headerBackgroundColor: "#F8F9F8",
+                  linkFontColor: "#344054",
+                  iconColor: "#7F56D9",
+                });
+              }
+              setShowNewLinkPopup(true);
+            }}
+            itemType={ACTIVITY_TYPES_INFO.HELPERLINKS}
+            itemTypeInfo={ACTIVITY_TYPES_INFO.HELPERLINKS}
+            getItemDetails={(helper) => ({
+              title: helper.title,
+              headerBackgroundColor: helper.headerBackgroundColor,
+              linkFontColor: helper.linkFontColor,
+              iconColor: helper.iconColor,
+            })}
           />
         )}
       </div>
