@@ -17,102 +17,67 @@ import LinkAppearance from "./LinkAppearance";
 import LinkContent from "./LinkContent";
 import s from "./LinkPage.module.scss";
 
-const demoItems = [
-  {
-    title: "Material UI",
-    url: "https://mui.com/material-ui/api/switch/",
-    order: 2,
-    id: 1,
-  },
-  {
-    title: "Blue Wave",
-    url: "https://bluewavelabs.ca",
-    order: 1,
-    id: 2,
-  },
-  {
-    title: "Sequelize",
-    url: "https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/",
-    order: 3,
-    id: 3,
-  },
-];
-
 const NewLinksPopup = ({
   currentHelper,
   setShowNewLinksPopup,
   currentLinks,
+  helperState,
 }) => {
   const [activeBtn, setActiveBtn] = useState(0);
 
-  const { showSettings, helper, setHelper, links, deletedLinks, setLinks } =
-    useContext(HelperLinkContext);
+  const {
+    showSettings,
+    helper,
+    setHelper,
+    links,
+    deletedLinks,
+    setLinks,
+    helperToEdit,
+    setHelperToEdit,
+  } = useContext(HelperLinkContext);
 
   useEffect(() => {
     setHelper(currentHelper);
     if (currentLinks.length) {
       setLinks(currentLinks);
     }
+    if (helperState?.isEdit) {
+      setHelperToEdit(helperState.id);
+    }
   }, []);
 
-  const createNewLink = async (it) => {
-    return await createLink(it);
-  };
-
-  const updateOldLink = async (it) => {
-    return await updateLink(it);
-  };
-
-  const deleteCurrLink = async (it) => {
-    return await deleteLink(it);
+  const handleLinks = async (helperId) => {
+    return await Promise.all(
+      links.map(async (it) => {
+        const { id, order, ...link } = it;
+        try {
+          const exists = await getLinkById(id);
+          if (exists) return await updateLink({ ...it, helperId });
+          return await createLink({ ...link, helperId });
+        } catch (err) {
+          emitToastError(err);
+        }
+      })
+    );
   };
 
   const handleSaveHelper = async () => {
     let newHelper;
     let createdLinks;
-    if (helper.id) {
-      try {
-        const { id, ...rest } = helper;
-        newHelper = await updateHelper(rest);
-      } catch (err) {
-        emitToastError(err);
-      }
-      createdLinks = await Promise.all(
-        links.map(async (it) => {
-          const { id, order, ...link } = it;
+    try {
+      newHelper = await (helperToEdit
+        ? updateHelper(helper)
+        : createHelper(helper));
+      setHelper(newHelper);
+    } catch (err) {
+      emitToastError(err);
+    }
+    createdLinks = await handleLinks(newHelper.id);
+    if (helperToEdit && deletedLinks.length) {
+      await Promise.all(
+        deletedLinks.map(async (it) => {
           try {
-            const exists = await getLinkById(id);
-            if (exists)
-              return await updateOldLink({ ...it, helperId: helper.id });
-            return await createNewLink({ ...link, helperId: helper.id });
-          } catch (err) {
-            emitToastError(err);
-          }
-        })
-      );
-      if (deletedLinks.length) {
-        await Promise.all(
-          deleteCurrLink.map(async (it) => {
-            try {
-              return await deleteCurrLink({ ...it, helperId: helper.id });
-            } catch (err) {
-              emitToastError(err);
-            }
-          })
-        );
-      }
-    } else {
-      try {
-        const { id, ...rest } = helper;
-        newHelper = await createHelper({ ...rest });
-      } catch (err) {
-        emitToastError(err);
-      }
-      createdLinks = await Promise.all(
-        links.map(async (it) => {
-          const { id, order, ...link } = it;
-          try {
-            return await createNewLink({ ...link, helperId: newHelper.id });
+            return await deleteLink({ ...it, helperId: helperToEdit });
           } catch (err) {
             emitToastError(err);
           }
@@ -127,6 +92,7 @@ const NewLinksPopup = ({
       setShowNewLinksPopup(false);
       setHelper({});
       setLinks([]);
+      setHelperToEdit(null);
     }
   };
 
@@ -169,6 +135,10 @@ NewLinksPopup.propTypes = {
     })
   ),
   setShowNewLinksPopup: PropTypes.func,
+  helperState: PropTypes.shape({
+    isEdit: PropTypes.bool,
+    id: PropTypes.number,
+  }),
 };
 
 export default NewLinksPopup;

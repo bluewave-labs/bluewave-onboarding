@@ -13,6 +13,7 @@ const LinksDefaultPage = () => {
   const [currentHelper, setCurrentHelper] = useState({});
   const [currentLinks, setCurrentLinks] = useState([]);
   const [showNewLinkPopup, setShowNewLinkPopup] = useState(false);
+  const [helperState, setHelperState] = useState(null)
 
   const style = {
     display: "flex",
@@ -32,6 +33,7 @@ const LinksDefaultPage = () => {
             currentLinks={currentLinks}
             setHelper={setCurrentHelper}
             setShowNewLinksPopup={setShowNewLinkPopup}
+            helperState={helperState}
           />
         ) : (
           <DefaultPageTemplate
@@ -42,6 +44,7 @@ const LinksDefaultPage = () => {
                 const { links, ...data } = await getHelperById(state.id);
                 setCurrentHelper(data);
                 setCurrentLinks(links.sort((a, b) => a.order - b.order));
+                setHelperState(state)
               } else {
                 setCurrentHelper({
                   title: "",

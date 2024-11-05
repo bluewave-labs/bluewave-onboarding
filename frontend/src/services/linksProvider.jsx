@@ -19,6 +19,8 @@ export const HelperLinkContext = createContext({
   linkToEdit: null,
   setLinkToEdit: (link) => {},
   renderLinks: () => {},
+  helperToEdit: null,
+  setHelperToEdit: (helperId) => {},
 });
 
 const HelperLinkProvider = ({ children }) => {
@@ -29,6 +31,7 @@ const HelperLinkProvider = ({ children }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [deletedLinks, setDeletedLinks] = useState([]);
   const [linkToEdit, setLinkToEdit] = useState(null);
+  const [helperToEdit, setHelperToEdit] = useState(null);
 
   const toggleSettings = (e, link = null) => {
     if (e.target.closest("#delete") || e.target.closest("#drag")) return;
@@ -70,6 +73,8 @@ const HelperLinkProvider = ({ children }) => {
       linkToEdit,
       setLinkToEdit,
       renderLinks,
+      helperToEdit,
+      setHelperToEdit,
     }),
     [helper, links, showSettings, isPopupOpen, linkToEdit]
   );
