@@ -6,7 +6,7 @@ import PasswordResetPage from "./scenes/login/PassswordResetPage";
 import ForgotPasswordPage from "./scenes/login/ForgotPasswordPage";
 import CheckYourEmailPage from "./scenes/login/CheckYourEmailPage";
 import SetNewPasswordPage from "./scenes/login/SetNewPassword";
-import Private from "./components/Private";
+import Private from "@components/Private";
 import ProgressStepsMain from "./scenes/progressSteps/ProgressStepsMain";
 import Settings from "./scenes/settings/Settings";
 import BannerPage from "./scenes/banner/CreateBannerPage";
@@ -20,12 +20,9 @@ import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
 
-import { GuideTemplateProvider } from "./templates/GuideTemplate/GuideTemplateContext";
-
 const App = () => {
 
   return (
-    <GuideTemplateProvider>
       <Routes>
         <Route path="/" element={<Private Component={HomePageTemplate} />}>
           <Route index element={<Home />} />
@@ -60,7 +57,6 @@ const App = () => {
         <Route path="/403" element={<Error403 />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
-    </GuideTemplateProvider>
   );
 }
 

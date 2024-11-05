@@ -4,36 +4,33 @@ import CreateHintPage from "./CreateHintPage";
 import { ACTIVITY_TYPES_INFO } from "../../data/guideMainPageData";
 import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
-const mockHints = [
-  {
-    idItem: 184293,
-    title: "Main dashboard - feature hint",
-    text: "This pops up the first time a user logs in to the dashboard.",
-  },
-  {
-    idItem: 194294,
-    title: "Main dashboard - password hint",
-    text: "This pops up the first time a user logs in to the dashboard.",
-  },
-];
+import { useNavigate } from "react-router";
+import { getHints, deleteHint } from '../../services/hintServices';
 
 const HintDefaultPage = () => {
   const { openDialog } = useDialog();
+  const navigate = useNavigate();
 
+  const getHintDetails = (hint) => ({
+    title: `Hint ${hint.id}`,
+    text: hint.header,
+  });
+
+  const navigateToCreate = (state) => {
+    navigate('/hint/create', state);
+  }
+  
   return (
     <>
-      <DefaultPageTemplate
-        getItems={() => mockHints}
-        deleteItem={() => {}}
-        navigateToCreate={openDialog}
-        itemType={ACTIVITY_TYPES_INFO.HINTS}
-        itemTypeInfo={ACTIVITY_TYPES_INFO.HINTS}
-        getItemDetails={(hint) => ({
-          title: hint.title,
-          text: hint.text,
-        })}
-      />
-      <CreateHintPage />
+    <DefaultPageTemplate
+      getItems={getHints}
+      deleteItem={deleteHint}
+      navigateToCreate={openDialog}
+      itemType={ACTIVITY_TYPES_INFO.HINTS}
+      itemTypeInfo={ACTIVITY_TYPES_INFO.HINTS}
+      getItemDetails={getHintDetails}
+    />
+    <CreateHintPage />
     </>
   );
 };

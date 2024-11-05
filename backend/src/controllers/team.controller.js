@@ -1,8 +1,65 @@
 const settings = require("../../config/settings");
 const TeamService = require("../service/team.service");
 const { internalServerError } = require("../utils/errors.helper");
+const { MAX_ORG_NAME_LENGTH, ORG_NAME_REGEX } = require('../utils/constants.helper');
+const db = require("../models");
 
+const Team = db.Team;
 const teamService = new TeamService();
+
+const setOrganisation = async (req, res) => {
+  let { name } = req.body;
+  try {
+    if (!name || typeof name !== 'string' || name.trim().length === 0) {
+      return res.status(400).json({ error: 'Organisation name is required and should be a non-empty string' });
+    }
+
+    name = name.trim();
+    if (name.length > MAX_ORG_NAME_LENGTH) {
+      return res.status(400).json({ error: `Organisation name cannot exceed ${MAX_ORG_NAME_LENGTH} characters` });
+    }
+
+    if (!ORG_NAME_REGEX.test(name)) {
+      return res.status(400).json({ error: 'Organisation name contains invalid characters' });
+    }
+
+    const teamCount = await Team.count();
+    if (teamCount > 0) {
+      return res.status(400).json({ error: 'Cannot create more than one team.' });
+    }
+
+    const newOrg = await teamService.createTeam(name);
+    return res.status(201).json({
+      status: 201,
+      message: 'Organisation created successfully',
+      data: {
+        id: newOrg.id,
+        name: newOrg.name,
+        createdAt: new Intl.DateTimeFormat('en-US').format(newOrg.createdAt)
+      }
+    });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      'CREATE_ORG_ERROR',
+      err.message
+    );
+    console.log(err);
+    res.status(statusCode).json(payload);
+  }
+};
+
+const getTeamCount = async (req, res) => {
+  try {
+    const teamCount = await Team.count();
+    return res.status(200).json({ teamExists: teamCount > 0 });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "GET_TEAM_COUNT_ERROR",
+      err.message,
+    );
+    res.status(statusCode).json(payload);
+  }
+};
 
 const getTeamDetails = async (req, res) => {
   try {
@@ -73,4 +130,4 @@ const changeRole = async (req, res) => {
   }
 }
 
-module.exports = { getTeamDetails, updateTeamDetails, removeMember, changeRole };
+module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, removeMember, changeRole, getTeamCount };

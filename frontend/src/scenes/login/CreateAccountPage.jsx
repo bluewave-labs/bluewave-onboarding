@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css'; 
-import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
+import CustomTextField from '@components/TextFieldComponents/CustomTextField/CustomTextField';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CircularProgress from '@mui/material/CircularProgress';
 import { signUp } from '../../services/loginServices';
-import CustomLink from '../../components/CustomLink/CustomLink';
+import CustomLink from '@components/CustomLink/CustomLink';
 import { handleAuthSuccess } from '../../utils/loginHelper';
 import { useAuth } from '../../services/authProvider';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../../components/Logo/Logo';
+import Logo from '@components/Logo/Logo';
 
 function CreateAccountPage() {
   const [formData, setFormData] = useState({ name: '', surname: '', email: '', password: '' });
@@ -67,7 +67,7 @@ function CreateAccountPage() {
 
     try {
       const response = await signUp(userData);
-      handleAuthSuccess(response, loginAuth, navigate)
+      handleAuthSuccess(response, loginAuth, navigate);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -78,6 +78,7 @@ function CreateAccountPage() {
           setError('An error occurred. Please try again.');
         }
       } else {
+        console.log(error);
         setError('An error occurred. Please check your network connection and try again.');
       }
     }

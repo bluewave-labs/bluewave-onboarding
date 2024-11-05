@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DOMPurify from "dompurify";
 import styles from "./PopupComponent.module.css"; // Use your module CSS file
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import Button from "../../components/Button/Button";
+import Button from "@components/Button/Button";
 
 const PopupComponent = ({
   header,

@@ -2,10 +2,10 @@ import { React, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import Button from '../../../../components/Button/Button';
+import Button from '@components/Button/Button';
 import styles from './InviteTeamMemberModal.module.scss';
-import CustomTextField from '../../../../components/TextFieldComponents/CustomTextField/CustomTextField';
-import DropdownList from '../../../../components/DropdownList/DropdownList';
+import CustomTextField from '@components/TextFieldComponents/CustomTextField/CustomTextField';
+import DropdownList from '@components/DropdownList/DropdownList';
 import { roles } from '../../../../utils/constants';
 
 const InviteTeamMemberModal = ({ open, handleClose, handleInviteTeamMember }) => {

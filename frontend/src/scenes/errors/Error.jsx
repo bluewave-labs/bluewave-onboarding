@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from "prop-types";
 import styles from './Error.module.scss';
-import Button from '../../components/Button/Button';
+import Button from '@components/Button/Button';
 
 export const ErrorComponent = ({ text, errorAction }) => {
   const errorButtonStyle = {

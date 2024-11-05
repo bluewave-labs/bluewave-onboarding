@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CustomTextField from '../../components/TextFieldComponents/CustomTextField/CustomTextField';
+import CustomTextField from '@components/TextFieldComponents/CustomTextField/CustomTextField';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CircularProgress from '@mui/material/CircularProgress';
 import { resetPassword } from '../../services/loginServices';

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import List from '../../templates/GuideMainPageTemplate/GuideMainPageComponents/List/List';
 import ContentArea from '../../templates/GuideMainPageTemplate/GuideMainPageComponents/ContentArea/ContentArea';
 import ConfirmationPopup from '../../templates/GuideMainPageTemplate/GuideMainPageComponents/ConfirmationPopup/ConfirmationPopup';
-import Button from '../../components/Button/Button';
+import Button from '@components/Button/Button';
 import './ProductTourStyles.css';
 import CreateToursPopup from './CreateToursPopup/CreateToursPopup';
 
