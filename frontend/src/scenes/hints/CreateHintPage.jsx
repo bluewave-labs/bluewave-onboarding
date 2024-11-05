@@ -8,8 +8,8 @@ import HintComponent from "../../products/Hint/HintComponent";
 const HintPage = () => {
   const [activeButton, setActiveButton] = useState(0);
   const [leftContentFormData, setLeftContentFormData] = useState({
-    actionButtonUrl: "https//",
-    actionButtonText: "",
+    actionButtonUrl: "https://",
+    actionButtonText: "Take me to subscribe page",
     targetElement: ".element",
   });
 
@@ -56,25 +56,22 @@ const HintPage = () => {
       rightContent={() => (
         <RichTextEditor
           sx={{
-            width: "100%",
+            width: "65%",
             maxWidth: "700px",
-            marginLeft: "2.5rem",
             marginTop: "1rem",
           }}
-          previewComponent={({ header, content }) => {
-            return (
-              <HintComponent
-                header={header}
-                content={content}
-                previewBtnText={leftContentFormData.actionButtonText}
-                headerBackgroundColor={headerBackgroundColor}
-                headerColor={headerColor}
-                textColor={textColor}
-                buttonBackgroundColor={buttonBackgroundColor}
-                buttonTextColor={buttonTextColor}
-              />
-            );
-          }}
+          previewComponent={({ header, content }) => (
+            <HintComponent
+              header={header}
+              content={content}
+              previewBtnText={leftContentFormData.actionButtonText}
+              headerBackgroundColor={headerBackgroundColor}
+              headerColor={headerColor}
+              textColor={textColor}
+              buttonBackgroundColor={buttonBackgroundColor}
+              buttonTextColor={buttonTextColor}
+            />
+          )}
         />
       )}
       leftContent={() => (

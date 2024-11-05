@@ -4,22 +4,23 @@ import CustomTextField from "../../TextFieldComponents/CustomTextField/CustomTex
 import "./HintLeftContent.css";
 
 const HintLeftContent = ({ setLeftContentFormData, formData }) => {
-  
   const handleChange = (name) => (e) => {
     setLeftContentFormData({ ...formData, [name]: e.target.value });
   };
 
   return (
     <div className="left-content-container">
-      <h2 className="hint-label">Action</h2>
+      <h2 className="hint-label" style={{ marginTop: "16px" }}>
+        Action
+      </h2>
       <DropdownList
         actions={["No action", "Open a URL", "Open a URL in a new tab"]}
       />
-      <h2 className="hint-label" style={{ marginBottom: 0 }}>
+      <h2 className="hint-label" style={{ marginBottom: 0, marginTop: "16px" }}>
         Action button url (can be relative)
       </h2>
       <CustomTextField
-        TextFieldWidth="241px"
+        TextFieldWidth="15.06rem"
         value={formData.actionButtonUrl}
         onChange={handleChange("actionButtonUrl")}
       />
@@ -27,7 +28,7 @@ const HintLeftContent = ({ setLeftContentFormData, formData }) => {
         Action button text
       </h2>
       <CustomTextField
-        TextFieldWidth="241px"
+        TextFieldWidth="15.06rem"
         value={formData.actionButtonText}
         onChange={handleChange("actionButtonText")}
       />
@@ -35,7 +36,7 @@ const HintLeftContent = ({ setLeftContentFormData, formData }) => {
         Target Element
       </h2>
       <CustomTextField
-        TextFieldWidth="241px"
+        TextFieldWidth="15.06rem"
         value={formData.targetElement}
         onChange={handleChange("targetElement")}
         helperText="Page element to attach tooltip to"

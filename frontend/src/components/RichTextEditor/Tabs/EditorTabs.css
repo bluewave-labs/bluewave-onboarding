@@ -4,6 +4,10 @@
   width: fit-content;
 }
 
+.editor-tabs.css-11keaam-MuiTabs-root {
+  top: 350px!important;
+}
+
 .tab[aria-selected="true"] {
   background-color: var(--main-purple);
   color: white !important;

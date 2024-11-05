@@ -1,10 +1,10 @@
 @use '../../styles/globals.scss' as *;
 
+
 .container {
 
     background-color: var(--background-color);
     box-sizing: border-box;
-    padding: 50px 150px 10px 110px;
     width: 100%;
 
     .popup {
@@ -45,8 +45,8 @@
     .optionButtons {
         display: flex;
         justify-content: flex-end;
-        margin-top: 2rem;
         gap: 1rem;
+        margin-top: 1rem;
     }
 
 

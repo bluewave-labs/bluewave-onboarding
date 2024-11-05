@@ -47,7 +47,7 @@ const RichTextEditor = ({ sx = {}, previewComponent = null }) => {
             labelText="Header"
             labelFontWeight={600}
             inputHeight="40px"
-            TextFieldWidth={"100%"}
+            TextFieldWidth="100%"
             value={header}
             onChange={handleHeaderChange}
             style={{ marginBottom: "2rem" }}
@@ -73,7 +73,7 @@ const RichTextEditor = ({ sx = {}, previewComponent = null }) => {
 
 RichTextEditor.propTypes = {
   sx: PropTypes.object,
-  previewComponent: PropTypes.node.isRequired,
+  previewComponent: PropTypes.elementType.isRequired,
 };
 
 export default RichTextEditor;

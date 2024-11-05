@@ -9,6 +9,7 @@
   flex-direction: column;
   word-wrap: break-word;
   box-sizing: border-box;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 .preview-container h3 {

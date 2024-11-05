@@ -4,6 +4,7 @@
   align-items: flex-start;
   flex: 1;
   color: var(--main-text-color);
+  width: 241px;
 }
 
 .hint-state-name {

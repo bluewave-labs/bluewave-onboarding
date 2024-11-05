@@ -14,17 +14,18 @@ import BannerDefaultPage from "./scenes/banner/BannerDefaultPage";
 import LinksDefaultPage from "./scenes/links/LinksDefaultPage";
 import ToursDefaultPage from "./scenes/tours/ToursDefaultPage";
 import PopupDefaultPage from "./scenes/popup/PopupDefaultPage";
-import CreateHintPage from "./scenes/hints/CreateHintPage";
 import HintDefaultPage from "./scenes/hints/HintDefaultPage";
 import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
 
+import { GuideTemplateProvider } from "./templates/GuideTemplate/GuideTemplateContext";
+
 const App = () => {
 
   return (
-    <>
+    <GuideTemplateProvider>
       <Routes>
         <Route path="/" element={<Private Component={HomePageTemplate} />}>
           <Route index element={<Home />} />
@@ -34,7 +35,6 @@ const App = () => {
           <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
           <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
           <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
-          <Route path="/hint/create" element={<CreateHintPage />} />
           <Route path="/hint" element={<HintDefaultPage />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
@@ -47,6 +47,7 @@ const App = () => {
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
 
 
+    
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
         <Route path="/banner/create" element={<BannerPage />} />
         <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
@@ -54,13 +55,12 @@ const App = () => {
         <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
         <Route path="/link" element={<LinksDefaultPage />} />
         <Route path="/tour" element={<ToursDefaultPage />} />
-        <Route path="/hint/create" element={<CreateHintPage />} />
         <Route path="/hint" element={<HintDefaultPage />} />
+        <Route path="/popup" element={<PopupDefaultPage/>} />
         <Route path="/403" element={<Error403 />} />
         <Route path="*" element={<Error404 />} />
-
       </Routes>
-    </>
+    </GuideTemplateProvider>
   );
 }
 

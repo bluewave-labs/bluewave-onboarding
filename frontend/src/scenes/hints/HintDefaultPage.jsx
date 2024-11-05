@@ -1,7 +1,8 @@
 import React from "react";
 import DefaultPageTemplate from "../../templates/DefaultPageTemplate/DefaultPageTemplate";
+import CreateHintPage from "./CreateHintPage";
 import { ACTIVITY_TYPES_INFO } from "../../data/guideMainPageData";
-import { useNavigate } from "react-router";
+import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
 const mockHints = [
   {
@@ -17,20 +18,23 @@ const mockHints = [
 ];
 
 const HintDefaultPage = () => {
-  const navigate = useNavigate();
+  const { openDialog } = useDialog();
 
   return (
-    <DefaultPageTemplate
-      getItems={() => mockHints}
-      deleteItem={() => {}}
-      navigateToCreate={() => navigate("/hint/create")}
-      itemType={ACTIVITY_TYPES_INFO.HINTS}
-      itemTypeInfo={ACTIVITY_TYPES_INFO.HINTS}
-      getItemDetails={(hint) => ({
-        title: hint.title,
-        text: hint.text,
-      })}
-    />
+    <>
+      <DefaultPageTemplate
+        getItems={() => mockHints}
+        deleteItem={() => {}}
+        navigateToCreate={openDialog}
+        itemType={ACTIVITY_TYPES_INFO.HINTS}
+        itemTypeInfo={ACTIVITY_TYPES_INFO.HINTS}
+        getItemDetails={(hint) => ({
+          title: hint.title,
+          text: hint.text,
+        })}
+      />
+      <CreateHintPage />
+    </>
   );
 };
 
