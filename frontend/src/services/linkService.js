@@ -34,7 +34,7 @@ export const getLinkById = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Get Link error:", error.response);
-    throw error;
+    return false
   }
 }
 

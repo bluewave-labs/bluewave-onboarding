@@ -1,5 +1,5 @@
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { HelperLinkContext } from "../../../services/linksProvider";
 import Switch from "../../Switch/Switch";
 import s from "./Settings.module.scss";
@@ -9,19 +9,30 @@ const defaultState = {
   url: "",
   target: true,
   helperId: null,
-  x: 0,
-  y: 0,
 };
 
 const Settings = () => {
   const { toggleSettings, helper, linkToEdit, setLinks, setLinkToEdit } =
     useContext(HelperLinkContext);
   const [oldLink] = useState(linkToEdit);
-  const [state, setState] = useState(defaultState);
+  const [state, setState] = useState({});
+  const settingsRef = useRef();
 
   const getTarget = (target) => {
     if (typeof target === "boolean") return target;
     return target === "_blank";
+  };
+
+  const handleClickOutside = (e) => {
+    const isSettings = settingsRef?.current.contains(e.target);
+    const isCards = !!(
+      settingsRef?.current &&
+      settingsRef.current !== e.target &&
+      e.target.closest("#cards")
+    );
+    if (!isSettings && !isCards) {
+      handleClose(e);
+    }
   };
 
   useEffect(() => {
@@ -33,8 +44,11 @@ const Settings = () => {
       };
       setState(newState);
     } else {
-      setState(defaultState);
+      setState({ ...defaultState, id: Math.floor(Date.now() * Math.random()) });
     }
+    window.addEventListener("click", handleClickOutside);
+
+    return () => window.removeEventListener("click", handleClickOutside);
   }, []);
 
   const handleChange = ({ target }) => {
@@ -45,7 +59,17 @@ const Settings = () => {
   };
 
   const handleClose = async (e) => {
-    if (!state.title.trim() && !state.url.trim()) {
+    e.preventDefault();
+    const info = Array.from(
+      settingsRef.current.querySelectorAll("input")
+    ).reduce(
+      (acc, it) => ({
+        ...acc,
+        [it.name]: it.name === "target" ? it.checked : it.value,
+      }),
+      {}
+    );
+    if (!info.title.trim() && !info.url.trim()) {
       toggleSettings(e);
       setLinkToEdit(null);
       return;
@@ -53,19 +77,19 @@ const Settings = () => {
     if (linkToEdit) {
       setLinks((prev) =>
         prev.map((it) =>
-          it.title === oldLink.title && it.url === oldLink.url ? state : it
+          it.title === oldLink.title && it.id === oldLink.id ? info : it
         )
       );
       setLinkToEdit(null);
       toggleSettings(e);
     } else {
-      setLinks((prev) => [...prev, state]);
+      setLinks((prev) => [...prev, info]);
       toggleSettings(e);
     }
   };
 
   return (
-    <div className={s.settings}>
+    <form className={s.settings} ref={settingsRef} onSubmit={handleClose}>
       <div className={s.settings__header}>
         <span className={s["settings__header--title"]}>Add new link</span>
         <div className={s["settings__header--right"]}>
@@ -77,6 +101,7 @@ const Settings = () => {
         </div>
       </div>
       <div className={s.settings__content}>
+        <input type='hidden' name='id' value={state.id} />
         <label htmlFor='title' className={s["settings__content--label"]}>
           <span className={s["settings__content--text"]}>Title</span>
           <input
@@ -119,7 +144,10 @@ const Settings = () => {
           <span>Open in a new tab</span>
         </label>
       </div>
-    </div>
+      <button type='submit' style={{ display: "none" }}>
+        Submit
+      </button>
+    </form>
   );
 };
 

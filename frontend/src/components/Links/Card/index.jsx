@@ -4,7 +4,11 @@ import React from "react";
 import s from "./Card.module.scss";
 
 const CardContainer = ({ children }) => {
-  return <List className={s.card__container}>{children}</List>;
+  return (
+    <div id='cards'>
+      <List className={s.card__container}>{children}</List>
+    </div>
+  );
 };
 
 CardContainer.propTypes = {
