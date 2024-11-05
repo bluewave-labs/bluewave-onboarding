@@ -3,9 +3,16 @@ import React, { useContext, useEffect, useState } from "react";
 import Preview from "../../components/Links/Preview";
 import Settings from "../../components/Links/Settings/Settings";
 import { createHelper, updateHelper } from "../../services/helperLinkService";
-import { createLink, deleteLink, updateLink } from "../../services/linkService";
+import {
+  createLink,
+  deleteLink,
+  getLinkById,
+  updateLink,
+} from "../../services/linkService";
 import { HelperLinkContext } from "../../services/linksProvider";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
+import { emitToastError } from "../../utils/guideHelper";
+import toastEmitter, { TOAST_EMITTER_KEY } from "../../utils/toastEmitter";
 import LinkAppearance from "./LinkAppearance";
 import LinkContent from "./LinkContent";
 import s from "./LinkPage.module.scss";
@@ -64,31 +71,62 @@ const NewLinksPopup = ({
     let newHelper;
     let createdLinks;
     if (helper.id) {
-      newHelper = await updateHelper(helper);
+      try {
+        const { id, ...rest } = helper;
+        newHelper = await updateHelper(rest);
+      } catch (err) {
+        emitToastError(err);
+      }
       createdLinks = await Promise.all(
         links.map(async (it) => {
-          if (it.id) return await updateOldLink({ ...it, helperId: helper.id });
-          return await createNewLink({ ...it, helperId: helper.id });
+          const { id, order, ...link } = it;
+          try {
+            const exists = await getLinkById(id);
+            if (exists)
+              return await updateOldLink({ ...it, helperId: helper.id });
+            return await createNewLink({ ...link, helperId: helper.id });
+          } catch (err) {
+            emitToastError(err);
+          }
         })
       );
       if (deletedLinks.length) {
         await Promise.all(
-          deleteCurrLink.map(async (it) =>
-            deleteCurrLink({ ...it, helperId: helper.id })
-          )
+          deleteCurrLink.map(async (it) => {
+            try {
+              return await deleteCurrLink({ ...it, helperId: helper.id });
+            } catch (err) {
+              emitToastError(err);
+            }
+          })
         );
       }
     } else {
-      newHelper = await createHelper({ ...helper });
+      try {
+        const { id, ...rest } = helper;
+        newHelper = await createHelper({ ...rest });
+      } catch (err) {
+        emitToastError(err);
+      }
       createdLinks = await Promise.all(
         links.map(async (it) => {
-          return await createNewLink({ ...it, helperId: newHelper.id });
+          const { id, order, ...link } = it;
+          try {
+            return await createNewLink({ ...link, helperId: newHelper.id });
+          } catch (err) {
+            emitToastError(err);
+          }
         })
       );
     }
-
-    if (newHelper && createdLinks) {
+    if (newHelper && createdLinks.every(Boolean)) {
+      const toastMessage = helper.id
+        ? "You edited this Helper Link"
+        : "New Helper Link saved";
+      toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
       setShowNewLinksPopup(false);
+      setHelper({});
+      setLinks([]);
     }
   };
 

@@ -31,7 +31,7 @@ const Preview = () => {
           {links
             .sort((a, b) => a.order - b.order)
             .map((it) => (
-              <li key={`preview-${it.title}`} className={s["preview__card--item"]}>
+              <li key={`preview-${it.id}`} className={s["preview__card--item"]}>
                 <SvgIcon className={s["preview__card--icon"]} fontSize='1'>
                   <svg
                     width='16'

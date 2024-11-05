@@ -43,10 +43,10 @@ const LinkContent = () => {
       <div className={s.body__links}>
         <h3 className={s.body__title}>Link items</h3>
         <CardContainer>
-          {links.map((item, i) => (
+          {links.map((item) => (
             <Card
               card={item}
-              key={item.title}
+              key={item.id}
               onDragStart={handleDragStart}
               onDragEnd={handleDragEnd}
               onDragOver={handleDragOver}

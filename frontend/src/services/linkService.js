@@ -28,6 +28,16 @@ export const getLinks = async (helperId) => {
   }
 };
 
+export const getLinkById = async (id) => {
+  try {
+    const response = await apiClient.get(`/link/get_link/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Get Link error:", error.response);
+    throw error;
+  }
+}
+
 export const updateLink = async (link) => {
   try {
     const response = await apiClient.put(`/link/edit_link/${link.id}`, {

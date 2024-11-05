@@ -18,7 +18,7 @@ const Popup = () => {
     setIsPopupOpen(false);
     setLinks(
       links.filter(
-        (it) => it.title !== itemToDelete.title && it.url !== itemToDelete.url
+        (it) => it.title !== itemToDelete.title && it.id !== itemToDelete.id
       )
     );
     setDeletedLinks((prev) => [...prev, itemToDelete]);
