@@ -158,11 +158,11 @@ function CreateAccountPage() {
       </div>
 
       <div className={styles["password-constraints"]}>
-        <CheckCircleIcon style={{ color: passwordChecks.atLeastEightCharacters ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: '5px' }} />
+        <CheckCircleIcon style={{ color: passwordChecks.atLeastEightCharacters ? 'green' : 'var(--light-border-color)', fontSize: '20px', marginRight: '5px' }} />
         Must be at least 8 characters
       </div>
       <div className={styles["password-constraints"]}>
-        <CheckCircleIcon style={{ color: passwordChecks.hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: '5px' }} />
+        <CheckCircleIcon style={{ color: passwordChecks.hasSpecialCharacter ? 'green' : 'var(--light-border-color)', fontSize: '20px', marginRight: '5px' }} />
         Must contain one special character
       </div>
 

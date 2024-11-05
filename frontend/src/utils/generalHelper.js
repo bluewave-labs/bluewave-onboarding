@@ -28,3 +28,16 @@ export const getFullName = (userData) => {
     return null
   }
 }
+
+export const generateApiKey = () => {
+  const length = 32; // Define the length of the API key
+  const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'; // Characters to use
+  let apiKey = '';
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    apiKey += charset[randomIndex];
+  }
+
+  return apiKey;
+};
