@@ -41,11 +41,7 @@ const LinksDefaultPage = () => {
               if (state?.isEdit) {
                 const { links, ...data } = await getHelperById(state.id);
                 setCurrentHelper(data);
-                setCurrentLinks(
-                  links
-                    .map((it) => ({ ...it, x: 0, y: 0 }))
-                    .sort((a, b) => a.order - b.order)
-                );
+                setCurrentLinks(links.sort((a, b) => a.order - b.order));
               } else {
                 setCurrentHelper({
                   title: "",

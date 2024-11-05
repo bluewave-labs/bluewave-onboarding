@@ -12,37 +12,24 @@ import React, { useContext } from "react";
 import { HelperLinkContext } from "../../../services/linksProvider";
 import s from "./Card.module.scss";
 
-const Card = ({
-  card,
-  index,
-  dragging,
-  draggingItemIndex,
-  onDragStart,
-  onDragEnd,
-  onDrag,
-}) => {
+const Card = ({ card, onDragEnd, onDragOver, onDragStart, onDrop }) => {
   const { toggleSettings, setItemToDelete, setIsPopupOpen } =
     useContext(HelperLinkContext);
-  const { title, x, y } = card;
+  const { title } = card;
 
   const onDelete = () => {
     setItemToDelete(card);
     setIsPopupOpen(true);
   };
 
-  const style = {
-    position: dragging && draggingItemIndex === index ? "absolute" : "relative",
-    top: draggingItemIndex === index ? `${y}px` : "initial",
-    left: draggingItemIndex === index ? `${x - 24}px` : "initial",
-    cursor: dragging ? "grabbing" : "grab",
-    zIndex: dragging && draggingItemIndex === index ? "10000" : "0",
-    backgroundColor: "#fff",
-    boxShadow:
-      dragging && draggingItemIndex === index ? "0 0 4px #00000029" : "",
-  };
-
   return (
-    <div style={{ height: "48px" }}>
+    <div
+      draggable='true'
+      onDragStart={(e) => onDragStart(e, card)}
+      onDragEnd={onDragEnd}
+      onDragOver={onDragOver}
+      onDrop={(e) => onDrop(e, card)}
+    >
       <ListItem
         onClick={(e) => toggleSettings(e, card)}
         secondaryAction={
@@ -70,15 +57,8 @@ const Card = ({
             </SvgIcon>
           </IconButton>
         }
-        style={style}
       >
-        <ListItemAvatar
-          onMouseDown={(e) => onDragStart(e, index)}
-          onMouseUp={onDragEnd}
-          onMouseMove={onDrag}
-          onDrop={onDragEnd}
-          id='drag'
-        >
+        <ListItemAvatar id='drag'>
           <IconButton style={{ fontSize: "1rem" }}>
             <SvgIcon className={s.card__icon} fontSize='1'>
               <svg
@@ -111,15 +91,11 @@ Card.propTypes = {
     url: PropTypes.string,
     id: PropTypes.number,
     order: PropTypes.number,
-    x: PropTypes.number,
-    y: PropTypes.number,
   }),
-  onDragStart: PropTypes.func,
-  onDrag: PropTypes.func,
-  draggingItemIndex: PropTypes.number,
   onDragEnd: PropTypes.func,
-  dragging: PropTypes.bool,
-  index: PropTypes.number,
+  onDragOver: PropTypes.func,
+  onDragStart: PropTypes.func,
+  onDrop: PropTypes.func,
 };
 
 export default Card;

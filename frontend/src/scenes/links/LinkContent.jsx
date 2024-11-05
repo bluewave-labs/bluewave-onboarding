@@ -7,36 +7,35 @@ import { HelperLinkContext } from "../../services/linksProvider";
 import s from "./LinkPage.module.scss";
 
 const LinkContent = () => {
-  const [draggingItemIndex, setDraggingItemIndex] = useState(null);
-  const [dragging, setDragging] = useState(false);
+  const [draggingItem, setDraggingItem] = useState(null);
 
-  const { links, toggleSettings, setLinks } =
-    useContext(HelperLinkContext);
+  const { links, toggleSettings, setLinks } = useContext(HelperLinkContext);
 
-  const handleDragStart = (e, index) => {
-    setDraggingItemIndex(index);
-    setDragging(true);
-  };
-
-  const handleDrag = (e) => {
-    if (draggingItemIndex === null) return;
-
-    const container = e.target.parentNode.getBoundingClientRect();
-    const x = e.clientX - container.left;
-    const y = e.clientY - container.top;
-
-    setLinks((prevItems) =>
-      prevItems.map((item, index) =>
-        index === draggingItemIndex ? { ...item, x, y } : item
-      )
-    );
+  const handleDragStart = (e, item) => {
+    setDraggingItem(item);
+    e.dataTransfer.setData("text/plain", item.title);
   };
 
   const handleDragEnd = () => {
-    setDraggingItemIndex(null);
-    setDragging(false);
-    const newList = links.sort((a, b) => b.y - a.y);
-    setLinks(newList);
+    setDraggingItem(null);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, targetItem) => {
+    if (!draggingItem) return;
+
+    const currentIndex = links.indexOf(draggingItem);
+    const targetIndex = links.indexOf(targetItem);
+
+    if (currentIndex !== -1 && targetIndex !== -1) {
+      links.splice(currentIndex, 1);
+      links.splice(targetIndex, 0, draggingItem);
+      setLinks(links.map((it, i) => ({ ...it, order: i + 1 })));
+    }
+    e.dataTransfer.clearData();
   };
 
   return (
@@ -50,10 +49,8 @@ const LinkContent = () => {
               key={item.title}
               onDragStart={handleDragStart}
               onDragEnd={handleDragEnd}
-              onDrag={handleDrag}
-              index={i}
-              dragging={dragging}
-              draggingItemIndex={draggingItemIndex}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
             />
           ))}
           <Link
