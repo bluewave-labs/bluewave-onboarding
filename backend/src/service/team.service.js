@@ -25,45 +25,54 @@ class TeamService {
                 limit: 1,
             });
             const users = await User.findAll();
-            return {team, users};
+            return { team, users };
         }
-        catch(err) {
+        catch (err) {
             throw new Error("Error retrieving Team");
         }
     }
+
+    async getTeamCount() {
+        try {
+            const teamCount = await Team.count();
+            return { teamExists: teamCount > 0 };
+        } catch (err) {
+            throw new Error("Get Team Count Error");
+        }
+    };
 
     async updateTeam(name) {
         try {
             await Team.update({
                 name: name
-            },{
+            }, {
                 where: {}
             });
         }
-        catch(error) {
+        catch (error) {
             throw new Error("Error Updating Team");
         }
     }
-    
+
     async removeUserFromTeam(userId, memberId) {
         const transaction = await sequelize.transaction();
         try {
-            if(userId == memberId) {
+            if (userId == memberId) {
                 throw new Error("User can't remove itself through team list");
             }
 
             const member = await User.findOne({
                 where: { id: memberId }
             })
-            if(!member) {
+            if (!member) {
                 throw new Error("User to be removed not found")
             }
-            
+
             await User.destroy({
                 where: { id: memberId },
                 transaction
             })
-            await Token.destroy({ 
+            await Token.destroy({
                 where: { userId: memberId },
                 transaction
             });
@@ -74,7 +83,7 @@ class TeamService {
 
             await transaction.commit();
         }
-        catch(err) {
+        catch (err) {
             await transaction.rollback();
             throw new Error(`Error Deleting User ~ ${err.message}`);
         }
@@ -85,15 +94,15 @@ class TeamService {
             const member = await User.findOne({
                 where: { id: memberId }
             });
-            if(!member) {
+            if (!member) {
                 throw new Error("User Not Found")
             }
 
-            if(member.role == settings.user.role.admin && settings.user.role[role] != settings.user.role.admin) {
+            if (member.role == settings.user.role.admin && settings.user.role[role] != settings.user.role.admin) {
                 const adminCount = await User.count({
                     where: { role: settings.user.role.admin }
                 });
-                if(adminCount <= 1) {
+                if (adminCount <= 1) {
                     throw new Error("The team has only single admin and its role can't be changed");
                 }
             }
@@ -104,7 +113,7 @@ class TeamService {
                 where: { id: memberId }
             })
         }
-        catch(err) {
+        catch (err) {
             throw new Error(`Error Changing User Roles ~ ${err.message}`);
         }
     }
