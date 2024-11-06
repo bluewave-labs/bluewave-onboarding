@@ -16,7 +16,7 @@ const Preview = () => {
   };
 
   return (
-    <div className={s.preview}>
+    <div className={s.preview} data-testid="preview">
       <h2 className={s.preview__title}>Preview</h2>
       <div className={s.preview__card}>
         <div

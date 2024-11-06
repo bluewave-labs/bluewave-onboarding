@@ -19,6 +19,9 @@ vi.mock("../../../services/loginServices");
 vi.mock("../../../services/helperLinkService");
 vi.mock("../../../services/linkService");
 
+const wait = async (time) =>
+  setTimeout(async () => await Promise.resolve(), time);
+
 const logIn = async () => {
   vi.spyOn(loginServices, "signUp").mockResolvedValueOnce({
     token: "mockAuthToken",
@@ -76,8 +79,12 @@ const addNewLink = async (title, url, target) => {
 };
 
 const openAppearance = async () => {
-  const appearanceBtn = await screen.findByRole("button", { name: "Appearance" });
-  await act(async () => {fireEvent.click(appearanceBtn);})
+  const appearanceBtn = await screen.findByRole("button", {
+    name: "Appearance",
+  });
+  await act(async () => {
+    fireEvent.click(appearanceBtn);
+  });
 };
 
 describe("Test Helper Link popup", () => {
@@ -138,25 +145,44 @@ describe("Test Helper Link popup", () => {
   it("should display the appearance form when the button is clicked", async () => {
     await renderPopup();
     await openAppearance();
-    const inputs = (await screen.findByRole('form')).querySelectorAll('input')
+    const inputs = (await screen.findByRole("form")).querySelectorAll("input");
 
-    expect(inputs).toHaveLength(4)
-    expect(inputs[0]).toHaveProperty('name', 'title')
-    expect(inputs[1]).toHaveProperty('name', 'headerBackgroundColor')
-    expect(inputs[2]).toHaveProperty('name', 'linkFontColor')
-    expect(inputs[3]).toHaveProperty('name', 'iconColor')
+    expect(inputs).toHaveLength(4);
+    expect(inputs[0]).toHaveProperty("name", "title");
+    expect(inputs[1]).toHaveProperty("name", "headerBackgroundColor");
+    expect(inputs[2]).toHaveProperty("name", "linkFontColor");
+    expect(inputs[3]).toHaveProperty("name", "iconColor");
   });
   it("should change the title on the preview when a title is typed", async () => {
     await renderPopup();
     await openAppearance();
-    const titleInput = await screen.findByRole('textbox')
+    const titleInput = await screen.findByRole("textbox");
     fireEvent.change(titleInput, { target: { value: "Title" } });
     const preview = await screen.findByText("Title");
     expect(preview).to.exist;
   });
-  it.todo(
-    "should change the background color of the header if the color is changed"
-  );
+  it("should change the background color of the header if the color is changed", async () => {
+    await renderPopup();
+    await openAppearance();
+    const previewHeader = (await screen.findByTestId("preview")).querySelector(
+      ".preview__card--header"
+    );
+    expect(getComputedStyle(previewHeader).backgroundColor).toBe(
+      "rgb(248, 249, 248)"
+    );
+    const form = await screen.findByRole("form");
+    const headerColorInput = form.querySelector("input#header-bg");
+    const headerColorLabel = form.querySelector("span.header");
+    await act(async () => {
+      fireEvent.change(headerColorInput, {
+        target: { value: "#f2f2f2" },
+      });
+    });
+    expect(headerColorLabel.innerHTML).toBe("#f2f2f2");
+    expect(getComputedStyle(previewHeader).backgroundColor).toBe(
+      "rgb(242, 242, 242)"
+    );
+  });
   it.todo("should change the link text color if the color is changed");
   it.todo("should change the icon color if the color is changed");
 });
