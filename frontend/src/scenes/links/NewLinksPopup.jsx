@@ -38,7 +38,7 @@ const NewLinksPopup = ({
 
   useEffect(() => {
     setHelper(currentHelper);
-    if (currentLinks.length) {
+    if (currentLinks?.length) {
       setLinks(currentLinks);
     }
     if (helperState?.isEdit) {
