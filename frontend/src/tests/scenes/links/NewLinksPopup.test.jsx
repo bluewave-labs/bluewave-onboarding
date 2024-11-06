@@ -114,6 +114,20 @@ describe("Test Helper Link popup", () => {
     expect(links).toHaveLength(2);
     expect(links[1]).toHaveProperty("href", "http://link1.com.br/");
   });
+  it("should add the new link to links list and to the preview with the correct target when a new link is created", async () => {
+    await renderPopup();
+    await addNewLink("link 1", "http://link1.com.br", true);
+    let links = await screen.findAllByText("link 1");
+    expect(links).toHaveLength(2);
+    expect(links[1]).toHaveProperty("href", "http://link1.com.br/");
+    expect(links[1]).toHaveProperty("target", "_blank");
+
+    await addNewLink("link 2", "http://link2.com.br", false);
+    links = await screen.findAllByText("link 2");
+    expect(links).toHaveLength(2);
+    expect(links[1]).toHaveProperty("href", "http://link2.com.br/");
+    expect(links[1]).toHaveProperty("target", "_self");
+  });
   it.skip("should change the order of the links on preview after drag", async () => {
     await renderPopup();
     await addNewLink("link 1", "http://link1.com.br");
