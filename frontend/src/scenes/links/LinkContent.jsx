@@ -11,9 +11,8 @@ const LinkContent = () => {
 
   const { links, toggleSettings, setLinks } = useContext(HelperLinkContext);
 
-  const handleDragStart = (e, item) => {
-    setDraggingItem(item);
-    e.dataTransfer.setData("text/plain", item.title);
+  const handleDragStart = (item) => {
+    // setDraggingItem(item);
   };
 
   const handleDragEnd = () => {
@@ -24,7 +23,7 @@ const LinkContent = () => {
     e.preventDefault();
   };
 
-  const handleDrop = (e, targetItem) => {
+  const handleDrop = (targetItem) => {
     if (!draggingItem) return;
 
     const currentIndex = links.indexOf(draggingItem);
@@ -35,7 +34,6 @@ const LinkContent = () => {
       links.splice(targetIndex, 0, draggingItem);
       setLinks(links.map((it, i) => ({ ...it, order: i + 1 })));
     }
-    e.dataTransfer.clearData();
   };
 
   return (

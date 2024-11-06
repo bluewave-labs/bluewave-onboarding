@@ -11,7 +11,7 @@ const LinkAppearance = () => {
   };
 
   return (
-    <div className={s.appearance}>
+    <form className={s.appearance} role="form">
       <label htmlFor='header' className={s.appearance__label}>
         Header text{" "}
         <input
@@ -86,7 +86,7 @@ const LinkAppearance = () => {
           </div>
         </div>
       </label>
-    </div>
+    </form>
   );
 };
 
