@@ -183,6 +183,46 @@ describe("Test Helper Link popup", () => {
       "rgb(242, 242, 242)"
     );
   });
-  it.todo("should change the link text color if the color is changed");
-  it.todo("should change the icon color if the color is changed");
+  it("should change the link text color if the color is changed", async () => {
+    await renderPopup();
+    await addNewLink("link 1", "http://localhost:4321");
+    await openAppearance();
+    const previewLink = (await screen.findByTestId("preview")).querySelector(
+      "li.preview__card--item a"
+    );
+    expect(getComputedStyle(previewLink).color).toBe("rgb(52, 64, 84)");
+    const form = await screen.findByRole("form");
+    const linkColorInput = form.querySelector("input#link-color");
+    const linkColorLabel = form.querySelector("span.link");
+    await act(async () => {
+      fireEvent.change(linkColorInput, {
+        target: { value: "#000" },
+      });
+    });
+    expect(linkColorLabel.innerHTML).toBe("#000000");
+    expect(getComputedStyle(previewLink).color).toBe("rgb(0, 0, 0)");
+  });
+  it("should change the icon color if the color is changed", async () => {
+    await renderPopup();
+    await addNewLink("link 1", "http://localhost:4321");
+    await openAppearance();
+    const previewIcon = (await screen.findByTestId("preview")).querySelector(
+      ".preview__card--icon"
+    );
+    expect(previewIcon.querySelector("path").getAttribute("stroke")).toBe(
+      "#7F56D9"
+    );
+    const form = await screen.findByRole("form");
+    const iconColorInput = form.querySelector("input#icon");
+    const iconColorLabel = form.querySelector("span.icon");
+    await act(async () => {
+      fireEvent.change(iconColorInput, {
+        target: { value: "#000" },
+      });
+    });
+    expect(iconColorLabel.innerHTML).toBe("#000000");
+    expect(previewIcon.querySelector("path").getAttribute("stroke")).toBe(
+      "#000000"
+    );
+  });
 });
