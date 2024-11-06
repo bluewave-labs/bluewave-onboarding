@@ -89,7 +89,7 @@ const Settings = () => {
   };
 
   return (
-    <form className={s.settings} ref={settingsRef} onSubmit={handleClose}>
+    <form className={s.settings} ref={settingsRef} onSubmit={handleClose} role="form">
       <div className={s.settings__header}>
         <span className={s["settings__header--title"]}>Add new link</span>
         <div className={s["settings__header--right"]}>

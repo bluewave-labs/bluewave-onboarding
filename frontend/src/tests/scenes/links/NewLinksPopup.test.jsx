@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { act } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
@@ -54,16 +54,56 @@ const renderPopup = () => {
   );
 };
 
+const addNewLink = async (title, url, target) => {
+  const addNewLinkBtn = await screen.findByText("+ Add new link");
+  await act(async () => {
+    fireEvent.click(addNewLinkBtn);
+  });
+  const settings = await screen.findByRole("form");
+  expect(settings).to.exist;
+  const inputs = settings.querySelectorAll("input");
+  await act(async () => {
+    fireEvent.change(inputs[1], { target: { value: title } });
+    fireEvent.change(inputs[2], { target: { value: url } });
+    if (target !== null) {
+      fireEvent.change(inputs[3], {
+        target: { value: target, checked: target },
+      });
+    }
+    fireEvent.submit(settings);
+  });
+};
+
 describe("Test Helper Link popup", () => {
   it("Tests if the popup is rendered correctly", async () => {
     await logIn();
     const { asFragment } = renderPopup();
     expect(asFragment).to.matchSnapshot();
   });
-  it.todo("should open the settings drawer when add new link is clicked");
-  it.todo(
-    "should add thee new link to links list and to the preview when a new link is created"
-  );
+  it("should open the settings drawer when add new link is clicked", async () => {
+    await logIn();
+    renderPopup();
+    const addNewLinkBtn = await screen.findByText("+ Add new link");
+    await act(async () => {
+      fireEvent.click(addNewLinkBtn);
+    });
+    const settings = await screen.findByRole("form");
+    expect(settings).to.exist;
+    const inputs = settings.querySelectorAll("input");
+    expect(inputs).toHaveLength(4);
+    expect(inputs[0]).toHaveProperty("name", "id");
+    expect(inputs[1]).toHaveProperty("name", "title");
+    expect(inputs[2]).toHaveProperty("name", "url");
+    expect(inputs[3]).toHaveProperty("name", "target");
+  });
+  it("should add the new link to links list and to the preview when a new link is created", async () => {
+    await logIn();
+    renderPopup();
+    await addNewLink("link 1", "http://link1.com.br");
+    const links = await screen.findAllByText("link 1");
+    expect(links).toHaveLength(2);
+    expect(links[1]).toHaveProperty("href", "http://link1.com.br/");
+  });
   it.todo("should change the order of the links on preview after drag");
   it.todo("should change the title on the preview when a title is typed");
   it.todo(
