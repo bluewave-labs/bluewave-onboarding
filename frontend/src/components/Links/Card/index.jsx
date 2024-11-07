@@ -5,7 +5,7 @@ import s from "./Card.module.scss";
 
 const CardContainer = ({ children }) => {
   return (
-    <div id='cards'>
+    <div data-testid='cards' id="cards">
       <List className={s.card__container}>{children}</List>
     </div>
   );

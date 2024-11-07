@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { act } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
@@ -58,23 +59,21 @@ const renderPopup = async () => {
   );
 };
 
-const addNewLink = async (title, url, target) => {
+const addNewLink = async (title, url, target = true) => {
   const addNewLinkBtn = await screen.findByText("+ Add new link");
   await act(async () => {
-    fireEvent.click(addNewLinkBtn);
+    await userEvent.click(addNewLinkBtn);
   });
   const settings = await screen.findByRole("form");
   expect(settings).to.exist;
   const inputs = settings.querySelectorAll("input");
   await act(async () => {
-    fireEvent.change(inputs[1], { target: { value: title } });
-    fireEvent.change(inputs[2], { target: { value: url } });
-    if (target !== null) {
-      fireEvent.change(inputs[3], {
-        target: { value: target, checked: target },
-      });
+    await userEvent.type(inputs[1], title);
+    await userEvent.type(inputs[2], url);
+    if (!target) {
+      await userEvent.click(inputs[3]);
     }
-    fireEvent.submit(settings);
+    await userEvent.keyboard("[Enter]");
   });
 };
 
@@ -83,7 +82,7 @@ const openAppearance = async () => {
     name: "Appearance",
   });
   await act(async () => {
-    fireEvent.click(appearanceBtn);
+    await userEvent.click(appearanceBtn);
   });
 };
 
@@ -96,7 +95,7 @@ describe("Test Helper Link popup", () => {
     await renderPopup();
     const addNewLinkBtn = await screen.findByText("+ Add new link");
     await act(async () => {
-      fireEvent.click(addNewLinkBtn);
+      await userEvent.click(addNewLinkBtn);
     });
     const settings = await screen.findByRole("form");
     expect(settings).to.exist;
@@ -113,6 +112,7 @@ describe("Test Helper Link popup", () => {
     const links = await screen.findAllByText("link 1");
     expect(links).toHaveLength(2);
     expect(links[1]).toHaveProperty("href", "http://link1.com.br/");
+    expect(links[1]).toHaveProperty("target", "_blank");
   });
   it("should add the new link to links list and to the preview with the correct target when a new link is created", async () => {
     await renderPopup();
@@ -134,27 +134,34 @@ describe("Test Helper Link popup", () => {
     await addNewLink("link 2", "http://link2.com.br");
     await addNewLink("link 3", "http://link3.com.br");
     const links = await screen.findAllByText(/link \d/, { selector: "span" });
-    const linksContainer = links[0].parentElement;
+    const linksContainer = screen.getByTestId("cards");
+    const listItems = linksContainer.querySelectorAll("li");
     expect(links).toHaveLength(3);
     expect(links.map((it) => it.innerHTML)).toEqual([
       "link 1",
       "link 2",
       "link 3",
     ]);
-    fireEvent.mouseDown(links[0], { which: 1, button: 0 });
-    fireEvent.dragStart(links[0]);
-    fireEvent.dragOver(links[2]);
-    fireEvent.drop(linksContainer);
-    fireEvent.mouseUp(linksContainer, { which: 1, button: 0 });
-    const updatedLinks = await screen.findAllByText(/link \d/, {
-      selector: "span",
+
+    await act(async () => {
+      await userEvent.pointer([
+        { keys: "[MouseLeft>]", target: listItems[0] },
+        { keys: "[/MouseLeft]", target: listItems[2] },
+      ]);
     });
-    expect(updatedLinks).toHaveLength(3);
-    expect(updatedLinks.map((it) => it.innerHTML)).not.toEqual([
-      "link 1",
-      "link 2",
-      "link 3",
-    ]);
+
+    await waitFor(async () => {
+      const updatedLinks = await screen.findAllByText(/link \d/, {
+        selector: "span",
+      });
+
+      expect(updatedLinks).toHaveLength(3);
+      expect(updatedLinks.map((it) => it.innerHTML)).not.toEqual([
+        "link 1",
+        "link 2",
+        "link 3",
+      ]);
+    });
   });
   it("should display the appearance form when the button is clicked", async () => {
     await renderPopup();
@@ -171,7 +178,7 @@ describe("Test Helper Link popup", () => {
     await renderPopup();
     await openAppearance();
     const titleInput = await screen.findByRole("textbox");
-    fireEvent.change(titleInput, { target: { value: "Title" } });
+    await userEvent.type(titleInput, "Title");
     const preview = await screen.findByText("Title");
     expect(preview).to.exist;
   });
@@ -188,6 +195,7 @@ describe("Test Helper Link popup", () => {
     const headerColorInput = form.querySelector("input#header-bg");
     const headerColorLabel = form.querySelector("span.header");
     await act(async () => {
+      await userEvent.pointer(headerColorInput, {});
       fireEvent.change(headerColorInput, {
         target: { value: "#f2f2f2" },
       });

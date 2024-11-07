@@ -56,7 +56,7 @@ const Card = ({ card, onDragEnd, onDragOver, onDragStart, onDrop }) => {
       onDragOver={onDragOver}
       onDrop={() => onDrop(card)}
     >
-      <ListItemAvatar id='drag'>
+      <ListItemAvatar id={`drag-${card.id}`}>
         <IconButton style={{ fontSize: "1rem" }}>
           <SvgIcon className={s.card__icon} fontSize='1'>
             <svg

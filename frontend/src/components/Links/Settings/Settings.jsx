@@ -65,7 +65,7 @@ const Settings = () => {
     ).reduce(
       (acc, it) => ({
         ...acc,
-        [it.name]: it.name === "target" ? it.checked : it.value,
+        [it.name]: it.name === "target" ? state.target : it.value,
       }),
       {}
     );
@@ -89,7 +89,12 @@ const Settings = () => {
   };
 
   return (
-    <form className={s.settings} ref={settingsRef} onSubmit={handleClose} role="form">
+    <form
+      className={s.settings}
+      ref={settingsRef}
+      onSubmit={handleClose}
+      role='form'
+    >
       <div className={s.settings__header}>
         <span className={s["settings__header--title"]}>Add new link</span>
         <div className={s["settings__header--right"]}>
