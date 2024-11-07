@@ -8,20 +8,9 @@ import { AuthProvider } from "../../../services/authProvider";
 import HelperLinkProvider from "../../../services/linksProvider";
 import * as loginServices from "../../../services/loginServices";
 
-vi.mock("react-router-dom", async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual,
-    useNavigate: () => vi.fn(), // Mock useNavigate to avoid actual routing
-  };
-});
-
 vi.mock("../../../services/loginServices");
 vi.mock("../../../services/helperLinkService");
 vi.mock("../../../services/linkService");
-
-const wait = async (time) =>
-  setTimeout(async () => await Promise.resolve(), time);
 
 const logIn = async () => {
   vi.spyOn(loginServices, "signUp").mockResolvedValueOnce({
@@ -91,160 +80,166 @@ describe("Test Helper Link popup", () => {
     const { asFragment } = await renderPopup();
     expect(asFragment).to.matchSnapshot();
   });
-  it("should open the settings drawer when add new link is clicked", async () => {
-    await renderPopup();
-    const addNewLinkBtn = await screen.findByText("+ Add new link");
-    await act(async () => {
-      await userEvent.click(addNewLinkBtn);
-    });
-    const settings = await screen.findByRole("form");
-    expect(settings).to.exist;
-    const inputs = settings.querySelectorAll("input");
-    expect(inputs).toHaveLength(4);
-    expect(inputs[0]).toHaveProperty("name", "id");
-    expect(inputs[1]).toHaveProperty("name", "title");
-    expect(inputs[2]).toHaveProperty("name", "url");
-    expect(inputs[3]).toHaveProperty("name", "target");
-  });
-  it("should add the new link to links list and to the preview when a new link is created", async () => {
-    await renderPopup();
-    await addNewLink("link 1", "http://link1.com.br");
-    const links = await screen.findAllByText("link 1");
-    expect(links).toHaveLength(2);
-    expect(links[1]).toHaveProperty("href", "http://link1.com.br/");
-    expect(links[1]).toHaveProperty("target", "_blank");
-  });
-  it("should add the new link to links list and to the preview with the correct target when a new link is created", async () => {
-    await renderPopup();
-    await addNewLink("link 1", "http://link1.com.br", true);
-    let links = await screen.findAllByText("link 1");
-    expect(links).toHaveLength(2);
-    expect(links[1]).toHaveProperty("href", "http://link1.com.br/");
-    expect(links[1]).toHaveProperty("target", "_blank");
-
-    await addNewLink("link 2", "http://link2.com.br", false);
-    links = await screen.findAllByText("link 2");
-    expect(links).toHaveLength(2);
-    expect(links[1]).toHaveProperty("href", "http://link2.com.br/");
-    expect(links[1]).toHaveProperty("target", "_self");
-  });
-  it.skip("should change the order of the links on preview after drag", async () => {
-    await renderPopup();
-    await addNewLink("link 1", "http://link1.com.br");
-    await addNewLink("link 2", "http://link2.com.br");
-    await addNewLink("link 3", "http://link3.com.br");
-    const links = await screen.findAllByText(/link \d/, { selector: "span" });
-    const linksContainer = screen.getByTestId("cards");
-    const listItems = linksContainer.querySelectorAll("li");
-    expect(links).toHaveLength(3);
-    expect(links.map((it) => it.innerHTML)).toEqual([
-      "link 1",
-      "link 2",
-      "link 3",
-    ]);
-
-    await act(async () => {
-      await userEvent.pointer([
-        { keys: "[MouseLeft>]", target: listItems[0] },
-        { keys: "[/MouseLeft]", target: listItems[2] },
-      ]);
-    });
-
-    await waitFor(async () => {
-      const updatedLinks = await screen.findAllByText(/link \d/, {
-        selector: "span",
+  describe("Test adding a new link", () => {
+    it("should open the settings drawer when add new link is clicked", async () => {
+      await renderPopup();
+      const addNewLinkBtn = await screen.findByText("+ Add new link");
+      await act(async () => {
+        await userEvent.click(addNewLinkBtn);
       });
+      const settings = await screen.findByRole("form");
+      expect(settings).to.exist;
+      const inputs = settings.querySelectorAll("input");
+      expect(inputs).toHaveLength(4);
+      expect(inputs[0]).toHaveProperty("name", "id");
+      expect(inputs[1]).toHaveProperty("name", "title");
+      expect(inputs[2]).toHaveProperty("name", "url");
+      expect(inputs[3]).toHaveProperty("name", "target");
+    });
+    it("should add the new link to links list and to the preview when a new link is created", async () => {
+      await renderPopup();
+      await addNewLink("link 1", "http://link1.com.br");
+      const links = await screen.findAllByText("link 1");
+      expect(links).toHaveLength(2);
+      expect(links[1]).toHaveProperty("href", "http://link1.com.br/");
+      expect(links[1]).toHaveProperty("target", "_blank");
+    });
+    it("should add the new link to links list and to the preview with the correct target when a new link is created", async () => {
+      await renderPopup();
+      await addNewLink("link 1", "http://link1.com.br", true);
+      let links = await screen.findAllByText("link 1");
+      expect(links).toHaveLength(2);
+      expect(links[1]).toHaveProperty("href", "http://link1.com.br/");
+      expect(links[1]).toHaveProperty("target", "_blank");
 
-      expect(updatedLinks).toHaveLength(3);
-      expect(updatedLinks.map((it) => it.innerHTML)).not.toEqual([
+      await addNewLink("link 2", "http://link2.com.br", false);
+      links = await screen.findAllByText("link 2");
+      expect(links).toHaveLength(2);
+      expect(links[1]).toHaveProperty("href", "http://link2.com.br/");
+      expect(links[1]).toHaveProperty("target", "_self");
+    });
+    it.skip("should change the order of the links on preview after drag", async () => {
+      await renderPopup();
+      await addNewLink("link 1", "http://link1.com.br");
+      await addNewLink("link 2", "http://link2.com.br");
+      await addNewLink("link 3", "http://link3.com.br");
+      const links = await screen.findAllByText(/link \d/, { selector: "span" });
+      const linksContainer = screen.getByTestId("cards");
+      const listItems = linksContainer.querySelectorAll("li");
+      expect(links).toHaveLength(3);
+      expect(links.map((it) => it.innerHTML)).toEqual([
         "link 1",
         "link 2",
         "link 3",
       ]);
-    });
-  });
-  it("should display the appearance form when the button is clicked", async () => {
-    await renderPopup();
-    await openAppearance();
-    const inputs = (await screen.findByRole("form")).querySelectorAll("input");
 
-    expect(inputs).toHaveLength(4);
-    expect(inputs[0]).toHaveProperty("name", "title");
-    expect(inputs[1]).toHaveProperty("name", "headerBackgroundColor");
-    expect(inputs[2]).toHaveProperty("name", "linkFontColor");
-    expect(inputs[3]).toHaveProperty("name", "iconColor");
-  });
-  it("should change the title on the preview when a title is typed", async () => {
-    await renderPopup();
-    await openAppearance();
-    const titleInput = await screen.findByRole("textbox");
-    await userEvent.type(titleInput, "Title");
-    const preview = await screen.findByText("Title");
-    expect(preview).to.exist;
-  });
-  it("should change the background color of the header if the color is changed", async () => {
-    await renderPopup();
-    await openAppearance();
-    const previewHeader = (await screen.findByTestId("preview")).querySelector(
-      ".preview__card--header"
-    );
-    expect(getComputedStyle(previewHeader).backgroundColor).toBe(
-      "rgb(248, 249, 248)"
-    );
-    const form = await screen.findByRole("form");
-    const headerColorInput = form.querySelector("input#header-bg");
-    const headerColorLabel = form.querySelector("span.header");
-    await act(async () => {
-      await userEvent.pointer(headerColorInput, {});
-      fireEvent.change(headerColorInput, {
-        target: { value: "#f2f2f2" },
+      await act(async () => {
+        await userEvent.pointer([
+          { keys: "[MouseLeft>]", target: listItems[0] },
+          { keys: "[/MouseLeft]", target: listItems[2] },
+        ]);
+      });
+
+      await waitFor(async () => {
+        const updatedLinks = await screen.findAllByText(/link \d/, {
+          selector: "span",
+        });
+
+        expect(updatedLinks).toHaveLength(3);
+        expect(updatedLinks.map((it) => it.innerHTML)).not.toEqual([
+          "link 1",
+          "link 2",
+          "link 3",
+        ]);
       });
     });
-    expect(headerColorLabel.innerHTML).toBe("#f2f2f2");
-    expect(getComputedStyle(previewHeader).backgroundColor).toBe(
-      "rgb(242, 242, 242)"
-    );
   });
-  it("should change the link text color if the color is changed", async () => {
-    await renderPopup();
-    await addNewLink("link 1", "http://localhost:4321");
-    await openAppearance();
-    const previewLink = (await screen.findByTestId("preview")).querySelector(
-      "li.preview__card--item a"
-    );
-    expect(getComputedStyle(previewLink).color).toBe("rgb(52, 64, 84)");
-    const form = await screen.findByRole("form");
-    const linkColorInput = form.querySelector("input#link-color");
-    const linkColorLabel = form.querySelector("span.link");
-    await act(async () => {
-      fireEvent.change(linkColorInput, {
-        target: { value: "#000" },
-      });
+  describe("Test the appearance and the preview", () => {
+    it("should display the appearance form when the button is clicked", async () => {
+      await renderPopup();
+      await openAppearance();
+      const inputs = (await screen.findByRole("form")).querySelectorAll(
+        "input"
+      );
+
+      expect(inputs).toHaveLength(4);
+      expect(inputs[0]).toHaveProperty("name", "title");
+      expect(inputs[1]).toHaveProperty("name", "headerBackgroundColor");
+      expect(inputs[2]).toHaveProperty("name", "linkFontColor");
+      expect(inputs[3]).toHaveProperty("name", "iconColor");
     });
-    expect(linkColorLabel.innerHTML).toBe("#000000");
-    expect(getComputedStyle(previewLink).color).toBe("rgb(0, 0, 0)");
-  });
-  it("should change the icon color if the color is changed", async () => {
-    await renderPopup();
-    await addNewLink("link 1", "http://localhost:4321");
-    await openAppearance();
-    const previewIcon = (await screen.findByTestId("preview")).querySelector(
-      ".preview__card--icon"
-    );
-    expect(previewIcon.querySelector("path").getAttribute("stroke")).toBe(
-      "#7F56D9"
-    );
-    const form = await screen.findByRole("form");
-    const iconColorInput = form.querySelector("input#icon");
-    const iconColorLabel = form.querySelector("span.icon");
-    await act(async () => {
-      fireEvent.change(iconColorInput, {
-        target: { value: "#000" },
-      });
+    it("should change the title on the preview when a title is typed", async () => {
+      await renderPopup();
+      await openAppearance();
+      const titleInput = await screen.findByRole("textbox");
+      await userEvent.type(titleInput, "Title");
+      const preview = await screen.findByText("Title");
+      expect(preview).to.exist;
     });
-    expect(iconColorLabel.innerHTML).toBe("#000000");
-    expect(previewIcon.querySelector("path").getAttribute("stroke")).toBe(
-      "#000000"
-    );
+    it("should change the background color of the header if the color is changed", async () => {
+      await renderPopup();
+      await openAppearance();
+      const previewHeader = (
+        await screen.findByTestId("preview")
+      ).querySelector(".preview__card--header");
+      expect(getComputedStyle(previewHeader).backgroundColor).toBe(
+        "rgb(248, 249, 248)"
+      );
+      const form = await screen.findByRole("form");
+      const headerColorInput = form.querySelector("input#header-bg");
+      const headerColorLabel = form.querySelector("span.header");
+      await act(async () => {
+        await userEvent.pointer(headerColorInput, {});
+        fireEvent.change(headerColorInput, {
+          target: { value: "#f2f2f2" },
+        });
+      });
+      expect(headerColorLabel.innerHTML).toBe("#f2f2f2");
+      expect(getComputedStyle(previewHeader).backgroundColor).toBe(
+        "rgb(242, 242, 242)"
+      );
+    });
+    it("should change the link text color if the color is changed", async () => {
+      await renderPopup();
+      await addNewLink("link 1", "http://localhost:4321");
+      await openAppearance();
+      const previewLink = (await screen.findByTestId("preview")).querySelector(
+        "li.preview__card--item a"
+      );
+      expect(getComputedStyle(previewLink).color).toBe("rgb(52, 64, 84)");
+      const form = await screen.findByRole("form");
+      const linkColorInput = form.querySelector("input#link-color");
+      const linkColorLabel = form.querySelector("span.link");
+      await act(async () => {
+        fireEvent.change(linkColorInput, {
+          target: { value: "#000" },
+        });
+      });
+      expect(linkColorLabel.innerHTML).toBe("#000000");
+      expect(getComputedStyle(previewLink).color).toBe("rgb(0, 0, 0)");
+    });
+    it("should change the icon color if the color is changed", async () => {
+      await renderPopup();
+      await addNewLink("link 1", "http://localhost:4321");
+      await openAppearance();
+      const previewIcon = (await screen.findByTestId("preview")).querySelector(
+        ".preview__card--icon"
+      );
+      expect(previewIcon.querySelector("path").getAttribute("stroke")).toBe(
+        "#7F56D9"
+      );
+      const form = await screen.findByRole("form");
+      const iconColorInput = form.querySelector("input#icon");
+      const iconColorLabel = form.querySelector("span.icon");
+      await act(async () => {
+        fireEvent.change(iconColorInput, {
+          target: { value: "#000" },
+        });
+      });
+      expect(iconColorLabel.innerHTML).toBe("#000000");
+      expect(previewIcon.querySelector("path").getAttribute("stroke")).toBe(
+        "#000000"
+      );
+    });
   });
 });
