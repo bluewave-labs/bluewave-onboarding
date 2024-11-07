@@ -78,7 +78,7 @@ const openAppearance = async () => {
 describe("Test Helper Link popup", () => {
   it("Tests if the popup is rendered correctly", async () => {
     const { asFragment } = await renderPopup();
-    expect(asFragment).to.matchSnapshot();
+    expect(asFragment()).to.matchSnapshot();
   });
   describe("Test adding a new link", () => {
     it("should open the settings drawer when add new link is clicked", async () => {
