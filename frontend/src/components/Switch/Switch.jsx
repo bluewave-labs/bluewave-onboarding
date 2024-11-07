@@ -11,9 +11,9 @@ import "./Switch.css";
  *
  * - value<String>: Standard input value attribute
  */
-export default function Switch({ id, name, value, enabled, onChange }) {
+export default function Switch({ id, name, value, enabled = true, onChange }) {
   return (
-    <label className='switch' htmlFor={id}>
+    <label className='switch'>
       <input
         type='checkbox'
         id={id}

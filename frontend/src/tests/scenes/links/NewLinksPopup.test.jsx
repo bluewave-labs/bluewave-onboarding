@@ -59,10 +59,10 @@ const addNewLink = async (title, url, target = true) => {
   await act(async () => {
     await userEvent.type(inputs[1], title);
     await userEvent.type(inputs[2], url);
-    if (!target) {
+    if (target === false) {
       await userEvent.click(inputs[3]);
     }
-    await userEvent.keyboard("[Enter]");
+    await userEvent.click(screen.getByTestId("close"));
   });
 };
 
@@ -106,7 +106,7 @@ describe("Test Helper Link popup", () => {
     });
     it("should add the new link to links list and to the preview with the correct target when a new link is created", async () => {
       await renderPopup();
-      await addNewLink("link 1", "http://link1.com.br", true);
+      await addNewLink("link 1", "http://link1.com.br");
       let links = await screen.findAllByText("link 1");
       expect(links).toHaveLength(2);
       expect(links[1]).toHaveProperty("href", "http://link1.com.br/");
@@ -136,7 +136,8 @@ describe("Test Helper Link popup", () => {
       await act(async () => {
         await userEvent.pointer([
           { keys: "[MouseLeft>]", target: listItems[0] },
-          { keys: "[/MouseLeft]", target: listItems[2] },
+          { keys: "[MouseLeft]", target: listItems[2] },
+          { keys: "[/MouseLeft]" },
         ]);
       });
 

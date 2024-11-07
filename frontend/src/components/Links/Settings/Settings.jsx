@@ -104,6 +104,7 @@ const Settings = () => {
           <CloseOutlinedIcon
             onClick={handleClose}
             style={{ color: "#98A2B3", fontSize: "20px", cursor: "pointer" }}
+            data-testid="close"
           />
         </div>
       </div>
