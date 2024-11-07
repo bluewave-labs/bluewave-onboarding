@@ -12,7 +12,7 @@ const CardContainer = ({ children }) => {
 };
 
 CardContainer.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
 };
 
 export default CardContainer;

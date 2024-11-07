@@ -4,6 +4,10 @@ import { HelperLinkContext } from "../../../services/linksProvider";
 import s from "./Popup.module.scss";
 
 const Popup = () => {
+  const context = useContext(HelperLinkContext);
+  if (!context) {
+    throw new Error("Popup must be used within a HelperLinkContext.Provider");
+  }
   const {
     isPopupOpen,
     setIsPopupOpen,
@@ -12,7 +16,7 @@ const Popup = () => {
     links,
     setDeletedLinks,
     setItemToDelete,
-  } = useContext(HelperLinkContext);
+  } = context;
 
   const handleClosePopup = async () => {
     setIsPopupOpen(false);

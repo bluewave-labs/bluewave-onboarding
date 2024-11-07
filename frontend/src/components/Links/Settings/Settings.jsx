@@ -77,13 +77,15 @@ const Settings = () => {
     if (linkToEdit) {
       setLinks((prev) =>
         prev.map((it) =>
-          it.title === oldLink.title && it.id === oldLink.id ? info : it
+          it.title === oldLink.title && it.id === oldLink.id
+            ? { ...info, id: +info.id }
+            : it
         )
       );
       setLinkToEdit(null);
       toggleSettings(e);
     } else {
-      setLinks((prev) => [...prev, info]);
+      setLinks((prev) => [...prev, { ...info, id: +info.id }]);
       toggleSettings(e);
     }
   };

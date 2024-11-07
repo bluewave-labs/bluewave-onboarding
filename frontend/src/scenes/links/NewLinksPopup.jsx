@@ -56,6 +56,7 @@ const NewLinksPopup = ({
           return await createLink({ ...link, helperId });
         } catch (err) {
           emitToastError(err);
+          return null;
         }
       })
     );
@@ -71,6 +72,7 @@ const NewLinksPopup = ({
       setHelper(newHelper);
     } catch (err) {
       emitToastError(err);
+      return null;
     }
     createdLinks = await handleLinks(newHelper.id);
     if (helperToEdit && deletedLinks.length) {
@@ -80,6 +82,7 @@ const NewLinksPopup = ({
             return await deleteLink({ ...it, helperId: helperToEdit });
           } catch (err) {
             emitToastError(err);
+            return null;
           }
         })
       );

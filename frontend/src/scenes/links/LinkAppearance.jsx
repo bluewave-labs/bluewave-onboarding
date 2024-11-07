@@ -3,7 +3,11 @@ import { HelperLinkContext } from "../../services/linksProvider";
 import s from "./LinkPage.module.scss";
 
 const LinkAppearance = () => {
-  const { helper, setHelper } = useContext(HelperLinkContext);
+  const context = useContext(HelperLinkContext);
+  if (!context) {
+    throw new Error("LinkAppearance must be used within a HelperLinkProvider");
+  }
+  const { helper, setHelper } = context;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -11,7 +15,7 @@ const LinkAppearance = () => {
   };
 
   return (
-    <form className={s.appearance} role="form">
+    <form className={s.appearance} role='form'>
       <label htmlFor='header' className={s.appearance__label}>
         Header text{" "}
         <input

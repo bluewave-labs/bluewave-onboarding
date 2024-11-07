@@ -23,8 +23,11 @@ export const getHelperById = async (id) => {
 
 export const createHelper = async (helper) => {
   try {
+    if (!helper?.title?.trim()) {
+      throw new Error("Helper title is required");
+    }
     const response = await apiClient.post(`/helper-link/add_helper`, {
-      title: helper.title,
+      title: helper.title.trim(),
     });
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
@@ -36,13 +39,16 @@ export const createHelper = async (helper) => {
 
 export const updateHelper = async (helper) => {
   try {
-    const response = await apiClient.put(`/helper-link/edit_helper/${helper.id}`, {
-      title: helper.title,
-      headerBackgroundColor: helper.headerBackgroundColor,
-      linkFontColor: helper.linkFontColor,
-      iconColor: helper.iconColor,
-      userId: helper.userId,
-    });
+    const response = await apiClient.put(
+      `/helper-link/edit_helper/${helper.id}`,
+      {
+        title: helper.title,
+        headerBackgroundColor: helper.headerBackgroundColor,
+        linkFontColor: helper.linkFontColor,
+        iconColor: helper.iconColor,
+        userId: helper.userId,
+      }
+    );
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {

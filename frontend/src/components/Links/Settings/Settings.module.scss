@@ -1,5 +1,13 @@
 @use "../../../styles/globals.scss" as *;
 
+:root {
+  --font-family-inter: "Inter", sans-serif;
+  --font-size-sm: 0.688rem;
+  --font-size-md: 0.813rem;
+  --font-size-lg: 1.25rem;
+  --spacing-unit: 0.313rem;
+}
+
 .settings {
   box-shadow: 0px 8px 8px -4px var(--shadow-one);
   box-shadow: 0px 20px 24px -4px var(--shadow-two);
@@ -20,9 +28,9 @@
     align-items: center;
 
     &--title {
-      font-size: 1.25rem;
+      font-size: var(--font-size-lg);
       font-weight: bold;
-      margin-left: 0.313rem;
+      margin-left: var(--spacing-unit);
     }
 
     &--right {
@@ -32,8 +40,8 @@
       & span {
         margin-right: 22px;
 
-        font-family: Inter;
-        font-size: 0.688rem;
+        font-family: var(--font-family-inter);
+        font-size: var(--font-size-sm);
         font-weight: 400;
         line-height: 1.45;
       }
@@ -46,8 +54,8 @@
     &--text {
       margin-bottom: 0.625rem;
 
-      font-family: Inter;
-      font-size: 0.813rem;
+      font-family: var(--font-family-inter);
+      font-size: var(--font-size-md);
       font-weight: 400;
       line-height: 1.54;
     }
@@ -75,8 +83,8 @@
           margin-left: 0.625rem;
           cursor: pointer;
 
-          font-family: Inter;
-          font-size: 0.813rem;
+          font-family: var(--font-family-inter);
+          font-size: var(--font-size-md);
           font-weight: 400;
           line-height: 1.54;
         }
@@ -85,7 +93,7 @@
 
     &--input {
       max-width: 100%;
-      padding: 0.313rem;
+      padding: var(--spacing-unit);
       margin-bottom: 1rem;
       border: 1px solid var(--light-border-color);
       box-shadow: 0px 1px 2px 0px #1018280d;
@@ -97,9 +105,9 @@
       margin-bottom: 1.75rem;
       max-width: 100%;
 
-      font-family: Inter;
+      font-family: var(--font-family-inter);
       white-space: wrap;
-      font-size: 0.688rem;
+      font-size: var(--font-size-sm);
       font-weight: 400;
       line-height: 1.45;
     }

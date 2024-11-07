@@ -12,7 +12,7 @@ import NewLinksPopup from "./NewLinksPopup";
 const LinksDefaultPage = () => {
   const [currentHelper, setCurrentHelper] = useState({});
   const [currentLinks, setCurrentLinks] = useState([]);
-  const [showNewLinkPopup, setShowNewLinkPopup] = useState(false);
+  const [showNewLinksPopup, setShowNewLinksPopup] = useState(false);
   const [helperState, setHelperState] = useState(null)
 
   const style = {
@@ -27,12 +27,12 @@ const LinksDefaultPage = () => {
   return (
     <HelperLinkProvider>
       <div style={style}>
-        {showNewLinkPopup ? (
+        {showNewLinksPopup ? (
           <NewLinksPopup
             currentHelper={currentHelper}
             currentLinks={currentLinks}
             setHelper={setCurrentHelper}
-            setShowNewLinksPopup={setShowNewLinkPopup}
+            setShowNewLinksPopup={setShowNewLinksPopup}
             helperState={helperState}
           />
         ) : (
@@ -53,7 +53,7 @@ const LinksDefaultPage = () => {
                   iconColor: "#7F56D9",
                 });
               }
-              setShowNewLinkPopup(true);
+              setShowNewLinksPopup(true);
             }}
             itemType={ACTIVITY_TYPES_INFO.HELPERLINKS}
             itemTypeInfo={ACTIVITY_TYPES_INFO.HELPERLINKS}

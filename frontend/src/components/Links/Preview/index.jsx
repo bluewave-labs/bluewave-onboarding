@@ -6,7 +6,11 @@ import { HelperLinkContext } from "../../../services/linksProvider";
 import s from "./Preview.module.scss";
 
 const Preview = () => {
-  const { links, helper } = useContext(HelperLinkContext);
+  const context = useContext(HelperLinkContext);
+  if (!context) {
+    return <div>Error: Helper Link context not found!</div>;
+  }
+  const { links = [], helper = {} } = context;
 
   const { title, headerBackgroundColor, linkFontColor, iconColor } = helper;
 

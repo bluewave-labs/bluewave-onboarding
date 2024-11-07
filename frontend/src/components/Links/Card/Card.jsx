@@ -17,9 +17,14 @@ const Card = ({ card, onDragEnd, onDragOver, onDragStart, onDrop }) => {
     useContext(HelperLinkContext);
   const { title } = card;
 
-  const onDelete = () => {
-    setItemToDelete(card);
-    setIsPopupOpen(true);
+  const onDelete = (e) => {
+    try {
+      e.stopPropagation();
+      setItemToDelete(card);
+      setIsPopupOpen(true);
+    } catch (error) {
+      console.error("Failed to initiate delete:", error);
+    }
   };
 
   return (

@@ -1,7 +1,22 @@
 import { apiClient } from "./apiClient";
 
+const isValidUrl = (url) => {
+  try {
+    new URL(url)
+    return true
+  } catch {
+    return false
+  }
+}
+
 export const createLink = async (link) => {
   try {
+    if (!link.title?.trim() || !link.url?.trim()) {
+      throw new Error("Title and URL are required");
+    }
+    if (!isValidUrl(link.url)) {
+      throw new Error("Invalid URL format");
+    }
     const response = await apiClient.post(`/link/add_link`, {
       title: link.title,
       url: link.url,
@@ -12,14 +27,16 @@ export const createLink = async (link) => {
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {
-    console.error("Update Link error:", error.response);
+    console.error("Create Link error:", error.response);
     throw error;
   }
 };
 
 export const getLinks = async (helperId) => {
   try {
-    const response = await apiClient.get(`/link/get_links?helperId=${helperId}`);
+    const response = await apiClient.get(
+      `/link/get_links?helperId=${helperId}`
+    );
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {
@@ -34,9 +51,9 @@ export const getLinkById = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Get Link error:", error.response);
-    return false
+    return false;
   }
-}
+};
 
 export const updateLink = async (link) => {
   try {
@@ -45,7 +62,7 @@ export const updateLink = async (link) => {
       url: link.url,
       order: link.order,
       target: link.target ? "_blank" : "_self",
-      helperId: link.helperId
+      helperId: link.helperId,
     });
     if (response.status >= 400) throw new Error(response.data);
     return response.data;

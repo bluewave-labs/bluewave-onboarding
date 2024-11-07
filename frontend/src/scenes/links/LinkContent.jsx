@@ -12,7 +12,7 @@ const LinkContent = () => {
   const { links, toggleSettings, setLinks } = useContext(HelperLinkContext);
 
   const handleDragStart = (item) => {
-    // setDraggingItem(item);
+    setDraggingItem(item);
   };
 
   const handleDragEnd = () => {
