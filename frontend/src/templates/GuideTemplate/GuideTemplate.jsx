@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import Button from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 
-const GuideTemplate = ({ title = '', handleButtonClick = () => null, activeButton = 0, leftContent = () => null, rightContent = () => null, leftAppearance = () => null, onSave= () => null, contentType = "/" }) => {
+const GuideTemplate = ({ title = '', handleButtonClick = () => null, activeButton = 0, leftContent = () => null, rightContent = () => null, leftAppearance = () => null, onSave= () => null, contentType = "/", isSaveDisabled = false }) => {
     const navigate = useNavigate();
     const buttons = ['Content', 'Appearance'];
     return (
@@ -37,7 +37,7 @@ const GuideTemplate = ({ title = '', handleButtonClick = () => null, activeButto
                     </div>
                     <div className={styles.optionButtons}>
                         <Button text='Cancel' buttonType='secondary-grey' onClick={() => {navigate('/');}}/>
-                        <Button text='Save'onClick={onSave}/>
+                        <Button text='Save' onClick={onSave} disabled={isSaveDisabled}/>
                     </div>
                 </div>
             </div>
@@ -54,6 +54,7 @@ GuideTemplate.propTypes = {
     rightContent: PropTypes.func,
     leftAppearance: PropTypes.func,
     onSave: PropTypes.func,
+    isSaveDisabled: PropTypes.bool,
 };
 
 export default GuideTemplate;

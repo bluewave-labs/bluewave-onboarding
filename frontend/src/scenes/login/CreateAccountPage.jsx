@@ -74,7 +74,7 @@ function CreateAccountPage() {
     !formik.values.password;
 
   const hasMinLength = formik.values.password.length >= 8;
-  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(formik.values.password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>=\-_]/.test(formik.values.password);
 
   return (
     <form

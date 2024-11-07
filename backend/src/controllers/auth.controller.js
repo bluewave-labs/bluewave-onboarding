@@ -9,8 +9,8 @@ const crypto = require('crypto');
 const { TOKEN_LIFESPAN } = require('../utils/constants.helper');
 const { sendSignupEmail, sendPasswordResetEmail } = require('../service/email.service');
 const settings = require("../../config/settings");
-const he = require('he');
-const { create } = require("domain");
+// const he = require('he');
+// const { create } = require("domain");
 
 const findUserByEmail = async (email) => {
   return await User.findOne({ where: { email } });

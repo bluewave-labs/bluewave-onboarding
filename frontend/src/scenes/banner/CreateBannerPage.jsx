@@ -19,10 +19,30 @@ const BannerPage = () => {
     const [bannerText, setBannerText] = useState('');
     const [url, setUrl] = useState('');
     const [buttonAction, setButtonAction] = useState('No action');
+    const [isBackgroundColorValid, setIsBackgroundColorValid] = useState(true);
+    const [isFontColorValid, setIsFontColorValid] = useState(true);
+    const [isBackgroundColorTouched, setIsBackgroundColorTouched] = useState(false);
+    const [isFontColorTouched, setIsFontColorTouched] = useState(false);
 
     const handleButtonClick = (index) => {
         setActiveButton(index);
     };
+
+    const validateHexColor = (color) => /^#[0-9A-F]{6}$/i.test(color);
+
+    const handleBackgroundColorChange = (color) => {
+        setBackgroundColor(color);
+        setIsBackgroundColorValid(validateHexColor(color));
+        setIsBackgroundColorTouched(true);
+    };
+
+    const handleFontColorChange = (color) => {
+        setFontColor(color);
+        setIsFontColorValid(validateHexColor(color));
+        setIsFontColorTouched(true);
+    };
+
+    const isSaveDisabled = !isBackgroundColorValid || !isFontColorValid;
 
     useEffect(() => {
         if (location.state?.isEdit) {
@@ -75,6 +95,7 @@ const BannerPage = () => {
             activeButton={activeButton}
             handleButtonClick={handleButtonClick}
             onSave={onSave}
+            isSaveDisabled={isSaveDisabled}
             rightContent={() =>
                 <BannerPreview
                     backgroundColor={backgroundColor}
@@ -95,9 +116,13 @@ const BannerPage = () => {
             leftAppearance={() => (
                 <BannerLeftAppearance
                     backgroundColor={backgroundColor}
-                    setBackgroundColor={setBackgroundColor}
+                    setBackgroundColor={handleBackgroundColorChange}
                     fontColor={fontColor}
-                    setFontColor={setFontColor}
+                    setFontColor={handleFontColorChange}
+                    isBackgroundColorValid={isBackgroundColorValid}
+                    isFontColorValid={isFontColorValid}
+                    isBackgroundColorTouched={isBackgroundColorTouched}
+                    isFontColorTouched={isFontColorTouched}
                 />
             )} />
     );

@@ -1,0 +1,252 @@
+[33mcommit 81bfb2e1a53f18533dbd1bbea859eb1e5107dd36[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m
+Author: Amaan Pathan <eulerbutcooler@gmail.com>
+Date:   Sun Nov 3 16:05:16 2024 +0530
+
+    refactored hints and cleaned up auth and banner helpers. added extra symbols in password regex
+
+[33mcommit 2f1e02d29c58b552f4419ddc6b47b1ac3a0c5691[m
+Author: Amaan Pathan <eulerbutcooler@gmail.com>
+Date:   Fri Nov 1 23:09:58 2024 +0530
+
+    banner and popuplog refactored
+
+[33mcommit 6b30ea13284b79e085db42410a598182335086e4[m
+Merge: 16a2d84 a7861dc
+Author: Amaan Pathan <eulerbutcooler@gmail.com>
+Date:   Tue Oct 29 16:58:51 2024 +0530
+
+    Merge remote-tracking branch 'upstream/develop' into develop
+
+[33mcommit 16a2d845b3a1d31916b45044a496efb826654389[m
+Author: Amaan Pathan <eulerbutcooler@gmail.com>
+Date:   Tue Oct 29 16:44:32 2024 +0530
+
+    auth validation - backend + frontend
+
+[33mcommit a7861dc23accc6355aca3889856848b492ee0459[m[33m ([m[1;31mupstream/develop[m[33m)[m
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Tue Oct 29 02:58:36 2024 +0300
+
+    Update loginHelper.js
+
+[33mcommit ee20cce068a82319ad6d12b5d16f6fb50ed18d37[m
+Merge: 42191d8 bf9b00e
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Sun Oct 27 04:15:28 2024 +0300
+
+    Merge pull request #319 from bluewave-labs/remove-invites-for-testing
+    
+    removed invites for testing
+
+[33mcommit 42191d8caea4fad29b0d08b005006554997c93c0[m
+Merge: f597526 0aebb7d
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Sun Oct 27 04:14:53 2024 +0300
+
+    Merge pull request #312 from jaykayudo/chore/add-migrations
+    
+    Create migrations for tour, hints, banners and popup_logs table
+
+[33mcommit 0aebb7dcbba027dd3da5d67850fec44a7fca0537[m
+Author: jaykayudo <jaykayudo@gmail.com>
+Date:   Sun Oct 27 00:55:43 2024 +0100
+
+    fix: revert createdBy Index
+
+[33mcommit 475ffd4857f109f68e0aaea435602ab8f4ece4f0[m
+Author: jaykayudo <jaykayudo@gmail.com>
+Date:   Sun Oct 27 00:28:06 2024 +0100
+
+    fix: fix error with migration
+
+[33mcommit 2f9fc81df5b5c85ea70624f1065cc8798299d34c[m
+Author: jaykayudo <jaykayudo@gmail.com>
+Date:   Sat Oct 26 23:31:44 2024 +0100
+
+    refactor: revert string to enum
+
+[33mcommit bf9b00e978afb818b459f8db1783da90acccd37e[m[33m ([m[1;31mupstream/remove-invites-for-testing[m[33m)[m
+Merge: cd1d1df f597526
+Author: erenfn <erenfindik7@gmail.com>
+Date:   Sun Oct 27 00:32:34 2024 +0300
+
+    resolved conflicts
+
+[33mcommit f597526d22f762eb4bfc7d6745c7bed912a31531[m
+Merge: 07f51af 683c4b9
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Sun Oct 27 00:28:27 2024 +0300
+
+    Merge pull request #325 from bluewave-labs/frontend-foler-restructure
+    
+    Frontend folder restructure
+
+[33mcommit cd1d1df576f7098c9ee3c09506e96769437ea028[m
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Sun Oct 27 00:24:32 2024 +0300
+
+    Update team.routes.js
+
+[33mcommit da1110b0372abec96d51cd0ba5646ed37dbd960c[m
+Author: erenfn <erenfindik7@gmail.com>
+Date:   Sun Oct 27 00:16:46 2024 +0300
+
+    revert env
+
+[33mcommit 683c4b9bd2f52a6a2c14589c2908c613ec37adfc[m[33m ([m[1;31mupstream/frontend-foler-restructure[m[33m)[m
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Sat Oct 26 23:18:16 2024 +0300
+
+    Rename CreateActivityButtonData.js to createActivityButtonData.js
+
+[33mcommit 5e7c46dcae535bab9ae5a0e87fe1c1ee476be703[m
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Sat Oct 26 23:17:53 2024 +0300
+
+    Update and rename GuideMainPageData.js to guideMainPageData.js
+
+[33mcommit 5bb3fd2d679d4e05c0662fb9e70129d9cf9d6ac9[m
+Author: erenfn <erenfindik7@gmail.com>
+Date:   Sat Oct 26 23:13:22 2024 +0300
+
+    change file names
+
+[33mcommit aa43853f9bde2a59f21a63b65526088c100e9c48[m
+Author: erenfn <erenfindik7@gmail.com>
+Date:   Sat Oct 26 23:04:44 2024 +0300
+
+    undo base url
+
+[33mcommit 2c127088a3795ca65707bba1021cf6c6b15af022[m
+Author: erenfn <erenfindik7@gmail.com>
+Date:   Sat Oct 26 23:03:24 2024 +0300
+
+    frontend folder restructure
+
+[33mcommit aa8b9b1e8c75abc432223bcf3e0d7e095d9881db[m
+Author: erenfn <erenfindik7@gmail.com>
+Date:   Sat Oct 26 23:03:13 2024 +0300
+
+    frontend folder restructure
+
+[33mcommit dcae71e64dbdcee5d40f346131f9800ba38db9f0[m
+Author: jaykayudo <jaykayudo@gmail.com>
+Date:   Sat Oct 26 20:20:37 2024 +0100
+
+    fix: remove custom validator from migrations
+
+[33mcommit 07f51af9e03840eebef97215b494aedee3716b0a[m
+Merge: c4dff05 b087e89
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Sat Oct 26 21:32:36 2024 +0300
+
+    Merge pull request #308 from mr-loop-1/feature/settings-integration
+    
+    Settings Integration
+
+[33mcommit b087e89b8a2133a37c2374fdbac3f0cbca27018b[m
+Merge: 16d6900 c4dff05
+Author: mr-loop-1 <loopolecreator1@gmail.com>
+Date:   Sat Oct 26 08:14:56 2024 +0530
+
+    Merge branch 'develop' into feature/settings-integration
+
+[33mcommit 52a5fb37e9bab97e3c655edb3244586e3de146d3[m
+Author: erenfn <erenfindik7@gmail.com>
+Date:   Sat Oct 26 05:18:53 2024 +0300
+
+    coderabbit changes
+
+[33mcommit c4dff05c72d94e36166cf23f4971638bd45a0561[m
+Merge: d0180d4 b4ba5c8
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Sat Oct 26 05:05:58 2024 +0300
+
+    Merge pull request #321 from bluewave-labs/320-standardize-backend-file-patterns
+    
+    320 standardize backend file patterns
+
+[33mcommit d0180d4461685c771a18169ef68627356f8193ba[m
+Merge: 9bf94d6 5deba11
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Sat Oct 26 05:00:02 2024 +0300
+
+    Merge pull request #275 from bluewave-labs/273-fix-checkColorFields
+    
+    fixed checkColorFields
+
+[33mcommit 5deba11b0ffe7b981e8f73522a748231a9b5c56b[m[33m ([m[1;31mupstream/273-fix-checkColorFields[m[33m)[m
+Merge: fb44717 9bf94d6
+Author: erenfn <erenfindik7@gmail.com>
+Date:   Sat Oct 26 04:55:10 2024 +0300
+
+    Merge branch 'develop' of https://github.com/bluewave-labs/bluewave-onboarding into 273-fix-checkColorFields
+
+[33mcommit 9bf94d66c11dbd49ca8ac8e39dca78145fbaee1b[m
+Merge: 1fce852 f0b22ed
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Sat Oct 26 04:52:39 2024 +0300
+
+    Merge pull request #318 from bluewave-labs/banner-component
+    
+    Banner component
+
+[33mcommit 1fce852899d104b91435f1571ece9cf7cc8da32b[m
+Merge: c2a6199 1cb8537
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Sat Oct 26 04:52:35 2024 +0300
+
+    Merge pull request #317 from bluewave-labs/refactor-css-fonts
+    
+    refactor css fonts
+
+[33mcommit c2a6199940017828cd5e1b0534b656d7dbf4114a[m
+Merge: e55a027 521fe84
+Author: erenfn <81182796+erenfn@users.noreply.github.com>
+Date:   Sat Oct 26 04:52:27 2024 +0300
+
+    Merge pull request #313 from bluewave-labs/fullname-refactor
+    
+    Fullname refactor
+
+[33mcommit 543d00e8c83abeabcc6d0e6eea8b23961df9b136[m
+Author: erenfn <erenfindik7@gmail.com>
+Date:   Sat Oct 26 04:51:37 2024 +0300
+
+    env fix
+
+[33mcommit b3ca75f95118d5d6ec5a09ca9153599a8126d4ba[m
+Author: erenfn <erenfindik7@gmail.com>
+Date:   Sat Oct 26 04:51:19 2024 +0300
+
+    audit fix
+
+[33mcommit 7498fd28880c4bf6d975fb926e1ebe6c6a621f5a[m
+Author: jaykayudo <jaykayudo@gmail.com>
+Date:   Fri Oct 25 22:31:30 2024 +0100
+
+    chore: add validators to migrations
+
+[33mcommit 16d6900077382921436ba281bd63a4419c4909fd[m
+Author: mr-loop-1 <loopolecreator1@gmail.com>
+Date:   Fri Oct 25 19:20:08 2024 +0530
+
+    fix: file middleware only for post put
+
+[33mcommit b4ba5c887161c0366ba6d9ec538ebc2dbb813e76[m[33m ([m[1;31mupstream/320-standardize-backend-file-patterns[m[33m)[m
+Author: Débora Serra <debora.r.serra@gmail.com>
+Date:   Thu Oct 24 08:59:13 2024 -0700
+
+    fix: rename tour controller file
+
+[33mcommit 3634f3815ca33445b6321232b44e011996d13297[m
+Author: Débora Serra <debora.r.serra@gmail.com>
+Date:   Thu Oct 24 08:58:26 2024 -0700
+
+    Revert "fix: rename tour controller file"
+    
+    This reverts commit e81ece7cc3767a878e97a13aa2b5214a20974f78.
+
+[33mcommit 2c8bce80c48d01140c1c8dbc90bbb2dc2d700290[m
+Merge: 8abad4b 9bed989
+Author: Débora Serra <debora.r.serra
