@@ -50,7 +50,7 @@ const Popup = () => {
               lineHeight: "24px",
               color: "#344054",
             }}
-            onClick={() => setPopupOpen(false)}
+            onClick={() => setIsPopupOpen(false)}
           >
             Cancel
           </Button>

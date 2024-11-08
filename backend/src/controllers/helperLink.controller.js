@@ -1,11 +1,18 @@
 const helperService = require("../service/helperLink.service");
+const linkService = require("../service/link.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { validateHexColor } = require("../utils/guide.helper");
+const { URL_REGEX } = require("../utils/link.helper");
+
+const validateUrl = (value) => {
+  return URL_REGEX.test(value);
+};
 
 class LinkController {
   async addHelper(req, res) {
     const userId = req.user.id;
-    const { title, headerBackgroundColor, linkFontColor, iconColor } = req.body;
+    const { title, headerBackgroundColor, linkFontColor, iconColor, links } =
+      req.body;
 
     if (!title) {
       return res.status(400).json({
@@ -55,12 +62,33 @@ class LinkController {
       }
     }
 
+    if (links) {
+      const result = await Promise.all(
+        links.map(async (link) => {
+          const { title, url } = link;
+          if (!title || !url) {
+            return {
+              msg: "title and url are required",
+            };
+          }
+
+          if (validateUrl(title) || !validateUrl(url)) {
+            return { msg: "Invalid value for title or url" };
+          }
+        })
+      );
+      if (result.some((it) => it?.msg)) {
+        const response = result.filter((it) => it.msg);
+        return res.status(400).json({ errors: response });
+      }
+    }
+
     try {
       const newHelperData = {
         ...req.body,
         createdBy: userId,
       };
-      const newHelper = await helperService.createHelper(newHelperData);
+      const newHelper = await helperService.createHelper(newHelperData, links);
       res.status(201).json(newHelper);
     } catch (err) {
       console.log(err);
@@ -103,7 +131,7 @@ class LinkController {
   async editHelper(req, res) {
     try {
       const { id } = req.params;
-      const { title, headerBackgroundColor, linkFontColor, iconColor } =
+      const { title, headerBackgroundColor, linkFontColor, iconColor, links } =
         req.body;
 
       if (!title) {
@@ -126,7 +154,37 @@ class LinkController {
         });
       }
 
-      const updatedHelper = await helperService.updateHelper(id, req.body);
+      if (links) {
+        const result = await Promise.all(
+          links.map(async (link) => {
+            const { title, url, order } = link;
+            if (!title || !url) {
+              return {
+                msg: "title and url are required",
+              };
+            }
+
+            if (validateUrl(title) || !validateUrl(url)) {
+              return { msg: "Invalid value for title or url" };
+            }
+
+            const allLinks = await linkService.getLinksByHelperId(id);
+            if (order && order > allLinks.length + 1) {
+              return { msg: "Invalid value for order" };
+            }
+          })
+        );
+        if (result.some((it) => it?.msg)) {
+          const response = result.filter((it) => it.msg);
+          return res.status(400).json({ errors: response });
+        }
+      }
+
+      const updatedHelper = await helperService.updateHelper(
+        id,
+        req.body,
+        links
+      );
       res.status(200).json(updatedHelper);
     } catch (err) {
       const { statusCode, payload } = internalServerError(

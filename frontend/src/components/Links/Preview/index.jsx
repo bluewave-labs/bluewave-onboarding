@@ -14,11 +14,6 @@ const Preview = () => {
 
   const { title, headerBackgroundColor, linkFontColor, iconColor } = helper;
 
-  const getTarget = (target) => {
-    if (typeof target === "string") return target;
-    return target ? "_blank" : "_self";
-  };
-
   return (
     <div className={s.preview} data-testid='preview'>
       <h2 className={s.preview__title}>Preview</h2>
@@ -62,7 +57,7 @@ const Preview = () => {
                 </SvgIcon>
                 <a
                   href={it.url}
-                  target={getTarget(it.target)}
+                  target={it.target ? "_blank" : "_self"}
                   rel='noreferrer'
                   style={{ color: linkFontColor }}
                 >

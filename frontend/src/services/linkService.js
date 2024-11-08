@@ -50,7 +50,6 @@ export const getLinkById = async (id) => {
     const response = await apiClient.get(`/link/get_link/${id}`);
     return response.data;
   } catch (error) {
-    console.error("Get Link error:", error.response);
     return false;
   }
 };

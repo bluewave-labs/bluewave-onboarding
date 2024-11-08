@@ -91,7 +91,7 @@ Card.propTypes = {
   card: PropTypes.shape({
     title: PropTypes.string,
     url: PropTypes.string,
-    id: PropTypes.number,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     order: PropTypes.number,
   }),
   onDragEnd: PropTypes.func,

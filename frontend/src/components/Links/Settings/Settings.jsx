@@ -9,27 +9,19 @@ const defaultState = {
   url: "",
   target: true,
   helperId: null,
+  id: 0,
 };
 
 const Settings = () => {
   const { toggleSettings, helper, linkToEdit, setLinks, setLinkToEdit } =
     useContext(HelperLinkContext);
   const [oldLink] = useState(linkToEdit);
-  const [state, setState] = useState({});
+  const [state, setState] = useState(linkToEdit ?? defaultState);
   const settingsRef = useRef();
-
-  const getTarget = (target) => {
-    if (typeof target === "boolean") return target;
-    return target === "_blank";
-  };
 
   const handleClickOutside = (e) => {
     const isSettings = settingsRef?.current.contains(e.target);
-    const isCards = !!(
-      settingsRef?.current &&
-      settingsRef.current !== e.target &&
-      e.target.closest("#cards")
-    );
+    const isCards = !!e.target.closest("#cards");
     if (!isSettings && !isCards) {
       handleClose(e);
     }
@@ -39,7 +31,6 @@ const Settings = () => {
     if (linkToEdit) {
       const newState = {
         ...linkToEdit,
-        target: getTarget(linkToEdit.target),
         helperId: helper.id,
       };
       setState(newState);
@@ -52,10 +43,11 @@ const Settings = () => {
   }, []);
 
   const handleChange = ({ target }) => {
-    const { name } = target;
-    let { value } = target;
-    if (name === "target") value = target.checked;
-    setState((prev) => ({ ...prev, [name]: value }));
+    const { name, value, checked } = target;
+    setState((prev) => ({
+      ...prev,
+      [name]: name === "target" ? checked : value,
+    }));
   };
 
   const handleClose = async (e) => {
@@ -65,7 +57,7 @@ const Settings = () => {
     ).reduce(
       (acc, it) => ({
         ...acc,
-        [it.name]: it.name === "target" ? state.target : it.value,
+        [it.name]: it.name === "target" ? it.value === "true" : it.value,
       }),
       {}
     );
@@ -77,9 +69,7 @@ const Settings = () => {
     if (linkToEdit) {
       setLinks((prev) =>
         prev.map((it) =>
-          it.title === oldLink.title && it.id === oldLink.id
-            ? { ...info, id: +info.id }
-            : it
+          it.id === oldLink.id ? { ...info, id: oldLink.id } : it
         )
       );
       setLinkToEdit(null);
@@ -104,12 +94,17 @@ const Settings = () => {
           <CloseOutlinedIcon
             onClick={handleClose}
             style={{ color: "#98A2B3", fontSize: "20px", cursor: "pointer" }}
-            data-testid="close"
+            data-testid='close'
           />
         </div>
       </div>
       <div className={s.settings__content}>
-        <input type='hidden' name='id' value={state.id} />
+        <input
+          type='hidden'
+          name='id'
+          value={state.id}
+          onChange={handleChange}
+        />
         <label htmlFor='title' className={s["settings__content--label"]}>
           <span className={s["settings__content--text"]}>Title</span>
           <input

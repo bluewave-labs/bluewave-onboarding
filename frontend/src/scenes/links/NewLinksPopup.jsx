@@ -3,12 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Preview from "../../components/Links/Preview";
 import Settings from "../../components/Links/Settings/Settings";
 import { createHelper, updateHelper } from "../../services/helperLinkService";
-import {
-  createLink,
-  deleteLink,
-  getLinkById,
-  updateLink,
-} from "../../services/linkService";
+import { deleteLink, getLinkById } from "../../services/linkService";
 import { HelperLinkContext } from "../../services/linksProvider";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import { emitToastError } from "../../utils/guideHelper";
@@ -46,35 +41,26 @@ const NewLinksPopup = ({
     }
   }, []);
 
-  const handleLinks = async (helperId) => {
-    return await Promise.all(
-      links.map(async (it) => {
-        const { id, order, ...link } = it;
-        try {
-          const exists = await getLinkById(id);
-          if (exists) return await updateLink({ ...it, helperId });
-          return await createLink({ ...link, helperId });
-        } catch (err) {
-          emitToastError(err);
-          return null;
-        }
-      })
-    );
+  const handleLinks = async (item) => {
+    const { target, id, ...link } = item;
+    const exists = await getLinkById(id);
+    if (exists) return { ...link, target: Boolean(target), id };
+    return { ...link, target: Boolean(target) };
   };
 
   const handleSaveHelper = async () => {
     let newHelper;
-    let createdLinks;
+    const formattedLinks = await Promise.all(links.map(handleLinks));
     try {
       newHelper = await (helperToEdit
-        ? updateHelper(helper)
-        : createHelper(helper));
+        ? updateHelper(helper, formattedLinks)
+        : createHelper(helper, formattedLinks));
       setHelper(newHelper);
     } catch (err) {
       emitToastError(err);
       return null;
     }
-    createdLinks = await handleLinks(newHelper.id);
+    // createdLinks = await handleLinks(newHelper.id);
     if (helperToEdit && deletedLinks.length) {
       await Promise.all(
         deletedLinks.map(async (it) => {
@@ -87,7 +73,7 @@ const NewLinksPopup = ({
         })
       );
     }
-    if (newHelper && createdLinks.every(Boolean)) {
+    if (newHelper) {
       const toastMessage = helper.id
         ? "You edited this Helper Link"
         : "New Helper Link saved";
@@ -132,7 +118,7 @@ NewLinksPopup.propTypes = {
       id: PropTypes.number,
       title: PropTypes.string,
       url: PropTypes.string,
-      target: PropTypes.string,
+      target: PropTypes.bool,
       x: PropTypes.number,
       y: PropTypes.number,
     })

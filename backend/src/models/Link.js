@@ -32,13 +32,11 @@ module.exports = (sequelize, DataTypes) => {
       order: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue: 1
       },
       target: {
-        type: DataTypes.STRING,
-        validate: {
-          isIn: ["_blank", "_self", "_parent", "_top"],
-        },
-        defaultValue: "_blank",
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
       },
       helperId: {
         type: DataTypes.INTEGER,

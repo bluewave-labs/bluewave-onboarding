@@ -31,7 +31,7 @@ class LinkController {
     try {
       const newLinkData = {
         ...req.body,
-        order: req.body.order || allLinks.length,
+        order: req.body.order || allLinks.length + 1,
         helperId,
         target: req.body.target || "_blank",
       };
