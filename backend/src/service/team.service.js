@@ -15,7 +15,7 @@ class TeamService {
             await transaction.commit();
             return team;
         } catch (err) {
-            throw new Error("Error creating Team.");
+            throw new Error("Failed to create team");
         }
     }
 
@@ -28,7 +28,7 @@ class TeamService {
             return { team, users };
         }
         catch (err) {
-            throw new Error("Error retrieving Team");
+            throw new Error("Failed to retrieve team");
         }
     }
 
@@ -37,19 +37,24 @@ class TeamService {
             const teamCount = await Team.count();
             return { teamExists: teamCount > 0 };
         } catch (err) {
-            throw new Error("Get Team Count Error");
+            throw new Error("Failed to get team count");
         }
     };
 
     async updateTeam(name) {
+        const transaction = await sequelize.transaction();
         try {
             await Team.update({
                 name: name
             }, {
                 where: {}
+            }, {
+                transaction
             });
+            await transaction.commit();
         }
         catch (error) {
+            await transaction.rollback();
             throw new Error("Error Updating Team");
         }
     }
@@ -85,11 +90,12 @@ class TeamService {
         }
         catch (err) {
             await transaction.rollback();
-            throw new Error(`Error Deleting User ~ ${err.message}`);
+            throw new Error(`Failed to remove user from team ~ ${err.message}`);
         }
     }
 
     async updateUserRole(memberId, role) {
+        const transaction = await sequelize.transaction();
         try {
             const member = await User.findOne({
                 where: { id: memberId }
@@ -111,10 +117,14 @@ class TeamService {
                 role: settings.user.role[role]
             }, {
                 where: { id: memberId }
+            }, {
+                transaction
             })
+            await transaction.commit();
         }
         catch (err) {
-            throw new Error(`Error Changing User Roles ~ ${err.message}`);
+            await transaction.rollback();
+            throw new Error(`"Failed to update user role ~ ${err.message}`);
         }
     }
 }

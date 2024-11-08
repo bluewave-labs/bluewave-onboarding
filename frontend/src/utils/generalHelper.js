@@ -34,9 +34,10 @@ export const generateApiKey = () => {
   const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'; // Characters to use
   let apiKey = '';
 
+  const array = new Uint8Array(length);
+  crypto.getRandomValues(array);
   for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * charset.length);
-    apiKey += charset[randomIndex];
+    apiKey += charset[array[i] % charset.length];
   }
 
   return apiKey;
