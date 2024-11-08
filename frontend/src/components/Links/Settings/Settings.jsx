@@ -19,14 +19,6 @@ const Settings = () => {
   const [state, setState] = useState(linkToEdit ?? defaultState);
   const settingsRef = useRef();
 
-  const handleClickOutside = (e) => {
-    const isSettings = settingsRef?.current.contains(e.target);
-    const isCards = !!e.target.closest("#cards");
-    if (!isSettings && !isCards) {
-      handleClose(e);
-    }
-  };
-
   useEffect(() => {
     if (linkToEdit) {
       const newState = {
@@ -37,9 +29,6 @@ const Settings = () => {
     } else {
       setState({ ...defaultState, id: Math.floor(Date.now() * Math.random()) });
     }
-    window.addEventListener("click", handleClickOutside);
-
-    return () => window.removeEventListener("click", handleClickOutside);
   }, []);
 
   const handleChange = ({ target }) => {
@@ -53,7 +42,7 @@ const Settings = () => {
   const handleClose = async (e) => {
     e.preventDefault();
     const info = Array.from(
-      settingsRef.current.querySelectorAll("input")
+      document.querySelectorAll("form input")
     ).reduce(
       (acc, it) => ({
         ...acc,
@@ -81,12 +70,7 @@ const Settings = () => {
   };
 
   return (
-    <form
-      className={s.settings}
-      ref={settingsRef}
-      onSubmit={handleClose}
-      role='form'
-    >
+    <form className={s.settings} onSubmit={handleClose} role='form'>
       <div className={s.settings__header}>
         <span className={s["settings__header--title"]}>Add new link</span>
         <div className={s["settings__header--right"]}>
