@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
-import Preview from "../../components/Links/Preview";
+import Preview from "../../products/LinkPreview";
 import Settings from "../../components/Links/Settings/Settings";
 import { createHelper, updateHelper } from "../../services/helperLinkService";
 import { deleteLink, getLinkById } from "../../services/linkService";

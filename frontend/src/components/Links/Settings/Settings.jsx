@@ -42,7 +42,7 @@ const Settings = () => {
   const handleClose = async (e) => {
     e.preventDefault();
     const info = Array.from(
-      document.querySelectorAll("form input")
+      settingsRef.current.querySelectorAll("input")
     ).reduce(
       (acc, it) => ({
         ...acc,
@@ -70,7 +70,7 @@ const Settings = () => {
   };
 
   return (
-    <form className={s.settings} onSubmit={handleClose} role='form'>
+    <form className={s.settings} ref={settingsRef} onSubmit={handleClose} role='form'>
       <div className={s.settings__header}>
         <span className={s["settings__header--title"]}>Add new link</span>
         <div className={s["settings__header--right"]}>
