@@ -2,7 +2,7 @@ import { default as CloseRoundedIcon } from "@mui/icons-material/CloseRounded";
 import SupportIcon from "@mui/icons-material/Support";
 import { SvgIcon } from "@mui/material";
 import React, { useContext } from "react";
-import { HelperLinkContext } from "../../../services/linksProvider";
+import { HelperLinkContext } from "../../services/linksProvider";
 import s from "./Preview.module.scss";
 
 const Preview = () => {
