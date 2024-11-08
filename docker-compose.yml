@@ -47,17 +47,17 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  # frontend:
-  #   build: ./frontend
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules
-  #   ports:
-  #     - "4173:4173"
-  #   environment:
-  #     - NODE_ENV=production
-  #   command: >
-  #     bash -c "npm run build && npm run preview"
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "4173:4173"
+    environment:
+      - NODE_ENV=production
+    command: >
+      bash -c "npm run build && npm run preview"
 
   mailhog:
     image: mailhog/mailhog
