@@ -35,6 +35,8 @@ const TeamTab = () => {
 
   const [selectedMember, setSelectedMember] = useState(null);
 
+  useEffect(() => {console.log(selectedMember)}, [selectedMember])
+  
   useEffect(() => {
     (async () => {
       try {
