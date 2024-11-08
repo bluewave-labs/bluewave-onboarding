@@ -93,7 +93,7 @@ class LinkController {
       }
 
       const allLinks = await linkService.getLinksByHelperId(helperId);
-      if (order && order > allLinks.length) {
+      if (order && order > allLinks.length + 1) {
         return res.status(400).json({
           errors: [{ msg: "Invalid value for order" }],
         });

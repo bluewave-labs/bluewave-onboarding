@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       title: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          len: [1, 255],
+        },
       },
       headerBackgroundColor: {
         type: DataTypes.STRING,

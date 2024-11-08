@@ -56,7 +56,11 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Link.associate = (models) => {
-    Link.belongsTo(models.HelperLink, { foreignKey: "helperId", as: "helper" });
+    Link.belongsTo(models.HelperLink, {
+      foreignKey: "helperId",
+      as: "helper",
+      onDelete: "CASCADE",
+    });
   };
 
   return Link;
