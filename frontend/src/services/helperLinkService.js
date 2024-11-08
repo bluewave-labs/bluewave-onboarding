@@ -23,9 +23,6 @@ export const getHelperById = async (id) => {
 
 export const createHelper = async (helper, links) => {
   try {
-    if (!helper?.title?.trim()) {
-      throw new Error("Helper title is required");
-    }
     const response = await apiClient.post(`/helper-link/add_helper`, {
       title: helper.title.trim(),
       headerBackgroundColor: helper.headerBackgroundColor,
@@ -37,7 +34,7 @@ export const createHelper = async (helper, links) => {
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {
-    console.error("Create helper link error:", error.response);
+    console.error("Create helper link error:", error.message);
     throw error;
   }
 };
