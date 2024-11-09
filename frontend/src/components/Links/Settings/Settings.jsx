@@ -20,6 +20,7 @@ const Settings = () => {
   const settingsRef = useRef();
 
   useEffect(() => {
+    document.querySelector("#title").focus();
     if (linkToEdit) {
       const newState = {
         ...linkToEdit,
@@ -70,7 +71,12 @@ const Settings = () => {
   };
 
   return (
-    <form className={s.settings} ref={settingsRef} onSubmit={handleClose} role='form'>
+    <form
+      className={s.settings}
+      ref={settingsRef}
+      onSubmit={handleClose}
+      role='form'
+    >
       <div className={s.settings__header}>
         <span className={s["settings__header--title"]}>Add new link</span>
         <div className={s["settings__header--right"]}>
