@@ -61,8 +61,6 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
         onDelete: () => handleOpenPopup(item.id),
         onEdit: () => navigateToCreate({ state: { isEdit: true, id: item.id } }),
     })), [items, getItemDetails, handleOpenPopup, navigateToCreate]);
-    console.log(mappedItems)
-
     return (
         <>
             {loading ? (
