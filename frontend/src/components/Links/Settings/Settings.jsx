@@ -19,6 +19,16 @@ const Settings = () => {
   const [state, setState] = useState(linkToEdit ?? defaultState);
   const settingsRef = useRef();
 
+  const handleMouseDown = (e) => {
+    if (settingsRef.current) {
+      const isSettings = settingsRef?.current.contains(e.target);
+      const isCards = !!e.target.closest("#cards");
+      if (!isSettings && !isCards) {
+        handleClose(e);
+      }
+    }
+  };
+
   useEffect(() => {
     document.querySelector("#title").focus();
     if (linkToEdit) {
@@ -30,6 +40,9 @@ const Settings = () => {
     } else {
       setState({ ...defaultState, id: Math.floor(Date.now() * Math.random()) });
     }
+    window.addEventListener("mousedown", handleMouseDown);
+
+    return () => window.removeEventListener("mousedown", handleMouseDown);
   }, []);
 
   const handleChange = ({ target }) => {
