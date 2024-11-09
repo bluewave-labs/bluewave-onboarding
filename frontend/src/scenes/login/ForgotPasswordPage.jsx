@@ -42,9 +42,6 @@ const ForgotPasswordPage = () => {
       }
     },
   });
-console.log('hekki')
-console.log(formik.errors.email)
-console.log('yeah')
 
   const isFormEmpty = !formik.values.email;
 
