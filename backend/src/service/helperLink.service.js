@@ -90,7 +90,7 @@ class HelperLinkService {
       t.commit();
       return updatedHelper;
     } catch (e) {
-      console.log(e)
+      console.log(e);
       await t.rollback();
       throw new Error("Error updating helper");
     }

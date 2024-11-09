@@ -1,13 +1,10 @@
 import { apiClient } from "./apiClient";
 
 const isValidUrl = (url) => {
-  try {
-    new URL(url)
-    return true
-  } catch {
-    return false
-  }
-}
+  return /(?:https?:\/\/(?:www\.)?|www\.)?[a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-\d@:%_+.~#?&//=]*)|(?:\/[a-zA-Z0-9@:%._+~#&//=]*)/gi.test(
+    url
+  );
+};
 
 export const createLink = async (link) => {
   try {

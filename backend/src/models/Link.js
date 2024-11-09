@@ -26,7 +26,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isUrl: true,
+          customValidation(value) {
+            return URL_REGEX.test(value)
+          }
         },
       },
       order: {
