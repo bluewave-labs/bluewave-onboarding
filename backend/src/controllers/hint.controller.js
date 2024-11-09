@@ -1,7 +1,5 @@
 const HintService = require("../service/hint.service");
 const { validateHintData, validateId } = require("../utils/hint.helper");
-console.log('hint helper:', validateHintData)
-console.log(typeof validateHintData)
 const { ErrorHandler } = require("../utils/banner.helper");
 const db = require("../models");
 const Hint = db.Hint;
