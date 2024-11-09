@@ -13,6 +13,9 @@ const settings = require("../../config/settings");
 // const { create } = require("domain");
 
 const findUserByEmail = async (email) => {
+  if (!email || typeof email !== 'string') {
+    throw new Error('Invalid email format');
+  }
   return await User.findOne({ where: { email } });
 };
 
