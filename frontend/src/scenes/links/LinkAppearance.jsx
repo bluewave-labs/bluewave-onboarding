@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { HelperLinkContext } from "../../services/linksProvider";
 import s from "./LinkPage.module.scss";
 
@@ -8,6 +8,10 @@ const LinkAppearance = () => {
     throw new Error("LinkAppearance must be used within a HelperLinkProvider");
   }
   const { helper, setHelper } = context;
+
+  useEffect(() => {
+    document.querySelector('#header').focus()
+  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
