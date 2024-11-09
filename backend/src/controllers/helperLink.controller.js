@@ -16,7 +16,7 @@ class LinkController {
 
     if (!title) {
       return res.status(400).json({
-        errors: [{ msg: "title is required" }],
+        errors: [{ msg: "header is required" }],
       });
     }
 
@@ -136,7 +136,7 @@ class LinkController {
 
       if (!title) {
         return res.status(400).json({
-          errors: [{ msg: "title is required" }],
+          errors: [{ msg: "header is required" }],
         });
       }
 
