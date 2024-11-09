@@ -1,7 +1,7 @@
 const settings = require("../../config/settings");
 const { body, validationResult } = require('express-validator');
 const UserService = require("../service/user.service");
-// const he = require('he');
+const he = require('he');
 const { internalServerError } = require("../utils/errors.helper");
 
 const userService = new UserService();
