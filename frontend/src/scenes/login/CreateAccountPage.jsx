@@ -11,15 +11,30 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '@components/Logo/Logo';
 
 function CreateAccountPage() {
-  const [formData, setFormData] = useState({ name: '', surname: '', email: '', password: '' });
-  const [validation, setValidation] = useState({ isNameValid: false, isSurnameValid: false, isEmailValid: false, isPasswordValid: false });
+  const [formData, setFormData] = useState({ name: '', surname: '', email: '', password: '', confirmPassword: '' });
+  const [validation, setValidation] = useState({ isNameValid: false, isSurnameValid: false, isEmailValid: false, isPasswordValid: false, doPasswordsMatch: false });
   const [passwordChecks, setPasswordChecks] = useState({ hasSpecialCharacter: false, atLeastEightCharacters: false });
   const [error, setError] = useState('');
+  const [passwordMatchError, setPasswordMatchError] = useState('');
   const [loading, setLoading] = useState('');
   const { loginAuth } = useAuth();
   const navigate = useNavigate();
 
   const isValidName = (value) => /^[A-Za-z'-]+$/.test(value) && value.length > 0 ;
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const passwordMatch = (password, confirmPassword) => {
+    if (password === '' && confirmPassword === '') {
+      setPasswordMatchError('');
+      return true;
+    }
+    if (password != confirmPassword) {
+      setPasswordMatchError('Passwords do not match.');
+      return false;
+    } else {
+      setPasswordMatchError('');
+      return true;
+    }
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,23 +56,25 @@ function CreateAccountPage() {
         setPasswordChecks({ hasSpecialCharacter, atLeastEightCharacters });
         setValidation((prev) => ({
           ...prev,
-          isPasswordValid: hasSpecialCharacter && atLeastEightCharacters
+          isPasswordValid: hasSpecialCharacter && atLeastEightCharacters,
+          doPasswordsMatch: passwordMatch(value, formData.confirmPassword),
         }));
+        break;
+      case 'confirmPassword':
+        setValidation((prev) => ({ ...prev, doPasswordsMatch: passwordMatch(value, formData.password) }));
         break;
       default:
         break;
     }
   };
 
-  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
   const handleSignUp = async (e) => {
     e.preventDefault();
     setLoading(true);
     const { name, surname, email, password } = formData;
-    const { isNameValid, isSurnameValid, isEmailValid, isPasswordValid } = validation;
+    const { isNameValid, isSurnameValid, isEmailValid, isPasswordValid, doPasswordsMatch } = validation;
 
-    if (!isNameValid || (surname && !isSurnameValid) || !isEmailValid || !isPasswordValid) {
+    if (!isNameValid || (surname && !isSurnameValid) || !isEmailValid || !isPasswordValid || !doPasswordsMatch) {
       alert('Please fill out the form correctly.');
       setLoading(false);
       return;
@@ -87,7 +104,7 @@ function CreateAccountPage() {
   return (
     <form onSubmit={handleSignUp} className={styles["login-container"]}>
       <Logo />
-      <h2>Create an account</h2>
+      <h2>Create admin account</h2>
       <div className={styles["form-group"]}>
         <CustomTextField
           id="name"
@@ -155,6 +172,24 @@ function CreateAccountPage() {
           value={formData.password}
           onChange={handleInputChange}
         />
+      </div>
+
+      <div className={styles["form-group"]}>
+        <CustomTextField
+          id="confirmPassword"
+          type="password"
+          name="confirmPassword"
+          labelText='Confirm password*:'
+          checkCircleIconVisible={true}
+          displayCheckCircleIcon={validation.doPasswordsMatch}
+          placeholder='Confirm your password'
+          textFieldMargin='none'
+          TextFieldWidth="full"
+          required
+          value={formData.confirmPassword}
+          onChange={handleInputChange}
+        />
+      {passwordMatchError && <div className={styles["error-message"]}>{passwordMatchError}</div>}
       </div>
 
       <div className={styles["password-constraints"]}>
