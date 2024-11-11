@@ -103,11 +103,11 @@ function SetNewPasswordPage({ email = 'asdf@asdf.com' }) {
         </div>
 
         <div className={styles["password-constraints"]}>
-          <CheckCircleIcon style={{ color: atLeastEightCharacters ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: "5px" }} />
+          <CheckCircleIcon style={{ color: atLeastEightCharacters ? 'green' : 'var(--light-border-color)', fontSize: '20px', marginRight: "5px" }} />
           Must be at least 8 characters
         </div>
         <div className={styles["password-constraints"]}>
-          <CheckCircleIcon style={{ color: hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight: "5px" }} />
+          <CheckCircleIcon style={{ color: hasSpecialCharacter ? 'green' : 'var(--light-border-color)', fontSize: '20px', marginRight: "5px" }} />
           Must contain one special character
         </div>
         <button type="submit" className={styles["sign-in-button"]} style={{ marginTop: "15px" }} disabled={loading}>

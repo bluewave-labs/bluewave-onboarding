@@ -17,13 +17,13 @@ export default function TeamTable({ team, setRemoveModalOpen, setChangeRoleModal
   const { userInfo } = useAuth();
 
   const handleRemoveMember = async (member) => {
-    setSelectedMember(() => member)
+    setSelectedMember(() => member);
     setRemoveModalOpen(() => true);
   }
 
-  const handleChangeRole = async (e, index) => {
-    setSelectedMember(()=>({...team[index], newRole: e.target.innerText}));
-    setChangeRoleModalOpen(()=>true)
+  const handleChangeRole = async (e, member) => {
+    setSelectedMember(() => ({ ...member, newRole: e.target.innerText }));
+    setChangeRoleModalOpen(() => true);
   }
 
   return (
@@ -49,15 +49,20 @@ export default function TeamTable({ team, setRemoveModalOpen, setChangeRoleModal
                 <div className={styles.role}>
                   {member.role}
                   {userInfo.role == "admin" &&
-                  <DropdownMenu
-                    menuItems={roles.filter(role=>role!=member.role).map(role => ({ text: role, onClick: handleChangeRole }))}
-                    direction={'right'} 
-                  />
+                    <DropdownMenu
+                      menuItems={roles.filter(role => role !== member.role).map(role => ({
+                        text: role,
+                        onClick: (e) => handleChangeRole(e, member)
+                      }))}
+                      direction={'right'} 
+                    />
                   }
                 </div>
               </TableCell>
               <TableCell className={styles.data}>
-                {userInfo.role == "admin" && member.id != userInfo.id && <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveMember(member)} />}
+                {userInfo.role == "admin" && member.id !== userInfo.id &&
+                  <RiDeleteBinLine style={{ fontSize: '20px', cursor: 'pointer', color: 'red' }} onClick={() => handleRemoveMember(member)} />
+                }
               </TableCell>
             </TableRow>
           ))}
