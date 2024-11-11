@@ -32,9 +32,10 @@ const LinkContent = ({ isLoading = false }) => {
     const targetIndex = links.indexOf(targetItem);
 
     if (currentIndex !== -1 && targetIndex !== -1) {
-      links.splice(currentIndex, 1);
-      links.splice(targetIndex, 0, draggingItem);
-      setLinks(links.map((it, i) => ({ ...it, order: i + 1 })));
+      const newLinks = [...links];
+      newLinks.splice(currentIndex, 1);
+      newLinks.splice(targetIndex, 0, draggingItem);
+      setLinks(newLinks.map((it, i) => ({ ...it, order: i + 1 })));
     }
   };
 
