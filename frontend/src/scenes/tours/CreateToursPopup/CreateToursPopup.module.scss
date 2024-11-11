@@ -3,7 +3,7 @@
 .settings {
   box-shadow: 0px 8px 8px -4px var(--shadow-one);
   box-shadow: 0px 20px 24px -4px var(--shadow-two);
-  border: 1px solid #D0D5DD;
+  border: 1px solid var(--light-border-color);
   max-width: 460px;
 
   .smallText {
