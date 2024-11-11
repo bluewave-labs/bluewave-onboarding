@@ -38,7 +38,7 @@ const App = () => {
       }
     }
     fetchTeamCount();
-  })
+  }, []);
 
 
   return (
