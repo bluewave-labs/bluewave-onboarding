@@ -37,7 +37,7 @@ module.exports = {
       },
     });
 
-    await queryInterface.addIndex('helper_link', ['helperId']);
+    await queryInterface.addIndex('link', ['helperId']);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("link");

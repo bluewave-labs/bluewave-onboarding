@@ -31,28 +31,47 @@ export const createLink = async (link) => {
 
 export const getLinks = async (helperId) => {
   try {
+    if (!helperId) {
+      throw new Error("Helper ID is required");
+    }
     const response = await apiClient.get(
       `/link/get_links?helperId=${helperId}`
     );
     if (response.status >= 400) throw new Error(response.data);
     return response.data;
   } catch (error) {
-    console.error("Update Link error:", error.response);
+    console.error("Get Link error:", error.response);
     throw error;
   }
 };
 
 export const getLinkById = async (id) => {
   try {
+    if (!id) {
+      throw new Error("Link ID is required");
+    }
     const response = await apiClient.get(`/link/get_link/${id}`);
     return response.data;
   } catch (error) {
+    if (error.message.includes("Link ID is required")) {
+      throw error;
+    }
     return false;
   }
 };
 
 export const updateLink = async (link) => {
   try {
+    if (!link.title?.trim() || !link.url?.trim()) {
+      throw new Error("Title and URL are required");
+    }
+    if (!isValidUrl(link.url)) {
+      throw new Error("Invalid URL format");
+    }
+    if (typeof link.order !== "number") {
+      throw new Error("Order must be a number");
+    }
+    link.title = link.title.replace(/[<>]/g, "");
     const response = await apiClient.put(`/link/edit_link/${link.id}`, {
       title: link.title,
       url: link.url,

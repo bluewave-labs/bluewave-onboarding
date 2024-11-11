@@ -65,14 +65,13 @@ class LinkController {
     if (links) {
       const result = await Promise.all(
         links.map(async (link) => {
-          const { title, url } = link;
-          if (!title || !url) {
+          if (!link?.title || !link?.url) {
             return {
               msg: "title and url are required",
             };
           }
 
-          if (validateUrl(title) || !validateUrl(url)) {
+          if (validateUrl(link?.title) || !validateUrl(link.url)) {
             return { msg: "Invalid value for title or url" };
           }
         })

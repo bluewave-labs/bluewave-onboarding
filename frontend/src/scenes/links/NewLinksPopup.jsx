@@ -41,17 +41,31 @@ const NewLinksPopup = ({
     }
   }, []);
 
+  const buildToastError = (msg) => ({
+    response: { data: { errors: [{ msg }] } },
+  });
+
   const handleLinks = async (item) => {
     const { target, id, ...link } = item;
-    const exists = await getLinkById(id);
-    if (exists) return { ...link, target: Boolean(target), id };
-    return { ...link, target: Boolean(target) };
+    if (!link?.title.trim() || !link?.url.trim()) {
+      emitToastError(buildToastError("Title and URL are required"));
+      return null;
+    }
+    try {
+      const exists = await getLinkById(id);
+      if (exists?.id) return { ...link, target: target === "true", id };
+      return { ...link, target: target === "true" };
+    } catch (err) {
+      emitToastError(err);
+      return null;
+    }
   };
 
   const handleSaveHelper = async () => {
     let newHelper;
     const formattedLinks = await Promise.all(links.map(handleLinks));
     try {
+      if (formattedLinks.some((it) => !it)) return null;
       newHelper = await (helperToEdit
         ? updateHelper(helper, formattedLinks)
         : createHelper(helper, formattedLinks));
@@ -60,7 +74,6 @@ const NewLinksPopup = ({
       emitToastError(err);
       return null;
     }
-    // createdLinks = await handleLinks(newHelper.id);
     if (helperToEdit && deletedLinks.length) {
       await Promise.all(
         deletedLinks.map(async (it) => {

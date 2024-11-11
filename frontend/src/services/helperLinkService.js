@@ -20,9 +20,27 @@ export const getHelperById = async (id) => {
     throw error;
   }
 };
+const validateHelper = (helper, links) => {
+  if (!helper?.title) {
+    throw new Error("Header is required");
+  }
+  if (!helper?.headerBackgroundColor) {
+    throw new Error("Header background color is required");
+  }
+  if (!helper?.linkFontColor) {
+    throw new Error("Link font color is required");
+  }
+  if (!helper?.iconColor) {
+    throw new Error("Icon color is required");
+  }
+  if (links.some((it) => !it?.title || !it?.url)) {
+    throw new Error("Title and URL are required");
+  }
+};
 
 export const createHelper = async (helper, links) => {
   try {
+    validateHelper(helper, links);
     const response = await apiClient.post(`/helper-link/add_helper`, {
       title: helper.title.trim(),
       headerBackgroundColor: helper.headerBackgroundColor,
@@ -41,6 +59,7 @@ export const createHelper = async (helper, links) => {
 
 export const updateHelper = async (helper, links) => {
   try {
+    validateHelper(helper, links);
     const response = await apiClient.put(
       `/helper-link/edit_helper/${helper.id}`,
       {
