@@ -24,9 +24,9 @@ const GuideTemplate = ({
     <Dialog
       open={isOpen}
       onClose={closeDialog}
-      maxWidth="md"
-      fullWidth
-      PaperProps={{ style: { height: "90vh", maxHeight: "none" } }}
+      maxWidth="lg"
+      //fullWidth
+      //PaperProps={{ style: {} }}
     >
       <div className={styles.container}>
         <div className={styles.popup}>

@@ -7,10 +7,11 @@ import HintLeftAppearance from "@components/HintPageComponents/HintLeftAppearanc
 import { addHint, getHintById, editHint } from '../../services/hintServices';
 import toastEmitter, { TOAST_EMITTER_KEY } from "../../utils/toastEmitter";
 import { emitToastError } from "../../utils/guideHelper";
-import { useNavigate, useLocation } from "react-router";
+import { useLocation } from "react-router";
+import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
 const HintPage = () => {
-  const navigate = useNavigate();
+  const { closeDialog } = useDialog();
   const location = useLocation();
   const [activeButton, setActiveButton] = useState(0);
 
@@ -102,7 +103,7 @@ const HintPage = () => {
         : await addHint(hintData);
       const toastMessage = location?.state?.isEdit ? "You edited this hint" : "New hint saved";
       toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
-      navigate("/hint");
+      closeDialog();
     } catch (error) {
       const errorMessage = error.response?.data?.message
         ? `Error: ${error.response.data.message}`
@@ -119,18 +120,16 @@ const HintPage = () => {
       onSave={onSave}
       rightContent={() => (
         <RichTextEditor
-          previewBtnText={actionButtonText}
-          headerBackgroundColor={headerBackgroundColor}
-          headerColor={headerColor}
-          textColor={textColor}
-          buttonBackgroundColor={buttonBackgroundColor}
-          buttonTextColor={buttonTextColor}
           sx={{
-            width: "65%",
+            width: "100%",
             maxWidth: "700px",
+            marginLeft: "2.5rem",
             marginTop: "1rem",
           }}
-          previewComponent={({ header, content }) => (
+          header={header}
+          setHeader={setHeader}
+          setContent={setContent}
+          previewComponent={() => (
             <HintComponent
               header={header}
               content={content}

@@ -11,10 +11,14 @@ import Toolbar from "./Toolbar/EditorToolbar";
 import EditorTabs from "./Tabs/EditorTabs";
 import CustomTextField from "../TextFieldComponents/CustomTextField/CustomTextField";
 
-const RichTextEditor = ({ sx = {}, previewComponent = null }) => {
-  const [htmlContent, setHtmlContent] = useState("");
+const RichTextEditor = ({
+  sx = {},
+  previewComponent,
+  header,
+  setHeader,
+  setContent,
+}) => {
   const [mode, setMode] = useState("editor");
-  const [header, setHeader] = useState("");
 
   const Preview = previewComponent;
 
@@ -35,12 +39,12 @@ const RichTextEditor = ({ sx = {}, previewComponent = null }) => {
       OrderedList,
     ],
     onUpdate: ({ editor }) => {
-      setHtmlContent(editor.getHTML());
+      setContent(editor.getHTML());
     },
   });
 
   return (
-    <div style={{ position: 'relative', ...sx }}>
+    <div style={{ position: "relative", ...sx }}>
       {mode === "editor" ? (
         <>
           <CustomTextField
@@ -59,14 +63,17 @@ const RichTextEditor = ({ sx = {}, previewComponent = null }) => {
           </div>
         </>
       ) : (
-        <Preview header={header} content={htmlContent} />
+        <Preview />
       )}
-      <EditorTabs mode={mode} setMode={setMode}
+      <EditorTabs
+        mode={mode}
+        setMode={setMode}
         sx={{
-          position: 'absolute',
-          top: '400px',
+          position: "absolute",
+          top: "400px",
           left: 0,
-        }} />
+        }}
+      />
     </div>
   );
 };

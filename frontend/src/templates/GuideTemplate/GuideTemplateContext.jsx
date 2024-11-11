@@ -2,7 +2,13 @@ import React, { createContext, useContext, useState } from "react";
 
 const GuideTemplateContext = createContext();
 
-export const useDialog = () => useContext(GuideTemplateContext);
+export const useDialog = () => {
+  const context = useContext(GuideTemplateContext);
+  if (context === undefined) {
+    throw new Error("useDialog must be used within a GuideTemplateProvider");
+  }
+  return context;
+};
 
 export const GuideTemplateProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);

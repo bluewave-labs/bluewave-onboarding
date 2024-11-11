@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
 import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
 import PopupComponent from "../../products/Popup/PopupComponent";
@@ -8,10 +8,17 @@ import PopupContent from './PopupPageComponents/PopupContent/PopupContent';
 import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 import { emitToastError } from '../../utils/guideHelper';
+import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
-const CreatePopupPage = () => {
-    const navigate = useNavigate();
+const CreatePopupPage = ({autoOpen = false}) => {
+  const { openDialog, closeDialog } = useDialog();
     const location = useLocation();
+
+     useEffect(() => {
+    if (autoOpen) {  // auto open dialog to run tests
+      openDialog();
+    }
+  }, [autoOpen, openDialog]);
 
     const [activeButton, setActiveButton] = useState(0);
 
@@ -23,11 +30,18 @@ const CreatePopupPage = () => {
 
     const [header, setHeader] = useState('');
     const [content, setContent] = useState('');
-
+    
     const [actionButtonUrl, setActionButtonUrl] = useState("https://");
     const [actionButtonText, setActionButtonText] = useState("Take me to subscription page");
     const [buttonAction, setButtonAction] = useState('No action');
     const [popupSize, setPopupSize] = useState('Small');
+    const [stablePopupSize, setStablePopupSize] = useState('');
+
+    useEffect(() => {
+        if (popupSize) {
+          setStablePopupSize(popupSize); // prevent passing empty string to PopupComponent
+        }
+    }, [popupSize]);
 
     const stateList = [
         { stateName: 'Header Background Color', state: headerBackgroundColor, setState: setHeaderBackgroundColor },
@@ -86,7 +100,7 @@ const CreatePopupPage = () => {
             const toastMessage = location.state?.isEdit ? 'You edited this popup' : 'New popup Saved'
 
             toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
-            navigate('/popup');
+            closeDialog();
         } catch (error) {
             const errorMessage = error.response?.data?.message
                 ? `Error: ${error.response.data.message}`
@@ -107,21 +121,22 @@ const CreatePopupPage = () => {
         onSave={onSave}
         rightContent={() => (
           <RichTextEditor
-            previewComponent={({header, content}) => (
+            previewComponent={() => (
               <PopupComponent
                 header={header}
                 content={content}
-                setHeader={setHeader}
-                setContent={setContent}
                 previewBtnText={actionButtonText}
                 headerBackgroundColor={headerBackgroundColor}
                 headerColor={headerColor}
                 textColor={textColor}
                 buttonBackgroundColor={buttonBackgroundColor}
                 buttonTextColor={buttonTextColor}
-                popupSize={popupSize}
+                popupSize={stablePopupSize}
               />
             )}
+            header={header}
+            setHeader={setHeader}
+            setContent={setContent}
             sx={{
               width: "100%",
               maxWidth: "700px",
