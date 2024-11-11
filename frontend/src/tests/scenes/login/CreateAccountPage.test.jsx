@@ -10,11 +10,11 @@ vi.mock('../../../services/loginServices', () => ({
 }));
 
 describe('CreateAccountPage', () => {
-  it('renders the create account page', () => {
+  it('renders the create account page for users', () => {
     render(
       <Router>
         <AuthProvider> 
-          <CreateAccountPage />
+          <CreateAccountPage isAdmin={false} />
         </AuthProvider>
       </Router>
     );
@@ -27,7 +27,25 @@ describe('CreateAccountPage', () => {
     expect(screen.getByText('Get started')).to.exist;
   });
 
-  it('validates name input', () => {
+  it("renders the create account page for admins", () => {
+    render(
+      <Router>
+        <AuthProvider> 
+          <CreateAccountPage isAdmin={true} />
+        </AuthProvider>
+      </Router>
+    );
+
+    expect(screen.getByText('Create admin account')).to.exist;
+    expect(screen.getByPlaceholderText('Enter your name')).to.exist;
+    expect(screen.getByPlaceholderText('Enter your surname')).to.exist;
+    expect(screen.getByPlaceholderText('Enter your email')).to.exist;
+    expect(screen.getByPlaceholderText('Create your password')).to.exist;
+    expect(screen.getByPlaceholderText('Confirm your password')).to.exist;
+    expect(screen.getByText('Get started')).to.exist;
+  })
+
+  it('validates name input for users', () => {
     render(
       <Router>
         <AuthProvider>
@@ -42,7 +60,22 @@ describe('CreateAccountPage', () => {
     expect(usernameInput.value).to.equal('testname');
   });
 
-  it('validates surname input', () => {
+  it('validates name input for admins', () => {
+    render(
+      <Router>
+        <AuthProvider>
+          <CreateAccountPage isAdmin={true}/>
+        </AuthProvider>
+      </Router>
+    );
+
+    const usernameInput = screen.getByPlaceholderText('Enter your name');
+    fireEvent.change(usernameInput, { target: { value: 'testname' } });
+
+    expect(usernameInput.value).to.equal('testname');
+  });
+
+  it('validates surname input for users', () => {
     render(
       <Router>
         <AuthProvider>
@@ -57,7 +90,22 @@ describe('CreateAccountPage', () => {
     expect(usernameInput.value).to.equal('testsurname');
   });
 
-  it('validates email input', () => {
+  it('validates surname input for admins', () => {
+    render(
+      <Router>
+        <AuthProvider>
+          <CreateAccountPage isAdmin={true}/>
+        </AuthProvider>
+      </Router>
+    );
+
+    const usernameInput = screen.getByPlaceholderText('Enter your surname');
+    fireEvent.change(usernameInput, { target: { value: 'testsurname' } });
+
+    expect(usernameInput.value).to.equal('testsurname');
+  });
+
+  it('validates email input for users', () => {
     render(
       <Router>
         <AuthProvider>
@@ -72,7 +120,23 @@ describe('CreateAccountPage', () => {
     expect(emailInput.value).to.equal('test@example.com');
   });
 
-  it('validates password input', () => {
+  it('validates email input for admins', () => {
+    render(
+      <Router>
+        <AuthProvider>
+          <CreateAccountPage isAdmin={true}/>
+        </AuthProvider>
+      </Router>
+    );
+
+    const emailInput = screen.getByPlaceholderText('Enter your email');
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+
+    expect(emailInput.value).to.equal('test@example.com');
+  });
+
+
+  it('validates password input for users', () => {
     render(
       <Router>
         <AuthProvider>
@@ -87,13 +151,45 @@ describe('CreateAccountPage', () => {
     expect(passwordInput.value).to.equal('Password1!');
   });
 
-  it('handles sign up success', async () => {
+  it('validates password input for admins', () => {
+    render(
+      <Router>
+        <AuthProvider>
+          <CreateAccountPage isAdmin={true}/>
+        </AuthProvider>
+      </Router>
+    );
+
+    const passwordInput = screen.getByPlaceholderText('Create your password');
+    fireEvent.change(passwordInput, { target: { value: 'Password1!' } });
+
+    expect(passwordInput.value).to.equal('Password1!');
+  });
+
+  it('validates confirm password input', () => {
+    render(
+      <Router>
+        <AuthProvider>
+          <CreateAccountPage isAdmin={true}/>
+        </AuthProvider>
+      </Router>
+    );
+
+    const passwordInput = screen.getByPlaceholderText('Create your password');
+    fireEvent.change(passwordInput, { target: { value: 'Password1!' } });
+    const confirmPasswordInput = screen.getByPlaceholderText('Confirm your password');
+    fireEvent.change(confirmPasswordInput, { target: { value: 'Password1!' } }); 
+
+    expect(confirmPasswordInput.value).to.equal(passwordInput.value);
+  });
+
+  it('handles sign up success for users', async () => {
     signUp.mockResolvedValueOnce({ data: { success: true } });
 
     render(
       <Router>
         <AuthProvider>
-          <CreateAccountPage />
+          <CreateAccountPage isAdmin={false} />
         </AuthProvider>
       </Router>
     );
@@ -110,7 +206,31 @@ describe('CreateAccountPage', () => {
     // Add more assertions as needed
   });
 
-  it('handles sign up failure with email already exists error', async () => {
+  it('handles sign up success for admins', async () => {
+    signUp.mockResolvedValueOnce({ data: { success: true } });
+
+    render(
+      <Router>
+        <AuthProvider>
+          <CreateAccountPage isAdmin={true} />
+        </AuthProvider>
+      </Router>
+    );
+
+    await act(async () => {
+      fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'testname' } });
+      fireEvent.change(screen.getByPlaceholderText('Enter your surname'), { target: { value: 'testsurname' } });
+      fireEvent.change(screen.getByPlaceholderText('Enter your email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(screen.getByPlaceholderText('Create your password'), { target: { value: 'Password1!' } });
+      fireEvent.change(screen.getByPlaceholderText('Confirm your password'), { target: { value: 'Password1!' } });
+      fireEvent.click(screen.getByText('Get started'));
+    });
+
+    expect(signUp).toHaveBeenCalledWith({ name: 'testname', surname: 'testsurname', email: 'test@example.com', password: 'Password1!' });
+    // Add more assertions as needed
+  });
+
+  it('handles sign up failure with email already exists error for users', async () => {
     signUp.mockRejectedValueOnce({
       response: {
         data: { error: 'Email already exists' },
@@ -141,7 +261,39 @@ describe('CreateAccountPage', () => {
     expect(signUp).toHaveBeenCalledWith({ name: 'testname', surname: 'testsurname', email: 'test@example.com', password: 'Password1!' });
   });
 
-  it('handles sign up failure with other errors', async () => {
+  it('handles sign up failure with email already exists error for admins', async () => {
+    signUp.mockRejectedValueOnce({
+      response: {
+        data: { error: 'Email already exists' },
+        status: 400,
+      },
+    });
+
+    render(
+      <Router>
+        <AuthProvider>
+          <CreateAccountPage isAdmin={true} />
+        </AuthProvider>
+      </Router>
+    );
+
+    await act(async () => {
+      fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'testname' } });
+      fireEvent.change(screen.getByPlaceholderText('Enter your surname'), { target: { value: 'testsurname' } });
+      fireEvent.change(screen.getByPlaceholderText('Enter your email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(screen.getByPlaceholderText('Create your password'), { target: { value: 'Password1!' } });
+      fireEvent.change(screen.getByPlaceholderText('Confirm your password'), { target: { value: 'Password1!' } });
+      fireEvent.click(screen.getByText('Get started'));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Email already exists')).to.exist;
+    });
+
+    expect(signUp).toHaveBeenCalledWith({ name: 'testname', surname: 'testsurname', email: 'test@example.com', password: 'Password1!' });
+  });
+
+  it('handles sign up failure with other errors for users', async () => {
     signUp.mockRejectedValueOnce({
       response: {
         data: { error: 'Some other error' },
@@ -152,7 +304,7 @@ describe('CreateAccountPage', () => {
     render(
       <Router>
         <AuthProvider>
-          <CreateAccountPage />
+          <CreateAccountPage isAdmin={false} />
         </AuthProvider>
       </Router>
     );
@@ -172,13 +324,18 @@ describe('CreateAccountPage', () => {
     expect(signUp).toHaveBeenCalledWith({ name: 'testname', surname: 'testsurname', email: 'test@example.com', password: 'Password1!' });
   });
 
-  it('handles network errors gracefully', async () => {
-    signUp.mockRejectedValueOnce(new Error('Network Error'));
+  it('handles sign up failure with other errors for admins', async () => {
+    signUp.mockRejectedValueOnce({
+      response: {
+        data: { error: 'Some other error' },
+        status: 500,
+      },
+    });
 
     render(
       <Router>
         <AuthProvider>
-          <CreateAccountPage />
+          <CreateAccountPage isAdmin={true} />
         </AuthProvider>
       </Router>
     );
@@ -188,6 +345,60 @@ describe('CreateAccountPage', () => {
       fireEvent.change(screen.getByPlaceholderText('Enter your surname'), { target: { value: 'testsurname' } });
       fireEvent.change(screen.getByPlaceholderText('Enter your email'), { target: { value: 'test@example.com' } });
       fireEvent.change(screen.getByPlaceholderText('Create your password'), { target: { value: 'Password1!' } });
+      fireEvent.change(screen.getByPlaceholderText('Confirm your password'), { target: { value: 'Password1!' } });
+      fireEvent.click(screen.getByText('Get started'));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('An error occurred. Please try again.')).to.exist;
+    });
+
+    expect(signUp).toHaveBeenCalledWith({ name: 'testname', surname: 'testsurname', email: 'test@example.com', password: 'Password1!' });
+  });
+
+  it('handles network errors gracefully for users', async () => {
+    signUp.mockRejectedValueOnce(new Error('Network Error'));
+
+    render(
+      <Router>
+        <AuthProvider>
+          <CreateAccountPage isAdmin={false} />
+        </AuthProvider>
+      </Router>
+    );
+
+    await act(async () => {
+      fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'testname' } });
+      fireEvent.change(screen.getByPlaceholderText('Enter your surname'), { target: { value: 'testsurname' } });
+      fireEvent.change(screen.getByPlaceholderText('Enter your email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(screen.getByPlaceholderText('Create your password'), { target: { value: 'Password1!' } });
+      fireEvent.click(screen.getByText('Get started'));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('An error occurred. Please check your network connection and try again.')).to.exist;
+    });
+
+    expect(signUp).toHaveBeenCalledWith({ name: 'testname', surname: 'testsurname', email: 'test@example.com', password: 'Password1!' });
+  });
+
+  it('handles network errors gracefully for admins', async () => {
+    signUp.mockRejectedValueOnce(new Error('Network Error'));
+
+    render(
+      <Router>
+        <AuthProvider>
+          <CreateAccountPage isAdmin={true} />
+        </AuthProvider>
+      </Router>
+    );
+
+    await act(async () => {
+      fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'testname' } });
+      fireEvent.change(screen.getByPlaceholderText('Enter your surname'), { target: { value: 'testsurname' } });
+      fireEvent.change(screen.getByPlaceholderText('Enter your email'), { target: { value: 'test@example.com' } });
+      fireEvent.change(screen.getByPlaceholderText('Create your password'), { target: { value: 'Password1!' } });
+      fireEvent.change(screen.getByPlaceholderText('Confirm your password'), { target: { value: 'Password1!' } });
       fireEvent.click(screen.getByText('Get started'));
     });
 

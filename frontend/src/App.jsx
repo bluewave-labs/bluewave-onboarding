@@ -20,8 +20,26 @@ import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
+import { useEffect, useState } from "react";
+import { getTeamCount } from "./services/teamServices";
+
 
 const App = () => {
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const fetchTeamCount = async () => {
+      try {
+        const { teamExists } = await getTeamCount();
+        setIsAdmin(!teamExists);
+      } catch (err) {
+        setIsAdmin(false);
+        console.error(err);
+      }
+    }
+    fetchTeamCount();
+  })
+
 
   return (
     <>
@@ -40,7 +58,7 @@ const App = () => {
         </Route>
 
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<CreateAccountPage />} />
+        <Route path="/signup" element={<CreateAccountPage isAdmin={isAdmin} />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<PasswordResetPage />} />
         <Route path="/check-email" element={<CheckYourEmailPage />} />

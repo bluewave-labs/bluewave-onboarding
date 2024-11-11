@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Login.module.css'; 
 import CustomTextField from '@components/TextFieldComponents/CustomTextField/CustomTextField';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -9,8 +9,9 @@ import { handleAuthSuccess } from '../../utils/loginHelper';
 import { useAuth } from '../../services/authProvider';
 import { useNavigate } from 'react-router-dom';
 import Logo from '@components/Logo/Logo';
+import { getTeamCount } from '../../services/teamServices';
 
-function CreateAccountPage() {
+function CreateAccountPage({ isAdmin = false }) {
   const [formData, setFormData] = useState({ name: '', surname: '', email: '', password: '', confirmPassword: '' });
   const [validation, setValidation] = useState({ isNameValid: false, isSurnameValid: false, isEmailValid: false, isPasswordValid: false, doPasswordsMatch: false });
   const [passwordChecks, setPasswordChecks] = useState({ hasSpecialCharacter: false, atLeastEightCharacters: false });
@@ -74,7 +75,7 @@ function CreateAccountPage() {
     const { name, surname, email, password } = formData;
     const { isNameValid, isSurnameValid, isEmailValid, isPasswordValid, doPasswordsMatch } = validation;
 
-    if (!isNameValid || (surname && !isSurnameValid) || !isEmailValid || !isPasswordValid || !doPasswordsMatch) {
+    if (!isNameValid || (surname && !isSurnameValid) || !isEmailValid || !isPasswordValid || (isAdmin && !doPasswordsMatch)) {
       alert('Please fill out the form correctly.');
       setLoading(false);
       return;
@@ -104,7 +105,7 @@ function CreateAccountPage() {
   return (
     <form onSubmit={handleSignUp} className={styles["login-container"]}>
       <Logo />
-      <h2>Create admin account</h2>
+      {isAdmin ? <h2> Create admin account</h2> : <h2>Create an account</h2>}
       <div className={styles["form-group"]}>
         <CustomTextField
           id="name"
@@ -174,23 +175,26 @@ function CreateAccountPage() {
         />
       </div>
 
-      <div className={styles["form-group"]}>
-        <CustomTextField
-          id="confirmPassword"
-          type="password"
-          name="confirmPassword"
-          labelText='Confirm password*:'
-          checkCircleIconVisible={true}
-          displayCheckCircleIcon={validation.doPasswordsMatch}
-          placeholder='Confirm your password'
-          textFieldMargin='none'
-          TextFieldWidth="full"
-          required
-          value={formData.confirmPassword}
-          onChange={handleInputChange}
-        />
-      {passwordMatchError && <div className={styles["error-message"]}>{passwordMatchError}</div>}
-      </div>
+      {
+        isAdmin &&
+        <div className={styles["form-group"]}>
+          <CustomTextField
+            id="confirmPassword"
+            type="password"
+            name="confirmPassword"
+            labelText='Confirm password*:'
+            checkCircleIconVisible={true}
+            displayCheckCircleIcon={validation.doPasswordsMatch}
+            placeholder='Confirm your password'
+            textFieldMargin='none'
+            TextFieldWidth="full"
+            required
+            value={formData.confirmPassword}
+            onChange={handleInputChange}
+          />
+          {passwordMatchError && <div className={styles["error-message"]}>{passwordMatchError}</div>}
+        </div>
+      }
 
       <div className={styles["password-constraints"]}>
         <CheckCircleIcon style={{ color: passwordChecks.atLeastEightCharacters ? 'green' : 'var(--light-border-color)', fontSize: '20px', marginRight: '5px' }} />
