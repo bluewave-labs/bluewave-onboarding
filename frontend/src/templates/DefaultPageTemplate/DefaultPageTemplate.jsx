@@ -6,6 +6,7 @@ import CreateActivityButton from '@components/Button/CreateActivityButton/Create
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 import './DefaultPageTemplate.css'
 import { useAuth } from '../../services/authProvider';
+import { hasRolePermission } from '../../utils/generalHelper';
 
 const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType, itemTypeInfo, getItemDetails }) => {
     const [items, setItems] = useState([]);
@@ -73,8 +74,8 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
                 <div className={`fade-in`}>
                     {items.length === 0 ? (
                         <div className={'placeholder-style'}>
-                            {role === 'admin' && <ParagraphCSS />}
-                            {role === 'admin' && <CreateActivityButton type={itemType} onClick={navigateToCreate} />}
+                            {hasRolePermission(role, 'admin') && <ParagraphCSS />}
+                            {hasRolePermission(role, 'admin') && <CreateActivityButton type={itemType} onClick={navigateToCreate} />}
                         </div>
                     ) : (
                         <GuideMainPageTemplate

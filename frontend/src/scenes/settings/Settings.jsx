@@ -9,10 +9,14 @@ import PasswordTab from "./PasswordTab/PasswordTab";
 import styles from"./Settings.module.css";
 import TeamTab from "./TeamTab/TeamTab";
 import CodeTab from "./CodeTab/CodeTab";
+import { useAuth } from "../../services/authProvider";
+import { hasRolePermission } from "../../utils/generalHelper";
 
 
 export default function Settings() {
   const [value, setValue] = useState("1");  
+  const { userInfo } = useAuth();
+  const role = userInfo.role;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -26,14 +30,22 @@ export default function Settings() {
             <TabList onChange={handleChange} aria-label="lab API tabs example">
               <Tab label="Profile" value="1" className={styles.tabLabel} />
               <Tab label="Password" value="2" className={styles.tabLabel} />
-              <Tab label="Team" value="3" className={styles.tabLabel} />
-              <Tab label="API key & code" value="4" className={styles.tabLabel} />
+              {hasRolePermission(role, 'admin') && (
+                <>
+                  <Tab label="Team" value="3" className={styles.tabLabel} />
+                  <Tab label="API key & code" value="4" className={styles.tabLabel} />
+                </>
+              )}
             </TabList>
           </Box>
           <TabPanel value="1"><ProfileTab /></TabPanel>
           <TabPanel value="2"><PasswordTab/></TabPanel>
-          <TabPanel value="3"><TeamTab/></TabPanel>
-          <TabPanel value="4"><CodeTab/></TabPanel>
+          {hasRolePermission(role, 'admin') && (
+            <>
+              <TabPanel value="3"><TeamTab /></TabPanel>
+              <TabPanel value="4"><CodeTab /></TabPanel>
+            </>
+          )}
         </TabContext>
       </Box>
     </Box>
