@@ -9,11 +9,11 @@ module.exports = {
         autoIncrement: true,
       },
       title: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(255),
         allowNull: false,
       },
       url: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(255),
         allowNull: false,
       },
       order: {
@@ -32,12 +32,12 @@ module.exports = {
           model: "helper_link",
           key: "id",
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
     });
 
-    await queryInterface.addIndex('link', ['helperId']);
+    await queryInterface.addIndex("link", ["helperId"]);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("link");

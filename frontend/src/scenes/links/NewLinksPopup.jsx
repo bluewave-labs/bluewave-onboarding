@@ -19,6 +19,7 @@ const NewLinksPopup = ({
   helperState,
 }) => {
   const [activeBtn, setActiveBtn] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     showSettings,
@@ -62,16 +63,22 @@ const NewLinksPopup = ({
   };
 
   const handleSaveHelper = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
     let newHelper;
     const formattedLinks = await Promise.all(links.map(handleLinks));
     try {
-      if (formattedLinks.some((it) => !it)) return null;
+      if (formattedLinks.some((it) => !it)) {
+        setIsLoading(false);
+        return null;
+      }
       newHelper = await (helperToEdit
         ? updateHelper(helper, formattedLinks)
         : createHelper(helper, formattedLinks));
       setHelper(newHelper);
     } catch (err) {
       emitToastError(err);
+      setIsLoading(false);
       return null;
     }
     if (helperToEdit && deletedLinks.length) {
@@ -80,6 +87,7 @@ const NewLinksPopup = ({
           try {
             return await deleteLink({ ...it, helperId: helperToEdit });
           } catch (err) {
+            setIsLoading(false);
             emitToastError(err);
             return null;
           }
@@ -95,11 +103,12 @@ const NewLinksPopup = ({
       setHelper({});
       setLinks([]);
       setHelperToEdit(null);
+      setIsLoading(false);
     }
   };
 
   const rightContent = () => <Preview />;
-  const leftContent = () => <LinkContent />;
+  const leftContent = () => <LinkContent isLoading={isLoading} />;
   const leftAppearance = () => <LinkAppearance />;
 
   return (

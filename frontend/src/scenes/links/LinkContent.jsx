@@ -1,12 +1,14 @@
 import { Link } from "@mui/material";
+import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import CardContainer from "../../components/Links/Card";
 import Card from "../../components/Links/Card/Card";
 import Popup from "../../components/Links/Popup/Popup";
+import LoadingArea from "../../components/LoadingPage/LoadingArea";
 import { HelperLinkContext } from "../../services/linksProvider";
 import s from "./LinkPage.module.scss";
 
-const LinkContent = () => {
+const LinkContent = ({ isLoading = false }) => {
   const [draggingItem, setDraggingItem] = useState(null);
 
   const { links, toggleSettings, setLinks } = useContext(HelperLinkContext);
@@ -35,6 +37,10 @@ const LinkContent = () => {
       setLinks(links.map((it, i) => ({ ...it, order: i + 1 })));
     }
   };
+
+  if (isLoading) {
+    return <LoadingArea />;
+  }
 
   return (
     <>
@@ -67,6 +73,10 @@ const LinkContent = () => {
       <Popup />
     </>
   );
+};
+
+LinkContent.propTypes = {
+  isLoading: PropTypes.bool,
 };
 
 export default LinkContent;

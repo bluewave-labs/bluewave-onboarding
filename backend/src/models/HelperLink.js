@@ -16,14 +16,14 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       title: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(255),
         allowNull: false,
         validate: {
           len: [1, 255],
         },
       },
       headerBackgroundColor: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(7),
         allowNull: false,
         defaultValue: "#F8F9F8",
         validate: {
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       linkFontColor: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(7),
         allowNull: false,
         defaultValue: "#344054",
         validate: {
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       iconColor: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(7),
         allowNull: false,
         defaultValue: "#7F56D9",
         validate: {

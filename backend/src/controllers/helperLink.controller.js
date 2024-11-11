@@ -8,6 +8,14 @@ const validateUrl = (value) => {
   return URL_REGEX.test(value);
 };
 
+function validateColors(colors) {
+  for (const [name, color] of Object.entries(colors)) {
+    if (color) {
+      validateHexColor(color, name);
+    }
+  }
+}
+
 class LinkController {
   async addHelper(req, res) {
     const userId = req.user.id;
@@ -20,46 +28,16 @@ class LinkController {
       });
     }
 
-    if (headerBackgroundColor) {
-      try {
-        validateHexColor(headerBackgroundColor, "headerBackgroundColor");
-      } catch (e) {
-        return res.status(400).json({
-          errors: [
-            {
-              msg: e.message,
-            },
-          ],
-        });
-      }
-    }
-
-    if (linkFontColor) {
-      try {
-        validateHexColor(linkFontColor, "linkFontColor");
-      } catch (e) {
-        return res.status(400).json({
-          errors: [
-            {
-              msg: e.message,
-            },
-          ],
-        });
-      }
-    }
-
-    if (iconColor) {
-      try {
-        validateHexColor(iconColor, "iconColor");
-      } catch (e) {
-        return res.status(400).json({
-          errors: [
-            {
-              msg: e.message,
-            },
-          ],
-        });
-      }
+    try {
+      validateColors({ headerBackgroundColor, linkFontColor, iconColor });
+    } catch (e) {
+      return res.status(400).json({
+        errors: [
+          {
+            msg: e.message,
+          },
+        ],
+      });
     }
 
     if (links) {
@@ -71,8 +49,8 @@ class LinkController {
             };
           }
 
-          if (validateUrl(link?.title) || !validateUrl(link.url)) {
-            return { msg: "Invalid value for title or url" };
+          if (!validateUrl(link.url)) {
+            return { msg: "Invalid value for URL" };
           }
         })
       );
@@ -140,9 +118,11 @@ class LinkController {
       }
 
       try {
-        validateHexColor(headerBackgroundColor, "headerBackgroundColor");
-        validateHexColor(linkFontColor, "linkFontColor");
-        validateHexColor(iconColor, "iconColor");
+        validateColors({
+          headerBackgroundColor,
+          linkFontColor,
+          iconColor,
+        });
       } catch (e) {
         return res.status(400).json({
           errors: [

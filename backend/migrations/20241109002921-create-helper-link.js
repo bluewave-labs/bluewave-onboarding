@@ -9,21 +9,21 @@ module.exports = {
         autoIncrement: true,
       },
       title: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(255),
         allowNull: false,
       },
       headerBackgroundColor: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(7),
         allowNull: false,
         defaultValue: "#F8F9F8",
       },
       linkFontColor: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(7),
         allowNull: false,
         defaultValue: "#344054",
       },
       iconColor: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(7),
         allowNull: false,
         defaultValue: "#7F56D9",
       },
@@ -40,7 +40,6 @@ module.exports = {
     });
 
     await queryInterface.addIndex('helper_link', ['createdBy']);
-    await queryInterface.addIndex('link', ['helperId']);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("helper_link");
