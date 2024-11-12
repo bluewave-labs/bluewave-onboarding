@@ -101,6 +101,20 @@ const updateTeamDetails = async (req, res) => {
     }
 };
 
+const addServerUrlAndApiKey = async (req, res) => {
+  const { serverUrl, apiKey } = req.body;
+  try {
+    await teamService.addServerUrlAndApiKey(serverUrl, apiKey);
+    return res.status(200).json({ message: "Server URL and API Key Added Successfully" });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "ADD_SERVER_URL_AND_API_KEY_ERROR",
+      err.message,
+    );
+    res.status(statusCode).json(payload);
+  }
+}
+
 const removeMember = async (req, res) => {
   const userId = req.user.id;
   const { memberId } = req.params;
@@ -130,4 +144,4 @@ const changeRole = async (req, res) => {
   }
 }
 
-module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, removeMember, changeRole, getTeamCount };
+module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, addServerUrlAndApiKey, removeMember, changeRole, getTeamCount };

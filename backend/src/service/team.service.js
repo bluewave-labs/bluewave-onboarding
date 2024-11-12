@@ -127,6 +127,25 @@ class TeamService {
             throw new Error(`"Failed to update user role ~ ${err.message}`);
         }
     }
+
+    async addServerUrlAndApiKey(serverUrl, apiKey) {
+        const transaction = await sequelize.transaction();
+        try {
+            await Team.update({
+                serverUrl,
+                apiKey
+            }, {
+                where: {}
+            }, {
+                transaction
+            });
+            await transaction.commit();
+        }
+        catch (error) {
+            await transaction.rollback();
+            throw new Error("Error adding server url and api key to Team");
+        }
+    }
 }
 
 module.exports = TeamService;

@@ -20,6 +20,7 @@ module.exports = {
       update: [userRole.ADMIN],
       changeRole: [userRole.ADMIN],
       setOrg: [userRole.ADMIN],
+      setServerUrlAndApiKey: [userRole.ADMIN],
       popups: [userRole.ADMIN],
       hints: [userRole.ADMIN],
       banners: [userRole.ADMIN],

@@ -3,7 +3,8 @@ const {
   setOrganisation,
   getTeamDetails,
   getTeamCount,
-  updateTeamDetails, 
+  updateTeamDetails,
+  addServerUrlAndApiKey,
   removeMember, 
   changeRole 
 } = require("../controllers/team.controller");
@@ -25,6 +26,7 @@ router.post("/set-organisation", authenticateJWT, accessGuard(teamPermissions.se
 router.post("/invite", authenticateJWT, accessGuard(teamPermissions.invite), sendTeamInvite);
 router.put("/update", authenticateJWT, accessGuard(teamPermissions.update), updateTeamDetails);
 router.put("/change-role", authenticateJWT, accessGuard(teamPermissions.changeRole), changeRole);
+router.put('/set-config', authenticateJWT, accessGuard(teamPermissions.setServerUrlAndApiKey), addServerUrlAndApiKey);
 
 router.delete("/remove/:memberId", authenticateJWT, accessGuard(teamPermissions.removeUser), removeMember);
 router.get('/get-all-invites', authenticateJWT, accessGuard(teamPermissions.removeUser), getAllInvites);
