@@ -11,13 +11,13 @@ import { useFormik } from "formik";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-  .matches(
-    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-    "Enter a valid email address"
-  )
-  .required("Email is required")
-  .trim()
-})
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "Enter a valid email address"
+    )
+    .required("Email is required")
+    .trim(),
+});
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate();
@@ -42,10 +42,6 @@ const ForgotPasswordPage = () => {
       }
     },
   });
-console.log('hekki')
-console.log(formik.errors.email)
-console.log('yeah')
-
   const isFormEmpty = !formik.values.email;
 
   return (
@@ -75,7 +71,7 @@ console.log('yeah')
           value={formik.values.email}
           onChange={(e) => {
             formik.handleChange(e);
-            formik.setFieldTouched('email', true, false)
+            formik.setFieldTouched("email", true, false);
           }}
           onBlur={formik.handleBlur}
           error={Boolean(formik.touched.email && formik.errors.email)}

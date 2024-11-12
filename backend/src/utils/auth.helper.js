@@ -6,12 +6,16 @@ const registerValidation = [
   body("password")
     .isLength({ min: 8 })
     .withMessage("Must be atleast 8 characters")
-    .matches(/[!@#$%^&*(),.?":{}|<>]/)
+    .matches(/[!@#$%^&*(),.?":{}|<>_\-=]/)
     .withMessage("Must contain one special character"),
 ];
 
 const loginValidation = [
-  body("email").isEmail().withMessage("Invalid email address"),
+  body("email")
+    .isEmail()
+    .withMessage("Invalid email address")
+    .notEmpty()
+    .withMessage("Email is required"),
   body("password").notEmpty().withMessage("Password is required"),
 ];
 

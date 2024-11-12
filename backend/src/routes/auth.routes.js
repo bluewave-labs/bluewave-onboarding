@@ -9,6 +9,6 @@ router.post("/register", registerValidation, handleValidationErrors, register);
 router.post("/login", loginValidation, handleValidationErrors, login);
 router.post("/logout", authenticateJWT, logout);
 router.post("/forget-password", forgetPasswordValidation, handleValidationErrors, forgetPassword);
-router.post("/reset-password", resetPassword, handleValidationErrors, resetPassword);
+router.post("/reset-password", handleValidationErrors, resetPassword);
 
 module.exports = router;

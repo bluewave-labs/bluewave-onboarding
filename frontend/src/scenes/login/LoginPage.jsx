@@ -8,49 +8,67 @@ import { handleAuthSuccess } from "../../utils/loginHelper";
 import { useAuth } from "../../services/authProvider";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../components/Logo/Logo";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+
+const validationSchema = Yup.object({
+  email: Yup.string()
+    .required("Email is required")
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "Invalid email address"
+    )
+    .trim(),
+  password: Yup.string().required("Password is required").trim(),
+});
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [errorMessages, setErrorMessages] = useState([]);
   const { loginAuth } = useAuth();
   const navigate = useNavigate();
+  const [serverErrors, setServerErrors] = useState([]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setErrorMessages([]);
-    try {
-      const response = await login(email, password);
-      handleAuthSuccess(response, loginAuth, navigate);
-      handleAuthSuccess(response, loginAuth, navigate);
-      setLoading(false);
-    } catch (error) {
-      if (error.response?.data?.errors) {
-        setErrorMessages(error.response.data.errors);
-      } else if (error.response?.data?.error) {
-        setErrorMessages([error.response.data.error]);
-      } else {
-        setErrorMessages(["An error occurred. Please try again."]);
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema,
+    validateOnMount: false,
+    onSubmit: async (values, { setSubmitting }) => {
+      setServerErrors([]);
+      try {
+        const response = await login(values);
+        handleAuthSuccess(response, loginAuth, navigate);
+      } catch (error) {
+        if (error.response?.data?.errors) {
+          setServerErrors(error.response.data.errors);
+        } else if (error.response?.data?.error) {
+          setServerErrors([error.response.data.error]);
+        } else {
+          setServerErrors([
+            "An error occurred. Please check your network connection and try again.",
+          ]);
+        }
+      } finally {
+        setSubmitting(false);
       }
-      setLoading(false);
-    }
-  };
+    },
+  });
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    setErrorMessages([]);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    setErrorMessages([]);
-  };
+  const isFormEmpty = !formik.values.email && !formik.values.password;
 
   return (
-    <form onSubmit={handleSubmit} className={styles["login-container"]}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        formik.handleSubmit(e);
+        Object.keys(formik.values).forEach((key) => {
+          formik.setFieldTouched(key, true, false);
+        });
+      }}
+      className={styles["login-container"]}
+    >
       <Logo />
       <h2>Log in to your account</h2>
       <div className={styles["form-group"]}>
@@ -61,8 +79,13 @@ function LoginPage() {
           textFieldMargin="none"
           TextFieldWidth="full"
           required={true}
-          value={email}
-          onChange={handleEmailChange}
+          value={formik.values.email}
+          onChange={(e) => {
+            formik.handleChange(e);
+          }}
+          onBlur={formik.handleBlur}
+          error={Boolean(formik.touched.email && formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
         />
       </div>
       <div className={styles["form-group"]}>
@@ -74,15 +97,23 @@ function LoginPage() {
           TextFieldWidth="full"
           type="password"
           required={true}
-          value={password}
-          onChange={handlePasswordChange}
+          value={formik.values.password}
+          onChange={(e) => {
+            formik.handleChange(e);
+            formik.setFieldTouched("email", true, false);
+            formik.setFieldTouched("password", true, false);
+          }}
+          onBlur={formik.handleBlur}
+          error={Boolean(formik.touched.password && formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
         />
-        {errorMessages.length > 0 &&
-          errorMessages.map((msg, index) => (
-            <div key={index} className={styles["error-message"]}>
-              {msg}
-            </div>
-          ))}
+        {serverErrors.length > 0 && (
+          <div className={styles["error-message"]}>
+            {serverErrors.map((error, index) => (
+              <div key={index}>{error}</div>
+            ))}
+          </div>
+        )}
       </div>
       <div className={styles["form-group"]}>
         <div className={styles["form-group-2"]}>
@@ -100,9 +131,13 @@ function LoginPage() {
       <button
         className={styles["sign-in-button"]}
         type="submit"
-        disabled={loading}
+        disabled={isFormEmpty || formik.isSubmitting}
       >
-        {loading ? <CircularProgress size={12} color="inherit" /> : "Sign In"}
+        {formik.isSubmitting ? (
+          <CircularProgress size={12} color="inherit" />
+        ) : (
+          "Sign In"
+        )}
       </button>
       <div className={styles["sign-up-link"]}>
         Don't have an account? <CustomLink text="Sign up" url="/signup" />
