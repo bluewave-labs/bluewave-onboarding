@@ -15,11 +15,17 @@ import { useFormik } from "formik";
 const validationSchema = Yup.object().shape({
   name: Yup.string()
     .required("Name is required")
-    .matches(/^[A-Za-z'-]+$/, "Name can only contain letters, hyphens and apostrophes")
+    .matches(
+      /^[A-Za-z'-]+$/,
+      "Name can only contain letters, hyphens and apostrophes"
+    )
     .trim(),
   surname: Yup.string()
     .required("Surname is required")
-    .matches(/^[A-Za-z'-]+$/, "Surname can only contain letters, hyphens and apostrophes")
+    .matches(
+      /^[A-Za-z'-]+$/,
+      "Surname can only contain letters, hyphens and apostrophes"
+    )
     .trim(),
   email: Yup.string()
     .matches(
@@ -31,7 +37,10 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters")
-    .matches(/[!@#$%^&*-_]/, "Password must contain at least one special character"),
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>_\-=]/,
+      "Password must contain at least one special character"
+    ),
 });
 
 function CreateAccountPage() {
@@ -59,7 +68,9 @@ function CreateAccountPage() {
         } else if (error.response?.data?.error) {
           setServerErrors([error.response.data.error]);
         } else {
-          setServerErrors(["An error occurred. Please check your network connection and try again."]);
+          setServerErrors([
+            "An error occurred. Please check your network connection and try again.",
+          ]);
         }
       } finally {
         setSubmitting(false);
@@ -74,14 +85,16 @@ function CreateAccountPage() {
     !formik.values.password;
 
   const hasMinLength = formik.values.password.length >= 8;
-  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(formik.values.password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>_\-=]/.test(
+    formik.values.password
+  );
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
         formik.handleSubmit(e);
-        Object.keys(formik.values).forEach(key => {
+        Object.keys(formik.values).forEach((key) => {
           formik.setFieldTouched(key, true, false);
         });
       }}
@@ -89,14 +102,6 @@ function CreateAccountPage() {
     >
       <Logo />
       <h2>Create an account</h2>
-
-      {serverErrors.length > 0 && (
-        <div className={styles["error-message"]}>
-          {serverErrors.map((error, index) => (
-            <div key={index}>{error}</div>
-          ))}
-        </div>
-      )}
 
       <div className={styles["form-group"]}>
         <CustomTextField
@@ -127,7 +132,9 @@ function CreateAccountPage() {
           type="text"
           labelText="Surname*:"
           checkCircleIconVisible={true}
-          displayCheckCircleIcon={formik.touched.surname && !formik.errors.surname}
+          displayCheckCircleIcon={
+            formik.touched.surname && !formik.errors.surname
+          }
           placeholder="Enter your surname"
           textFieldMargin="none"
           TextFieldWidth="full"
@@ -135,7 +142,7 @@ function CreateAccountPage() {
           value={formik.values.surname}
           onChange={(e) => {
             formik.handleChange(e);
-            formik.setFieldTouched('name', true, false);
+            formik.setFieldTouched("name", true, false);
           }}
           onBlur={formik.handleBlur}
           error={Boolean(formik.touched.surname && formik.errors.surname)}
@@ -158,7 +165,7 @@ function CreateAccountPage() {
           value={formik.values.email}
           onChange={(e) => {
             formik.handleChange(e);
-            formik.setFieldTouched('surname', true, false);
+            formik.setFieldTouched("surname", true, false);
           }}
           onBlur={formik.handleBlur}
           error={Boolean(formik.touched.email && formik.errors.email)}
@@ -173,7 +180,9 @@ function CreateAccountPage() {
           name="password"
           labelText="Password*:"
           checkCircleIconVisible={true}
-          displayCheckCircleIcon={formik.touched.password && !formik.errors.password}
+          displayCheckCircleIcon={
+            formik.touched.password && !formik.errors.password
+          }
           placeholder="Create your password"
           textFieldMargin="none"
           TextFieldWidth="full"
@@ -181,8 +190,8 @@ function CreateAccountPage() {
           value={formik.values.password}
           onChange={(e) => {
             formik.handleChange(e);
-            formik.setFieldTouched('email', true, false)
-            formik.setFieldTouched('password', true, false);
+            formik.setFieldTouched("email", true, false);
+            formik.setFieldTouched("password", true, false);
           }}
           onBlur={formik.handleBlur}
           error={Boolean(formik.touched.password && formik.errors.password)}
@@ -210,6 +219,14 @@ function CreateAccountPage() {
         />
         Must contain one special character
       </div>
+
+      {serverErrors.length > 0 && (
+        <div className={styles["error-message"]}>
+          {serverErrors.map((error, index) => (
+            <div key={index}>{error}</div>
+          ))}
+        </div>
+      )}
 
       <button
         className={styles["create-account-button"]}
