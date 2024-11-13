@@ -3,7 +3,7 @@ services:
     image: onboarding/onboarding:v0
     build: ./backend
     volumes:
-      - ./backend:/app
+      # - ./backend:/app
       - /app/node_modules
     ports:
       - "3000:3000"
@@ -56,7 +56,7 @@ services:
   frontend:
     build: ./frontend
     volumes:
-      - ./frontend:/app
+      # - ./frontend:/app # Uncomment this only in testing mode
       - /app/node_modules
     ports:
       - "4173:4173"
@@ -67,10 +67,16 @@ services:
           target: /app
           ignore:
             - node_modules/
+          # Disable watch mode for testing (no `develop` section or watch defined)
     environment:
       - NODE_ENV=development
     command: >
-      bash -c "npm run build && npm run preview"
+        bash -c "
+          if [ \"$NODE_ENV\" = \"development\" ]; then
+            npm run dev;
+          elif [ \"$NODE_ENV\" != \"development\" ]; then
+            npm run build && npm run preview;
+          fi"
   mailhog:
     image: mailhog/mailhog
     ports:
