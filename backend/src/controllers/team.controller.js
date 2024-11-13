@@ -50,8 +50,8 @@ const setOrganisation = async (req, res) => {
 
 const getTeamCount = async (req, res) => {
   try {
-    const teamCount = await Team.count();
-    return res.status(200).json({ teamExists: teamCount > 0 });
+    const result = await teamService.getTeamCount();
+    return res.status(200).json(result);
   } catch (err) {
     const { statusCode, payload } = internalServerError(
       "GET_TEAM_COUNT_ERROR",
