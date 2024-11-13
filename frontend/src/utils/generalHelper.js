@@ -43,7 +43,8 @@ export const generateApiKey = () => {
   return apiKey;
 };
 
-export function hasRolePermission(userRole, requiredRole) {
-  if (!userRole || !requiredRole) return false;
-  return userRole === requiredRole;
+// Authorization utility function
+export function renderIfAuthorized(userRole, requiredRole, element) {
+  if (!userRole || !requiredRole) return null;
+  return userRole === requiredRole ? element : null;
 }

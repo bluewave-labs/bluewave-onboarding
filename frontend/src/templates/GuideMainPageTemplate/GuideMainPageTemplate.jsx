@@ -7,7 +7,7 @@ import Button from '@components/Button/Button';
 import './GuideMainPageTemplate.css';
 import { activityInfoData } from '../../data/guideMainPageData';
 import { useAuth } from '../../services/authProvider';
-import { hasRolePermission } from '../../utils/generalHelper';
+import { renderIfAuthorized } from '../../utils/generalHelper';
 
 const GuideMainPageTemplate = ({ items, handleDelete, isPopupOpen, handleClosePopup, type, onClick }) => {
   const {  userInfo } = useAuth();
@@ -18,7 +18,7 @@ const GuideMainPageTemplate = ({ items, handleDelete, isPopupOpen, handleClosePo
     <div className="product-page-container">
       <div className="product-page-header">
         <ContentHeader title={title} />
-        {hasRolePermission(role, 'admin') &&<Button text={buttonText} onClick={onClick} />}
+        {renderIfAuthorized(role, 'admin', <Button text={buttonText} onClick={onClick} />)}
       </div>
       <div className="product-page">
         <ContentArea className="content-area">
