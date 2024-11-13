@@ -73,7 +73,7 @@ services:
             - node_modules/
           # Disable watch mode for testing (no `develop` section or watch defined)
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=${NODE_ENV:-development}
     command: >
         bash -c "
           if [ \"$NODE_ENV\" = \"development\" ]; then
