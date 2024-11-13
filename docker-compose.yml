@@ -28,7 +28,7 @@ services:
           ignore:
             - node_modules/
             - .git/
-            - *.log
+            - "*.log"
             - coverage/
             - dist/
     command: >
