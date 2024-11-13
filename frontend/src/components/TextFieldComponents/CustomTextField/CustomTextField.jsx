@@ -13,6 +13,7 @@ const CustomTextField = ({
   labelText = "",
   value = "",
   onChange = () => { },
+  onBlur = () => { },
   helperText = "",
   error = false,
   multiline = false,
@@ -52,6 +53,7 @@ const CustomTextField = ({
         type={type}
         name={name}
         autoFocus={autofocus}
+        onBlur={onBlur}
         required={Boolean(required)}
         className="textField"
         sx={{ width: TextFieldWidth }}
@@ -92,6 +94,7 @@ CustomTextField.propTypes = {
   labelText: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   defaultValue: PropTypes.string,
   helperText: PropTypes.string,
   error: PropTypes.bool,
