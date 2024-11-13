@@ -1,6 +1,6 @@
 const linkService = require("../service/link.service");
 const { internalServerError } = require("../utils/errors.helper");
-const { URL_REGEX } = require("../utils/link.helper");
+const { validateUrl } = require("../utils/link.helper");
 
 class LinkController {
   async addLink(req, res) {
@@ -26,10 +26,11 @@ class LinkController {
 
     try {
       const newLinkData = {
-        ...req.body,
-        order: req.body.order || allLinks.length + 1,
+        title,
+        url,
+        order: order || allLinks.length + 1,
         helperId,
-        target: req.body.target || "_blank",
+        target: target || "_blank",
       };
       const newPopup = await linkService.createLink(newLinkData);
       res.status(201).json(newPopup);
@@ -95,7 +96,15 @@ class LinkController {
         });
       }
 
-      const updatedLink = await linkService.updateLink(id, req.body);
+      const newLinkData = {
+        title,
+        url,
+        order: order || allLinks.length + 1,
+        helperId,
+        target: target || "_blank",
+      };
+
+      const updatedLink = await linkService.updateLink(id, newLinkData);
       res.status(200).json(updatedLink);
     } catch (err) {
       const { statusCode, payload } = internalServerError(
