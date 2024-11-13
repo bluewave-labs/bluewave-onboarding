@@ -41,20 +41,20 @@ class LinkController {
     }
 
     if (links) {
-      const result = await Promise.all(
-        links.map(async (link) => {
-          if (!link?.title || !link?.url) {
-            return {
-              msg: "title and url are required",
-            };
-          }
+      const result = links.map((link) => {
+        if (!link?.title || !link?.url) {
+          return {
+            msg: "title and url are required",
+          };
+        }
 
-          if (!validateUrl(link.url)) {
-            return { msg: "Invalid value for URL" };
-          }
-        })
-      );
-      if (result.some((it) => it?.msg)) {
+        if (!validateUrl(link.url)) {
+          return { msg: "Invalid value for URL" };
+        }
+        return { msg: null };
+      });
+
+      if (result.some((it) => it?.msg !== null)) {
         const response = result.filter((it) => it.msg);
         return res.status(400).json({ errors: response });
       }
