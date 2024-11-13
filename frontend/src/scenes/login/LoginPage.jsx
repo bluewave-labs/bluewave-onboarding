@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import styles from "./Login.module.css";
 import CustomTextField from "../../components/TextFieldComponents/CustomTextField/CustomTextField";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -8,8 +10,6 @@ import { handleAuthSuccess } from "../../utils/loginHelper";
 import { useAuth } from "../../services/authProvider";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../components/Logo/Logo";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -24,125 +24,122 @@ const validationSchema = Yup.object({
 
 function LoginPage() {
   const [rememberMe, setRememberMe] = useState(false);
+  const [serverErrors, setServerErrors] = useState([]);
   const { loginAuth } = useAuth();
   const navigate = useNavigate();
-  const [serverErrors, setServerErrors] = useState([]);
-
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema,
-    validateOnMount: false,
-    onSubmit: async (values, { setSubmitting }) => {
-      setServerErrors([]);
-      try {
-        const response = await login(values);
-        handleAuthSuccess(response, loginAuth, navigate);
-      } catch (error) {
-        if (error.response?.data?.errors) {
-          setServerErrors(error.response.data.errors);
-        } else if (error.response?.data?.error) {
-          setServerErrors([error.response.data.error]);
-        } else {
-          setServerErrors([
-            "An error occurred. Please check your network connection and try again.",
-          ]);
-        }
-      } finally {
-        setSubmitting(false);
-      }
-    },
-  });
-
-  const isFormEmpty = !formik.values.email && !formik.values.password;
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        formik.handleSubmit(e);
-        Object.keys(formik.values).forEach((key) => {
-          formik.setFieldTouched(key, true, false);
-        });
+    <Formik
+      initialValues={{
+        email: "",
+        password: "",
       }}
-      className={styles["login-container"]}
+      validationSchema={validationSchema}
+      validateOnChange={false}
+      validateOnBlur={true}
+      onSubmit={async (values, { setSubmitting }) => {
+        setServerErrors([]);
+        try {
+          const response = await login(values);
+          handleAuthSuccess(response, loginAuth, navigate);
+        } catch (error) {
+          if (error.response?.data?.errors) {
+            setServerErrors(error.response.data.errors);
+          } else if (error.response?.data?.error) {
+            setServerErrors([error.response.data.error]);
+          } else {
+            setServerErrors([
+              "An error occurred. Please check your network connection and try again.",
+            ]);
+          }
+        } finally {
+          setSubmitting(false);
+        }
+      }}
     >
-      <Logo />
-      <h2>Log in to your account</h2>
-      <div className={styles["form-group"]}>
-        <CustomTextField
-          id="email"
-          placeholder="Enter email"
-          labelText="Email:"
-          textFieldMargin="none"
-          TextFieldWidth="full"
-          required={true}
-          value={formik.values.email}
-          onChange={(e) => {
-            formik.handleChange(e);
-          }}
-          onBlur={formik.handleBlur}
-          error={Boolean(formik.touched.email && formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-        />
-      </div>
-      <div className={styles["form-group"]}>
-        <CustomTextField
-          id="password"
-          placeholder="Enter password"
-          labelText="Password:"
-          textFieldMargin="none"
-          TextFieldWidth="full"
-          type="password"
-          required={true}
-          value={formik.values.password}
-          onChange={(e) => {
-            formik.handleChange(e);
-            formik.setFieldTouched("email", true, false);
-            formik.setFieldTouched("password", true, false);
-          }}
-          onBlur={formik.handleBlur}
-          error={Boolean(formik.touched.password && formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
-        />
-        {serverErrors.length > 0 && (
-          <div className={styles["error-message"]}>
-            {serverErrors.map((error, index) => (
-              <div key={index}>{error}</div>
-            ))}
-          </div>
-        )}
-      </div>
-      <div className={styles["form-group"]}>
-        <div className={styles["form-group-2"]}>
-          <label>
-            <input
-              type="checkbox"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
+      {({
+        isSubmitting,
+        touched,
+        errors,
+        handleChange,
+        handleBlur,
+        values,
+      }) => (
+        <Form className={styles["login-container"]}>
+          <Logo />
+          <h2>Log in to your account</h2>
+
+          <div className={styles["form-group"]}>
+            <CustomTextField
+              id="email"
+              name="email"
+              placeholder="Enter email"
+              labelText="Email:"
+              textFieldMargin="none"
+              TextFieldWidth="full"
+              required={true}
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={Boolean(touched.email && errors.email)}
+              helperText={touched.email && errors.email}
             />
-            Remember for 30 days
-          </label>
-          <CustomLink text="Forgot Password" url="/forgot-password" />
-        </div>
-      </div>
-      <button
-        className={styles["sign-in-button"]}
-        type="submit"
-        disabled={isFormEmpty || formik.isSubmitting}
-      >
-        {formik.isSubmitting ? (
-          <CircularProgress size={12} color="inherit" />
-        ) : (
-          "Sign In"
-        )}
-      </button>
-      <div className={styles["sign-up-link"]}>
-        Don't have an account? <CustomLink text="Sign up" url="/signup" />
-      </div>
-    </form>
+          </div>
+
+          <div className={styles["form-group"]}>
+            <CustomTextField
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter password"
+              labelText="Password:"
+              textFieldMargin="none"
+              TextFieldWidth="full"
+              required={true}
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={Boolean(touched.password && errors.password)}
+              helperText={touched.password && errors.password}
+            />
+
+            {serverErrors.length > 0 && (
+              <div className={styles["error-message"]}>
+                {serverErrors.map((error, index) => (
+                  <div key={index}>{error}</div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className={styles["form-group"]}>
+            <div className={styles["form-group-2"]}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                />
+                Remember for 30 days
+              </label>
+              <CustomLink text="Forgot Password" url="/forgot-password" />
+            </div>
+          </div>
+
+          <button
+            className={styles["sign-in-button"]}
+            type="submit"
+            disabled={!values.email || !values.password || isSubmitting}
+          >
+            {isSubmitting ? (
+              <CircularProgress size={12} color="inherit" />
+            ) : (
+              "Sign In"
+            )}
+          </button>
+        </Form>
+      )}
+    </Formik>
   );
 }
 
