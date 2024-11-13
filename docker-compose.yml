@@ -3,7 +3,7 @@ services:
     image: onboarding/onboarding:v0
     build: ./backend
     volumes:
-      - ./backend:/app
+      # - ./backend:/app
       - /app/node_modules
     ports:
       - "3000:3000"
@@ -20,6 +20,17 @@ services:
       - EMAIL_HOST=${EMAIL_HOST}
       - EMAIL_PORT=${EMAIL_PORT}
       - EMAIL_ENABLE=${EMAIL_ENABLE}
+    develop:
+      watch:
+        - action: sync
+          path: ./backend
+          target: /app
+          ignore:
+            - node_modules/
+            - .git/
+            - "*.log"
+            - coverage/
+            - dist/
     command: >
       bash -c "if ! npx sequelize-cli db:migrate; then
         if ! npx sequelize-cli db:create; then
@@ -46,19 +57,30 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-
   frontend:
     build: ./frontend
     volumes:
-      - ./frontend:/app
+      # - ./frontend:/app # Uncomment this only in testing mode
       - /app/node_modules
     ports:
       - "4173:4173"
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app
+          ignore:
+            - node_modules/
+          # Disable watch mode for testing (no `develop` section or watch defined)
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=${NODE_ENV:-development}
     command: >
-      bash -c "npm run build && npm run preview"
-
+        bash -c "
+          if [ \"$NODE_ENV\" = \"development\" ]; then
+            npm run dev;
+          elif [ \"$NODE_ENV\" != \"development\" ]; then
+            npm run build && npm run preview;
+          fi"
   mailhog:
     image: mailhog/mailhog
     ports:
