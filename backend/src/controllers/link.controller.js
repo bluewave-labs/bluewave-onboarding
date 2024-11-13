@@ -2,10 +2,6 @@ const linkService = require("../service/link.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { URL_REGEX } = require("../utils/link.helper");
 
-const validateUrl = (value) => {
-  return URL_REGEX.test(value);
-};
-
 class LinkController {
   async addLink(req, res) {
     const { title, url, order, helperId } = req.body;

@@ -1,9 +1,13 @@
 import { apiClient } from "./apiClient";
+const RELATIVE_URL_REGEX = /^([./?#]|[a-zA-Z0-9_-]+\/?)+$/;
 
 const isValidUrl = (url) => {
-  return /(?:https?:\/\/(?:www\.)?|www\.)?[a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-\d@:%_+.~#?&//=]*)|(?:\/[a-zA-Z0-9@:%._+~#&//=]*)/gi.test(
-    url
-  );
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    return RELATIVE_URL_REGEX.test(url);
+  }
 };
 
 export const createLink = async (link) => {

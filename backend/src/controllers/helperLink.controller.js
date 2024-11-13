@@ -1,12 +1,7 @@
 const helperService = require("../service/helperLink.service");
-const linkService = require("../service/link.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { validateHexColor } = require("../utils/guide.helper");
-const { URL_REGEX } = require("../utils/link.helper");
-
-const validateUrl = (value) => {
-  return URL_REGEX.test(value);
-};
+const { validateUrl } = require("../utils/link.helper");
 
 function validateColors(colors) {
   for (const [name, color] of Object.entries(colors)) {
@@ -14,6 +9,27 @@ function validateColors(colors) {
       validateHexColor(color, name);
     }
   }
+}
+
+function validateLinks(links) {
+  const result = [];
+  for (const link of links) {
+    const { title, url, order } = link;
+    if (!title || !url) {
+      result.push({ msg: "title and url are required" });
+      continue;
+    }
+    if (!validateUrl(url)) {
+      result.push({ msg: "Invalid value for url" });
+      continue;
+    }
+    if (order && order < 1) {
+      result.push({ msg: "Invalid value for order" });
+      continue;
+    }
+    result.push({ msg: null });
+  }
+  return result;
 }
 
 class LinkController {
@@ -41,21 +57,10 @@ class LinkController {
     }
 
     if (links) {
-      const result = links.map((link) => {
-        if (!link?.title || !link?.url) {
-          return {
-            msg: "title and url are required",
-          };
-        }
-
-        if (!validateUrl(link.url)) {
-          return { msg: "Invalid value for URL" };
-        }
-        return { msg: null };
-      });
+      const result = validateLinks(links);
 
       if (result.some((it) => it?.msg !== null)) {
-        const response = result.filter((it) => it.msg);
+        const response = result.find((it) => it.msg);
         return res.status(400).json({ errors: response });
       }
     }
@@ -134,23 +139,7 @@ class LinkController {
       }
 
       if (links) {
-        const result = [];
-        for (const link of links) {
-          const { title, url, order } = link;
-          if (!title || !url) {
-            result.push({ msg: "title and url are required" });
-            continue;
-          }
-          if (!validateUrl(url)) {
-            result.push({ msg: "Invalid value for url" });
-            continue;
-          }
-          if (order && order < 1) {
-            result.push({ msg: "Invalid value for order" });
-            continue;
-          }
-          result.push({ msg: null });
-        }
+        const result = validateLinks(links);
         if (result.some((it) => it?.msg !== null)) {
           const response = result.filter((it) => it.msg);
           return res.status(400).json({ errors: response });
