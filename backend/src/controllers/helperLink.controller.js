@@ -61,7 +61,7 @@ class LinkController {
 
       if (result.some((it) => it?.msg !== null)) {
         const response = result.find((it) => it.msg);
-        return res.status(400).json({ errors: response });
+        return res.status(400).json({ errors: [response] });
       }
     }
 
@@ -141,8 +141,8 @@ class LinkController {
       if (links) {
         const result = validateLinks(links);
         if (result.some((it) => it?.msg !== null)) {
-          const response = result.filter((it) => it.msg);
-          return res.status(400).json({ errors: response });
+          const response = result.find((it) => it.msg);
+          return res.status(400).json({ errors: [response] });
         }
       }
 
