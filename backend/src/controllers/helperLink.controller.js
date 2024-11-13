@@ -134,26 +134,24 @@ class LinkController {
       }
 
       if (links) {
-        const result = await Promise.all(
-          links.map(async (link) => {
-            const { title, url, order } = link;
-            if (!title || !url) {
-              return {
-                msg: "title and url are required",
-              };
-            }
-
-            if (validateUrl(title) || !validateUrl(url)) {
-              return { msg: "Invalid value for title or url" };
-            }
-
-            const allLinks = await linkService.getLinksByHelperId(id);
-            if (order && order > allLinks.length + 1) {
-              return { msg: "Invalid value for order" };
-            }
-          })
-        );
-        if (result.some((it) => it?.msg)) {
+        const result = [];
+        for (const link of links) {
+          const { title, url, order } = link;
+          if (!title || !url) {
+            result.push({ msg: "title and url are required" });
+            continue;
+          }
+          if (!validateUrl(url)) {
+            result.push({ msg: "Invalid value for url" });
+            continue;
+          }
+          if (order && order < 1) {
+            result.push({ msg: "Invalid value for order" });
+            continue;
+          }
+          result.push({ msg: null });
+        }
+        if (result.some((it) => it?.msg !== null)) {
           const response = result.filter((it) => it.msg);
           return res.status(400).json({ errors: response });
         }
