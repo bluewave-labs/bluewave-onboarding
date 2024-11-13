@@ -30,14 +30,17 @@ const menuItems = [
   { text: 'GET FEEDBACK', title: true },
   { text: 'Feedback', icon: <ChatIcon /> },
   { text: 'Surveys', icon: <ListIcon /> },
-  { text: 'Support', icon: <SportsIcon /> },
-];
+  { text: 'Support', icon: <SportsIcon />, route: 'https://github.com/bluewave-labs/bluewave-onboarding' }];
 
 function LeftMenu() {
   const navigate = useNavigate();
 
   const handleNavigation = (route) => {
-    if (route) navigate(route);
+    if (route && route.startsWith('/')) {
+      navigate(route);  
+    } else if (route) {
+      window.open(route, '_blank', 'noopener,noreferrer'); 
+    }
   };
 
   return (

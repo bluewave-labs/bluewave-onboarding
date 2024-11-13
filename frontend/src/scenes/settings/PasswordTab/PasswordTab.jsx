@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { LuAlertTriangle } from "react-icons/lu";
 import styles from "./PasswordTab.module.css";
-import CustomTextField from "../../../components/TextFieldComponents/CustomTextField/CustomTextField";
-import Button from "../../../components/Button/Button";
+import CustomTextField from "@components/TextFieldComponents/CustomTextField/CustomTextField";
+import Button from "@components/Button/Button";
 
 const PasswordTab = () => {
   const [currentPassword, setCurrentPassword] = useState('');

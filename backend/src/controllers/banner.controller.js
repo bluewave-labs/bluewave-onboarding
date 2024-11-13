@@ -1,9 +1,8 @@
 const bannerService = require("../service/banner.service.js");
 const { internalServerError } = require("../utils/errors.helper");
-const { isValidHexColor, checkColorFields, validateCloseButtonAction } = require("../utils/guide.helper");
+const { validateCloseButtonAction } = require("../utils/guide.helper");
 const { validatePosition } = require("../utils/banner.helper");
-const db = require("../models/index.js"); 
-const Banner = db.Banner;
+const { checkColorFieldsFail } =require("../utils/guide.helper");
 
 class BannerController {
   async addBanner(req, res) {
@@ -77,8 +76,9 @@ class BannerController {
   async editBanner(req, res) {
     try {
       const { id } = req.params;
+      const { fontColor, backgroundColor, url, position, closeButtonAction, bannerText } = req.body;
   
-      if (!req.body.position || !req.body.closeButtonAction) {
+      if (!position || !closeButtonAction) {
         return res
           .status(400)
           .json({
@@ -86,13 +86,13 @@ class BannerController {
           });
       }
   
-      if (!validatePosition(req.body.position)) {
+      if (!validatePosition(position)) {
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid value for position" }] });
       }
   
-      if (!validateCloseButtonAction(req.body.closeButtonAction)) {
+      if (!validateCloseButtonAction(closeButtonAction)) {
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid value for closeButtonAction" }] });

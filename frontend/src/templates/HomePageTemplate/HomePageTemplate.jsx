@@ -1,5 +1,5 @@
 import React from 'react';
-import LeftMenu from "../../components/LeftMenu/LeftMenu";
+import LeftMenu from "@components/LeftMenu/LeftMenu";
 import "./HomePageTemplate.css";
 import { Outlet } from "react-router-dom";
 

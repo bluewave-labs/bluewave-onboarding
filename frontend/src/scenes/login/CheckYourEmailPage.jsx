@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Login.module.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useLocation, useNavigate } from 'react-router-dom';
-import CustomLink from '../../components/CustomLink/CustomLink';
+import CustomLink from '@components/CustomLink/CustomLink';
 
 const CheckYourEmailPage = () => {
   const navigate = useNavigate();
