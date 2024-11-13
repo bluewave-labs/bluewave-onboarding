@@ -3,7 +3,7 @@ services:
     image: onboarding/onboarding:v0
     build: ./backend
     volumes:
-      # - ./backend:/app
+      - ./backend:/app
       - /app/node_modules
     ports:
       - "3000:3000"
@@ -60,7 +60,7 @@ services:
   frontend:
     build: ./frontend
     volumes:
-      # - ./frontend:/app # Uncomment this only in testing mode
+      - ./frontend:/app
       - /app/node_modules
     ports:
       - "4173:4173"
@@ -71,7 +71,6 @@ services:
           target: /app
           ignore:
             - node_modules/
-          # Disable watch mode for testing (no `develop` section or watch defined)
     environment:
       - NODE_ENV=${NODE_ENV:-development}
     command: >
