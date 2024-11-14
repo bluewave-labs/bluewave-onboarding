@@ -41,7 +41,6 @@ function LoginPage() {
       validateOnBlur={true}
       onSubmit={async (values, { setSubmitting }) => {
         setServerErrors([]);
-        console.log(values)
         try {
           const response = await login(values);
           handleAuthSuccess(response, loginAuth, navigate);
