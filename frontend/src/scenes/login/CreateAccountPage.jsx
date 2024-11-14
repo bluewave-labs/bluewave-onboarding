@@ -56,7 +56,7 @@ function CreateAccountPage() {
         password: "",
       }}
       validationSchema={validationSchema}
-      validateOnMount={false}
+      validateonMount={false}
       validateonBlur={true}
       onSubmit={async (values, { setSubmitting }) => {
         setServerErrors([]);
