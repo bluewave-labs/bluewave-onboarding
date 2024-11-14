@@ -19,6 +19,9 @@ import { changeMemberRole, getOrgDetails, inviteMember, removeTeamMember, update
 import InviteTeamMemberModal from "../Modals/InviteTeamMemberModal/InviteTeamMemberModal";
 import RemoveTeamMemberModal from "../Modals/RemoveTeamMemberModal/RemoveTeamMemberModal";
 import ChangeMemberRoleModal from "../Modals/ChangeMemberRoleModal/ChangeMemberRoleModal";
+import { useAuth } from "../../../services/authProvider";
+
+
 
 
 const TeamTab = () => {
@@ -28,7 +31,8 @@ const TeamTab = () => {
   const [refetch, setRefetch] = useState(true);
   const [loading, setLoading] = useState(true);
   const [team, setTeam] = useState([]);
-
+  const { userInfo, updateProfile } = useAuth();
+  const currentUserId = userInfo?.id;
   const [openInviteTeamMemberModal, setOpenInviteTeamMemberModal] = useState(false);
   const [openRemoveTeamMemberModal, setOpenRemoveTeamMemberModal] = useState(false);
   const [openChangeMemberRoleModal, setOpenChangeMemberRoleModal] = useState(false);
@@ -40,6 +44,13 @@ const TeamTab = () => {
       try {
         setLoading(()=>true)
         const response = await getOrgDetails();
+        if (response.data.users) {
+          response.data.users.forEach(user => {
+            if (user.id === currentUserId && user.role !== userInfo.role) { 
+              updateProfile({...userInfo, role: user.role}); 
+            }
+          });
+        }
         setOrgName(()=>response.data.name);
         setTeam(()=>response.data.users);
       }

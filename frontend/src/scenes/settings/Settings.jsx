@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -17,6 +17,12 @@ export default function Settings() {
   const [value, setValue] = useState("1");  
   const { userInfo } = useAuth();
   const role = userInfo?.role;
+
+  useEffect(() => {
+    if (role === "member") {
+      setValue("1");
+    }
+  }, [role]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
