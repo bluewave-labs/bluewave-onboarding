@@ -1,7 +1,15 @@
 const { body } = require("express-validator");
 const registerValidation = [
-  body("name").notEmpty().withMessage("Name is required"),
-  body("surname").notEmpty().withMessage("Surname is required"),
+  body("name")
+    .notEmpty()
+    .withMessage("Name is required")
+    .matches(/^[A-Za-z'-]+$/)
+    .withMessage("Name can only contain letters, hyphens and apostrophes"),
+  body("surname")
+    .notEmpty()
+    .withMessage("Surname is required")
+    .matches(/^[A-Za-z'-]+$/)
+    .withMessage("Name can only contain letters, hyphens and apostrophes"),
   body("email").isEmail().withMessage("Invalid email address"),
   body("password")
     .isLength({ min: 8 })

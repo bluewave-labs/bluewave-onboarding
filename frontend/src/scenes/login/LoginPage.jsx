@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import styles from "./Login.module.css";
 import CustomTextField from "../../components/TextFieldComponents/CustomTextField/CustomTextField";
@@ -137,6 +137,9 @@ function LoginPage() {
               "Sign In"
             )}
           </button>
+          <div className={styles["sign-up-link"]}>
+            Don't have an account? <CustomLink text="Sign up" url="/signup" />
+          </div>
         </Form>
       )}
     </Formik>
