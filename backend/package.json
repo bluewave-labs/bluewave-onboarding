@@ -30,8 +30,10 @@
     "sequelize": "^6.37.3"
   },
   "devDependencies": {
+    "chai": "^5.1.2",
+    "mocha": "^10.8.2",
     "nodemon": "^3.1.0",
     "sequelize-cli": "^6.6.2",
-    "vitest": "^2.1.5"
+    "sinon": "^19.0.2"
   }
 }
