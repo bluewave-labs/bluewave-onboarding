@@ -12,6 +12,16 @@ describe("Unit test user service", () => {
   let Invite;
   let Token;
   let Sequelize;
+  let commit;
+  let rollback;
+  beforeEach(() => {
+    commit = sinon.spy();
+    rollback = sinon.spy();
+    sinon.stub(db.sequelize, "transaction").callsFake(async () => ({
+      commit,
+      rollback,
+    }));
+  });
   afterEach(() => {
     Sequelize = sinon.spy(db, "Sequelize");
     sinon.restore();
@@ -160,8 +170,79 @@ describe("Unit test user service", () => {
     ).to.be.true;
     expect(User.callCount).to.be.equal(1);
   });
-  it.skip("updateUser - if the user is updated, should return the updated user", () => {});
-  it.skip("updateUser - if the user is not updated, should throw an error", () => {});
-  it.skip("deleteUser - if the user is the only admin role, should throw an error", () => {});
-  it.skip("deleteUser - if the user is not the admin role, should delete the user, the invite and the token", () => {});
+  it("updateUser - if the user is updated, should return the updated user", async () => {
+    const details = {
+      name: "Harry",
+      surname: "Potter",
+      email: "harry.potter@wizards.com",
+    };
+    User = sinon
+      .stub(db.User, "update")
+      .resolves([1, [{ ...mocks.validUser, ...details }]]);
+    const user = await service.updateUser(1, details);
+    expect(
+      User.calledWith(details, {
+        where: { id: 1 },
+        returning: true,
+      })
+    ).to.be.true;
+    expect(user).not.to.equal(mocks.validUser);
+    expect(user).to.have.property("name", "Harry");
+  });
+  it("updateUser - if something goes wrong, should throw an error 'Error updating user'", async () => {
+    const details = {
+      name: "Harry",
+      surname: "Potter",
+      email: "harry.potter@wizards.com",
+    };
+    User = sinon.stub(db.User, "update").rejects();
+    try {
+      await service.updateUser(1, details);
+    } catch (error) {
+      expect(error).to.have.property("message", "Error updating user");
+      expect(error).to.be.instanceOf(Error);
+    }
+    expect(
+      User.calledWith(details, {
+        where: { id: 1 },
+        returning: true,
+      })
+    ).to.be.true;
+  });
+  it("deleteUser - if the user is the only admin role, should throw an error", async () => {
+    sinon.stub(db.User, "findOne").resolves(mocks.validUser);
+    sinon.stub(db.User, "count").resolves(1);
+    User = sinon.stub(db.User, "destroy");
+    Token = sinon.stub(db.Token, "destroy");
+    Invite = sinon.stub(db.Invite, "destroy");
+    try {
+      await service.deleteUser(1);
+    } catch (error) {
+      expect(error).to.be.instanceOf(Error);
+      expect(error).to.have.property(
+        "message",
+        "Error deleting user ~ The team has only single admin and can't delete themselves"
+      );
+    }
+    expect(User.called).to.be.false;
+    expect(Invite.called).to.be.false;
+    expect(Token.called).to.be.false;
+    expect(commit.called).to.be.false;
+    expect(rollback.called).to.be.true;
+  });
+  it("deleteUser - if the user is not the admin role, should delete the user, the invite and the token", async () => {
+    sinon.stub(db.User, "findOne").resolves(mocks.validUser);
+    sinon.stub(db.User, "count").resolves(2);
+    User = sinon.stub(db.User, "destroy");
+    Token = sinon.stub(db.Token, "destroy");
+    Invite = sinon.stub(db.Invite, "destroy");
+
+    const result = await service.deleteUser(1);
+    console.log(result);
+    expect(User.called).to.be.true;
+    expect(Invite.called).to.be.true;
+    expect(Token.called).to.be.true;
+    expect(commit.called).to.be.true;
+    expect(rollback.called).to.be.false;
+  });
 });
