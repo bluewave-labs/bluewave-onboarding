@@ -1,5 +1,5 @@
-import { describe, it } from "vitest";
+const { describe, it } = require("mocha");
 
 describe("E2e tests user", () => {
-  it.todo("todo tests");
+  it.skip("todo tests", () => {});
 });

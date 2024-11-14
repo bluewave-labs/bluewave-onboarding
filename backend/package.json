@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "vitest",
-    "t:coverage": "vitest run --coverage",
+    "test": "mocha 'src/test/**/*.test.js' --watch",
+    "t:coverage": "mocha",
     "dev": "nodemon index.js",
     "prod": "NODE_ENV=production node index.js",
     "build": "echo 'No build script defined'"
