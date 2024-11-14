@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import styles from "./Login.module.css";
 import CustomTextField from "../../components/TextFieldComponents/CustomTextField/CustomTextField";
@@ -20,6 +20,7 @@ const validationSchema = Yup.object({
     )
     .trim(),
   password: Yup.string().required("Password is required").trim(),
+  rememberMe: Yup.boolean()
 });
 
 function LoginPage() {
@@ -33,12 +34,14 @@ function LoginPage() {
       initialValues={{
         email: "",
         password: "",
+        rememberMe: false
       }}
       validationSchema={validationSchema}
       validateOnChange={false}
       validateOnBlur={true}
       onSubmit={async (values, { setSubmitting }) => {
         setServerErrors([]);
+        console.log(values)
         try {
           const response = await login(values);
           handleAuthSuccess(response, loginAuth, navigate);
@@ -115,10 +118,9 @@ function LoginPage() {
           <div className={styles["form-group"]}>
             <div className={styles["form-group-2"]}>
               <label>
-                <input
+                <Field
                   type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
+                  name="rememberMe"
                 />
                 Remember for 30 days
               </label>
@@ -129,7 +131,7 @@ function LoginPage() {
           <button
             className={styles["sign-in-button"]}
             type="submit"
-            disabled={!values.email || !values.password || isSubmitting}
+            disabled={isSubmitting}
           >
             {isSubmitting ? (
               <CircularProgress size={12} color="inherit" />

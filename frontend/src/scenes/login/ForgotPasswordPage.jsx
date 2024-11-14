@@ -36,7 +36,7 @@ const ForgotPasswordPage = () => {
           const response = await forgotPassword(values);
           navigate("/check-email", { state: { values } });
         } catch (error) {
-          setServerErrors(error.response.data.error);
+          setServerErrors(error.response?.data?.error);
         } finally {
           setSubmitting(false);
         }

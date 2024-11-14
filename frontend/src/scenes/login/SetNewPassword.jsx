@@ -21,13 +21,7 @@ function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
         /[!@#$%^&*(),.?":{}|<>_\-=]/,
         "Password must contain at least one special character"
       ),
-    confirmPassword: Yup.string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters")
-      .matches(
-        /[!@#$%^&*(),.?":{}|<>_\-=]/,
-        "Password must contain at least one special character"
-      ),
+    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null, 'Passwords must match']).required('Please confirm your password')
   });
 
   return (
@@ -40,14 +34,14 @@ function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
       validateOnChange={false}
       validateOnBlur={true}
       onSubmit={async (values, { setSubmitting }) => {
-        setServerError([]);
+        setServerErrors([]);
         try {
           const respone = await resetPassword(email, values.password);
           navigate("/reset-password");
         } catch (error) {
           console.error("Password Reset failed:", error);
           if (error.respone?.data?.errors) {
-            setServerErrors(error.respone?.data?.errors);
+            setServerErrors(error.response?.data?.errors);
           } else if (error.response?.data?.error) {
             setServerErrors([error.response.data.error]);
           } else {
@@ -98,7 +92,7 @@ function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
                 checkCircleIconVisible={true}
                 displayCheckCircleIcon={
                   touched.confirmPassword &&
-                  errors.confirmPassword &&
+                  !errors.confirmPassword &&
                   values.password === values.confirmPassword
                 }
                 placeholder="Confirm your password"
@@ -118,7 +112,7 @@ function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
               <CheckCircleIcon
                 style={{
                   color:
-                    values.password >= 8
+                    values.password.length >= 8
                       ? "green"
                       : "var(--light-border-color)",
                   fontSize: "20px",
@@ -143,9 +137,9 @@ function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
               type="submit"
               className={styles["sign-in-button"]}
               style={{ marginTop: "15px" }}
-              disabled={loading}
+              disabled={isSubmitting}
             >
-              {loading ? (
+              {isSubmitting ? (
                 <CircularProgress size={12} color="inherit" />
               ) : (
                 "Reset Password"
