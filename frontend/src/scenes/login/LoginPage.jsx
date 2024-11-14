@@ -24,7 +24,6 @@ const validationSchema = Yup.object({
 });
 
 function LoginPage() {
-  const [rememberMe, setRememberMe] = useState(false);
   const [serverErrors, setServerErrors] = useState([]);
   const { loginAuth } = useAuth();
   const navigate = useNavigate();

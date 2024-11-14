@@ -7,7 +7,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { resetPassword } from "../../services/loginServices";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { Formik } from "formik";
+import { Formik, Form } from "formik";
 
 function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
   const [serverErrors, setServerErrors] = useState([]);
@@ -21,7 +21,9 @@ function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
         /[!@#$%^&*(),.?":{}|<>_\-=]/,
         "Password must contain at least one special character"
       ),
-    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null, 'Passwords must match']).required('Please confirm your password')
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Please confirm your password"),
   });
 
   return (
@@ -40,7 +42,7 @@ function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
           navigate("/reset-password");
         } catch (error) {
           console.error("Password Reset failed:", error);
-          if (error.respone?.data?.errors) {
+          if (error.response?.data?.errors) {
             setServerErrors(error.response?.data?.errors);
           } else if (error.response?.data?.error) {
             setServerErrors([error.response.data.error]);
@@ -103,8 +105,12 @@ function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {serverErrors && (
-                <div className={styles["error-message"]}>{serverErrors}</div>
+              {serverErrors.length > 0 && (
+                <div className={styles["error-message"]}>
+                  {serverErrors.map((error, index) => (
+                    <div key={index}>{error}</div>
+                  ))}
+                </div>
               )}
             </div>
 
