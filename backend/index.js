@@ -1,9 +1,9 @@
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const dotenv = require("dotenv");
-const bodyParser = require("body-parser");
-const jsonErrorMiddleware = require("./src/middleware/jsonError.middleware");
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const jsonErrorMiddleware = require('./src/middleware/jsonError.middleware');
 const fileSizeValidator = require('./src/middleware/fileSizeValidator.middleware');
 const { MAX_FILE_SIZE } = require('./src/utils/constants.helper');
 
@@ -19,6 +19,8 @@ const banner = require('./src/routes/banner.routes');
 const teamRoutes = require('./src/routes/team.routes');
 const hint = require('./src/routes/hint.routes');
 const tourRoutes = require('./src/routes/tour.routes');
+const linkRoutes = require('./src/routes/link.routes');
+const helperLinkRoutes = require('./src/routes/helperLink.routes');
 
 const app = express();
 
@@ -33,8 +35,8 @@ const config = require("./config/config");
 
 sequelize
   .authenticate()
-  .then(() => console.log("Database connected..."))
-  .catch((err) => console.log("Error: " + err));
+  .then(() => console.log('Database connected...'))
+  .catch((err) => console.log('Error: ' + err));
 
 sequelize
   .sync({ force: true })
@@ -51,10 +53,12 @@ app.use('/api/team', teamRoutes);
 // app.use('/api/tours', tourRoutes);
 app.use('/api/hint', hint);
 app.use('/api/tour', tourRoutes);
+app.use('/api/link', linkRoutes);
+app.use('/api/helper-link', helperLinkRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: "Internal Server Error" });
+  res.status(500).json({ message: 'Internal Server Error' });
 });
 
 const PORT = process.env.PORT || 3000;
