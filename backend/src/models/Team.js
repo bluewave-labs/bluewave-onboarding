@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.STRING(50),
           allowNull: false,
         },
+        apiKey: {
+          type: DataTypes.STRING(255),
+          allowNull: true,
+        },
+        serverUrl: {
+          type: DataTypes.STRING(255),
+          allowNull: true,
+        },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
