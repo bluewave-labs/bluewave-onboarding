@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "mocha 'src/test/**/*.test.js' --watch",
-    "t:coverage": "mocha",
+    "t:coverage": "nyc mocha 'src/test/**/*.test.js'",
     "dev": "nodemon index.js",
     "prod": "NODE_ENV=production node index.js",
     "build": "echo 'No build script defined'"
@@ -33,6 +33,7 @@
     "chai": "^5.1.2",
     "mocha": "^10.8.2",
     "nodemon": "^3.1.0",
+    "nyc": "^17.1.0",
     "sequelize-cli": "^6.6.2",
     "sinon": "^19.0.2"
   }
