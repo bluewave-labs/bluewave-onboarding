@@ -30,7 +30,7 @@ const RemoveTeamMemberModal = ({ open, setModalOpen, selectedMember, handleRemov
 RemoveTeamMemberModal.propTypes = {
     open: PropTypes.bool.isRequired,
     setModalOpen: PropTypes.func.isRequired, 
-    selectedMember: PropTypes.object.isRequired, 
+    selectedMember: PropTypes.object, 
     handleRemoveTeamMember: PropTypes.func.isRequired
 };
 
