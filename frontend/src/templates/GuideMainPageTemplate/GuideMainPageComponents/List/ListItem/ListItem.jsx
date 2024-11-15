@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CircleIcon from '@mui/icons-material/Circle';
 import './ListItem.css';
 import { useAuth } from '../../../../../services/authProvider';
+import { renderIfAuthorized } from '../../../../../utils/generalHelper';
 
 const ListItem = ({ title, text, id, onClick, onDelete, onEdit }) => {
   const theme = useTheme();
@@ -26,12 +27,16 @@ const ListItem = ({ title, text, id, onClick, onDelete, onEdit }) => {
         {id && <p className="item-id">ID: {id}</p>}
       </div>
       <div className="list-item-actions">
-        {role === 'admin' && <IconButton onClick={onEdit}>
-          {<EditIcon />}
-        </IconButton>}
-        {role === 'admin' && <IconButton onClick={onDelete}>
-          <DeleteIcon />
-        </IconButton>}
+        {renderIfAuthorized(role, 'admin',
+          <IconButton onClick={onEdit}>
+            <EditIcon />
+          </IconButton>
+        )}
+        {renderIfAuthorized(role, 'admin',
+          <IconButton onClick={onDelete}>
+            <DeleteIcon />
+          </IconButton>
+        )}
       </div>
     </div>
   );

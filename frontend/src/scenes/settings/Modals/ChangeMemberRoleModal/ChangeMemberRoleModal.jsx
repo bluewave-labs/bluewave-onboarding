@@ -31,7 +31,7 @@ const ChangeMemberRoleModal = ({ open, setModalOpen, selectedMember, handleChang
 ChangeMemberRoleModal.propTypes = {
     open: PropTypes.bool.isRequired,
     setModalOpen: PropTypes.func.isRequired, 
-    selectedMember: PropTypes.object.isRequired, 
+    selectedMember: PropTypes.object, 
     handleChangeRole: PropTypes.func.isRequired
 };
 

@@ -47,7 +47,7 @@ const authReducer = (state, action) => {
                 ...action.payload,
             });
             localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
-            return { isLoggedIn: true, userInfo: updatedUserInfo };
+            return {isLoggedIn: true, userInfo: updatedUserInfo };
         }
         default:
             return state;
@@ -123,7 +123,7 @@ export const AuthProvider = ({ children }) => {
             logoutAuth, 
             updateProfile, 
             userInfo: state.userInfo, 
-            isFetching 
+            isFetching
         }}>
             {children}
         </AuthContext.Provider>

@@ -42,3 +42,9 @@ export const generateApiKey = () => {
 
   return apiKey;
 };
+
+// Authorization utility function
+export function renderIfAuthorized(userRole, requiredRole, element) {
+  if (!userRole || !requiredRole) return null;
+  return userRole === requiredRole ? element : null;
+}
