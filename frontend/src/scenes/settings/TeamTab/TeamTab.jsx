@@ -29,7 +29,7 @@ const TeamTab = ({ handleTabChange }) => {
   const [loading, setLoading] = useState(true);
   const [team, setTeam] = useState([]);
   const { userInfo, updateProfile } = useAuth();
-  const currentUserId = userInfo?.id;
+  const currentUserId = userInfo?.id ?? null;;
   const [openInviteTeamMemberModal, setOpenInviteTeamMemberModal] = useState(false);
   const [openRemoveTeamMemberModal, setOpenRemoveTeamMemberModal] = useState(false);
   const [openChangeMemberRoleModal, setOpenChangeMemberRoleModal] = useState(false);
