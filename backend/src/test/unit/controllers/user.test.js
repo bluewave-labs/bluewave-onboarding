@@ -5,6 +5,7 @@ const controller = require("../../../controllers/user.controller.js");
 const sinon = require("sinon");
 const mocks = require("../mocks/user.mock.js");
 const settings = require("../../../../config/settings.js");
+const { validationResult } = require("express-validator");
 
 describe("Unit test user controller", () => {
   const req = {};
@@ -136,6 +137,58 @@ describe("Unit test user controller", () => {
       error: "Internal Server Error",
       errorCode: "DELETE_USER_ERROR",
       message: "Error",
+    });
+  });
+  describe("test the user middlewares", () => {
+    let next;
+    beforeEach(() => {
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns(res);
+    });
+    afterEach(sinon.restore);
+    it("checkAtLeastOneField - should return status 400 if all of 'name', 'surname' and 'picture' are empty", async () => {
+      next = sinon.stub();
+      req.user = mocks.validUser;
+      req.body = {};
+      await controller.checkAtLeastOneField(req, res);
+      expect(res.status.args[0][0]).to.be.equal(400);
+      expect(res.json.args[0][0]).to.be.deep.equal({
+        updated: false,
+        error: "Error, no value(s) provided to update",
+      });
+      expect(next.called).to.be.false;
+    });
+    it("checkAtLeastOneField - should move on if one of the fields is provided", async () => {
+      next = sinon.stub();
+      req.user = mocks.validUser;
+      req.body = { name: "Jane" };
+      await controller.checkAtLeastOneField(req, res, next);
+      expect(res.status.called).to.be.false;
+      expect(res.json.called).to.be.false;
+      expect(next.called).to.be.true;
+    });
+    it.skip("handleValidationErrors - should return status 400 if validation fails", async () => {
+      next = sinon.stub();
+      const expValidator = sinon.spy(validationResult)
+      req.user = mocks.validUser;
+      req.body = {};
+      await controller.handleValidationErrors(req, res, next);
+      console.log(expValidator(req))
+      expect(expValidator.called).to.be.true;
+      expect(res.status.called).to.be.false;
+      expect(res.json.called).to.be.false;
+      expect(next.called).to.be.false;
+    });
+    it.skip("handleValidationErrors - should move on if validator passes", async () => {
+      next = sinon.stub();
+      const expValidator = sinon.spy(validationResult)
+      req.user = mocks.validUser;
+      req.body = {};
+      await controller.handleValidationErrors(req, res, next);
+      expect(expValidator.called).to.be.true;
+      expect(res.status.called).to.be.false;
+      expect(res.json.called).to.be.false;
+      expect(next.called).to.be.true;
     });
   });
 });
