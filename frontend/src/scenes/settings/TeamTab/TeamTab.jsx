@@ -31,7 +31,7 @@ const TeamTab = () => {
   const [refetch, setRefetch] = useState(true);
   const [loading, setLoading] = useState(true);
   const [team, setTeam] = useState([]);
-  const { userInfo, updateProfile } = useAuth();
+  const { userInfo, updateProfile, setTabValue } = useAuth();
   const currentUserId = userInfo?.id;
   const [openInviteTeamMemberModal, setOpenInviteTeamMemberModal] = useState(false);
   const [openRemoveTeamMemberModal, setOpenRemoveTeamMemberModal] = useState(false);
@@ -48,6 +48,7 @@ const TeamTab = () => {
           response.data.users.forEach(user => {
             if (user.id === currentUserId && user.role !== userInfo.role) { 
               updateProfile({...userInfo, role: user.role}); 
+              setTabValue('1'); 
             }
           });
         }
