@@ -3,6 +3,7 @@ const TeamService = require("../service/team.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { MAX_ORG_NAME_LENGTH, ORG_NAME_REGEX } = require('../utils/constants.helper');
 const db = require("../models");
+const bcrypt = require('bcrypt');
 
 const Team = db.Team;
 const teamService = new TeamService();
@@ -101,6 +102,34 @@ const updateTeamDetails = async (req, res) => {
     }
 };
 
+const setConfig = async (req, res) => {
+  const { serverUrl, apiKey } = req.body;
+  if (!serverUrl || typeof serverUrl !== 'string' || serverUrl.length === 0) {
+    return res.status(400).json({ message: 'Server URL is required and should be a non-empty string' });
+  }
+  if (!apiKey || typeof apiKey !== "string" || apiKey.length === 0) {
+    return res.status(400).json({ message: 'API Key is required and should be a non-empty string' });
+  }
+
+  try {
+    new URL(serverUrl);
+  } catch (err) {
+    return res.status(400).json({ message: 'Invalid server URL format' });
+  }
+
+  try {
+    encryptedApiKey = await bcrypt.hash(apiKey, 10);
+    await teamService.addServerUrlAndApiKey(serverUrl, encryptedApiKey);
+    return res.status(200).json({ message: "Server URL and API Key Set Successfully" });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "SET_CONFIG_ERROR",
+      err.message
+    )
+    res.status(statusCode).json(payload);
+  }
+}
+
 const removeMember = async (req, res) => {
   const userId = req.user.id;
   const { memberId } = req.params;
@@ -130,4 +159,4 @@ const changeRole = async (req, res) => {
   }
 }
 
-module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, removeMember, changeRole, getTeamCount };
+module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, removeMember, changeRole, getTeamCount, setConfig };

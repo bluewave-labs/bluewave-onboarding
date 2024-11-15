@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const settings = require("../../config/settings");
 const db = require("../models");
 const Team = db.Team;
@@ -125,6 +126,24 @@ class TeamService {
         catch (err) {
             await transaction.rollback();
             throw new Error(`"Failed to update user role ~ ${err.message}`);
+        }
+    }
+
+    async addServerUrlAndApiKey(serverUrl, apiKey) {
+        const transaction = await sequelize.transaction();
+        try {
+            await Team.update({
+                serverUrl,
+                apiKey
+            }, {
+                where: {}
+            }, {
+                transaction
+            });
+            await transaction.commit();
+        } catch (err) {
+            await transaction.rollback();
+            throw new Error("Failed to add server url and api key");
         }
     }
 }

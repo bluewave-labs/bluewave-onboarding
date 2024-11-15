@@ -23,6 +23,7 @@ module.exports = {
       popups: [userRole.ADMIN],
       hints: [userRole.ADMIN],
       banners: [userRole.ADMIN],
+      serverUrlAndApiKey: [userRole.ADMIN]
     }
   }
 };
