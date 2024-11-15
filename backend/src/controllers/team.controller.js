@@ -118,8 +118,7 @@ const setConfig = async (req, res) => {
   }
 
   try {
-    encryptedApiKey = await bcrypt.hash(apiKey, 10);
-    await teamService.addServerUrlAndApiKey(serverUrl, encryptedApiKey);
+    await teamService.addServerUrlAndApiKey(serverUrl, apiKey);
     return res.status(200).json({ message: "Server URL and API Key Set Successfully" });
   } catch (err) {
     const { statusCode, payload } = internalServerError(
