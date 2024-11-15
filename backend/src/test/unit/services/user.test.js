@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const sinon = require("sinon");
 const db = require("../../../models/index.js");
 const UserService = require("../../../service/user.service.js");
-const mocks = require("../mocks/user.mock.js");
+const mocks = require("../../mocks/user.mock.js");
 
 const service = new UserService();
 

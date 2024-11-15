@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const { userService } = require("../../../controllers/user.controller.js");
 const controller = require("../../../controllers/user.controller.js");
 const sinon = require("sinon");
-const mocks = require("../mocks/user.mock.js");
+const mocks = require("../../mocks/user.mock.js");
 const settings = require("../../../../config/settings.js");
 const { validationResult } = require("express-validator");
 
