@@ -23,3 +23,13 @@ export const getTeamCount = async () => {
     throw err;
   }
 }
+
+export const setConfig = async (serverUrl, apiKey) => {
+  try {
+    const response = await apiClient.put(`${baseEndpoint}/set-config`, { serverUrl, apiKey });
+    return response.data;
+  } catch (err) {
+    console.error('Error setting Server URL and API Key: ', err);
+    throw err;
+  }
+}

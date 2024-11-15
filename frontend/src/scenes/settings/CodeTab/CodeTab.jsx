@@ -5,6 +5,9 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import Button from "@components/Button/Button";
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import { generateApiKey } from "../../../utils/generalHelper";
+import { emitToastError } from "../../../utils/guideHelper";
+import { setConfig } from '../../../services/teamServices';
+import toastEmitter, { TOAST_EMITTER_KEY } from "../../../utils/toastEmitter";
 
 const CodeTab = () => {
     const [apiKey, setApiKey] = useState('')
@@ -21,6 +24,28 @@ const CodeTab = () => {
     const deleteApiKey = () => {
         setApiKey('');
     }
+
+    const onSave = async () => {
+        if (!serverUrl.trim()) {
+            toastEmitter.emit(TOAST_EMITTER_KEY, 'Server URL cannot be empty');
+            return;
+        }
+        if (!serverUrl.startsWith("http://") && !serverUrl.startsWith("https://")) {
+            toastEmitter.emit(TOAST_EMITTER_KEY, 'Server URL must start with http:// or https://');
+            return;
+        }
+        if (!apiKey.trim()) {
+            toastEmitter.emit(TOAST_EMITTER_KEY, 'API key cannot be empty');
+            return;
+        }
+        
+        try {
+            const response = await setConfig(serverUrl, apiKey);
+            toastEmitter.emit(TOAST_EMITTER_KEY, response.message);
+        } catch (err) {
+            emitToastError(err);
+        }
+    };
 
     return (
         <section className={styles.container}>
@@ -49,7 +74,7 @@ const CodeTab = () => {
                     TextFieldWidth="550px"
                 />
                 <span/>
-                <Button text='Save' sx={{width:'120px'}}/>
+                <Button text='Save' sx={{width:'120px'}} onClick={onSave}/>
             </div>
             <h2 style={{marginTop: '25px'}}>Code in your webpage</h2>
             <div className={styles.informativeBlock}>
