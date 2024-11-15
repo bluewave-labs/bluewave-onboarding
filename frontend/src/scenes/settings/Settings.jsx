@@ -14,24 +14,17 @@ import { renderIfAuthorized } from "../../utils/generalHelper";
 
 
 export default function Settings() {
-  const [value, setValue] = useState("1");  
-  const { userInfo } = useAuth();
+  const { userInfo, tabValue, setTabValue } = useAuth();
   const role = userInfo?.role;
 
-  useEffect(() => {
-    if (role === "member") {
-      setValue("1");
-    }
-  }, [role]);
-
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setTabValue(newValue);
   };
 
   return (
     <Box className={styles.settings}>
       <Box sx={{ width: "100%", typography: "body1" }}>
-        <TabContext value={value}>
+        <TabContext value={tabValue}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <TabList onChange={handleChange} aria-label="lab API tabs example">
               <Tab label="Profile" value="1" className={styles.tabLabel} />
