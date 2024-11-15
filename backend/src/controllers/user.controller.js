@@ -149,5 +149,6 @@ module.exports = {
   deleteUser,
   checkAtLeastOneField,
   validateProfileUpdate,
-  handleValidationErrors
+  handleValidationErrors,
+  userService
 };
