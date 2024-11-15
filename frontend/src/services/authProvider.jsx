@@ -39,7 +39,7 @@ const authReducer = (state, action) => {
         case 'LOGIN_AND_SET_USER_INFO': {
             const processedData = processUserData(action.payload);
             localStorage.setItem('userInfo', JSON.stringify(processedData));
-            return { isLoggedIn: true, userInfo: processedData, tabValue: '1' };
+            return { isLoggedIn: true, userInfo: processedData };
         }
         case 'UPDATE_AND_SET_UPDATED_USER_INFO': {
             const updatedUserInfo = processUserData({
@@ -47,10 +47,8 @@ const authReducer = (state, action) => {
                 ...action.payload,
             });
             localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
-            return {...state, isLoggedIn: true, userInfo: updatedUserInfo };
+            return {isLoggedIn: true, userInfo: updatedUserInfo };
         }
-        case 'SET_TAB_VALUE':
-            return { ...state, tabValue: action.payload };
         default:
             return state;
     }
@@ -65,15 +63,14 @@ export const AuthProvider = ({ children }) => {
                 const parsedData = JSON.parse(storedData);
                 return { 
                     isLoggedIn: false, 
-                    userInfo: processUserData(parsedData),
-                    tabValue: '1'
+                    userInfo: processUserData(parsedData)
                 };
             } catch (e) {
                 console.error('Error parsing stored user data:', e);
-                return { isLoggedIn: false, userInfo: null, tabValue: '1' };
+                return { isLoggedIn: false, userInfo: null };
             }
         }
-        return { isLoggedIn: false, userInfo: null, tabValue: '1' };
+        return { isLoggedIn: false, userInfo: null };
     };
 
     const [state, dispatch] = useReducer(authReducer, getInitialState());
@@ -119,9 +116,6 @@ export const AuthProvider = ({ children }) => {
         dispatch({ type: 'LOGOUT' });
     };
 
-    const setTabValue = (value) => {
-        dispatch({ type: 'SET_TAB_VALUE', payload: value });
-    };
     return (
         <AuthContext.Provider value={{ 
             isLoggedIn: state.isLoggedIn, 
@@ -129,9 +123,7 @@ export const AuthProvider = ({ children }) => {
             logoutAuth, 
             updateProfile, 
             userInfo: state.userInfo, 
-            isFetching,
-            tabValue: state.tabValue,
-            setTabValue
+            isFetching
         }}>
             {children}
         </AuthContext.Provider>
