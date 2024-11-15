@@ -42,15 +42,17 @@ const TeamTab = ({ handleTabChange }) => {
         setLoading(() => true)
         const response = await getOrgDetails();
         if (response.data.users) {
-          response.data.users.forEach(user => {
-            if (user.id === currentUserId && user.role !== userInfo.role) {
-              updateProfile({ ...userInfo, role: user.role });
-              handleTabChange(null, "1");
-            }
-          });
+          const matchedUser = response.data.users.find(
+            user => user.id === currentUserId && user.role !== userInfo.role
+          );
+  
+          if (matchedUser) {
+            updateProfile({ ...userInfo, role: matchedUser.role });
+            handleTabChange(null, "1");
+          }
+          setTeam(() => response.data.users);
         }
         setOrgName(() => response.data.name);
-        setTeam(() => response.data.users);
       }
       catch (error) {
         console.error("Error fetching team details", error.message);
