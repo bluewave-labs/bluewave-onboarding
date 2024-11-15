@@ -12,6 +12,7 @@ import toastEmitter, { TOAST_EMITTER_KEY } from "../../../utils/toastEmitter";
 const CodeTab = () => {
     const [apiKey, setApiKey] = useState('')
     const [serverUrl, setServerUrl] = useState('')
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleUrlChange = (e) => {
         setServerUrl(e.target.value);
@@ -30,20 +31,32 @@ const CodeTab = () => {
             toastEmitter.emit(TOAST_EMITTER_KEY, 'Server URL cannot be empty');
             return;
         }
-        if (!serverUrl.startsWith("http://") && !serverUrl.startsWith("https://")) {
+
+        try {
+            const url = new URL(serverUrl);
+            if (!['http:', 'https:'].includes(url.protocol)) {
+                toastEmitter.emit(TOAST_EMITTER_KEY, 'Invalid URL protocol');
+                return;
+            }
+        } catch {
             toastEmitter.emit(TOAST_EMITTER_KEY, 'Server URL must start with http:// or https://');
             return;
         }
+
+
         if (!apiKey.trim()) {
             toastEmitter.emit(TOAST_EMITTER_KEY, 'API key cannot be empty');
             return;
         }
         
         try {
+            setIsLoading(true);
             const response = await setConfig(serverUrl, apiKey);
             toastEmitter.emit(TOAST_EMITTER_KEY, response.message);
         } catch (err) {
             emitToastError(err);
+        } finally {
+            setIsLoading(false);
         }
     };
 

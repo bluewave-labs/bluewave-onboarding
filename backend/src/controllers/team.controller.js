@@ -3,7 +3,6 @@ const TeamService = require("../service/team.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { MAX_ORG_NAME_LENGTH, ORG_NAME_REGEX } = require('../utils/constants.helper');
 const db = require("../models");
-const bcrypt = require('bcrypt');
 
 const Team = db.Team;
 const teamService = new TeamService();
@@ -103,18 +102,27 @@ const updateTeamDetails = async (req, res) => {
 };
 
 const setConfig = async (req, res) => {
-  const { serverUrl, apiKey } = req.body;
-  if (!serverUrl || typeof serverUrl !== 'string' || serverUrl.length === 0) {
+  let { serverUrl, apiKey } = req.body;
+  if (!serverUrl || typeof serverUrl !== 'string' || serverUrl.trim().length === 0) {
     return res.status(400).json({ message: 'Server URL is required and should be a non-empty string' });
   }
-  if (!apiKey || typeof apiKey !== "string" || apiKey.length === 0) {
+  if (!apiKey || typeof apiKey !== "string" || apiKey.trim().length === 0) {
     return res.status(400).json({ message: 'API Key is required and should be a non-empty string' });
   }
 
+  serverUrl = serverUrl.trim();
+  apiKey = apiKey.trim();
+
   try {
-    new URL(serverUrl);
+    const url = new URL(serverUrl);
+    if (!['http:', 'https:'].includes(url.protocol)) {
+      throw new Error('Invalid protocol');
+    }
+    if (url.username || url.password) {
+      throw new Error('URL cannt contain credentials');
+    }
   } catch (err) {
-    return res.status(400).json({ message: 'Invalid server URL format' });
+    return res.status(400).json({ message: 'Invalid server URL format. Only HTTP/HTTPS protocols are allowed.' });
   }
 
   try {
