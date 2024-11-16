@@ -42,6 +42,7 @@ function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
             email: email,
             password: values.password,
           });
+          resetForm();
           navigate("/reset-password");
         } catch (error) {
           console.error("Password Reset failed:", error);

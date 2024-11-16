@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Formik, Form, Field } from "formik";
+import React, { useState, useEffect} from "react";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import styles from "./Login.module.css";
 import CustomTextField from "../../components/TextFieldComponents/CustomTextField/CustomTextField";
@@ -22,13 +22,19 @@ const validationSchema = Yup.object({
   password: Yup.string().required("Password is required").trim(),
 });
 
-function LoginPage() {
+function LoginPage({isAdmin=false}) {
   const [rememberMe, setRememberMe]=useState(false)
   const [serverErrors, setServerErrors] = useState([]);
   const { loginAuth } = useAuth();
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isAdmin) {
+      navigate('/signup');
+    }
+  }, [isAdmin]);
   return (
+
     <Formik
       initialValues={{
         email: "",
