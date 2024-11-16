@@ -238,7 +238,6 @@ describe("Unit test user service", () => {
     Invite = sinon.stub(db.Invite, "destroy");
 
     const result = await service.deleteUser(1);
-    console.log(result);
     expect(User.called).to.be.true;
     expect(Invite.called).to.be.true;
     expect(Token.called).to.be.true;

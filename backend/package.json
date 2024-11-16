@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "pretest": "NODE_ENV=test docker rm -f test-postgres || true && docker run --name test-postgres --env-file .env.test -p 5432:5432 -d postgres && npx wait-on tcp:5432 && npx sequelize-cli db:create --env test || true && npx sequelize-cli db:migrate --env test && npx sequelize-cli db:seed:all --env test",
+    "pretest": "NODE_ENV=test docker rm -f test-postgres || true && docker run --name test-postgres --env-file .env.test -p 5432:5432 -d postgres && npx wait-on tcp:5432 && npx sequelize-cli db:create --env test || true && npx sequelize-cli db:migrate --env test",
     "posttest": "docker stop test-postgres && docker rm test-postgres",
     "test": "NODE_ENV=test mocha 'src/test/**/*.test.js' --watch",
-    "test:e2e": "NODE_ENV=test mocha 'src/test/e2e/**/*.test.js' --watch",
-    "test:coverage": "NODE_ENV=test nyc mocha 'src/test/**/*.test.js'",
+    "test:e2e": "npm run pretest && NODE_ENV=test mocha 'src/test/e2e/**/*.test.js'",
+    "test:coverage": "npm run pretest && NODE_ENV=test nyc mocha 'src/test/**/*.test.js'",
     "dev": "nodemon index.js",
     "prod": "NODE_ENV=production node index.js",
     "build": "echo 'No build script defined'"

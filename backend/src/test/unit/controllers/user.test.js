@@ -173,7 +173,6 @@ describe("Unit test user controller", () => {
       req.user = mocks.validUser;
       req.body = {};
       await controller.handleValidationErrors(req, res, next);
-      console.log(expValidator(req))
       expect(expValidator.called).to.be.true;
       expect(res.status.called).to.be.false;
       expect(res.json.called).to.be.false;
