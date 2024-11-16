@@ -16,14 +16,14 @@ const validationSchema = Yup.object().shape({
   name: Yup.string()
     .required("Name is required")
     .matches(
-      /^[A-Za-z'-]+$/,
+      /^[A-Za-z'\s-]+$/,
       "Name can only contain letters, hyphens and apostrophes"
     )
     .trim(),
   surname: Yup.string()
     .required("Surname is required")
     .matches(
-      /^[A-Za-z'-]+$/,
+      /^[A-Za-z'\s-]+$/,
       "Surname can only contain letters, hyphens and apostrophes"
     )
     .trim(),

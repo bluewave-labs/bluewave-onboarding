@@ -20,10 +20,10 @@ const validationSchema = Yup.object({
     )
     .trim(),
   password: Yup.string().required("Password is required").trim(),
-  rememberMe: Yup.boolean()
 });
 
 function LoginPage() {
+  const [rememberMe, setRememberMe]=useState(false)
   const [serverErrors, setServerErrors] = useState([]);
   const { loginAuth } = useAuth();
   const navigate = useNavigate();
@@ -33,7 +33,6 @@ function LoginPage() {
       initialValues={{
         email: "",
         password: "",
-        rememberMe: false
       }}
       validationSchema={validationSchema}
       validateOnChange={false}
@@ -116,9 +115,10 @@ function LoginPage() {
           <div className={styles["form-group"]}>
             <div className={styles["form-group-2"]}>
               <label>
-                <Field
+                <input
                   type="checkbox"
-                  name="rememberMe"
+                  checked={rememberMe}
+                  onChange={(e)=>setRememberMe(e.target.checked)}
                 />
                 Remember for 30 days
               </label>
