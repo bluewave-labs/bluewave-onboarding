@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./RichTextEditor.css";
 import { useEditor, EditorContent } from "@tiptap/react";
@@ -17,6 +17,7 @@ const RichTextEditor = ({
   header,
   setHeader,
   setContent,
+  content,
 }) => {
   const [mode, setMode] = useState("editor");
 
@@ -38,13 +39,25 @@ const RichTextEditor = ({
       BulletList,
       OrderedList,
     ],
+    content,
     onUpdate: ({ editor }) => {
       setContent(editor.getHTML());
     },
+    onDestroy: () => {
+      setContent("");
+      setHeader("");
+    },
   });
-
+  
+  // Set initial content of the editor to the content prop during editing
+  useEffect(() => {
+    if (editor?.isEmpty && content !== "<p></p>") {
+      editor.commands.setContent(content);
+    }
+  }, [content]);
+  
   return (
-    <div style={{ position: "relative", ...sx }}>
+    <div style={{ ...sx }}>
       {mode === "editor" ? (
         <>
           <CustomTextField
@@ -59,7 +72,7 @@ const RichTextEditor = ({
           <label className="editor-label">Content</label>
           <div className="editor-container">
             <Toolbar editor={editor} />
-            <EditorContent editor={editor} />
+            <EditorContent editor={editor}/>
           </div>
         </>
       ) : (
@@ -81,6 +94,10 @@ const RichTextEditor = ({
 RichTextEditor.propTypes = {
   sx: PropTypes.object,
   previewComponent: PropTypes.elementType.isRequired,
+  header: PropTypes.string,
+  setHeader: PropTypes.func,
+  setContent: PropTypes.func,
+  content: PropTypes.string,
 };
 
 export default RichTextEditor;

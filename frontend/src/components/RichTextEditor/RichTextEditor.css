@@ -5,12 +5,12 @@
   border-radius: 8px;
   padding-top: 1rem;
   margin-top: 1rem;
-  width: 466px;
+  width: 400px;
 }
 
 .ProseMirror {
     height: 7.5rem;
-    padding: 0 25px;
+    padding: 0 14px;
     overflow-y: auto;
 }
 

@@ -58,7 +58,11 @@ const HintLeftContent = ({ actionButtonText, setActionButtonText, actionButtonUr
         helperText="Page element to attach tooltip to"
       />
       <h2 className="hint-label">Tooltip Placement</h2>
-      <DropdownList actions={["Top", "Right", "Bottom", "Left"]} onActionChange={handleTooltipPlacement} selectedActionString={tooltipPlacement} />
+      <DropdownList
+        actions={["Top", "Right", "Bottom", "Left"]}
+        onActionChange={handleTooltipPlacement}
+        selectedActionString={tooltipPlacement}
+      />
     </div>
   );
 };

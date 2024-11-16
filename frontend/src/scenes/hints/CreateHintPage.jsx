@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Turndown from "turndown";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import RichTextEditor from "@components/RichTextEditor/RichTextEditor";
 import HintComponent from "../../products/Hint/HintComponent";
@@ -10,7 +11,7 @@ import { emitToastError } from "../../utils/guideHelper";
 import { useLocation } from "react-router";
 import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
-const HintPage = () => {
+const HintPage = ({ isEdit, itemId, setItemsUpdated }) => {
   const { closeDialog } = useDialog();
   const location = useLocation();
   const [activeButton, setActiveButton] = useState(0);
@@ -25,12 +26,16 @@ const HintPage = () => {
   const [buttonBackgroundColor, setButtonBackgroundColor] = useState("#7F56D9");
   const [buttonTextColor, setButtonTextColor] = useState("#FFFFFF");
 
-  const [header, setHeader] = useState('');
-  const [content, setContent] = useState('');
+  const [header, setHeader] = useState("");
+  const [content, setContent] = useState("");
+
+  const markdownContent = new Turndown().turndown(content);
 
   const [actionButtonUrl, setActionButtonUrl] = useState("https://");
-  const [actionButtonText, setActionButtonText] = useState("");
-  const [action, setAction] = useState('No action');
+  const [actionButtonText, setActionButtonText] = useState(
+    "Take me to subscription page"
+  );
+  const [action, setAction] = useState("No action");
   const [targetElement, setTargetElement] = useState(".element");
   const [tooltipPlacement, setTooltipPlacement] = useState("Top");
 
@@ -59,28 +64,27 @@ const HintPage = () => {
   ];
 
   useEffect(() => {
-    if (location.state?.isEdit) {
+    if (isEdit) {
       const fetchHintData = async () => {
         try {
-          const hintData = await getHintById(location.state?.id);
-          setHeaderBackgroundColor(hintData.headerBackgroundColor || '#F8F9F8');
-          setHeaderColor(hintData.headerColor || '#101828');
-          setTextColor(hintData.textColor || '#344054');
-          setButtonBackgroundColor(hintData.buttonBackgroundColor || '#7F56D9');
-          setButtonTextColor(hintData.buttonTextColor || '#FFFFFF');
-          setHeader(hintData.header || '');
-          setContent(hintData.hintContent || '');
-          setActionButtonUrl(hintData.actionButtonUrl || 'https://');
-          setActionButtonText(hintData.actionButtonText || '');
-          setButtonAction(hintData.action || 'No action');
-
+          const hintData = await getHintById(itemId);
+          setHeaderBackgroundColor(hintData.headerBackgroundColor || "#F8F9F8");
+          setHeaderColor(hintData.headerColor || "#101828");
+          setTextColor(hintData.textColor || "#344054");
+          setButtonBackgroundColor(hintData.buttonBackgroundColor || "#7F56D9");
+          setButtonTextColor(hintData.buttonTextColor || "#FFFFFF");
+          setHeader(hintData.header || "");
+          setContent(hintData.hintContent || "");
+          setActionButtonUrl(hintData.actionButtonUrl || "https://");
+          setActionButtonText(hintData.actionButtonText || "");
+          setAction(hintData.action || "No action");
         } catch (error) {
           emitToastError(error);
         }
-      }
+      };
       fetchHintData();
     }
-  }, [location.state])
+  }, [isEdit, itemId]);
 
   const onSave = async () => {
     const hintData = {
@@ -98,30 +102,33 @@ const HintPage = () => {
       buttonTextColor,
     };
     try {
-      const response = location?.state?.isEdit
-        ? await editHint(location?.state?.id, hintData)
+      const response = isEdit
+        ? await editHint(itemId, hintData)
         : await addHint(hintData);
-      const toastMessage = location?.state?.isEdit ? "You edited this hint" : "New hint saved";
+      const toastMessage = isEdit ? "You edited this hint" : "New hint saved";
       toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
+      setItemsUpdated((prev) => !prev);
+      setHeader("");
+      setContent("");
       closeDialog();
     } catch (error) {
       const errorMessage = error.response?.data?.message
         ? `Error: ${error.response.data.message}`
-        : 'An unexpected error occurred. Please try again.';
+        : "An unexpected error occurred. Please try again.";
       toastEmitter.emit(TOAST_EMITTER_KEY, errorMessage);
     }
   };
 
   return (
     <GuideTemplate
-      title={location.state?.isEdit ? "Edit Hint" : "Create Hint"}
+      title={isEdit ? "Edit Hint" : "Create Hint"}
       activeButton={activeButton}
       handleButtonClick={handleButtonClick}
       onSave={onSave}
       rightContent={() => (
         <RichTextEditor
           sx={{
-            width: "100%",
+            width: "400px",
             maxWidth: "700px",
             marginLeft: "2.5rem",
             marginTop: "1rem",
@@ -129,10 +136,11 @@ const HintPage = () => {
           header={header}
           setHeader={setHeader}
           setContent={setContent}
+          content={content}
           previewComponent={() => (
             <HintComponent
               header={header}
-              content={content}
+              content={markdownContent}
               previewBtnText={actionButtonText}
               headerBackgroundColor={headerBackgroundColor}
               headerColor={headerColor}

@@ -1,4 +1,6 @@
 .popupContainer {
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--light-border-color);
   margin-top: 1rem;
   overflow: auto;
@@ -36,6 +38,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  height: calc(100% - 30px);
 }
 
 .popupButtonContainer {

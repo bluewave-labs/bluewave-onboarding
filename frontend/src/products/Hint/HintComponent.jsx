@@ -1,5 +1,5 @@
 import React from "react";
-import DOMPurify from "dompurify";
+import ReactMarkdown from "react-markdown";
 import "./hintComponent.css";
 import Button from "../../components/Button/Button";
 
@@ -27,22 +27,22 @@ const HintComponent = ({
             <h3>{header}</h3>
           </div>
         )}
-        <div
-          className="preview-content"
-          style={{ color: textColor }}
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
-        />
-        <div className="preview-button-container">
-          {previewBtnText && (
-            <Button
-              style={{
-                backgroundColor: buttonBackgroundColor,
-                color: buttonTextColor,
-                margin: "1rem",
-              }}
-              text={previewBtnText}
-            ></Button>
-          )}
+        <div className="preview-content-container" style={{ color: textColor }}>
+          <div>
+            <ReactMarkdown>{content}</ReactMarkdown>
+          </div>
+          <div className="preview-button-container">
+            {previewBtnText && (
+              <Button
+                style={{
+                  backgroundColor: buttonBackgroundColor,
+                  color: buttonTextColor,
+                  margin: "1rem",
+                }}
+                text={previewBtnText}
+              ></Button>
+            )}
+          </div>
         </div>
       </div>
     </>

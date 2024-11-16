@@ -1,7 +1,6 @@
 .preview-container {
   width: 100%;
-  max-width: 400px;
-  max-height: 250px;
+  height: 250px;
   border: 1px solid var(--light-border-color);
   margin-top: 1rem;
   overflow: auto;
@@ -20,10 +19,15 @@
   padding: 0 2rem;
 }
 
-.preview-content {
+.preview-content-container {
   color: var(--second-text-color);
-  font-size: 13px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: calc(100% - 20px);
   padding: 0 2rem;
+  font-size: 13px;
 }
 
 .preview-content p {
@@ -33,7 +37,6 @@
 
 .preview-button-container {
   margin-top: 0.5rem;
-  padding: 0 2rem;
   display: flex;
   justify-content: flex-end;
 }

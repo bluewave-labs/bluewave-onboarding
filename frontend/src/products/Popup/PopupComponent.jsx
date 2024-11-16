@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import DOMPurify from "dompurify";
+import ReactMarkdown from "react-markdown";
 import styles from "./PopupComponent.module.css"; // Use your module CSS file
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import Button from "@components/Button/Button";
 
 const PopupComponent = ({
@@ -63,12 +63,10 @@ const PopupComponent = ({
             />
           </div>
         )}
-        <div className={styles.popupContentContainer}>
-          <div
-            className={styles.popupContent}
-            style={{ color: textColor }}
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
-          />
+        <div className={`${styles.popupContentContainer}`}>
+          <div className={styles.popupContent} style={{ color: textColor }}>
+            <ReactMarkdown>{content}</ReactMarkdown>
+          </div>
           <div className={styles.popupButtonContainer}>
             {previewBtnText && (
               <Button

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import Turndown from 'turndown';
 import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
 import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
 import PopupComponent from "../../products/Popup/PopupComponent";
@@ -10,9 +10,8 @@ import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 import { emitToastError } from '../../utils/guideHelper';
 import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
-const CreatePopupPage = ({autoOpen = false}) => {
+const CreatePopupPage = ({autoOpen = false, isEdit, itemId, setItemsUpdated}) => {
   const { openDialog, closeDialog } = useDialog();
-    const location = useLocation();
 
      useEffect(() => {
     if (autoOpen) {  // auto open dialog to run tests
@@ -30,6 +29,8 @@ const CreatePopupPage = ({autoOpen = false}) => {
 
     const [header, setHeader] = useState('');
     const [content, setContent] = useState('');
+
+    const markdownContent = new Turndown().turndown(content);
     
     const [actionButtonUrl, setActionButtonUrl] = useState("https://");
     const [actionButtonText, setActionButtonText] = useState("Take me to subscription page");
@@ -52,10 +53,10 @@ const CreatePopupPage = ({autoOpen = false}) => {
     ];
 
     useEffect(() => {
-        if (location.state?.isEdit) {
+        if (isEdit) {
             const fetchPopupData = async () => {
                 try {
-                    const popupData = await getPopupById(location.state.id);
+                    const popupData = await getPopupById(itemId);
 
                     // Update the state with the fetched data
                     setHeaderBackgroundColor(popupData.headerBackgroundColor || '#F8F9F8');
@@ -76,7 +77,7 @@ const CreatePopupPage = ({autoOpen = false}) => {
 
             fetchPopupData();
         }
-    }, [location.state]);
+    }, [isEdit, itemId]);
 
     const onSave = async () => {
         const popupData = {
@@ -93,13 +94,16 @@ const CreatePopupPage = ({autoOpen = false}) => {
             content: content
         };
         try {
-            const response = location.state?.isEdit
-                ? await editPopup(location.state?.id, popupData)
+            const response = isEdit
+                ? await editPopup(itemId, popupData)
                 : await addPopup(popupData);
 
-            const toastMessage = location.state?.isEdit ? 'You edited this popup' : 'New popup Saved'
+            const toastMessage = isEdit ? 'You edited this popup' : 'New popup Saved'
 
             toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
+            setItemsUpdated(prevState => !prevState);
+            setHeader('');
+            setContent('');
             closeDialog();
         } catch (error) {
             const errorMessage = error.response?.data?.message
@@ -115,7 +119,7 @@ const CreatePopupPage = ({autoOpen = false}) => {
 
     return (
       <GuideTemplate
-        title={location.state?.isEdit ? "Edit Popup" : "New Popup"}
+        title={isEdit ? "Edit Popup" : "New Popup"}
         activeButton={activeButton}
         handleButtonClick={handleButtonClick}
         onSave={onSave}
@@ -124,7 +128,7 @@ const CreatePopupPage = ({autoOpen = false}) => {
             previewComponent={() => (
               <PopupComponent
                 header={header}
-                content={content}
+                content={markdownContent}
                 previewBtnText={actionButtonText}
                 headerBackgroundColor={headerBackgroundColor}
                 headerColor={headerColor}
@@ -137,8 +141,9 @@ const CreatePopupPage = ({autoOpen = false}) => {
             header={header}
             setHeader={setHeader}
             setContent={setContent}
+            content={content}
             sx={{
-              width: "100%",
+              minWidth: "400px",
               maxWidth: "700px",
               marginLeft: "2.5rem",
               marginTop: "1rem",

@@ -7,7 +7,7 @@ import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 import './DefaultPageTemplate.css'
 import { useAuth } from '../../services/authProvider';
 
-const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType, itemTypeInfo, getItemDetails }) => {
+const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType, itemTypeInfo, getItemDetails, itemsUpdated, onEditItem }) => {
     const [items, setItems] = useState([]);
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState();
@@ -56,13 +56,13 @@ const DefaultPageTemplate = ({ getItems, deleteItem, navigateToCreate, itemType,
             }
         };
         fetchData();
-    }, [itemDeleted]);
+    }, [itemDeleted, itemsUpdated]);
 
     const mappedItems = useMemo(() => items.map(item => ({
         idItem: item.id,
         ...getItemDetails(item),
         onDelete: () => handleOpenPopup(item.id),
-        onEdit: () => navigateToCreate({ state: { isEdit: true, id: item.id } }),
+        onEdit: () => onEditItem(item.id),
     })), [items, getItemDetails, handleOpenPopup, navigateToCreate]);
 
     return (
