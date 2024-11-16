@@ -3,12 +3,12 @@ const registerValidation = [
   body("name")
     .notEmpty()
     .withMessage("Name is required")
-    .matches(/^[A-Za-z'-]+$/)
+    .matches(/^[A-Za-z'\s-]+$/)
     .withMessage("Name can only contain letters, hyphens and apostrophes"),
   body("surname")
     .notEmpty()
     .withMessage("Surname is required")
-    .matches(/^[A-Za-z'-]+$/)
+    .matches(/^[A-Za-z'\s-]+$/)
     .withMessage("Name can only contain letters, hyphens and apostrophes"),
   body("email").isEmail().withMessage("Invalid email address"),
   body("password")

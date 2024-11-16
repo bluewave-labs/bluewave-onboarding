@@ -38,7 +38,10 @@ function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
       onSubmit={async (values, { setSubmitting }) => {
         setServerErrors([]);
         try {
-          const respone = await resetPassword(email, values.password);
+          const response = await resetPassword({
+            email: email,
+            password: values.password,
+          });
           navigate("/reset-password");
         } catch (error) {
           console.error("Password Reset failed:", error);
@@ -83,6 +86,8 @@ function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                error={Boolean(touched.password && errors.password)}
+                helperText={touched.password && errors.password}
               />
             </div>
             <div className={styles["form-group"]} style={{ marginBottom: 0 }}>
@@ -104,6 +109,10 @@ function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
                 value={values.confirmPassword}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                error={Boolean(
+                  touched.confirmPassword && errors.confirmPassword
+                )}
+                helperText={touched.confirmPassword && errors.confirmPassword}
               />
               {serverErrors.length > 0 && (
                 <div className={styles["error-message"]}>
