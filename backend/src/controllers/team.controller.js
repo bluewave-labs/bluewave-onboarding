@@ -3,6 +3,7 @@ const TeamService = require("../service/team.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { MAX_ORG_NAME_LENGTH, ORG_NAME_REGEX } = require('../utils/constants.helper');
 const db = require("../models");
+const { encryptApiKey } = require("../utils/team.helper");
 
 const Team = db.Team;
 const teamService = new TeamService();
@@ -112,6 +113,7 @@ const setConfig = async (req, res) => {
 
   serverUrl = serverUrl.trim();
   apiKey = apiKey.trim();
+  const encryptedApiKey = encryptApiKey(apiKey);
 
   try {
     const url = new URL(serverUrl);
@@ -126,7 +128,7 @@ const setConfig = async (req, res) => {
   }
 
   try {
-    await teamService.addServerUrlAndApiKey(serverUrl, apiKey);
+    await teamService.addServerUrlAndApiKey(serverUrl, encryptedApiKey);
     return res.status(200).json({ message: "Server URL and API Key Set Successfully" });
   } catch (err) {
     const { statusCode, payload } = internalServerError(
