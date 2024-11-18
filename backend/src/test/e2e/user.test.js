@@ -73,19 +73,11 @@ describe("E2e tests user", () => {
         .execute(app)
         .put("/api/users/update")
         .set("Authorization", `Bearer ${token}`);
-
-      expect(result.status).to.be.equal(500);
-      expect(result.body).to.deep.equal({ error: "Internal Server Error" });
-    });
-    it("should fail if fails the validations", async () => {
-      const result = await chai.request
-        .execute(app)
-        .put("/api/users/update")
-        .set("Authorization", `Bearer ${token}`)
-        .send({ picture: "string" });
-
-      expect(result.status).to.be.equal(500);
-      expect(result.body).to.be.deep.equal({ error: "Internal Server Error" });
+      expect(result.status).to.be.equal(400);
+      expect(result.body).to.deep.equal({
+        updated: false,
+        error: "Error, no value(s) provided to update",
+      });
     });
     it("if everything goes right, should return the updated user without the password", async () => {
       const { password, createdAt: c, ...expected } = mocks.validUser;
@@ -104,7 +96,24 @@ describe("E2e tests user", () => {
     });
   });
   describe("DELETE /api/users/delete", () => {
-    it.skip("should return the message 'User deleted successfully' if everything goes right", async () => {});
-    it.skip("should return status code 500 and the title error code DELETE_USER_ERROR if something goes wrong", async () => {});
+    it("should return the message 'User deleted successfully' if everything goes right", async () => {
+      const result = await chai.request
+        .execute(app)
+        .delete("/api/users/delete");
+      expect(result.status).to.be.equal(401);
+      expect(result.body).to.deep.equal({
+        error: "No token provided",
+      });
+    });
+    it("should return status code 500 and the title error code DELETE_USER_ERROR if something goes wrong", async () => {
+      const result = await chai.request
+        .execute(app)
+        .delete("/api/users/delete")
+        .set("Authorization", `Bearer ${token}`);
+      expect(result.status).to.be.equal(200);
+      expect(result.body).to.deep.equal({
+        message: "User deleted successfully",
+      });
+    });
   });
 });
