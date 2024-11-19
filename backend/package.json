@@ -9,6 +9,7 @@
     "posttest": "docker stop test-postgres && docker rm test-postgres",
     "test": "NODE_ENV=test nyc mocha 'src/test/**/*.test.js' --watch",
     "test:e2e": "npm run pretest && NODE_ENV=test mocha 'src/test/e2e/**/*.test.js'",
+    "test:unit" : "NODE_ENV=test mocha 'src/test/unit/**/*.test.js' --watch",
     "dev": "nodemon index.js",
     "prod": "NODE_ENV=production node index.js",
     "build": "echo 'No build script defined'"
