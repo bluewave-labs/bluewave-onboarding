@@ -167,27 +167,5 @@ describe("Unit test user controller", () => {
       expect(res.json.called).to.be.false;
       expect(next.called).to.be.true;
     });
-    it.skip("handleValidationErrors - should return status 400 if validation fails", async () => {
-      next = sinon.stub();
-      const expValidator = sinon.spy(validationResult)
-      req.user = mocks.validUser;
-      req.body = {};
-      await controller.handleValidationErrors(req, res, next);
-      expect(expValidator.called).to.be.true;
-      expect(res.status.called).to.be.false;
-      expect(res.json.called).to.be.false;
-      expect(next.called).to.be.false;
-    });
-    it.skip("handleValidationErrors - should move on if validator passes", async () => {
-      next = sinon.stub();
-      const expValidator = sinon.spy(validationResult)
-      req.user = mocks.validUser;
-      req.body = {};
-      await controller.handleValidationErrors(req, res, next);
-      expect(expValidator.called).to.be.true;
-      expect(res.status.called).to.be.false;
-      expect(res.json.called).to.be.false;
-      expect(next.called).to.be.true;
-    });
   });
 });
