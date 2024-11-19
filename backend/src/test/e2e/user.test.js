@@ -1,6 +1,6 @@
 import { expect, use } from "chai";
 import chaiHttp from "chai-http";
-import { before, beforeEach, describe, it } from "mocha";
+import { beforeEach, describe, it } from "mocha";
 import app from "../../../index.js";
 import db from "../../models/index.js";
 import mocks from "../mocks/user.mock.js";
@@ -17,13 +17,6 @@ describe("E2e tests user", () => {
       .send(mocks.validUser);
     token = login.body.token;
   });
-  // before(async () => {
-  //   const login = await chai.request
-  //     .execute(app)
-  //     .post("/api/auth/register")
-  //     .send(mocks.validUser);
-  //   token = login.body.token;
-  // });
   describe("GET /api/users/users-list", () => {
     it("should return a list of users with pagination and status code 200 if everything goes right", async () => {
       const result = await chai.request
@@ -86,6 +79,66 @@ describe("E2e tests user", () => {
       expect(result.body).to.deep.equal({
         updated: false,
         error: "Error, no value(s) provided to update",
+      });
+    });
+    it.skip("should fail if the image is not an url or base64", async () => {
+      const result = await chai.request
+        .execute(app)
+        .put("/api/users/update")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ picture: "photo" });
+      expect(result).to.have.status(400);
+      expect(result.body).to.deep.equal({
+        errors: [
+          {
+            location: "body",
+            msg: "Invalid value",
+            path: "picture",
+            type: "field",
+            value: "photo",
+          },
+        ],
+        updated: false,
+      });
+    });
+    it("should fail if the name is not a string", async () => {
+      const result = await chai.request
+        .execute(app)
+        .put("/api/users/update")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ name: 25 });
+      expect(result).to.have.status(400);
+      expect(result.body).to.deep.equal({
+        errors: [
+          {
+            location: "body",
+            msg: "Invalid value",
+            path: "name",
+            type: "field",
+            value: 25,
+          },
+        ],
+        updated: false,
+      });
+    });
+    it("should fail if the surname is not a string", async () => {
+      const result = await chai.request
+        .execute(app)
+        .put("/api/users/update")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ surname: 32 });
+      expect(result).to.have.status(400);
+      expect(result.body).to.deep.equal({
+        errors: [
+          {
+            location: "body",
+            msg: "Invalid value",
+            path: "surname",
+            type: "field",
+            value: 32,
+          },
+        ],
+        updated: false,
       });
     });
     it("if everything goes right, should return the updated user without the password", async () => {
