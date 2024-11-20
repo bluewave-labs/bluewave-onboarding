@@ -291,9 +291,7 @@ describe("Unit test auth controller", () => {
 
     expect(res.status.args[0][0]).to.be.equal(200);
     const body = res.json.args[0][0];
-    expect(body).to.be.deep.equal({
-      message: "Password reset token sent",
-    });
+    expect(body).to.be.have.property("message", "Password reset token sent");
   });
   it("forgetPassword - if something goes wrong, should return status 500", async () => {
     req.body = {

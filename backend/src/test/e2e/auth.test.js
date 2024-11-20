@@ -8,7 +8,7 @@ import mocks from "../mocks/user.mock.js";
 const chai = use(chaiHttp);
 const user = mocks.UserBuilder.user;
 
-describe.only("E2e tests auth", () => {
+describe("E2e tests auth", () => {
   describe("POST /api/auth/register", () => {
     afterEach(async () => {
       await db.sequelize.sync({ force: true, match: /_test$/ });
