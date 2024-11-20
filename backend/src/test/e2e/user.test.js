@@ -1,24 +1,40 @@
-import { expect, use } from "chai";
-import chaiHttp from "chai-http";
-import { beforeEach, describe, it } from "mocha";
+import { expect } from "chai";
+import { afterEach, beforeEach, describe, it } from "mocha";
+import waitOn from "wait-on";
 import app from "../../../index.js";
 import db from "../../models/index.js";
 import mocks from "../mocks/user.mock.js";
-
-const chai = use(chaiHttp);
+import chai from "./index.js";
 
 describe("E2e tests user", () => {
-  let token;
-  beforeEach(async () => {
-    await db.sequelize.sync({ force: true });
+  let resetDb = async () => {
     const login = await chai.request
       .execute(app)
       .post("/api/auth/register")
       .send(mocks.validUser);
-    token = login.body.token;
-  });
+    return login.body.token;
+  };
   describe("GET /api/users/users-list", () => {
+    beforeEach(async () => {
+      const dbReadyOptions = {
+        resources: ["tcp:localhost:5432"],
+        delay: 1000,
+        timeout: 30000,
+        interval: 1000,
+      };
+
+      try {
+        await waitOn(dbReadyOptions);
+      } catch (err) {
+        console.error("Database not ready in time:", err);
+        throw err;
+      }
+    });
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
+    });
     it("should return a list of users with pagination and status code 200 if everything goes right", async () => {
+      await resetDb();
       const result = await chai.request
         .execute(app)
         .get("/api/users/users-list ");
@@ -39,7 +55,26 @@ describe("E2e tests user", () => {
     });
   });
   describe("GET /api/users/current-user", () => {
+    beforeEach(async () => {
+      const dbReadyOptions = {
+        resources: ["tcp:localhost:5432"],
+        delay: 1000,
+        timeout: 30000,
+        interval: 1000,
+      };
+
+      try {
+        await waitOn(dbReadyOptions);
+      } catch (err) {
+        console.error("Database not ready in time:", err);
+        throw err;
+      }
+    });
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
+    });
     it("should fail if the user is not logged", async () => {
+      await resetDb();
       const result = await chai.request
         .execute(app)
         .get("/api/users/current-user");
@@ -49,6 +84,7 @@ describe("E2e tests user", () => {
       });
     });
     it("should return the user without the password if everything goes right", async () => {
+      const token = await resetDb();
       const {
         password,
         picture: p,
@@ -65,12 +101,32 @@ describe("E2e tests user", () => {
     });
   });
   describe("PUT /api/users/update", () => {
+    beforeEach(async () => {
+      const dbReadyOptions = {
+        resources: ["tcp:localhost:5432"],
+        delay: 1000,
+        timeout: 30000,
+        interval: 1000,
+      };
+
+      try {
+        await waitOn(dbReadyOptions);
+      } catch (err) {
+        console.error("Database not ready in time:", err);
+        throw err;
+      }
+    });
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
+    });
     it("should fail if the user is not logged", async () => {
+      await resetDb();
       const result = await chai.request.execute(app).put("/api/users/update");
       expect(result).to.have.status(401);
       expect(result.body).to.deep.equal({ error: "No token provided" });
     });
     it("should fail if the request body is empty", async () => {
+      const token = await resetDb();
       const result = await chai.request
         .execute(app)
         .put("/api/users/update")
@@ -82,6 +138,7 @@ describe("E2e tests user", () => {
       });
     });
     it.skip("should fail if the image is not an url or base64", async () => {
+      const token = await resetDb();
       const result = await chai.request
         .execute(app)
         .put("/api/users/update")
@@ -102,6 +159,7 @@ describe("E2e tests user", () => {
       });
     });
     it("should fail if the name is not a string", async () => {
+      const token = await resetDb();
       const result = await chai.request
         .execute(app)
         .put("/api/users/update")
@@ -122,6 +180,7 @@ describe("E2e tests user", () => {
       });
     });
     it("should fail if the surname is not a string", async () => {
+      const token = await resetDb();
       const result = await chai.request
         .execute(app)
         .put("/api/users/update")
@@ -142,6 +201,7 @@ describe("E2e tests user", () => {
       });
     });
     it("if everything goes right, should return the updated user without the password", async () => {
+      const token = await resetDb();
       const result = await chai.request
         .execute(app)
         .put("/api/users/update")
@@ -155,7 +215,26 @@ describe("E2e tests user", () => {
     });
   });
   describe("DELETE /api/users/delete", () => {
+    beforeEach(async () => {
+      const dbReadyOptions = {
+        resources: ["tcp:localhost:5432"],
+        delay: 1000,
+        timeout: 30000,
+        interval: 1000,
+      };
+
+      try {
+        await waitOn(dbReadyOptions);
+      } catch (err) {
+        console.error("Database not ready in time:", err);
+        throw err;
+      }
+    });
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
+    });
     it("should return status code 500 and the title error code DELETE_USER_ERROR if something goes wrong", async () => {
+      await resetDb();
       const result = await chai.request
         .execute(app)
         .delete("/api/users/delete");
@@ -165,6 +244,7 @@ describe("E2e tests user", () => {
       });
     });
     it("should return status code 500 and the correct response if only one admin is present", async () => {
+      const token = await resetDb();
       const result = await chai.request
         .execute(app)
         .delete("/api/users/delete")
@@ -178,6 +258,7 @@ describe("E2e tests user", () => {
       });
     });
     it("should return the message 'User deleted successfully' if everything goes right", async () => {
+      await resetDb();
       const newLogin = await chai.request
         .execute(app)
         .post("/api/auth/register")
