@@ -1,6 +1,6 @@
 import { expect, use } from "chai";
 import chaiHttp from "chai-http";
-import { beforeEach, describe, it } from "mocha";
+import { afterEach, beforeEach, describe, it } from "mocha";
 import app from "../../../index.js";
 import db from "../../models/index.js";
 import mocks from "../mocks/user.mock.js";
@@ -10,8 +10,10 @@ const user = mocks.UserBuilder.user;
 
 describe.only("E2e tests auth", () => {
   describe("POST /api/auth/register", () => {
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
+    });
     it("should return the user info and a token if everything goes right", async () => {
-      await db.sequelize.sync({ force: true });
       const result = await chai.request
         .execute(app)
         .post("/api/auth/register")
@@ -30,7 +32,6 @@ describe.only("E2e tests auth", () => {
       expect(result.body).to.have.property("token");
     });
     it("should return status 400 in the name has an invalid format", async () => {
-      await db.sequelize.sync({ force: true });
       const result = await chai.request
         .execute(app)
         .post("/api/auth/register")
@@ -42,7 +43,6 @@ describe.only("E2e tests auth", () => {
       });
     });
     it("should return status 400 in the surname has an invalid format", async () => {
-      await db.sequelize.sync({ force: true });
       const result = await chai.request
         .execute(app)
         .post("/api/auth/register")
@@ -53,8 +53,7 @@ describe.only("E2e tests auth", () => {
         errors: ["Name can only contain letters, hyphens and apostrophes"],
       });
     });
-    it.only("should return status 400 in the email has an invalid format", async () => {
-      await db.sequelize.sync({ force: true });
+    it("should return status 400 in the email has an invalid format", async () => {
       const result = await chai.request
         .execute(app)
         .post("/api/auth/register")
@@ -66,7 +65,6 @@ describe.only("E2e tests auth", () => {
       });
     });
     it("should return status 400 in the password has an invalid format", async () => {
-      await db.sequelize.sync({ force: true });
       const result = await chai.request
         .execute(app)
         .post("/api/auth/register")
@@ -77,7 +75,7 @@ describe.only("E2e tests auth", () => {
         errors: ["Must contain one special character"],
       });
 
-      await db.sequelize.sync({ force: true });
+      await db.sequelize.truncate({ cascade: true, restartIdentity: true });
       const result2 = await chai.request
         .execute(app)
         .post("/api/auth/register")
@@ -89,7 +87,6 @@ describe.only("E2e tests auth", () => {
       });
     });
     it("should return status 400 in the name is missing", async () => {
-      await db.sequelize.sync({ force: true });
       const result = await chai.request
         .execute(app)
         .post("/api/auth/register")
@@ -104,7 +101,6 @@ describe.only("E2e tests auth", () => {
       });
     });
     it("should return status 400 in the surname is missing", async () => {
-      await db.sequelize.sync({ force: true });
       const result = await chai.request
         .execute(app)
         .post("/api/auth/register")
@@ -119,7 +115,6 @@ describe.only("E2e tests auth", () => {
       });
     });
     it("should return status 400 in the email is missing", async () => {
-      await db.sequelize.sync({ force: true });
       const result = await chai.request
         .execute(app)
         .post("/api/auth/register")
@@ -131,7 +126,6 @@ describe.only("E2e tests auth", () => {
       });
     });
     it("should return status 400 in the password is missing", async () => {
-      await db.sequelize.sync({ force: true });
       const result = await chai.request
         .execute(app)
         .post("/api/auth/register")
@@ -146,232 +140,219 @@ describe.only("E2e tests auth", () => {
       });
     });
   });
-  describe.skip("POST /api/auth/login", () => {
+  describe("POST /api/auth/login", () => {
+    beforeEach(async () => {
+      await chai.request
+        .execute(app)
+        .post("/api/auth/register")
+        .send(user().build());
+    });
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
+    });
     it("should return the user info and a token if everything goes right", async () => {
       const result = await chai.request
         .execute(app)
-        .get("/api/auth/current-user");
-      expect(result).to.have.status(401);
-      expect(result.body).to.be.deep.equal({
-        error: "No token provided",
+        .post("/api/auth/login")
+        .send(user().build());
+      expect(result).to.have.status(200);
+      const { token, ...info } = result.body;
+      expect(info).to.be.deep.equal({
+        user: {
+          email: "jane.doe@email.com",
+          id: 1,
+          name: "Jane",
+          role: "admin",
+          surname: "Doe",
+          picture: "",
+        },
       });
+      expect(result.body).to.have.property("token");
     });
     it("should return status 400 in the email has an invalid format", async () => {
-      const result = await chai.request.execute(app).get("/api/auth/register ");
-      expect(result).to.have.status(200);
-      expect(result.body).to.be.deep.equal({
-        currentPage: 1,
-        totalPages: 1,
-        totalUsers: 1,
-        users: [
-          {
-            email: "jane.doe@email.com",
-            name: "Jane",
-            role: "admin",
-            surname: "Doe",
-          },
-        ],
+      const result = await chai.request
+        .execute(app)
+        .post("/api/auth/login")
+        .send(user().invalidEmail().build());
+      expect(result).to.have.status(400);
+      const { token, ...info } = result.body;
+      expect(info).to.be.deep.equal({
+        errors: ["Invalid email address"],
       });
     });
-    it("should return status 400 in the password has an invalid format", async () => {
-      const result = await chai.request.execute(app).get("/api/auth/register ");
-      expect(result).to.have.status(200);
-      expect(result.body).to.be.deep.equal({
-        currentPage: 1,
-        totalPages: 1,
-        totalUsers: 1,
-        users: [
-          {
-            email: "jane.doe@email.com",
-            name: "Jane",
-            role: "admin",
-            surname: "Doe",
-          },
-        ],
+    it("should return status 401 in the password has an invalid format", async () => {
+      const result = await chai.request
+        .execute(app)
+        .post("/api/auth/login")
+        .send(user().invalidPasswordChar().build());
+      expect(result).to.have.status(401);
+      const { token, ...info } = result.body;
+      expect(info).to.be.deep.equal({
+        error: "Invalid credentials",
+      });
+
+      const result2 = await chai.request
+        .execute(app)
+        .post("/api/auth/login")
+        .send(user().invalidPasswordLength().build());
+      expect(result2).to.have.status(401);
+      const { token: t, ...info2 } = result2.body;
+      expect(info2).to.be.deep.equal({
+        error: "Invalid credentials",
       });
     });
     it("should return status 400 in the email is empty", async () => {
-      const result = await chai.request.execute(app).get("/api/auth/register ");
-      expect(result).to.have.status(200);
-      expect(result.body).to.be.deep.equal({
-        currentPage: 1,
-        totalPages: 1,
-        totalUsers: 1,
-        users: [
-          {
-            email: "jane.doe@email.com",
-            name: "Jane",
-            role: "admin",
-            surname: "Doe",
-          },
-        ],
+      const result = await chai.request
+        .execute(app)
+        .post("/api/auth/login")
+        .send(user().missingEmail().build());
+      expect(result).to.have.status(400);
+      const { token, ...info } = result.body;
+      expect(info).to.be.deep.equal({
+        errors: ["Invalid email address", "Email is required"],
       });
     });
     it("should return status 400 in the password is empty", async () => {
-      const result = await chai.request.execute(app).get("/api/auth/register ");
-      expect(result).to.have.status(200);
-      expect(result.body).to.be.deep.equal({
-        currentPage: 1,
-        totalPages: 1,
-        totalUsers: 1,
-        users: [
-          {
-            email: "jane.doe@email.com",
-            name: "Jane",
-            role: "admin",
-            surname: "Doe",
-          },
+      await db.sequelize.truncate({ cascade: true, restartIdentity: true });
+      const result = await chai.request
+        .execute(app)
+        .post("/api/auth/register")
+        .send(user().missingPassword().build());
+      expect(result).to.have.status(400);
+      const { token, ...info } = result.body;
+      expect(info).to.be.deep.equal({
+        errors: [
+          "Must be at least 8 characters",
+          "Must contain one special character",
         ],
       });
     });
   });
-  describe.skip("POST /api/auth/logout", () => {
+  describe("POST /api/auth/logout", () => {
     let token;
     beforeEach(async () => {
-      await db.sequelize.sync({ force: true });
       const login = await chai.request
         .execute(app)
         .post("/api/auth/register")
-        .send(mocks.validUser);
+        .send(user().build());
       token = login.body.token;
     });
-    it("should return status 200 and message if everything is right", async () => {
-      const result = await chai.request.execute(app).put("/api/auth/update");
-      expect(result).to.have.status(401);
-      expect(result.body).to.deep.equal({ error: "No token provided" });
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
     });
-    it("should fail if the token is invalid or missing", async () => {
+    it("should return status 200 and message if everything is right", async () => {
       const result = await chai.request
         .execute(app)
-        .put("/api/auth/update")
+        .post("/api/auth/logout")
         .set("Authorization", `Bearer ${token}`);
-      expect(result).to.have.status(400);
-      expect(result.body).to.deep.equal({
-        updated: false,
-        error: "Error, no value(s) provided to update",
+      expect(result).to.have.status(200);
+      expect(result.body).to.be.deep.equal({
+        message: "Successfully logged out",
       });
     });
-  });
-  describe.skip("POST /api/auth/forget-password", () => {
-    it("should return status 200 and message if everything is right", async () => {
-      const result = await chai.request.execute(app).delete("/api/auth/delete");
+    it("should fail if the token is invalid or missing", async () => {
+      const result = await chai.request.execute(app).post("/api/auth/logout");
       expect(result).to.have.status(401);
-      expect(result.body).to.deep.equal({
+      expect(result.body).to.be.deep.equal({
         error: "No token provided",
       });
     });
-    it("should return status 400 in the email has an invalid format", async () => {
-      const result = await chai.request.execute(app).get("/api/auth/register ");
+  });
+  describe("POST /api/auth/forget-password", () => {
+    beforeEach(async () => {
+      await chai.request
+        .execute(app)
+        .post("/api/auth/register")
+        .send(user().build());
+    });
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
+    });
+    it("should return status 200 and message if everything is right", async () => {
+      const result = await chai.request
+        .execute(app)
+        .post("/api/auth/forget-password")
+        .send({ email: user().build().email });
       expect(result).to.have.status(200);
-      expect(result.body).to.be.deep.equal({
-        currentPage: 1,
-        totalPages: 1,
-        totalUsers: 1,
-        users: [
-          {
-            email: "jane.doe@email.com",
-            name: "Jane",
-            role: "admin",
-            surname: "Doe",
-          },
-        ],
+      expect(result.body).to.be.have.property(
+        "message",
+        "Password reset token sent"
+      );
+    });
+    it("should return status 400 in the email has an invalid format", async () => {
+      const result = await chai.request
+        .execute(app)
+        .post("/api/auth/forget-password")
+        .send(user().invalidEmail().build());
+      expect(result).to.have.status(400);
+      const { token, ...info } = result.body;
+      expect(info).to.be.deep.equal({
+        errors: ["Invalid email address"],
       });
     });
     it("should return status 400 in the email is empty", async () => {
-      const result = await chai.request.execute(app).get("/api/auth/register ");
-      expect(result).to.have.status(200);
-      expect(result.body).to.be.deep.equal({
-        currentPage: 1,
-        totalPages: 1,
-        totalUsers: 1,
-        users: [
-          {
-            email: "jane.doe@email.com",
-            name: "Jane",
-            role: "admin",
-            surname: "Doe",
-          },
-        ],
+      const result = await chai.request
+        .execute(app)
+        .post("/api/auth/forget-password")
+        .send(user().missingEmail().build());
+      expect(result).to.have.status(400);
+      const { token, ...info } = result.body;
+      expect(info).to.be.deep.equal({
+        errors: ["Invalid email address"],
       });
     });
   });
-  describe.skip("POST /api/auth/reset-password", () => {
-    it("should return the user info and a token if everything goes right", async () => {
+  describe("POST /api/auth/reset-password", () => {
+    let token;
+    beforeEach(async () => {
+      await chai.request
+        .execute(app)
+        .post("/api/auth/register")
+        .send(user().build());
+      const response = await chai.request
+        .execute(app)
+        .post("/api/auth/forget-password")
+        .send({ email: user().build().email });
+      token = response.body.resetToken;
+    });
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
+    });
+    it("should return status 200 if everything goes right", async () => {
       const result = await chai.request
         .execute(app)
-        .get("/api/auth/current-user");
-      expect(result).to.have.status(401);
-      expect(result.body).to.be.deep.equal({
-        error: "No token provided",
-      });
-    });
-    it("should return status 400 in the token has an invalid format", async () => {
-      const result = await chai.request.execute(app).get("/api/auth/register ");
+        .post("/api/auth/reset-password")
+        .send({ token, newPassword: "321drowss@P" });
       expect(result).to.have.status(200);
       expect(result.body).to.be.deep.equal({
-        currentPage: 1,
-        totalPages: 1,
-        totalUsers: 1,
-        users: [
-          {
-            email: "jane.doe@email.com",
-            name: "Jane",
-            role: "admin",
-            surname: "Doe",
-          },
-        ],
-      });
-    });
-    it("should return status 400 in the new password has an invalid format", async () => {
-      const result = await chai.request.execute(app).get("/api/auth/register ");
-      expect(result).to.have.status(200);
-      expect(result.body).to.be.deep.equal({
-        currentPage: 1,
-        totalPages: 1,
-        totalUsers: 1,
-        users: [
-          {
-            email: "jane.doe@email.com",
-            name: "Jane",
-            role: "admin",
-            surname: "Doe",
-          },
-        ],
+        message: "Password reset successful",
       });
     });
     it("should return status 400 in the token is empty", async () => {
-      const result = await chai.request.execute(app).get("/api/auth/register ");
-      expect(result).to.have.status(200);
+      const result = await chai.request
+        .execute(app)
+        .post("/api/auth/reset-password")
+        .send({ token: "", newPassword: "321drowss@P" });
+      expect(result).to.have.status(400);
       expect(result.body).to.be.deep.equal({
-        currentPage: 1,
-        totalPages: 1,
-        totalUsers: 1,
-        users: [
-          {
-            email: "jane.doe@email.com",
-            name: "Jane",
-            role: "admin",
-            surname: "Doe",
-          },
-        ],
+        error: "Invalid or expired token",
       });
     });
-    it("should return status 400 in the new password is empty", async () => {
-      const result = await chai.request.execute(app).get("/api/auth/register ");
-      expect(result).to.have.status(200);
-      expect(result.body).to.be.deep.equal({
-        currentPage: 1,
-        totalPages: 1,
-        totalUsers: 1,
-        users: [
-          {
-            email: "jane.doe@email.com",
-            name: "Jane",
-            role: "admin",
-            surname: "Doe",
-          },
-        ],
-      });
+    it("should return status 400 in the new password has an invalid format", async () => {
+      const result = await chai.request
+        .execute(app)
+        .post("/api/auth/reset-password")
+        .send({ token, newPassword: user().invalidPasswordChar().build() });
+      expect(result).to.have.status(500);
+      expect(result.body).to.be.deep.equal({ error: "Internal Server Error" });
+    });
+    it("should return status 400 if the new password is empty", async () => {
+      const result = await chai.request
+        .execute(app)
+        .post("/api/auth/reset-password")
+        .send({ token, newPassword: "" });
+      expect(result).to.have.status(400);
+      expect(result.body).to.be.deep.equal({});
     });
   });
 });

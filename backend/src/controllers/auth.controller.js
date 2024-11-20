@@ -180,6 +180,11 @@ const forgetPassword = async (req, res) => {
     });
 
     await sendPasswordResetEmail(user.email, user.name, resetToken);
+    if (isTestingEnv) {
+      return res
+        .status(200)
+        .json({ message: "Password reset token sent", resetToken });
+    }
     res.status(200).json({ message: "Password reset token sent" });
   } catch (error) {
     console.error("Error in forget password:", error);
