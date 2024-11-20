@@ -12,41 +12,47 @@ import Logo from "../../components/Logo/Logo";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .required("Name is required")
-    .matches(
-      /^[A-Za-z'\s-]+$/,
-      "Name can only contain letters, hyphens and apostrophes"
-    )
-    .trim(),
-  surname: Yup.string()
-    .required("Surname is required")
-    .matches(
-      /^[A-Za-z'\s-]+$/,
-      "Surname can only contain letters, hyphens and apostrophes"
-    )
-    .trim(),
-  email: Yup.string()
-    .matches(
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Enter a valid email address"
-    )
-    .required("Email is required")
-    .trim(),
-  password: Yup.string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters")
-    .matches(
-      /[!@#$%^&*(),.?":{}|<>_\-=]/,
-      "Password must contain at least one special character"
-    ),
-});
-
-function CreateAccountPage() {
+function CreateAccountPage({ isAdmin = false, setIsAdmin}) {
   const { loginAuth } = useAuth();
   const navigate = useNavigate();
   const [serverErrors, setServerErrors] = useState([]);
+  
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .required("Name is required")
+      .matches(
+        /^[A-Za-z'\s-]+$/,
+        "Name can only contain letters, hyphens and apostrophes"
+      )
+      .trim(),
+    surname: Yup.string()
+      .required("Surname is required")
+      .matches(
+        /^[A-Za-z'\s-]+$/,
+        "Surname can only contain letters, hyphens and apostrophes"
+      )
+      .trim(),
+    email: Yup.string()
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Enter a valid email address"
+      )
+      .required("Email is required")
+      .trim(),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters")
+      .matches(
+        /[!@#$%^&*(),.?":{}|<>_\-=]/,
+        "Password must contain at least one special character"
+      ),
+      ...(isAdmin && {
+        confirmPassword: Yup.string()
+          .required("Confirm Password is required")
+          .oneOf([Yup.ref('password'), null], "Passwords must match"),
+      }),
+  });
+
   return (
     <Formik
       initialValues={{
@@ -62,6 +68,7 @@ function CreateAccountPage() {
         setServerErrors([]);
         try {
           const response = await signUp(values);
+          setIsAdmin(false);
           handleAuthSuccess(response, loginAuth, navigate);
         } catch (error) {
           if (error.response?.data?.errors) {
@@ -88,8 +95,7 @@ function CreateAccountPage() {
       }) => (
         <Form className={styles["login-container"]}>
           <Logo />
-          <h2>Create an account</h2>
-
+          {isAdmin ? <h2> Create admin account</h2> : <h2>Create an account</h2>}
           <div className={styles["form-group"]}>
             <CustomTextField
               id="name"
@@ -170,6 +176,30 @@ function CreateAccountPage() {
             />
           </div>
 
+          {
+            isAdmin &&
+            <div className={styles["form-group"]}>
+              <CustomTextField
+                id="confirmPassword"
+                type="password"
+                name="confirmPassword"
+                labelText="Confirm Password*:"
+                checkCircleIconVisible={true}
+                displayCheckCircleIcon={
+                  touched.confirmPassword && !errors.confirmPassword
+                }
+                placeholder="Confirm your password"
+                textFieldMargin="none"
+                TextFieldWidth="full"
+                required={true}
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={Boolean(touched.confirmPassword && errors.confirmPassword)}
+                helperText={touched.confirmPassword && errors.confirmPassword}
+              />
+            </div>
+          }
           <div className={styles["password-constraints"]}>
             <CheckCircleIcon
               style={{
@@ -213,7 +243,7 @@ function CreateAccountPage() {
             )}
           </button>
           <div className={styles["sign-up-link"]}>
-            Already have an account? <CustomLink text="Log in" url="/" />
+            Already have an account? <CustomLink text="Log in" url="/login" />
           </div>
         </Form>
       )}
