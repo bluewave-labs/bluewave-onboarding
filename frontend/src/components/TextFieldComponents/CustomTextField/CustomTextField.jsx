@@ -12,7 +12,8 @@ const CustomTextField = ({
   displayCheckCircleIcon = false,
   labelText = "",
   value = "",
-  onChange = () => {},
+  onChange = () => { },
+  onBlur = () => { },
   helperText = "",
   error = false,
   multiline = false,
@@ -53,6 +54,7 @@ const CustomTextField = ({
         type={type}
         name={name}
         autoFocus={autofocus}
+        onBlur={onBlur}
         required={Boolean(required)}
         className={"textField"}
         sx={{ width: TextFieldWidth, marginTop: 1 }}
@@ -98,6 +100,7 @@ CustomTextField.propTypes = {
   labelText: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   defaultValue: PropTypes.string,
   helperText: PropTypes.string,
   error: PropTypes.bool,

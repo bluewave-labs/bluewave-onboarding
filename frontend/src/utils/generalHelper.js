@@ -28,3 +28,23 @@ export const getFullName = (userData) => {
     return null
   }
 }
+
+export const generateApiKey = () => {
+  const length = 32; // Define the length of the API key
+  const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'; // Characters to use
+  let apiKey = '';
+
+  const array = new Uint8Array(length);
+  crypto.getRandomValues(array);
+  for (let i = 0; i < length; i++) {
+    apiKey += charset[array[i] % charset.length];
+  }
+
+  return apiKey;
+};
+
+// Authorization utility function
+export function renderIfAuthorized(userRole, requiredRole, element) {
+  if (!userRole || !requiredRole) return null;
+  return userRole === requiredRole ? element : null;
+}

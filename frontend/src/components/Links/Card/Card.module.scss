@@ -1,0 +1,33 @@
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 1rem;
+
+  &__container {
+    border: 0.78px solid #ebebeb;
+    border-radius: 7.8px;
+    padding: 1.25rem;
+    max-width: 320px;
+  }
+
+  &__title {
+    margin: 0 21px 0;
+    flex-grow: 1;
+    font-family: Inter;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.43;
+    color: #344054;
+  }
+
+  &__icon {
+    width: 12px;
+    height: 13px;
+  }
+
+  & .MuiIconButton-root {
+    color: #344054;
+  }
+}
