@@ -8,7 +8,7 @@ const validUser = {
   password: "P@ssword123",
   role: 1,
   picture: "",
-  createdAt: "2024-11-12",
+  createdAt: new Date("2024-11-12"),
 };
 
 const validList = [
@@ -20,7 +20,7 @@ const validList = [
     password: "P@ssword123",
     role: 1,
     picture: "",
-    createdAt: "2024-11-12",
+    createdAt: new Date("2024-11-12"),
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const validList = [
     password: "P@ssword123",
     role: 1,
     picture: "",
-    createdAt: "2024-11-12",
+    createdAt: new Date("2024-11-12"),
   },
   {
     id: 3,
@@ -40,7 +40,7 @@ const validList = [
     password: "P@ssword123",
     role: 1,
     picture: "",
-    createdAt: "2024-11-12",
+    createdAt: new Date("2024-11-12"),
   },
   {
     id: 4,
@@ -50,7 +50,7 @@ const validList = [
     password: "P@ssword123",
     role: 1,
     picture: "",
-    createdAt: "2024-11-12",
+    createdAt: new Date("2024-11-12"),
   },
   {
     id: 5,
@@ -60,7 +60,7 @@ const validList = [
     password: "P@ssword123",
     role: 1,
     picture: "",
-    createdAt: "2024-11-12",
+    createdAt: new Date("2024-11-12"),
   },
 ];
 
@@ -74,7 +74,7 @@ class UserBuilder {
       password: "P@ssword123",
       role: 1,
       picture: "",
-      createdAt: "2024-11-12",
+      createdAt: new Date("2024-11-12"),
     };
   }
 
