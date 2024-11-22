@@ -21,6 +21,7 @@ describe("E2e tests auth", () => {
   describe("POST /api/banner/add_banner", () => {
     let token;
     beforeEach(async () => {
+      process.env.NODE_ENV = "test";
       try {
         await waitOn(dbReadyOptions);
       } catch (err) {
@@ -45,7 +46,13 @@ describe("E2e tests auth", () => {
       const body = result.body;
       expect(body).to.be.deep.equal({ error: "No token provided" });
     });
-    it.skip("should return 403 if user does not have required access level", async () => {
+    it("should return 403 if user does not have required access level", async () => {
+      process.env.NODE_ENV = "not-test";
+      await chai.request
+        .execute(app)
+        .post("/api/team/invite")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ invitedEmail: userMocks.validList[1].email, role: "member" });
       const login = await chai.request
         .execute(app)
         .post("/api/auth/register")
@@ -172,6 +179,7 @@ describe("E2e tests auth", () => {
   describe("DELETE /api/banner/delete_banner/:id", () => {
     let token;
     beforeEach(async () => {
+      process.env.NODE_ENV = "test";
       try {
         await waitOn(dbReadyOptions);
       } catch (err) {
@@ -195,7 +203,13 @@ describe("E2e tests auth", () => {
       const body = result.body;
       expect(body).to.be.deep.equal({ error: "No token provided" });
     });
-    it.skip("should return 403 if user does not have required access level", async () => {
+    it("should return 403 if user does not have required access level", async () => {
+      process.env.NODE_ENV = "not-test";
+      await chai.request
+        .execute(app)
+        .post("/api/team/invite")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ invitedEmail: userMocks.validList[1].email, role: "member" });
       const login = await chai.request
         .execute(app)
         .post("/api/auth/register")
@@ -262,6 +276,7 @@ describe("E2e tests auth", () => {
   describe("PUT /api/banner/edit_banner/:id", () => {
     let token;
     beforeEach(async () => {
+      process.env.NODE_ENV = "test";
       try {
         await waitOn(dbReadyOptions);
       } catch (err) {
@@ -286,7 +301,13 @@ describe("E2e tests auth", () => {
       const body = result.body;
       expect(body).to.be.deep.equal({ error: "No token provided" });
     });
-    it.skip("should return 403 if user does not have required access level", async () => {
+    it("should return 403 if user does not have required access level", async () => {
+      process.env.NODE_ENV = "not-test";
+      await chai.request
+        .execute(app)
+        .post("/api/team/invite")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ invitedEmail: userMocks.validList[1].email, role: "member" });
       const login = await chai.request
         .execute(app)
         .post("/api/auth/register")
