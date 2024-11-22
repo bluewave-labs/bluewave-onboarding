@@ -1,7 +1,6 @@
 const { describe, it, beforeEach, afterEach } = require("mocha");
-const db = require("../../../models/index.js");
 const sinon = require("sinon");
-const { UserBuilder, validList } = require("../../mocks/user.mock.js");
+const { validList } = require("../../mocks/user.mock.js");
 const { expect } = require("chai");
 const controller = require("../../../controllers/invite.controller.js");
 
@@ -13,9 +12,7 @@ const validEmailList = validList.map((it) => ({
   role: "admin",
 }));
 
-const user = UserBuilder.user;
-
-describe.only("Test invite service", () => {
+describe("Test invite service", () => {
   const serviceMock = {};
   const req = {};
   const res = {};

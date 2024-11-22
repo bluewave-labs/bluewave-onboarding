@@ -8,7 +8,7 @@ const { BannerBuilder, validList } = require("../../mocks/banner.mock.js");
 const Banner = db.Banner;
 const banner = BannerBuilder.banner;
 
-describe.only("Test Banner service", () => {
+describe("Test Banner service", () => {
   const BannerMock = {};
   afterEach(sinon.restore);
   it("getAllBanners - should return all the banners", async () => {
