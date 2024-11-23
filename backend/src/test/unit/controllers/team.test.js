@@ -164,10 +164,90 @@ describe("Unit test user controller", () => {
       message: "Error",
     });
   });
-  it("updateTeamDetails - should return status 200 if everything goes right", async () => {});
-  it("updateTeamDetails - should return status 500 if something goes wrong", async () => {});
-  it("removeMember - should return status 200 if everything goes right", async () => {});
-  it("removeMember - should return status 500 if something goes wrong", async () => {});
-  it("changeRole - should return status 200 if everything goes right", async () => {});
-  it("changeRole - should return status 500 if something goes wrong", async () => {});
+  it("updateTeamDetails - should return status 200 if everything goes right", async () => {
+    req.body = {
+      name: "Test",
+    };
+    sinon.stub(service, "updateTeam").resolves();
+    await controller.updateTeamDetails(req, res);
+    expect(res.status.args[0][0]).to.equal(200);
+    const body = res.json.args[0][0];
+    expect(body).to.be.deep.equal({
+      message: "Team Details Updated Successfully",
+    });
+  });
+  it("updateTeamDetails - should return status 500 if something goes wrong", async () => {
+    req.body = {
+      name: "Test",
+    };
+    sinon.stub(service, "updateTeam").rejects();
+    await controller.updateTeamDetails(req, res);
+    expect(res.status.args[0][0]).to.equal(500);
+    const body = res.json.args[0][0];
+    expect(body).to.be.deep.equal({
+      error: "Internal Server Error",
+      errorCode: "UPDATE_TEAM_ERROR",
+      message: "Error",
+    });
+  });
+  it("removeMember - should return status 200 if everything goes right", async () => {
+    req.params = {
+      memberId: 1,
+    };
+    req.user = {
+      id: 1,
+    };
+    sinon.stub(service, "removeUserFromTeam").resolves();
+    await controller.removeMember(req, res);
+    expect(res.status.args[0][0]).to.equal(200);
+    const body = res.json.args[0][0];
+    expect(body).to.be.deep.equal({
+      message: "User Removed from Team Successfully",
+    });
+  });
+  it("removeMember - should return status 500 if something goes wrong", async () => {
+    req.params = {
+      memberId: 1,
+    };
+    req.user = {
+      id: 1,
+    };
+    sinon.stub(service, "removeUserFromTeam").rejects();
+    await controller.removeMember(req, res);
+    expect(res.status.args[0][0]).to.equal(500);
+    const body = res.json.args[0][0];
+    expect(body).to.be.deep.equal({
+      error: "Internal Server Error",
+      errorCode: "REMOVE_USER_ERROR",
+      message: "Error",
+    });
+  });
+  it("changeRole - should return status 200 if everything goes right", async () => {
+    req.body = {
+      userId: 1,
+      role: "member",
+    };
+    sinon.stub(service, "updateUserRole").resolves();
+    await controller.changeRole(req, res);
+    expect(res.status.args[0][0]).to.equal(200);
+    const body = res.json.args[0][0];
+    expect(body).to.be.deep.equal({
+      message: "User Role Updated Successfully",
+    });
+  });
+  it("changeRole - should return status 500 if something goes wrong", async () => {
+    req.body = {
+      userId: 1,
+      role: "member",
+    };
+    sinon.stub(service, "updateUserRole").rejects();
+    await controller.changeRole(req, res);
+    expect(res.status.args[0][0]).to.equal(500);
+    const body = res.json.args[0][0];
+    expect(body).to.be.deep.equal({
+      error: "Internal Server Error",
+      errorCode: "CHANGE_ROLE_ERROR",
+      message: "Error",
+    });
+  });
 });

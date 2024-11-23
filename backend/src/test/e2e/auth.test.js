@@ -1,31 +1,30 @@
-import { expect, use } from "chai";
-import chaiHttp from "chai-http";
+import { expect } from "chai";
 import { afterEach, beforeEach, describe, it } from "mocha";
+import waitOn from "wait-on";
 import app from "../../../index.js";
 import db from "../../models/index.js";
 import mocks from "../mocks/user.mock.js";
-import waitOn from "wait-on";
 import chai from "./index.js";
 
 const user = mocks.UserBuilder.user;
 
 describe("E2e tests auth", () => {
   describe("POST /api/auth/register", () => {
-    beforeEach(async () =>  {
+    beforeEach(async () => {
       const dbReadyOptions = {
         resources: ["tcp:localhost:5432"],
         delay: 1000,
         timeout: 30000,
         interval: 1000,
       };
-    
+
       try {
         await waitOn(dbReadyOptions);
       } catch (err) {
         console.error("Database not ready in time:", err);
         throw err;
       }
-    })
+    });
     afterEach(async () => {
       await db.sequelize.sync({ force: true, match: /_test$/ });
     });
