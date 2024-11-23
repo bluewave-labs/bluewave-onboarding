@@ -72,7 +72,7 @@ class UserBuilder {
       surname: "Doe",
       email: "jane.doe@email.com",
       password: "P@ssword123",
-      role: 1,
+      role: "admin",
       picture: "",
       createdAt: new Date("2024-11-12"),
     };
