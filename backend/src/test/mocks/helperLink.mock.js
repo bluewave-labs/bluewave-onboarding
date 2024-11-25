@@ -135,4 +135,5 @@ module.exports = {
   LikBuilder,
   LinksList,
   HelperLinkListUser1,
+  HelperLinkListUser2,
 };
