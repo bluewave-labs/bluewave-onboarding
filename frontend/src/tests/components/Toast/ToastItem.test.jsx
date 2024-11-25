@@ -1,72 +1,61 @@
-// ToastItem.test.tsx
-import { render, screen, act, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, vi, expect } from 'vitest';
-import '@testing-library/jest-dom';
-import ToastItem from '../../../components/Toast/ToastItem';
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen, act, fireEvent } from '@testing-library/react';
+import ToastItem from '@components/Toast/ToastItem';
 
+describe('ToastItem', () => {
+  const mockRemoveToast = vi.fn();
+  const mockToast = { id: 1, message: 'Test Toast', duration: 1000 };
 
-vi.mock('@mui/icons-material/Close', () => ({
-  default: vi.fn(() => <div>CloseIcon</div>)
-}));
+  it('renders toast message correctly', () => {
+    render(<ToastItem toast={mockToast} removeToast={mockRemoveToast} />);
 
-vi.mock('../../../components/Toast/Toast.module.scss', async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    toast: 'toast',
-    slideIn: 'slideIn',
-    slideOut: 'slideOut',
-    text: 'text',
-    icon: 'icon',
-    ...actual
-  }
-});
-
-describe('ToastItem Component', () => {
-  const mockCloseToast = vi.fn()
-  const mockOptions = { duration: 3000 };
-
-  it('should render toast message', () => {
-    render(<ToastItem message="Test Toast" id={1} closeToast={mockCloseToast} options={mockOptions} />);
-    
-    expect(screen.getByText('Test Toast')).toBeInTheDocument();
-    expect(screen.getByText('CloseIcon')).toBeInTheDocument(); // Close icon should be visible
+    expect(screen.getByText('Test Toast')).to.exist;
   });
 
-  it('should apply slide-in animation when toast is visible', () => {
-    vi.useFakeTimers();
-    
-    render(<ToastItem message="Test Toast" id={1} closeToast={mockCloseToast} options={mockOptions} />);
-
-    expect(screen.getByText('Test Toast').parentElement).toHaveClass('toast');
-    
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
-    
-    expect(screen.getByText('Test Toast').parentElement).toHaveClass('slideIn');
-  });
-
-  it('should remove toast after duration and apply slide-out animation', () => {
+  it('removes toast after the specified duration', () => {
     vi.useFakeTimers();
 
-    render(<ToastItem message="Test Toast" id={1} closeToast={mockCloseToast} options={mockOptions} />);
+    render(<ToastItem toast={mockToast} removeToast={mockRemoveToast} />);
 
     act(() => {
-      vi.advanceTimersByTime(mockOptions.duration);
+      vi.advanceTimersByTime(1000);
     });
 
-    expect(screen.getByText('Test Toast').parentElement).toHaveClass('slideOut');
-    
+    act(() => {
+      vi.advanceTimersByTime(500); 
+    });
+
+    expect(mockRemoveToast).toHaveBeenCalledWith(mockToast.id);
+
+    vi.useRealTimers();
   });
 
-  it('should close toast when close icon is clicked', async () => {
-    const closeToast = vi.fn(); // Mock closeToast function
+  it('cleans up timeout on unmount', () => {
+    vi.useFakeTimers();
 
-    render(<ToastItem message="Test Toast" id={1} closeToast={closeToast} options={mockOptions} />);
+    const clearTimeoutSpy = vi.spyOn(global, 'clearTimeout');
+    const { unmount } = render(<ToastItem toast={mockToast} removeToast={mockRemoveToast} />);
 
-    fireEvent.click(screen.getByText('CloseIcon'));
+    unmount();
+    expect(clearTimeoutSpy).toHaveBeenCalled();
 
-    expect(screen.getByText('Test Toast').parentElement).toHaveClass('slideOut');
-      
+    clearTimeoutSpy.mockRestore();
+    vi.useRealTimers();
+  });
+
+  it('closes toast when close icon is clicked', () => {
+    vi.useFakeTimers();
+
+    render(<ToastItem toast={mockToast} removeToast={mockRemoveToast} />);
+
+    fireEvent.click(screen.getByTestId('CloseIcon'));
+
+    act(() => {
+      vi.advanceTimersByTime(500);
+    });
+
+    expect(mockRemoveToast).toHaveBeenCalledWith(mockToast.id);
+
+    vi.useRealTimers();
   });
 });

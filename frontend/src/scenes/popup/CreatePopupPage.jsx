@@ -1,13 +1,12 @@
-import HomePageTemplate from '../../templates/HomePageTemplate/HomePageTemplate';
-import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
-import { React, useState, useEffect } from 'react';
-import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
-import PopupAppearance from '../../components/PopupPageComponents/PopupAppearance/PopupAppearance';
-import PopupContent from '../../components/PopupPageComponents/PopupContent/PopupContent';
-import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
+import RichTextEditor from '@components/RichTextEditor/RichTextEditor';
+import PopupAppearance from './PopupPageComponents/PopupAppearance/PopupAppearance';
+import PopupContent from './PopupPageComponents/PopupContent/PopupContent';
+import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
-
+import { emitToastError } from '../../utils/guideHelper';
 
 const CreatePopupPage = () => {
     const navigate = useNavigate();
@@ -28,7 +27,6 @@ const CreatePopupPage = () => {
     const [actionButtonText, setActionButtonText] = useState("Take me to subscription page");
     const [buttonAction, setButtonAction] = useState('No action');
     const [popupSize, setPopupSize] = useState('Small');
-
 
     const stateList = [
         { stateName: 'Header Background Color', state: headerBackgroundColor, setState: setHeaderBackgroundColor },
@@ -56,20 +54,14 @@ const CreatePopupPage = () => {
                     setActionButtonText(popupData.actionButtonText || 'Take me to subscription page');
                     setButtonAction(popupData.closeButtonAction || 'No action');
                     setPopupSize(popupData.popupSize || 'Small');
-
-                    console.log('Get popup successful:', response);
                 } catch (error) {
-                    if (error.response && error.response.data) {
-                        console.error('An error occurred:', error.response.data.errors[0].msg);
-                    } else {
-                        console.log('An error occurred. Please check your network connection and try again.');
-                    }
+                    emitToastError(error);
                 }
             };
 
             fetchPopupData();
         }
-    }, []);
+    }, [location.state]);
 
     const onSave = async () => {
         const popupData = {
@@ -87,66 +79,61 @@ const CreatePopupPage = () => {
         };
         try {
             const response = location.state?.isEdit
-            ? await editPopup(location.state?.id, popupData)
-            : await addPopup(popupData);
-            
+                ? await editPopup(location.state?.id, popupData)
+                : await addPopup(popupData);
+
             const toastMessage = location.state?.isEdit ? 'You edited this popup' : 'New popup Saved'
 
             toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
             navigate('/popup');
         } catch (error) {
-            if (error.response && error.response.data) {
-                console.error('An error occurred:', error.response.data.errors[0].msg);
-            } else {
-                console.log('An error occurred. Please check your network connection and try again.');
-            }
+            const errorMessage = error.response?.data?.message
+                ? `Error: ${error.response.data.message}`
+                : 'An unexpected error occurred. Please try again.';
+            toastEmitter.emit(TOAST_EMITTER_KEY, errorMessage);
         }
     }
-
 
     const handleButtonClick = (index) => {
         setActiveButton(index);
     };
 
     return (
-        <div >
-            <HomePageTemplate>
-                <GuideTemplate title='New Popup'
-                    activeButton={activeButton}
-                    handleButtonClick={handleButtonClick}
-                    onSave={onSave}
-                    rightContent={() =>
-                        <RichTextEditor
-                            header={header}
-                            content={content}
-                            setHeader={setHeader}
-                            setContent={setContent}
-                            previewBtnText={actionButtonText}
-                            headerBackgroundColor={headerBackgroundColor}
-                            headerColor={headerColor}
-                            textColor={textColor}
-                            buttonBackgroundColor={buttonBackgroundColor}
-                            buttonTextColor={buttonTextColor}
-                            sx={{ width: "100%", maxWidth: '700px', marginLeft: '2.5rem', marginTop: '1rem' }}
-                        />}
-                    leftContent={() =>
-                        <PopupContent
-                            actionButtonUrl={actionButtonUrl}
-                            setActionButtonText={setActionButtonText}
-                            setActionButtonUrl={setActionButtonUrl}
-                            actionButtonText={actionButtonText}
-                            setButtonAction={setButtonAction}
-                            buttonAction={buttonAction}
-                        />}
-                    leftAppearance={() => (
-                        <PopupAppearance
-                            data={stateList}
-                            setPopupSize={setPopupSize}
-                        />
-                    )} />
-
-            </HomePageTemplate>
-        </div>
+        <GuideTemplate title={location.state?.isEdit ? 'Edit Popup' : 'New Popup'}
+            activeButton={activeButton}
+            handleButtonClick={handleButtonClick}
+            onSave={onSave}
+            rightContent={() =>
+                <RichTextEditor
+                    header={header}
+                    content={content}
+                    setHeader={setHeader}
+                    setContent={setContent}
+                    previewBtnText={actionButtonText}
+                    headerBackgroundColor={headerBackgroundColor}
+                    headerColor={headerColor}
+                    textColor={textColor}
+                    buttonBackgroundColor={buttonBackgroundColor}
+                    buttonTextColor={buttonTextColor}
+                    popupSize={popupSize}
+                    sx={{ width: "100%", maxWidth: '700px', marginLeft: '2.5rem', marginTop: '1rem' }}
+                />}
+            leftContent={() =>
+                <PopupContent
+                    actionButtonUrl={actionButtonUrl}
+                    setActionButtonText={setActionButtonText}
+                    setActionButtonUrl={setActionButtonUrl}
+                    actionButtonText={actionButtonText}
+                    setButtonAction={setButtonAction}
+                    buttonAction={buttonAction}
+                />}
+            leftAppearance={() => (
+                <PopupAppearance
+                    data={stateList}
+                    setPopupSize={setPopupSize}
+                    popupSize={popupSize}
+                />
+            )} />
     );
 };
 

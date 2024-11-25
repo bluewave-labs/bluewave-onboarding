@@ -1,28 +1,30 @@
-import CreateActivityButton from "../../components/Button/CreateActivityButton/CreateActivityButton"
-import HomePageTemplate from "../../templates/HomePageTemplate/HomePageTemplate"
-import { ACTIVITY_TYPES } from "../../data/CreateActivityButtonData";
-import ParagraphCSS from "../../components/ParagraphCSS/ParagraphCSS";
+import React from "react";
+import DefaultPageTemplate from "../../templates/DefaultPageTemplate/DefaultPageTemplate";
+import { ACTIVITY_TYPES_INFO } from "../../data/guideMainPageData";
 import { useNavigate } from "react-router";
+import { getHints, deleteHint } from '../../services/hintServices';
 
 const HintDefaultPage = () => {
   const navigate = useNavigate();
-  const style = {
-    display: "flex",
-    "flex-direction": "column",
-    width: "100%",
-    "justify-content": "center",
-    "align-items": "center",
-  };
+
+  const getHintDetails = (hint) => ({
+    title: `Hint ${hint.id}`,
+    text: hint.header,
+  });
+
+  const navigateToCreate = (state) => {
+    navigate('/hint/create', state);
+  }
+  
   return (
-    <HomePageTemplate>
-      <div style={style}>
-        <ParagraphCSS />
-        <CreateActivityButton
-          type={ACTIVITY_TYPES.HINTS}
-          onClick={() => navigate("/hint/create")}
-        />
-      </div>
-    </HomePageTemplate>
+    <DefaultPageTemplate
+      getItems={getHints}
+      deleteItem={deleteHint}
+      navigateToCreate={navigateToCreate}
+      itemType={ACTIVITY_TYPES_INFO.HINTS}
+      itemTypeInfo={ACTIVITY_TYPES_INFO.HINTS}
+      getItemDetails={getHintDetails}
+    />
   );
 };
 

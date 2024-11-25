@@ -1,0 +1,159 @@
+@import url(../../styles/variables.css);
+
+.form-group-2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 5px;
+}
+
+.form-group .form-group-2 label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.form-group .form-group-2 input {
+  margin-left: 0;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 20px;
+  background-repeat: no-repeat;
+  background-image: url('../../assets/auth-screen-background.svg');
+  background-position: center -350px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: var(--font-regular);
+  color: var(--main-text-color);
+  font-weight: 500;
+}
+
+.form-group input[type="email"],
+.form-group input[type="name"],
+.form-group input[type="password"],
+.form-group input[type="surname"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--light-border-color);
+  border-radius: 8px;
+  font-size: var(--font-regular);
+  box-sizing: border-box;
+  color: var(--second-text-color);
+
+  ::placeholder {
+    color: var(--second-text-color);
+  }
+}
+
+.form-group input[type="checkbox"],
+.form-group a {
+  font-size: var(--font-regular);
+  color: var(--main-purple);
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.create-account-button,
+.reset-password-button,
+.sign-in-button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-size: var(--font-regular);
+  background-color: var(--main-purple);
+}
+
+.sign-up-link {
+  text-align: center;
+  font-size: var(--font-regular);
+  font-weight: 450;
+  color: var(--second-text-color);
+}
+
+.sign-up-link a {
+  color: var(--main-purple);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-container h2 {
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  font-size: var(--font-header);
+  font-weight: 600;
+  line-height: 38px;
+}
+
+/* For Create an Account Page */
+.password-constraints {
+  font-size: var(--font-regular);
+  display: flex;
+  align-items: center;
+  color: var(--second-text-color);
+  margin-bottom: 7px;
+}
+
+.password-constraints .MuiSvgIcon-root {
+  color: var(--main-text-color);
+}
+
+.create-account-button {
+  margin-top: 20px;
+}
+
+.check-div {
+  display: flex;
+  margin-bottom: 0.25rem;
+}
+
+.login-container h3 {
+  color: var(--second-text-color);
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: var(--font-regular);
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.error-message {
+  color: #D92D20;
+  font-size: var(--font-regular);
+  font-weight: 400;
+  margin-bottom: 1rem;
+  margin-top: 0.25rem;
+}
+
+.back-to-login-button {
+  padding: 10px;
+  color: var(--second-text-color);
+  cursor: pointer;
+  font-size: var(--font-regular);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

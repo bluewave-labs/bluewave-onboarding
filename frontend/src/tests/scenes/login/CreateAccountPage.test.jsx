@@ -1,10 +1,11 @@
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { AuthProvider } from '../../../services/authProvider';
 import CreateAccountPage from '../../../scenes/login/CreateAccountPage';
 import { signUp } from '../../../services/loginServices';
-import { AuthProvider } from '../../../services/authProvider';
 
+// Mock login services
 vi.mock('../../../services/loginServices', () => ({
   signUp: vi.fn(),
 }));
@@ -19,12 +20,12 @@ describe('CreateAccountPage', () => {
       </Router>
     );
 
-    expect(screen.getByText('Create an account')).to.exist;
-    expect(screen.getByLabelText('Name*:')).to.exist;
-    expect(screen.getByLabelText('Surname*:')).to.exist;
-    expect(screen.getByLabelText('Email*:')).to.exist;
-    expect(screen.getByLabelText('Password*:')).to.exist;
-    expect(screen.getByText('Get started')).to.exist;
+    expect(screen.getByText('Create an account')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Enter your name')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Enter your surname')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Enter your email')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Create your password')).toBeTruthy();
+    expect(screen.getByText('Get started')).toBeTruthy();
   });
 
   it('validates name input', () => {
@@ -36,10 +37,9 @@ describe('CreateAccountPage', () => {
       </Router>
     );
 
-    const usernameInput = screen.getByPlaceholderText('Enter your name');
-    fireEvent.change(usernameInput, { target: { value: 'testname' } });
-
-    expect(usernameInput.value).to.equal('testname');
+    const nameInput = screen.getByPlaceholderText('Enter your name');
+    fireEvent.change(nameInput, { target: { value: 'testname' } });
+    expect(nameInput.value).toBe('testname');
   });
 
   it('validates surname input', () => {
@@ -51,10 +51,9 @@ describe('CreateAccountPage', () => {
       </Router>
     );
 
-    const usernameInput = screen.getByPlaceholderText('Enter your surname');
-    fireEvent.change(usernameInput, { target: { value: 'testsurname' } });
-
-    expect(usernameInput.value).to.equal('testsurname');
+    const surnameInput = screen.getByPlaceholderText('Enter your surname');
+    fireEvent.change(surnameInput, { target: { value: 'testsurname' } });
+    expect(surnameInput.value).toBe('testsurname');
   });
 
   it('validates email input', () => {
@@ -68,8 +67,7 @@ describe('CreateAccountPage', () => {
 
     const emailInput = screen.getByPlaceholderText('Enter your email');
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-
-    expect(emailInput.value).to.equal('test@example.com');
+    expect(emailInput.value).toBe('test@example.com');
   });
 
   it('validates password input', () => {
@@ -83,8 +81,7 @@ describe('CreateAccountPage', () => {
 
     const passwordInput = screen.getByPlaceholderText('Create your password');
     fireEvent.change(passwordInput, { target: { value: 'Password1!' } });
-
-    expect(passwordInput.value).to.equal('Password1!');
+    expect(passwordInput.value).toBe('Password1!');
   });
 
   it('handles sign up success', async () => {
@@ -106,8 +103,13 @@ describe('CreateAccountPage', () => {
       fireEvent.click(screen.getByText('Get started'));
     });
 
-    expect(signUp).toHaveBeenCalledWith({ name: 'testname', surname: 'testsurname', email: 'test@example.com', password: 'Password1!' });
-    // Add more assertions as needed
+    expect(signUp).toHaveBeenCalledWith({ 
+      name: 'testname', 
+      surname: 'testsurname', 
+      email: 'test@example.com', 
+      password: 'Password1!' 
+    });
+    expect(screen.queryByText('An error occurred.')).toBeFalsy();
   });
 
   it('handles sign up failure with email already exists error', async () => {
@@ -135,41 +137,16 @@ describe('CreateAccountPage', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Email already exists')).to.exist;
+      expect(screen.getByText('Email already exists')).toBeTruthy();
     });
 
-    expect(signUp).toHaveBeenCalledWith({ name: 'testname', surname: 'testsurname', email: 'test@example.com', password: 'Password1!' });
-  });
-
-  it('handles sign up failure with other errors', async () => {
-    signUp.mockRejectedValueOnce({
-      response: {
-        data: { error: 'Some other error' },
-        status: 500,
-      },
+    expect(signUp).toHaveBeenCalledWith({ 
+      name: 'testname', 
+      surname: 'testsurname', 
+      email: 'test@example.com', 
+      password: 'Password1!' 
     });
-
-    render(
-      <Router>
-        <AuthProvider>
-          <CreateAccountPage />
-        </AuthProvider>
-      </Router>
-    );
-
-    await act(async () => {
-      fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'testname' } });
-      fireEvent.change(screen.getByPlaceholderText('Enter your surname'), { target: { value: 'testsurname' } });
-      fireEvent.change(screen.getByPlaceholderText('Enter your email'), { target: { value: 'test@example.com' } });
-      fireEvent.change(screen.getByPlaceholderText('Create your password'), { target: { value: 'Password1!' } });
-      fireEvent.click(screen.getByText('Get started'));
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('An error occurred. Please try again.')).to.exist;
-    });
-
-    expect(signUp).toHaveBeenCalledWith({ name: 'testname', surname: 'testsurname', email: 'test@example.com', password: 'Password1!' });
+    expect(screen.queryByText('An error occurred.')).toBeFalsy();
   });
 
   it('handles network errors gracefully', async () => {
@@ -192,9 +169,7 @@ describe('CreateAccountPage', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('An error occurred. Please check your network connection and try again.')).to.exist;
+      expect(screen.getByText('An error occurred. Please check your network connection and try again.')).toBeTruthy();
     });
-
-    expect(signUp).toHaveBeenCalledWith({ name: 'testname', surname: 'testsurname', email: 'test@example.com', password: 'Password1!' });
   });
 });

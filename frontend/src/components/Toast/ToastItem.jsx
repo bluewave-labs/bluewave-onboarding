@@ -1,48 +1,51 @@
-import React, { useEffect, useState } from "react";
-import classNames from "classnames";
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import CloseIcon from '@mui/icons-material/Close';
 import styles from './Toast.module.scss';
 
-const ToastItem = ({ message, id, closeToast, options }) => {
-  const [isVisible, setIsVisible] = useState(false);
+const ToastItem = ({ toast, removeToast }) => {
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // For animation slide-in
-    const animationTimeout = setTimeout(() => {
-      setIsVisible(true);
-    }, 0)
-    const timeout = setTimeout(() => {
-      setIsVisible(false);
-    }, options.duration);
+    const timeoutId = setTimeout(() => {
+      setIsVisible(false); 
+      setTimeout(() => {
+        removeToast(toast.id);
+      }, 500); 
+    }, toast.duration || 3000);
 
     return () => {
-      clearTimeout(timeout);
-      clearTimeout(animationTimeout);
+      clearTimeout(timeoutId); 
     };
-  }, []);
+  }, [toast, removeToast]);
 
   const handleClose = () => {
     setIsVisible(false);
-    // For animation slide out
     setTimeout(() => {
-      closeToast(id)
-    },300)
-  }
+      removeToast(toast.id);
+    }, 500); 
+  };
 
   return (
-    <div className={classNames(styles.toast, { [styles.slideIn]: isVisible, [styles.slideOut]: !isVisible})} key={id}>
-      <p className={styles.text}>{message}</p>
-      <CloseIcon onClick={handleClose} className={styles.icon} />
+    <div
+      className={classNames(styles.toast, { 
+        [styles.slideIn]: isVisible, 
+        [styles.slideOut]: !isVisible 
+      })}
+    >
+      <p className={styles.text}>{toast.message}</p>
+      <CloseIcon onClick={handleClose} className={styles.icon} data-testid="CloseIcon" />
     </div>
   );
 };
 
 ToastItem.propTypes = {
-  message: PropTypes.string,
-  id: PropTypes.number,
-  closeToast: PropTypes.func,
-  options: PropTypes.object
-}
+  toast: PropTypes.shape({
+    message: PropTypes.string.isRequired,
+    duration: PropTypes.number,
+  }).isRequired,
+  removeToast: PropTypes.func.isRequired,
+};
 
 export default ToastItem;

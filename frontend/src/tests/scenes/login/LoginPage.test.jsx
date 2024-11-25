@@ -1,9 +1,9 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, waitFor, screen, fireEvent, act } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { BrowserRouter as Router } from 'react-router-dom';
 import LoginPage from '../../../scenes/login/LoginPage';
 import * as loginServices from '../../../services/loginServices';
-import { AuthProvider } from '../../../services/authProvider'; // Import your AuthProvider
+import { AuthProvider } from '../../../services/authProvider';
 
 vi.mock('../../../services/loginServices');
 
@@ -17,10 +17,10 @@ describe('LoginPage', () => {
       </Router>
     );
 
-    expect(screen.getByText('Log in to your account')).not.toBeNull();
-    expect(screen.getByLabelText('Email:')).not.toBeNull();
-    expect(screen.getByLabelText('Password:')).not.toBeNull();
-    expect(screen.getByText("Don't have an account?")).not.toBeNull();
+    expect(screen.getByText('Log in to your account')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Enter email')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Enter password')).toBeTruthy();
+    expect(screen.getByText("Don't have an account?")).toBeTruthy();
   });
 
   it('handles login success', async () => {
@@ -34,16 +34,26 @@ describe('LoginPage', () => {
       </Router>
     );
 
-    fireEvent.change(screen.getByLabelText('Email:'), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByLabelText('Password:'), { target: { value: 'password' } });
-    fireEvent.click(screen.getByText('Sign in'));
+    await act(async () => {
+      fireEvent.change(screen.getByPlaceholderText('Enter email'), 
+        { target: { value: 'test@example.com' } }
+      );
+      fireEvent.change(screen.getByPlaceholderText('Enter password'), 
+        { target: { value: 'password' } }
+      );
+      fireEvent.click(screen.getByText('Sign In'));
+    });
 
-    expect(loginServices.login).toHaveBeenCalledWith('test@example.com', 'password');
-    // Add more assertions as needed
+    expect(loginServices.login).toHaveBeenCalledWith({
+      email: 'test@example.com',
+      password: 'password'
+    });
   });
 
   it('handles login failure', async () => {
-    loginServices.login.mockRejectedValueOnce({ response: { data: { error: 'Invalid credentials' } } });
+    loginServices.login.mockRejectedValueOnce({ 
+      response: { data: { error: 'Invalid credentials' } } 
+    });
 
     render(
       <Router>
@@ -53,10 +63,34 @@ describe('LoginPage', () => {
       </Router>
     );
 
-    fireEvent.change(screen.getByLabelText('Email:'), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByLabelText('Password:'), { target: { value: 'wrongpassword' } });
-    fireEvent.click(screen.getByText('Sign in'));
+    await act(async () => {
+      fireEvent.change(screen.getByPlaceholderText('Enter email'), 
+        { target: { value: 'test@example.com' } }
+      );
+      fireEvent.change(screen.getByPlaceholderText('Enter password'), 
+        { target: { value: 'wrongpassword' } }
+      );
+      fireEvent.click(screen.getByText('Sign In'));
+    });
 
-    expect(await screen.findByText('Invalid credentials')).not.toBeNull();
+    await waitFor(() => {
+      expect(screen.getByText('Invalid credentials')).toBeTruthy();
+    });
+  });
+
+  it('handles remember me checkbox', () => {
+    render(
+      <Router>
+        <AuthProvider>
+          <LoginPage />
+        </AuthProvider>
+      </Router>
+    );
+
+    const checkbox = screen.getByLabelText('Remember for 30 days');
+    expect(checkbox.checked).toBe(false);
+    
+    fireEvent.click(checkbox);
+    expect(checkbox.checked).toBe(true);
   });
 });

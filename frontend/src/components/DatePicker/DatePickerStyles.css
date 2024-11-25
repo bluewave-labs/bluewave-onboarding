@@ -1,5 +1,5 @@
 .css-1wy8uaa-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
-  background-color: #7f56d9 !important;
+  background-color: var(--main-purple) !important;
   color: white !important;
 }
 .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
@@ -67,7 +67,7 @@
   align-self: stretch !important;
   padding: 10px 14px !important;
   border-radius: var(--radius-xs, 4px) !important;
-  border: 1px solid var(--Component-colors-Components-Buttons-Primary-button-primary-border, #D0D5DD) !important;
+  border: 1px solid var(--Component-colors-Components-Buttons-Primary-button-primary-border, var(--light-border-color)) !important;
 }
 
 /* Apply button */
@@ -93,7 +93,7 @@
   height: 34px;
   gap: var(--spacing-xs, 4px);
   flex: 1 0 0;
-  border: 1px solid var(--Component-colors-Components-Buttons-Secondary-button-secondary-border, #D0D5DD) !important;
+  border: 1px solid var(--Component-colors-Components-Buttons-Secondary-button-secondary-border, var(--light-border-color)) !important;
   background: var(--Component-colors-Components-Buttons-Secondary-button-secondary-bg, #FFF);
 
   /* Shadows/shadow-xs */

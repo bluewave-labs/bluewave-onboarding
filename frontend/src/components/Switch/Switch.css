@@ -39,12 +39,12 @@
 }
   
 input:checked + .slider {
-    background-color: #7F56D9;
+    background-color: var(--main-purple);
 }
  
 /*
 input:focus + .slider {
-    box-shadow: 0 0 1px #7F56D9;
+    box-shadow: 0 0 1px var(--main-purple);
 }
 */
   

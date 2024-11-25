@@ -34,12 +34,27 @@
         box-shadow: 0px 1px 2px 0px #1018280D;
         border-radius: 8px;
         width: 450px;
+        margin-bottom: 10px;
     }
     input[type="text"]::placeholder {
         @include text-style(regular);
-        color:  #D0D5DD;
+        color:  #b0b0b0;
         padding-left: 0.5rem;
-      }
+    }
+    input[type="email"] {
+        border: 1px solid #ccc;
+        padding: 5px;
+        border: 1px solid var(--light-border-color);
+        box-shadow: 0px 1px 2px 0px #1018280D;
+        border-radius: 8px;
+        width: 450px;
+        margin-bottom: 10px;
+    }
+    input[type="email"]::placeholder {
+        @include text-style(regular);
+        color:  #b0b0b0;
+        padding-left: 0.5rem;
+    }
 
     .buttons{
         display: flex;            
@@ -60,7 +75,39 @@
     .stepOne{
         display: flex;
         flex-direction: row;
-        align-items: center;
         margin-top: 4rem;
+        justify-content: start;
+    }
+    .invite{
+        display: flex;
+    }
+    .teamMembers{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .errorMessage {
+        color: #D92D20;
+        font-size: 13px;
+        font-weight: 400;
+        margin-bottom: 1rem;
+        margin-top: 0.25rem;
+    }
+
+    .checkbox {
+        accent-color: var(--main-purple);
+        border-radius: 4px;
+        padding: 1px;
+    }
+
+    .checkbox:active {
+        accent-color: var(--main-purple);
+        outline: 5px solid #9E77ED3D;
+    }
+
+    .small {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
     }
 }

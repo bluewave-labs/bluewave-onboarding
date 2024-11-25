@@ -1,95 +1,179 @@
-import React, { useState } from 'react';
-import './Login.css'; 
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { resetPassword } from '../../services/loginServices';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import styles from "./Login.module.css";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CustomTextField from "@components/TextFieldComponents/CustomTextField/CustomTextField";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CircularProgress from "@mui/material/CircularProgress";
+import { resetPassword } from "../../services/loginServices";
+import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { Formik, Form } from "formik";
 
-function SetNewPasswordPage({email='asdf@asdf.com'}) {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
-  const [hasSpecialCharacter, setHasSpecialCharacter] = useState(false);
-  const [atLeastEightCharacters, setAtLeastEightCharacters] = useState(false);
+function SetNewPasswordPage({ email = "asdf@asdf.com" }) {
+  const [serverErrors, setServerErrors] = useState([]);
   const navigate = useNavigate();
 
-  const handleResetPassword = async () => {
-    try {
-      const response = await resetPassword({email, password});
-      console.log('Password Reset successful:', response);
-      navigate('/reset-password');
-    } catch (error) {
-      console.error('Password Reset failed:', error);
-    }
-  };
-  
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    setHasSpecialCharacter(hasSpecialCharacterCheck(e.target.value));
-    setAtLeastEightCharacters(atLeastEightCharactersCheck(e.target.value));
-    setIsPasswordValid(validatePassword(e.target.value));
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-  };
-
-  const hasSpecialCharacterCheck = (password) => {
-    const regex = /[!@#$%^&*-_]/;
-    return regex.test(password);
-  };
-
-  const atLeastEightCharactersCheck = (password) => {
-    return password.length >= 8;
-  };
-
-  const validatePassword = (password) => {
-    return atLeastEightCharactersCheck(password) && hasSpecialCharacterCheck(password);
-  };
+  const validationSchema = Yup.object({
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters")
+      .matches(
+        /[!@#$%^&*(),.?":{}|<>_\-=]/,
+        "Password must contain at least one special character"
+      ),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Please confirm your password"),
+  });
 
   return (
-    <body class="login-body">
-    <div className="login-container">
-      <h2 style={{marginBottom: "0px"}}>Set new Password</h2>
-      <h3>Your new password must be different to previously used passwords.</h3>
-      <div className="form-group">
-        <div className='check-div'>
-          {isPasswordValid && <CheckCircleIcon style={{ color: 'green' , fontSize: '20px'}} />}
-          <label>Password</label>
-        </div>    
-        <input
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-          placeholder="Enter your password"
-        />
-      </div>
-      <div className="form-group">
-        <div className='check-div'>
-          <label>Confirm Password</label>
-        </div>    
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-          placeholder="Confirm your password"
-        />
-      </div>
-      <div className="password-constraints">
-        <CheckCircleIcon style={{ color: atLeastEightCharacters ? 'green' : '#D0D5DD', fontSize: '20px', marginRight:"5px" }} />
-        Must be at least 8 characters
-      </div>
-      <div className="password-constraints">
-        <CheckCircleIcon style={{ color: hasSpecialCharacter ? 'green' : '#D0D5DD', fontSize: '20px', marginRight:"5px"}} />
-        Must contain one special character
-      </div>
-      <button className="sign-in-button" style={{marginTop: "15px"}} onClick={handleResetPassword}>
-        Reset Password
-      </button>
-      <button className="back-to-login-button"> <ArrowBackIcon style={{fontSize: "18px", marginRight: "5px"}}/>Back to log in</button>
-    </div>
-    </body>
+    <Formik
+      initialValues={{
+        password: "",
+        confirmPassword: "",
+      }}
+      validationSchema={validationSchema}
+      validateOnChange={false}
+      validateOnBlur={true}
+      onSubmit={async (values, { setSubmitting }) => {
+        setServerErrors([]);
+        try {
+          const response = await resetPassword({
+            email: email,
+            password: values.password,
+          });
+          resetForm();
+          navigate("/reset-password");
+        } catch (error) {
+          console.error("Password Reset failed:", error);
+          if (error.response?.data?.errors) {
+            setServerErrors(error.response?.data?.errors);
+          } else if (error.response?.data?.error) {
+            setServerErrors([error.response.data.error]);
+          } else {
+            setServerErrors(["An error occurred. Please try again."]);
+          }
+        } finally {
+          setSubmitting(false);
+        }
+      }}
+    >
+      {({
+        isSubmitting,
+        touched,
+        errors,
+        handleChange,
+        handleBlur,
+        values,
+      }) => (
+        <div className={styles["login-body"]}>
+          <Form className={styles["login-container"]}>
+            <h2 style={{ marginBottom: "0px" }}>Set new Password</h2>
+            <h3>
+              Your new password must be different to previously used passwords.
+            </h3>
+            <div className={styles["form-group"]}>
+              <CustomTextField
+                id="password"
+                type="password"
+                name="password"
+                labelText="Password*:"
+                checkCircleIconVisible={true}
+                displayCheckCircleIcon={touched.password && !errors.password}
+                placeholder="Create your password"
+                textFieldMargin="none"
+                TextFieldWidth="full"
+                required={true}
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={Boolean(touched.password && errors.password)}
+                helperText={touched.password && errors.password}
+              />
+            </div>
+            <div className={styles["form-group"]} style={{ marginBottom: 0 }}>
+              <CustomTextField
+                id="confirmPassword"
+                type="password"
+                name="confirmPassword"
+                labelText="Confirm Password*:"
+                checkCircleIconVisible={true}
+                displayCheckCircleIcon={
+                  touched.confirmPassword &&
+                  !errors.confirmPassword &&
+                  values.password === values.confirmPassword
+                }
+                placeholder="Confirm your password"
+                textFieldMargin="none"
+                TextFieldWidth="full"
+                required={true}
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={Boolean(
+                  touched.confirmPassword && errors.confirmPassword
+                )}
+                helperText={touched.confirmPassword && errors.confirmPassword}
+              />
+              {serverErrors.length > 0 && (
+                <div className={styles["error-message"]}>
+                  {serverErrors.map((error, index) => (
+                    <div key={index}>{error}</div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className={styles["password-constraints"]}>
+              <CheckCircleIcon
+                style={{
+                  color:
+                    values.password.length >= 8
+                      ? "green"
+                      : "var(--light-border-color)",
+                  fontSize: "20px",
+                  marginRight: "5px",
+                }}
+              />
+              Must be at least 8 characters
+            </div>
+            <div className={styles["password-constraints"]}>
+              <CheckCircleIcon
+                style={{
+                  color: /[!@#$%^&*(),.?":{}|<>_\-=]/.test(values.password)
+                    ? "green"
+                    : "var(--light-border-color)",
+                  fontSize: "20px",
+                  marginRight: "5px",
+                }}
+              />
+              Must contain one special character
+            </div>
+            <button
+              type="submit"
+              className={styles["sign-in-button"]}
+              style={{ marginTop: "15px" }}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <CircularProgress size={12} color="inherit" />
+              ) : (
+                "Reset Password"
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/login")}
+              className={styles["back-to-login-button"]}
+            >
+              {" "}
+              <ArrowBackIcon style={{ fontSize: "18px", marginRight: "5px" }} />
+              Back to log in
+            </button>
+          </Form>
+        </div>
+      )}
+    </Formik>
   );
 }
 

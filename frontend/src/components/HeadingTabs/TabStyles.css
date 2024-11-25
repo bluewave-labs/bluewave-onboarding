@@ -1,21 +1,21 @@
 .MuiTab-root {
     font-family: 'Inter', sans-serif;
-    font-size: 13px;
+    font-size: var(--font-regular);
     font-style: normal;
     font-weight: 400;
     line-height: 20px;
   }
 .MuiTabs-root .MuiTab-root.Mui-selected {
-    color: #7F56D9;
+    color: var(--main-purple);
   }
 
 .MuiTabs-root .MuiTab-root:not(.Mui-selected) {
-color: #344054;
+color: var(--main-text-color);
 border-bottom: 1px solid var(--Colors-Foreground-fg-brand-primary_alt, #EAECF0);
 }
 
 .MuiTabs-root .MuiTabs-indicator {
-background-color: #7F56D9;
+background-color: var(--main-purple);
 }
 .container-tabs{
   padding: 45px;

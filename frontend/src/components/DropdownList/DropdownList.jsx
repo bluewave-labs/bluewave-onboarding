@@ -8,7 +8,9 @@ const DropdownList = ({
   actions = [],
   onActionChange,
   selectedActionIndex = 0,
-  selectedActionString = ""
+  selectedActionString = "",
+  className = "",
+  name = "select"
 }) => {
 
   const [selectedAction, setSelectedAction] = useState('');
@@ -16,23 +18,21 @@ const DropdownList = ({
   useEffect(() => {
     const getInitialSelectedAction = () => {
       if (selectedActionString) {
-        const lowerCaseSelectedActionString = selectedActionString.toLowerCase();
         const index = actions.findIndex(action =>
-          action.toLowerCase() === lowerCaseSelectedActionString
+          action.toLowerCase() === selectedActionString.toLowerCase()
         );
         return index !== -1 ? actions[index] : actions[0] || "";
       }
       return actions[selectedActionIndex] || "";
     };
-
     setSelectedAction(getInitialSelectedAction());
-  }, [selectedActionString, actions, selectedActionIndex]);
+  }, []);
 
   useEffect(() => {
     if (onActionChange) {
       onActionChange(selectedAction);
     }
-  }, []);
+  }, [selectedAction, onActionChange]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -43,33 +43,34 @@ const DropdownList = ({
   };
 
   return (
-    <div className="dropdown">
-      <Select
-        value={selectedAction}
-        onChange={handleChange}
-        className="select"
-      >
-        {actions.length > 0 ? (
-          actions.map((action, index) => (
-            <MenuItem key={index} className="menuItem" value={action}>
-              {action}
-            </MenuItem>
-          ))
-        ) : (
-          <MenuItem value="" disabled className="menuItem">
-            No Actions Available
+    <Select
+      name={name}
+      value={selectedAction}
+      onChange={handleChange}
+      className={`select ${className}`}
+    >
+      {actions.length > 0 ? (
+        actions.map((action, index) => (
+          <MenuItem key={index} className="menuItem" value={action}>
+            {action}
           </MenuItem>
-        )}
-      </Select>
-    </div>
+        ))
+      ) : (
+        <MenuItem value="" disabled className="menuItem">
+          No Actions Available
+        </MenuItem>
+      )}
+    </Select>
   );
 };
 
 DropdownList.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.string),
   onActionChange: PropTypes.func,
-  selectedActionIndex: PropTypes.number, // Index for the selected action
-  selectedActionString: PropTypes.string, // String for the selected action
+  selectedActionIndex: PropTypes.number,
+  selectedActionString: PropTypes.string,
+  className: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default DropdownList;

@@ -1,30 +1,12 @@
-import HomePageTemplate from "../../templates/HomePageTemplate/HomePageTemplate";
 import Dashboard from "../dashboard/Dashboard";
-import "./Home.css";
-import React, { useEffect, useState } from 'react';
-import { getCurrentUser } from '../../services/loginServices';
-import Cookies from 'js-cookie';
+import React from 'react';
+import { useAuth } from "../../services/authProvider";
 
 const Home = () => {
-  const initialFullName = Cookies.get('fullName') || 'John Doe';
-  const [fullName, setFullName] = useState(initialFullName);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const user = await getCurrentUser();
-      setFullName(user.surname ? user.name + " " + user.surname : user.name);
-    };
-    fetchUser();
-  }, [fullName]);
+  const {userInfo} = useAuth();
 
   return (
-    <div className="app">
-      <div className="content">
-        <HomePageTemplate>
-          <Dashboard fullName={fullName} />
-        </HomePageTemplate>
-      </div>
-    </div>
+    <Dashboard name={userInfo.name} />
   );
 };
 
