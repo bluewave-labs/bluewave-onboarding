@@ -39,7 +39,7 @@ class LikBuilder {
   }
 
   invalidOrderValue() {
-    this.link.order = 10;
+    this.link.order = -1;
     return this;
   }
 

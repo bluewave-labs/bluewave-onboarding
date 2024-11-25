@@ -1,6 +1,8 @@
 const express = require("express");
-const helperController = require("../controllers/helperLink.controller");
+const helper = require("../controllers/helperLink.controller");
 const authenticateJWT = require("../middleware/auth.middleware");
+
+const helperController = helper.controller;
 
 const router = express.Router();
 
