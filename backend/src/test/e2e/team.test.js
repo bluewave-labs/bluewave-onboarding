@@ -14,7 +14,7 @@ const dbReadyOptions = {
   interval: 1000,
 };
 
-describe("E2e tests auth", () => {
+describe("E2e tests team", () => {
   describe("GET /api/team/details", () => {
     let token;
     beforeEach(async () => {

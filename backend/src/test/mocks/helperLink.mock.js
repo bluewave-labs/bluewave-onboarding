@@ -18,11 +18,6 @@ class LikBuilder {
     return this;
   }
 
-  invalidTitle() {
-    this.link.title = "http://";
-    return this;
-  }
-
   missingUrl() {
     this.link.url = "";
     return this;
@@ -40,6 +35,11 @@ class LikBuilder {
 
   invalidOrderValue() {
     this.link.order = -1;
+    return this;
+  }
+
+  withoutId() {
+    delete this.link.id;
     return this;
   }
 
@@ -72,23 +72,8 @@ class HelperLinkBuilder {
     return this;
   }
 
-  invalidTitle() {
-    this.helperLink.title = "http://";
-    return this;
-  }
-
-  missingHeaderBackgroundColor() {
-    this.helperLink.headerBackgroundColor = "";
-    return this;
-  }
-
   invalidHeaderBackgroundColor() {
     this.helperLink.headerBackgroundColor = "color";
-    return this;
-  }
-
-  missingLinkFontColor() {
-    this.helperLink.linkFontColor = "";
     return this;
   }
 
@@ -97,13 +82,13 @@ class HelperLinkBuilder {
     return this;
   }
 
-  missingIconColor() {
-    this.helperLink.iconColor = "";
+  invalidIconColor() {
+    this.helperLink.iconColor = "color";
     return this;
   }
 
-  invalidIconColor() {
-    this.helperLink.iconColor = "color";
+  withoutId() {
+    delete this.helperLink.id;
     return this;
   }
 
@@ -116,24 +101,17 @@ const LinksList = Array.from({ length: 5 }, (_, i) =>
   LikBuilder.link(i + 1).build()
 );
 
-const HelperLinkListUser2 = Array.from({ length: 5 }, (_, i) =>
+const HelperLinkList = Array.from({ length: 10 }, (_, i) =>
   HelperLinkBuilder.helperLink(i + 1).build()
-).map((link) => {
-  link.createdBy = 2;
+).map((link, i) => {
+  if (i < 5) link.createdBy = 1;
+  else link.createdBy = 2;
   return link;
 });
-
-const HelperLinkListUser1 = Array.from({ length: 5 }, (_, i) =>
-  HelperLinkBuilder.helperLink(i + 1).build()
-);
-
-const HelperLinkList = [...HelperLinkListUser1, ...HelperLinkListUser2];
 
 module.exports = {
   HelperLinkBuilder,
   HelperLinkList,
   LikBuilder,
   LinksList,
-  HelperLinkListUser1,
-  HelperLinkListUser2,
 };

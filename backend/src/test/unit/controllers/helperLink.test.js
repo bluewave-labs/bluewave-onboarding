@@ -605,7 +605,7 @@ describe("Test helper link service", () => {
       });
     });
     it("should return 200 if helpers are found", async () => {
-      const helpers = mocks.HelperLinkListUser1;
+      const helpers = mocks.HelperLinkList.filter((h) => h.createdBy === 1);
       serviceMock.getHelpersByUserId = sinon
         .stub(service, "getHelpersByUserId")
         .resolves(helpers);

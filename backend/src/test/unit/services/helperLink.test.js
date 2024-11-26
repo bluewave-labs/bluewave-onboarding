@@ -46,9 +46,9 @@ describe("Test invite service", () => {
   it("getHelpersByUserId - should return all the helper links of one user without the password", async () => {
     HelperLinkMock.findAll = sinon
       .stub(HelperLink, "findAll")
-      .resolves(mocks.HelperLinkListUser1);
+      .resolves(mocks.HelperLinkList.filter((it) => it.createdBy === 1));
     const result = await helperLinkService.getHelpersByUserId(1);
-    expect(result).to.deep.equal(mocks.HelperLinkListUser1);
+    expect(result).to.deep.equal(mocks.HelperLinkList.filter((it) => it.createdBy === 1));
     const params = HelperLinkMock.findAll.getCall(0).args;
     expect(params).to.deep.equal([
       {

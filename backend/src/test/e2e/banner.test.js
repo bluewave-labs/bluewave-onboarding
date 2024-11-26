@@ -17,7 +17,7 @@ const dbReadyOptions = {
   interval: 1000,
 };
 
-describe("E2e tests auth", () => {
+describe("E2e tests banner", () => {
   describe("POST /api/banner/add_banner", () => {
     let token;
     beforeEach(async () => {
