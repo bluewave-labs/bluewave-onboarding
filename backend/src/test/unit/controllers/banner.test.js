@@ -7,7 +7,7 @@ const controller = require("../../../controllers/banner.controller.js");
 
 const banner = BannerBuilder.banner;
 
-describe("Test Banner service", () => {
+describe("Test Banner controller", () => {
   const serviceMock = {};
   const req = {};
   const res = {};

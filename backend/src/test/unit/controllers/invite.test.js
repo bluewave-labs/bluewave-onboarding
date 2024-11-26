@@ -12,7 +12,7 @@ const validEmailList = validList.map((it) => ({
   role: "admin",
 }));
 
-describe("Test invite service", () => {
+describe("Test invite controller", () => {
   const serviceMock = {};
   const req = {};
   const res = {};

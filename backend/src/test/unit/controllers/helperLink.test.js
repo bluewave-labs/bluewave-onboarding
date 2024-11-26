@@ -7,7 +7,7 @@ const service = require("../../../service/helperLink.service.js");
 
 const controller = helperLinks.controller;
 
-describe("Test helper link service", () => {
+describe("Test helper link controller", () => {
   const serviceMock = {};
   const req = {};
   const res = {};

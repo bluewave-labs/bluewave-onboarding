@@ -8,7 +8,7 @@ const helperLinkService = require("../../../service/helperLink.service.js");
 const HelperLink = db.HelperLink;
 const Link = db.Link;
 
-describe("Test invite service", () => {
+describe("Test helper link service", () => {
   const HelperLinkMock = {};
   const LinkMock = {};
   let commit;

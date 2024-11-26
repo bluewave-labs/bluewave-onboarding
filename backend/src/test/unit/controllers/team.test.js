@@ -8,7 +8,7 @@ const db = require("../../../models/index.js");
 const Team = db.Team;
 const service = controller.teamService;
 
-describe("Unit test user controller", () => {
+describe("Unit test team controller", () => {
   const req = {};
   const res = {};
   beforeEach(() => {

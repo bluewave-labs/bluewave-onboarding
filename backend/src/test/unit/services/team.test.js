@@ -12,7 +12,7 @@ const Token = db.Token;
 const user = UserBuilder.user;
 const service = new TeamService();
 
-describe("Test invite service", () => {
+describe("Test team service", () => {
   const UserMock = {};
   const TeamMock = {};
   const InviteMock = {};
