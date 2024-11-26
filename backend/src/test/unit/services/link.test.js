@@ -7,7 +7,7 @@ const linkService = require("../../../service/link.service.js");
 
 const Link = db.Link;
 
-describe.only("Test link service", () => {
+describe("Test link service", () => {
   const LinkMock = {};
   afterEach(sinon.restore);
   it("getAllLinks - should return a list of links with it's respective helper", async () => {

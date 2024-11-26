@@ -18,6 +18,11 @@ class LikBuilder {
     return this;
   }
 
+  invalidTitle() {
+    this.link.title = "http://url.com";
+    return this;
+  }
+
   missingUrl() {
     this.link.url = "";
     return this;
@@ -35,6 +40,16 @@ class LikBuilder {
 
   invalidOrderValue() {
     this.link.order = -1;
+    return this;
+  }
+
+  missingOrder() {
+    delete this.link.order;
+    return this;
+  }
+
+  missingTarget() {
+    delete this.link.target;
     return this;
   }
 

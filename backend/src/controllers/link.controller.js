@@ -4,7 +4,7 @@ const { validateUrl } = require("../utils/link.helper");
 
 class LinkController {
   async addLink(req, res) {
-    const { title, url, order, helperId } = req.body;
+    const { title, url, order, helperId, target } = req.body;
 
     if (!title || !url) {
       return res.status(400).json({
@@ -17,20 +17,20 @@ class LinkController {
         errors: [{ msg: "Invalid value for title or url" }],
       });
     }
-    const allLinks = await linkService.getLinksByHelperId(helperId);
-    if (order && order > allLinks.length + 1) {
-      return res.status(400).json({
-        errors: [{ msg: "Invalid value for order" }],
-      });
-    }
-
     try {
+      const allLinks = await linkService.getLinksByHelperId(helperId);
+      if (order && (isNaN(order) || order > allLinks.length + 1 || order < 0)) {
+        return res.status(400).json({
+          errors: [{ msg: "Invalid value for order" }],
+        });
+      }
+
       const newLinkData = {
         title,
         url,
         order: order || allLinks.length + 1,
         helperId,
-        target: target || "_blank",
+        target: target ?? true,
       };
       const newPopup = await linkService.createLink(newLinkData);
       res.status(201).json(newPopup);
@@ -75,7 +75,11 @@ class LinkController {
   async editLink(req, res) {
     try {
       const { id } = req.params;
-      const { title, url, order, helperId } = req.body;
+      const { title, url, order, helperId, target } = req.body;
+
+      if (isNaN(id) || id.trim() === "") {
+        return res.status(400).json({ errors: [{ msg: "Invalid id" }] });
+      }
 
       if (!title || !url) {
         return res.status(400).json({
@@ -90,7 +94,7 @@ class LinkController {
       }
 
       const allLinks = await linkService.getLinksByHelperId(helperId);
-      if (order && order > allLinks.length + 1) {
+      if (order && (isNaN(order) || order > allLinks.length + 1 || order < 0)) {
         return res.status(400).json({
           errors: [{ msg: "Invalid value for order" }],
         });
@@ -101,7 +105,7 @@ class LinkController {
         url,
         order: order || allLinks.length + 1,
         helperId,
-        target: target || "_blank",
+        target: target ?? true,
       };
 
       const updatedLink = await linkService.updateLink(id, newLinkData);
@@ -131,6 +135,9 @@ class LinkController {
   async getLinksByHelperId(req, res) {
     try {
       const { helperId } = req.query;
+      if (!helperId || isNaN(helperId)) {
+        return res.status(400).json({ errors: [{ msg: "Invalid helperId" }] });
+      }
       const links = await linkService.getLinksByHelperId(helperId);
       res.status(200).json(links);
     } catch (err) {
