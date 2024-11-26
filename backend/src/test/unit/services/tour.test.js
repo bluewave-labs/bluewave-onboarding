@@ -8,7 +8,7 @@ const tourService = require("../../../service/tour.service.js");
 const Tour = db.Tour;
 const tour = mocks.TourBuilder.tour;
 
-describe("Test link service", () => {
+describe("Test tour service", () => {
   const TourMock = {};
   afterEach(sinon.restore);
   it("getAllTours - should return all tours with it's users", async () => {

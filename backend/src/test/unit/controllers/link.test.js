@@ -7,7 +7,7 @@ const linkController = require("../../../controllers/link.controller.js");
 
 const link = mocks.LikBuilder.link;
 
-describe("Test link service", () => {
+describe("Test link controller", () => {
   const serviceMock = {};
   const req = {};
   const res = {};

@@ -110,7 +110,7 @@ class TourController {
     const userId = req.user.id;
 
     try {
-      const tours = await tourService.getToursByUserId(userId);
+      const tours = await tourService.getTours(userId);
       res.status(200).json(tours);
     } catch (err) {
       console.log(err);
