@@ -9,7 +9,7 @@ const Popup = db.Popup;
 const popup = mocks.PopupBuilder.popup;
 const popupList = mocks.popupList;
 
-describe("Test popup log service", () => {
+describe("Test popup service", () => {
   const PopupMock = {};
   afterEach(sinon.restore);
   it("getAllPopups - should return all the popups with the user", async () => {

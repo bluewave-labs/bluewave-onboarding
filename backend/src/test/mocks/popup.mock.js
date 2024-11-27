@@ -21,6 +21,76 @@ class PopupBuilder {
     return new PopupBuilder(id);
   }
 
+  missingCloseButtonAction() {
+    delete this.popup.closeButtonAction;
+    return this;
+  }
+
+  invalidCloseButtonAction() {
+    this.popup.closeButtonAction = "invalid";
+    return this;
+  }
+
+  missingPopupSize() {
+    delete this.popup.popupSize;
+    return this;
+  }
+
+  invalidPopupSize() {
+    this.popup.popupSize = "invalid";
+    return this;
+  }
+
+  missingHeaderBackgroundColor() {
+    delete this.popup.headerBackgroundColor;
+    return this;
+  }
+
+  missingHeaderColor() {
+    delete this.popup.headerColor;
+    return this;
+  }
+
+  missingTextColor() {
+    delete this.popup.textColor;
+    return this;
+  }
+
+  missingButtonBackgroundColor() {
+    delete this.popup.buttonBackgroundColor;
+    return this;
+  }
+
+  missingButtonTextColor() {
+    delete this.popup.buttonTextColor;
+    return this;
+  }
+
+  invalidHeaderBackgroundColor() {
+    this.popup.headerBackgroundColor = "invalid";
+    return this;
+  }
+
+  invalidHeaderColor() {
+    this.popup.headerColor = "invalid";
+    return this;
+  }
+
+  invalidTextColor() {
+    this.popup.textColor = "invalid";
+    return this;
+  }
+
+  invalidButtonBackgroundColor() {
+    this.popup.buttonBackgroundColor = "invalid";
+    return this;
+  }
+
+  invalidButtonTextColor() {
+    this.popup.buttonTextColor = "invalid";
+    return this;
+  }
+
   build() {
     return this.popup;
   }
