@@ -28,7 +28,7 @@ const createTour = async (token, tour) => {
   return res.body;
 };
 
-describe("E2e tests helperLink", () => {
+describe("E2e tests tour", () => {
   describe("POST /api/tour/add_tour", () => {
     before(async () => {
       db.sequelize.connectionManager.initPools();

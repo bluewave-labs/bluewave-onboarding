@@ -24,7 +24,7 @@ const createPopupLog = async (log) => {
   return res.body;
 };
 
-describe("E2e tests helperLink", () => {
+describe("E2e tests popupLog", () => {
   describe("POST /api/popup_log/add_popup_log", () => {
     before(async () => {
       db.sequelize.connectionManager.initPools();

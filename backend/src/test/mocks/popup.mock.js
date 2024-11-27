@@ -41,31 +41,6 @@ class PopupBuilder {
     return this;
   }
 
-  missingHeaderBackgroundColor() {
-    delete this.popup.headerBackgroundColor;
-    return this;
-  }
-
-  missingHeaderColor() {
-    delete this.popup.headerColor;
-    return this;
-  }
-
-  missingTextColor() {
-    delete this.popup.textColor;
-    return this;
-  }
-
-  missingButtonBackgroundColor() {
-    delete this.popup.buttonBackgroundColor;
-    return this;
-  }
-
-  missingButtonTextColor() {
-    delete this.popup.buttonTextColor;
-    return this;
-  }
-
   invalidHeaderBackgroundColor() {
     this.popup.headerBackgroundColor = "invalid";
     return this;
