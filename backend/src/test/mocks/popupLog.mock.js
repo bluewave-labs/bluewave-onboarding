@@ -12,6 +12,11 @@ class PopupLogBuilder {
     return new PopupLogBuilder();
   }
 
+  missingCompleted() {
+    delete this.popupLog.completed;
+    return this;
+  }
+
   build() {
     return this.popupLog;
   }

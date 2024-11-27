@@ -8,7 +8,7 @@ const popuplogService = require("../../../service/popuplog.service.js");
 const PopupLog = db.PopupLog;
 const popupLog = mocks.PopupLogBuilder.popupLog;
 
-describe("Test tour service", () => {
+describe("Test popup log service", () => {
   const PopupLogMock = {};
   afterEach(sinon.restore);
   it("addPopupLog - should create a new popup log", async () => {
