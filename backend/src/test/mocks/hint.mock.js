@@ -22,6 +22,41 @@ class HintBuilder {
     return new HintBuilder(id);
   }
 
+  missingAction() {
+    delete this.hint.action;
+    return this;
+  }
+
+  invalidAction() {
+    this.hint.action = "invalid action";
+    return this;
+  }
+
+  invalidHeaderBackgroundColor() {
+    this.hint.headerBackgroundColor = "invalid";
+    return this;
+  }
+
+  invalidHeaderColor() {
+    this.hint.headerColor = "invalid";
+    return this;
+  }
+
+  invalidTextColor() {
+    this.hint.textColor = "invalid";
+    return this;
+  }
+
+  invalidButtonBackgroundColor() {
+    this.hint.buttonBackgroundColor = "invalid";
+    return this;
+  }
+
+  invalidButtonTextColor() {
+    this.hint.buttonTextColor = "invalid";
+    return this;
+  }
+
   build() {
     return this.hint;
   }
