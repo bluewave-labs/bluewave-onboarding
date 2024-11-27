@@ -11,7 +11,7 @@ class TourBuilder {
   constructor(id) {
     this.tour = {
       id: id,
-      title: "title",
+      title: `title ${id}`,
       description: "description",
       statusActive: true,
       pageTargeting: this.pageTargeting[0],
@@ -85,8 +85,14 @@ class TourBuilder {
   }
 }
 
-const toursList = new Array(5)
+const toursList = new Array(10)
   .fill(null)
-  .map((_, i) => TourBuilder.tour(i + 1).build());
+  .map((_, i) => TourBuilder.tour(i + 1).build())
+  .map((tour, i) => {
+    if (i % 2 === 0) {
+      return { ...tour, createdBy: 2 };
+    }
+    return tour;
+  });
 
 module.exports = { TourBuilder, toursList };
