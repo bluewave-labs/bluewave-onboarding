@@ -5,7 +5,7 @@ const { expect } = require("chai");
 const linkService = require("../../../service/link.service.js");
 const linkController = require("../../../controllers/link.controller.js");
 
-const link = mocks.LikBuilder.link;
+const link = mocks.LinkBuilder.link;
 
 describe("Test link controller", () => {
   const serviceMock = {};

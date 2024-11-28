@@ -11,8 +11,6 @@ const db = require("../../../models/index.js");
 const User = db.User;
 const user = UserBuilder.user;
 
-const envFile = fs.readFileSync(".env.test", "utf-8");
-
 describe("Test email service", () => {
   let readFile;
   let transporterMock;
@@ -25,10 +23,12 @@ describe("Test email service", () => {
     process.env = JSON.parse(envOrig);
   });
   beforeEach(() => {
-    readFile = sinon.stub(fs, "readFile");
+    readFile = sinon.stub(fs, "readFileSync");
     transporterMock = sinon.stub(service.transporter, "sendMail");
     sinon.stub(path, "join").callsFake((...args) => args.join("/"));
-    sinon.stub(handlebars, "compile").callsFake((html) => (replacements) => html);
+    sinon
+      .stub(handlebars, "compile")
+      .callsFake((html) => (replacements) => html);
   });
   afterEach(sinon.restore);
   it("findUserByEmail - should return the user if it is found", async () => {

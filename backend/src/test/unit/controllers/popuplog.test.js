@@ -20,15 +20,16 @@ describe("Test popup log controller", () => {
     });
     afterEach(sinon.restore);
     it("should return a new popup log", async () => {
-      req.body = popupLog().build();
+      const popupLogData = popupLog().build();
+      req.body = popupLogData;
       serviceMock.addPopupLog = sinon
         .stub(popuplogService, "addPopupLog")
-        .returns(popupLog());
+        .returns(popupLogData);
       await popuplogController.addPopupLog(req, res);
       const status = res.status.getCall(0).args[0];
       const body = res.json.getCall(0).args[0];
       expect(status).to.be.equal(201);
-      expect(body).to.be.deep.equal(popupLog());
+      expect(body).to.be.deep.equal(popupLogData);
     });
     it("should create a new popup log with default completed value", async () => {
       req.body = popupLog().missingCompleted().build();

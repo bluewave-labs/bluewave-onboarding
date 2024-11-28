@@ -48,7 +48,9 @@ describe("Test helper link service", () => {
       .stub(HelperLink, "findAll")
       .resolves(mocks.HelperLinkList.filter((it) => it.createdBy === 1));
     const result = await helperLinkService.getHelpersByUserId(1);
-    expect(result).to.deep.equal(mocks.HelperLinkList.filter((it) => it.createdBy === 1));
+    expect(result).to.deep.equal(
+      mocks.HelperLinkList.filter((it) => it.createdBy === 1)
+    );
     const params = HelperLinkMock.findAll.getCall(0).args;
     expect(params).to.deep.equal([
       {
@@ -73,7 +75,7 @@ describe("Test helper link service", () => {
       .resolves(mocks.HelperLinkBuilder.helperLink(1).build());
     LinkMock.create = sinon
       .stub(Link, "create")
-      .resolves(mocks.LikBuilder.link(1).build());
+      .resolves(mocks.LinkBuilder.link(1).build());
     const result = await helperLinkService.createHelper(
       mocks.HelperLinkBuilder.helperLink(1).build(),
       mocks.LinksList
@@ -85,7 +87,7 @@ describe("Test helper link service", () => {
     );
     expect(paramsHelper[1]).to.have.property("returning", true);
     const paramsLink = LinkMock.create.getCall(0).args;
-    expect(paramsLink[0]).to.deep.equal(mocks.LikBuilder.link(1).build());
+    expect(paramsLink[0]).to.deep.equal(mocks.LinkBuilder.link(1).build());
     expect(commit.called).to.be.true;
     expect(rollback.called).to.be.false;
   });
@@ -177,7 +179,7 @@ describe("Test helper link service", () => {
     expect(commit.called).to.be.true;
     expect(rollback.called).to.be.false;
   });
-  it("updateHelper - should create a link if it exists", async () => {
+  it("updateHelper - should create a link if it doesn't exist", async () => {
     HelperLinkMock.update = sinon
       .stub(HelperLink, "update")
       .resolves([1, mocks.HelperLinkBuilder.helperLink(1).build()]);

@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { after, afterEach, before, beforeEach, describe } from "mocha";
 import waitOn from "wait-on";
-import app from "../../server.js";
 import db from "../../models/index.js";
+import app from "../../server.js";
 import mocks from "../mocks/tour.mock.js";
 import { UserBuilder, validList } from "../mocks/user.mock.js";
 import chai from "./index.js";
@@ -233,10 +233,10 @@ describe("E2e tests tour", () => {
       expect(body).to.be.deep.equal({ msg: "Tour not found" });
     });
     it("should return 200 if tour is found", async () => {
-      await createTour(token, tour().withoutId().build());
+      const tokenToDelete = await createTour(token, tour().withoutId().build());
       const res = await chai.request
         .execute(app)
-        .delete("/api/tour/delete_tour/1")
+        .delete(`/api/tour/delete_tour/${tokenToDelete.id}`)
         .set("Authorization", `Bearer ${token}`);
       expect(res).to.have.status(200);
       const body = res.body;

@@ -21,9 +21,9 @@ describe("Unit test user service", () => {
       commit,
       rollback,
     }));
+    Sequelize = sinon.spy(db, "Sequelize");
   });
   afterEach(() => {
-    Sequelize = sinon.spy(db, "Sequelize");
     sinon.restore();
   });
   it("getUser - should throw an error if something goes wrong", async () => {
@@ -81,6 +81,23 @@ describe("Unit test user service", () => {
     ).to.be.true;
     expect(users).not.to.be.equal(mocks.validList);
     expect(users).to.have.length(2);
+  });
+  it("getUsers - should filter users when search param is provided", async () => {
+    User = sinon
+      .stub(db.User, "findAndCountAll")
+      .resolves(mocks.validList.filter((u) => u.name.includes("Harry")));
+    await service.getUsers({ search: "Harry", page: 1, limit: 2 });
+    const params = User.getCall(0).args[0];
+    expect(params).to.be.deep.equal({
+      where: {
+        [Sequelize.Op.or]: [
+          { name: { [Sequelize.Op.like]: `%Harry%` } },
+          { surname: { [Sequelize.Op.like]: `%Harry%` } },
+        ],
+      },
+      limit: 2,
+      offset: 0,
+    });
   });
   it("getUsers - should return the correct pagination when the page changes", async () => {
     User = sinon

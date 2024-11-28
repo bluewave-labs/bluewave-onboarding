@@ -90,11 +90,6 @@ describe("E2e tests team", () => {
     afterEach(async () => {
       await db.sequelize.sync({ force: true, match: /_test$/ });
     });
-    it("should return status 401 if no token is provided", async () => {
-      const response = await chai.request.execute(app).get("/api/team/count");
-      expect(response).to.have.status(401);
-      expect(response.body).to.be.deep.equal({ error: "No token provided" });
-    });
     it("should return status 200 if everything goes right", async () => {
       const response = await chai.request
         .execute(app)

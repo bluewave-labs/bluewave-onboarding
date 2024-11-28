@@ -125,7 +125,7 @@ describe("Test helper link controller", () => {
       const helper = mocks.HelperLinkBuilder.helperLink().build();
       req.body = {
         ...helper,
-        links: [mocks.LikBuilder.link().missingTitle().build()],
+        links: [mocks.LinkBuilder.link().missingTitle().build()],
       };
       await controller.addHelper(req, res);
       const status = res.status.args[0][0];
@@ -142,7 +142,7 @@ describe("Test helper link controller", () => {
       const helper = mocks.HelperLinkBuilder.helperLink().build();
       req.body = {
         ...helper,
-        links: [mocks.LikBuilder.link().missingUrl().build()],
+        links: [mocks.LinkBuilder.link().missingUrl().build()],
       };
       await controller.addHelper(req, res);
       const status = res.status.args[0][0];
@@ -159,7 +159,7 @@ describe("Test helper link controller", () => {
       const helper = mocks.HelperLinkBuilder.helperLink().build();
       req.body = {
         ...helper,
-        links: [mocks.LikBuilder.link().invalidUrl().build()],
+        links: [mocks.LinkBuilder.link().invalidUrl().build()],
       };
       await controller.addHelper(req, res);
       const status = res.status.args[0][0];
@@ -176,7 +176,7 @@ describe("Test helper link controller", () => {
       const helper = mocks.HelperLinkBuilder.helperLink().build();
       req.body = {
         ...helper,
-        links: [mocks.LikBuilder.link().invalidOrderValue().build()],
+        links: [mocks.LinkBuilder.link().invalidOrderValue().build()],
       };
       await controller.addHelper(req, res);
       const status = res.status.args[0][0];
@@ -193,7 +193,7 @@ describe("Test helper link controller", () => {
       const helper = mocks.HelperLinkBuilder.helperLink().build();
       req.body = {
         ...helper,
-        links: [mocks.LikBuilder.link().invalidOrderType().build()],
+        links: [mocks.LinkBuilder.link().invalidOrderType().build()],
       };
       await controller.addHelper(req, res);
       const status = res.status.args[0][0];
@@ -434,7 +434,7 @@ describe("Test helper link controller", () => {
       const helper = mocks.HelperLinkBuilder.helperLink().build();
       req.body = {
         ...helper,
-        links: [mocks.LikBuilder.link().missingTitle().build()],
+        links: [mocks.LinkBuilder.link().missingTitle().build()],
       };
       await controller.editHelper(req, res);
       const status = res.status.args[0][0];
@@ -451,7 +451,7 @@ describe("Test helper link controller", () => {
       const helper = mocks.HelperLinkBuilder.helperLink().build();
       req.body = {
         ...helper,
-        links: [mocks.LikBuilder.link().missingUrl().build()],
+        links: [mocks.LinkBuilder.link().missingUrl().build()],
       };
       await controller.editHelper(req, res);
       const status = res.status.args[0][0];
@@ -468,7 +468,7 @@ describe("Test helper link controller", () => {
       const helper = mocks.HelperLinkBuilder.helperLink().build();
       req.body = {
         ...helper,
-        links: [mocks.LikBuilder.link().invalidUrl().build()],
+        links: [mocks.LinkBuilder.link().invalidUrl().build()],
       };
       await controller.editHelper(req, res);
       const status = res.status.args[0][0];
@@ -485,7 +485,7 @@ describe("Test helper link controller", () => {
       const helper = mocks.HelperLinkBuilder.helperLink().build();
       req.body = {
         ...helper,
-        links: [mocks.LikBuilder.link().invalidOrderValue().build()],
+        links: [mocks.LinkBuilder.link().invalidOrderValue().build()],
       };
       await controller.editHelper(req, res);
       const status = res.status.args[0][0];
@@ -502,7 +502,7 @@ describe("Test helper link controller", () => {
       const helper = mocks.HelperLinkBuilder.helperLink().build();
       req.body = {
         ...helper,
-        links: [mocks.LikBuilder.link().invalidOrderType().build()],
+        links: [mocks.LinkBuilder.link().invalidOrderType().build()],
       };
       await controller.editHelper(req, res);
       const status = res.status.args[0][0];

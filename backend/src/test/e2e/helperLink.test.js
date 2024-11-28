@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { after, afterEach, before, beforeEach, describe, it } from "mocha";
 import waitOn from "wait-on";
-import app from "../../server.js";
 import db from "../../models/index.js";
+import app from "../../server.js";
 import mocks from "../mocks/helperLink.mock.js";
 import { UserBuilder, validList } from "../mocks/user.mock.js";
 import chai from "./index.js";
@@ -16,7 +16,7 @@ const dbReadyOptions = {
 };
 
 const helper = mocks.HelperLinkBuilder.helperLink;
-const link = mocks.LikBuilder.link;
+const link = mocks.LinkBuilder.link;
 
 const createHelper = async (token, helper) => {
   const { links, createdBy, id, ...helperData } = helper;
@@ -545,7 +545,7 @@ describe("E2e tests helperLink", () => {
         const { id, ...rest } = it;
         return rest;
       });
-      const { links: l, ...expected } = helperToUpdate;
+      const { links: l, id, ...expected } = helperToUpdate;
       expect(response).to.be.deep.equal([expected]);
     });
   });
@@ -610,7 +610,7 @@ describe("E2e tests helperLink", () => {
         .set("Authorization", `Bearer ${token}`);
       expect(res).to.have.status(200);
       expect(res.body).to.be.deep.equal({
-        message: "Helper with ID 1 deleted successfully",
+        message: `Helper with ID ${helperId} deleted successfully`,
       });
     });
   });

@@ -1,4 +1,4 @@
-class LikBuilder {
+class LinkBuilder {
   constructor(id = null, helperId = 1) {
     this.link = {
       id: id ?? 1,
@@ -10,7 +10,7 @@ class LikBuilder {
     };
   }
   static link(id = null, helperId = 1) {
-    return new LikBuilder(id);
+    return new LinkBuilder(id, helperId);
   }
 
   missingTitle() {
@@ -73,7 +73,7 @@ class HelperLinkBuilder {
       iconColor: "#7F56D9",
       createdBy: 1,
       links: Array.from({ length: 5 }, (_, i) =>
-        LikBuilder.link(i + 1, id).build()
+        LinkBuilder.link(i + 1, id).build()
       ),
     };
   }
@@ -113,7 +113,7 @@ class HelperLinkBuilder {
 }
 
 const LinksList = Array.from({ length: 5 }, (_, i) =>
-  LikBuilder.link(i + 1).build()
+  LinkBuilder.link(i + 1).build()
 );
 
 const HelperLinkList = Array.from({ length: 10 }, (_, i) =>
@@ -127,6 +127,6 @@ const HelperLinkList = Array.from({ length: 10 }, (_, i) =>
 module.exports = {
   HelperLinkBuilder,
   HelperLinkList,
-  LikBuilder,
+  LinkBuilder,
   LinksList,
 };

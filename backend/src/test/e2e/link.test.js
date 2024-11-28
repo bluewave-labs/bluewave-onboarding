@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { after, afterEach, before, beforeEach, describe } from "mocha";
 import waitOn from "wait-on";
-import app from "../../server.js";
 import db from "../../models/index.js";
+import app from "../../server.js";
 import mocks from "../mocks/helperLink.mock.js";
 import { UserBuilder } from "../mocks/user.mock.js";
 import chai from "./index.js";
@@ -16,7 +16,7 @@ const dbReadyOptions = {
 };
 
 const helper = mocks.HelperLinkBuilder.helperLink;
-const link = mocks.LikBuilder.link;
+const link = mocks.LinkBuilder.link;
 
 const createHelper = async (token, helper) => {
   const { links, createdBy, id, ...helperData } = helper;

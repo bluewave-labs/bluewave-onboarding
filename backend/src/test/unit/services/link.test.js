@@ -44,7 +44,7 @@ describe("Test link service", () => {
     });
   });
   it("createLink - should return the link created", async () => {
-    const linkToCreate = mocks.LikBuilder.link().build();
+    const linkToCreate = mocks.LinkBuilder.link().build();
     LinkMock.create = sinon.stub(Link, "create").resolves(linkToCreate);
     const link = await linkService.createLink(linkToCreate);
     expect(link).to.deep.equal(linkToCreate);
@@ -78,7 +78,7 @@ describe("Test link service", () => {
     expect(params[1]).to.be.deep.equal({ where: { id: 1 }, returning: true });
   });
   it("updateLink - should return the updated link", async () => {
-    const linkToUpdate = mocks.LikBuilder.link().build();
+    const linkToUpdate = mocks.LinkBuilder.link().build();
     LinkMock.update = sinon.stub(Link, "update").resolves([1, [linkToUpdate]]);
     const link = await linkService.updateLink(1, linkToUpdate);
     expect(link).to.deep.equal(linkToUpdate);
@@ -90,9 +90,9 @@ describe("Test link service", () => {
   it("getLinkById - should return the link with it's helper", async () => {
     LinkMock.findOne = sinon
       .stub(Link, "findOne")
-      .resolves(mocks.LikBuilder.link().build());
+      .resolves(mocks.LinkBuilder.link().build());
     const link = await linkService.getLinkById(1);
-    expect(link).to.deep.equal(mocks.LikBuilder.link().build());
+    expect(link).to.deep.equal(mocks.LinkBuilder.link().build());
     expect(LinkMock.findOne.called).to.be.true;
     const params = LinkMock.findOne.getCall(0).args[0];
     expect(params).to.be.deep.equal({

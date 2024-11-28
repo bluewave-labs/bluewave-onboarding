@@ -1,10 +1,32 @@
 import { expect } from "chai";
 import { afterEach, beforeEach, describe, it } from "mocha";
 import waitOn from "wait-on";
-import app from "../../server.js";
 import db from "../../models/index.js";
+import app from "../../server.js";
 import mocks from "../mocks/user.mock.js";
 import chai from "./index.js";
+
+const dbReadyOptions = {
+  resources: ["tcp:localhost:5432"],
+  delay: 1000,
+  timeout: 30000,
+  interval: 1000,
+};
+
+const setupTestDb = () => {
+  beforeEach(async () => {
+    try {
+      await waitOn(dbReadyOptions);
+    } catch (err) {
+      console.error("Database not ready in time:", err);
+      throw err;
+    }
+  });
+
+  afterEach(async () => {
+    await db.sequelize.sync({ force: true, match: /_test$/ });
+  });
+};
 
 describe("E2e tests user", () => {
   let resetDb = async () => {
@@ -15,24 +37,7 @@ describe("E2e tests user", () => {
     return login.body.token;
   };
   describe("GET /api/users/users-list", () => {
-    beforeEach(async () => {
-      const dbReadyOptions = {
-        resources: ["tcp:localhost:5432"],
-        delay: 1000,
-        timeout: 30000,
-        interval: 1000,
-      };
-
-      try {
-        await waitOn(dbReadyOptions);
-      } catch (err) {
-        console.error("Database not ready in time:", err);
-        throw err;
-      }
-    });
-    afterEach(async () => {
-      await db.sequelize.sync({ force: true, match: /_test$/ });
-    });
+    setupTestDb();
     it("should return a list of users with pagination and status code 200 if everything goes right", async () => {
       await resetDb();
       const result = await chai.request
@@ -55,24 +60,7 @@ describe("E2e tests user", () => {
     });
   });
   describe("GET /api/users/current-user", () => {
-    beforeEach(async () => {
-      const dbReadyOptions = {
-        resources: ["tcp:localhost:5432"],
-        delay: 1000,
-        timeout: 30000,
-        interval: 1000,
-      };
-
-      try {
-        await waitOn(dbReadyOptions);
-      } catch (err) {
-        console.error("Database not ready in time:", err);
-        throw err;
-      }
-    });
-    afterEach(async () => {
-      await db.sequelize.sync({ force: true, match: /_test$/ });
-    });
+    setupTestDb();
     it("should fail if the user is not logged", async () => {
       await resetDb();
       const result = await chai.request
@@ -101,24 +89,7 @@ describe("E2e tests user", () => {
     });
   });
   describe("PUT /api/users/update", () => {
-    beforeEach(async () => {
-      const dbReadyOptions = {
-        resources: ["tcp:localhost:5432"],
-        delay: 1000,
-        timeout: 30000,
-        interval: 1000,
-      };
-
-      try {
-        await waitOn(dbReadyOptions);
-      } catch (err) {
-        console.error("Database not ready in time:", err);
-        throw err;
-      }
-    });
-    afterEach(async () => {
-      await db.sequelize.sync({ force: true, match: /_test$/ });
-    });
+    setupTestDb();
     it("should fail if the user is not logged", async () => {
       await resetDb();
       const result = await chai.request.execute(app).put("/api/users/update");
@@ -215,24 +186,7 @@ describe("E2e tests user", () => {
     });
   });
   describe("DELETE /api/users/delete", () => {
-    beforeEach(async () => {
-      const dbReadyOptions = {
-        resources: ["tcp:localhost:5432"],
-        delay: 1000,
-        timeout: 30000,
-        interval: 1000,
-      };
-
-      try {
-        await waitOn(dbReadyOptions);
-      } catch (err) {
-        console.error("Database not ready in time:", err);
-        throw err;
-      }
-    });
-    afterEach(async () => {
-      await db.sequelize.sync({ force: true, match: /_test$/ });
-    });
+    setupTestDb();
     it("should return status code 500 and the title error code DELETE_USER_ERROR if something goes wrong", async () => {
       await resetDb();
       const result = await chai.request

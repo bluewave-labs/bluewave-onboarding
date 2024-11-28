@@ -14,8 +14,7 @@ const Token = db.Token;
 describe("Unit test auth controller", () => {
   const req = {};
   const res = {};
-  const fakeToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0Ijo1NTE2MjM5MDIyfQ.KA4waP1mBe_P6kS9inaGZTxOLNV64KQOMQSTkpVYRF8";
+  const fakeToken = jwt.sign({ id: 1 }, process.env.JWT_SECRET || 'test_secret');
   const UserMock = {};
   const TokenMock = {};
   let commit;
