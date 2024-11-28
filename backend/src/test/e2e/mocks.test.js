@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { before, describe } from "mocha";
 import waitOn from "wait-on";
-import app from "../../../index.js";
+import app from "../../server.js";
 import chai from "./index.js";
 
 const dbReadyOptions = {

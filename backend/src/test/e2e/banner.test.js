@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { afterEach, beforeEach, describe } from "mocha";
 import waitOn from "wait-on";
-import app from "../../../index.js";
+import app from "../../server.js";
 import db from "../../models/index.js";
 import { BannerBuilder } from "../mocks/banner.mock.js";
 import userMocks from "../mocks/user.mock.js";
