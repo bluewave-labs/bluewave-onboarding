@@ -19,10 +19,10 @@ const transporter = nodemailer.createTransport({
 const readHTMLFile = (filePath) => {
   return new Promise((resolve, reject) => {
     try {
-      const file = fs.readFile(filePath, { encoding: "utf-8" });
+      const file = fs.readFileSync(filePath, { encoding: "utf-8" });
       resolve(file);
     } catch (err) {
-      reject(new Error(err));
+      reject(new Error(`Failed to read template file ${filePath}: ${err.message}`));
     }
   });
 };
