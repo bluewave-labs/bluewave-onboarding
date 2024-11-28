@@ -16,6 +16,30 @@ const dbReadyOptions = {
 const popupLog = mocks.PopupLogBuilder.popupLog;
 const popupLogList = mocks.popupLogList;
 
+const setupDatabase = () => {
+  before(async () => {
+    db.sequelize.connectionManager.initPools();
+  });
+  
+  after(async () => {
+    const conn = await db.sequelize.connectionManager.getConnection();
+    db.sequelize.connectionManager.releaseConnection(conn);
+  });
+
+  beforeEach(async () => {
+    try {
+      await waitOn(dbReadyOptions);
+    } catch (err) {
+      console.error("Database not ready in time:", err);
+      throw err;
+    }
+  });
+  
+  afterEach(async () => {
+    await db.sequelize.sync({ force: true, match: /_test$/ });
+  });
+};
+
 const createPopupLog = async (log) => {
   const res = await chai.request
     .execute(app)
@@ -26,25 +50,7 @@ const createPopupLog = async (log) => {
 
 describe("E2e tests popupLog", () => {
   describe("POST /api/popup_log/add_popup_log", () => {
-    before(async () => {
-      db.sequelize.connectionManager.initPools();
-    });
-    after(async () => {
-      const conn = await db.sequelize.connectionManager.getConnection();
-      db.sequelize.connectionManager.releaseConnection(conn);
-    });
-
-    beforeEach(async () => {
-      try {
-        await waitOn(dbReadyOptions);
-      } catch (err) {
-        console.error("Database not ready in time:", err);
-        throw err;
-      }
-    });
-    afterEach(async () => {
-      await db.sequelize.sync({ force: true, match: /_test$/ });
-    });
+    setupDatabase();
     it("should return 400 if popupType is missing", async () => {
       const res = await chai.request
         .execute(app)
@@ -120,25 +126,7 @@ describe("E2e tests popupLog", () => {
     });
   });
   describe("POST /api/popup_log/get_popup_logs", () => {
-    before(async () => {
-      db.sequelize.connectionManager.initPools();
-    });
-    after(async () => {
-      const conn = await db.sequelize.connectionManager.getConnection();
-      db.sequelize.connectionManager.releaseConnection(conn);
-    });
-
-    beforeEach(async () => {
-      try {
-        await waitOn(dbReadyOptions);
-      } catch (err) {
-        console.error("Database not ready in time:", err);
-        throw err;
-      }
-    });
-    afterEach(async () => {
-      await db.sequelize.sync({ force: true, match: /_test$/ });
-    });
+    setupDatabase();
     it("should return 200 and an empty array if no logs", async () => {
       await Promise.all(popupLogList.map((log) => createPopupLog(log)));
       const res = await chai.request
