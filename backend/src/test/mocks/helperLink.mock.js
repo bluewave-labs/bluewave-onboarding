@@ -44,17 +44,17 @@ class LikBuilder {
   }
 
   missingOrder() {
-    delete this.link.order;
+    this.link.order = undefined;
     return this;
   }
 
   missingTarget() {
-    delete this.link.target;
+    this.link.target = undefined;
     return this;
   }
 
   withoutId() {
-    delete this.link.id;
+    this.link.id = undefined;
     return this;
   }
 
@@ -103,7 +103,7 @@ class HelperLinkBuilder {
   }
 
   withoutId() {
-    delete this.helperLink.id;
+    this.helperLink.id = undefined;
     return this;
   }
 

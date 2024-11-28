@@ -18,7 +18,7 @@ class PopupLogBuilder {
   }
 
   missingPopupType() {
-    delete this.popupLog.popupType;
+    this.popupLog.popupType = undefined;
     return this;
   }
 
@@ -28,7 +28,7 @@ class PopupLogBuilder {
   }
 
   missingUserId() {
-    delete this.popupLog.userId;
+    this.popupLog.userId = undefined;
     return this;
   }
 
@@ -38,7 +38,7 @@ class PopupLogBuilder {
   }
 
   missingCompleted() {
-    delete this.popupLog.completed;
+    this.popupLog.completed = undefined;
     return this;
   }
 

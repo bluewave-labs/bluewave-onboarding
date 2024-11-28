@@ -23,7 +23,7 @@ class HintBuilder {
   }
 
   missingAction() {
-    delete this.hint.action;
+    this.hint.action = undefined;
     return this;
   }
 

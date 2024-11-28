@@ -26,7 +26,7 @@ class TourBuilder {
   }
 
   withoutId() {
-    delete this.tour.id;
+    this.tour.id = undefined;
     return this;
   }
 
@@ -36,7 +36,7 @@ class TourBuilder {
   }
 
   missingTitle() {
-    delete this.tour.title;
+    this.tour.title = undefined;
     return this;
   }
 
@@ -46,7 +46,7 @@ class TourBuilder {
   }
 
   missingDescription() {
-    delete this.tour.description;
+    this.tour.description = undefined;
     return this;
   }
 
@@ -56,7 +56,7 @@ class TourBuilder {
   }
 
   missingPageTargeting() {
-    delete this.tour.pageTargeting;
+    this.tour.pageTargeting = undefined;
     return this;
   }
 
@@ -66,7 +66,7 @@ class TourBuilder {
   }
 
   missingTheme() {
-    delete this.tour.theme;
+    this.tour.theme = undefined;
     return this;
   }
 
@@ -76,7 +76,7 @@ class TourBuilder {
   }
 
   missingTriggeringFrequency() {
-    delete this.tour.triggeringFrequency;
+    this.tour.triggeringFrequency = undefined;
     return this;
   }
 

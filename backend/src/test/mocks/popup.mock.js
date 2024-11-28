@@ -22,7 +22,7 @@ class PopupBuilder {
   }
 
   missingCloseButtonAction() {
-    delete this.popup.closeButtonAction;
+    this.popup.closeButtonAction = undefined;
     return this;
   }
 
@@ -32,7 +32,7 @@ class PopupBuilder {
   }
 
   missingPopupSize() {
-    delete this.popup.popupSize;
+    this.popup.popupSize = undefined;
     return this;
   }
 
