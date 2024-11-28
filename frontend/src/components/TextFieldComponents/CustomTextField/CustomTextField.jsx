@@ -30,6 +30,7 @@ const CustomTextField = ({
   required = false,
   style,
   labelSubText,
+  fullWidth=false, 
   disabled = false,
   autofocus = false
 }) => {
@@ -56,8 +57,8 @@ const CustomTextField = ({
         onBlur={onBlur}
         required={Boolean(required)}
         className="textField"
-        sx={{ width: TextFieldWidth }}
-        fullWidth
+        sx={{ width: fullWidth?"100%": TextFieldWidth }}
+        fullWidth={fullWidth}
         margin={textFieldMargin}
         value={value}
         onChange={onChange}
@@ -118,6 +119,7 @@ CustomTextField.propTypes = {
   displayCheckCircleIcon: PropTypes.bool,
   textFieldMargin: PropTypes.string,
   type: PropTypes.string,
+  fullWidth: PropTypes.bool, 
   required: PropTypes.bool,
 };
 
