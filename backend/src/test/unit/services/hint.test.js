@@ -9,7 +9,7 @@ const Hint = db.Hint;
 const hint = mocks.HintBuilder.hint;
 const hintList = mocks.hintList;
 
-describe.only("Test hint service", () => {
+describe("Test hint service", () => {
   const HintMock = {};
   afterEach(sinon.restore);
   it("getAllHints - should return the list of hints", async () => {
