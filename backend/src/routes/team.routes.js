@@ -3,6 +3,7 @@ const {
   setOrganisation,
   setConfig,
   getTeamDetails,
+  getServerUrlAndApiKey,
   getTeamCount,
   updateTeamDetails, 
   removeMember, 
@@ -20,6 +21,7 @@ const router = express.Router();
 const teamPermissions = settings.team.permissions;
 
 router.get("/details", authenticateJWT, getTeamDetails);
+router.get('/get-config', authenticateJWT, accessGuard(teamPermissions.serverUrlAndApiKey), getServerUrlAndApiKey);
 router.get("/count", getTeamCount);
 
 router.post("/set-organisation", authenticateJWT, accessGuard(teamPermissions.setOrg), setOrganisation);

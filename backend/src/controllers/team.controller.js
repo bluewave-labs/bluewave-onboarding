@@ -3,7 +3,7 @@ const TeamService = require("../service/team.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { MAX_ORG_NAME_LENGTH, ORG_NAME_REGEX } = require('../utils/constants.helper');
 const db = require("../models");
-const { encryptApiKey } = require("../utils/team.helper");
+const { encryptApiKey, decryptApiKey } = require("../utils/team.helper");
 
 const Team = db.Team;
 const teamService = new TeamService();
@@ -57,6 +57,24 @@ const getTeamCount = async (req, res) => {
     const { statusCode, payload } = internalServerError(
       "GET_TEAM_COUNT_ERROR",
       err.message,
+    );
+    res.status(statusCode).json(payload);
+  }
+};
+
+const getServerUrlAndApiKey = async (req, res) => {
+  try {
+    let { serverUrl, apiKey } = await teamService.fetchServerUrlAndApiKey();
+    apiKey = decryptApiKey(apiKey);
+    const data = {
+      serverUrl,
+      apiKey
+    }
+    return res.status(200).json(data);
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "GET_SERVER_URL_AND_API_KEY_ERROR",
+      err.message
     );
     res.status(statusCode).json(payload);
   }
@@ -168,4 +186,4 @@ const changeRole = async (req, res) => {
   }
 }
 
-module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, removeMember, changeRole, getTeamCount, setConfig };
+module.exports = { setOrganisation, getTeamDetails, getServerUrlAndApiKey, updateTeamDetails, removeMember, changeRole, getTeamCount, setConfig };

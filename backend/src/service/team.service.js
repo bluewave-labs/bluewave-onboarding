@@ -146,6 +146,19 @@ class TeamService {
             throw new Error("Failed to add server url and api key");
         }
     }
+
+    async fetchServerUrlAndApiKey() {
+        try {
+            const team = await Team.findOne({
+                limit: 1,
+                
+            });
+            const { serverUrl, apiKey } = team;
+            return { serverUrl, apiKey };
+        } catch (err) {
+            throw new Error("Failed to fetch server url and api key");
+        }
+    }
 }
 
 module.exports = TeamService;

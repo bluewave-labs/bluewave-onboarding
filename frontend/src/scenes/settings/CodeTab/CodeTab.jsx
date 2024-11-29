@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./CodeTab.module.css";
 import CustomTextField from "@components/TextFieldComponents/CustomTextField/CustomTextField";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
@@ -6,13 +6,26 @@ import Button from "@components/Button/Button";
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import { generateApiKey } from "../../../utils/generalHelper";
 import { emitToastError } from "../../../utils/guideHelper";
-import { setConfig } from '../../../services/teamServices';
+import { setConfig, getConfig } from '../../../services/teamServices';
 import toastEmitter, { TOAST_EMITTER_KEY } from "../../../utils/toastEmitter";
 
 const CodeTab = () => {
     const [apiKey, setApiKey] = useState('')
     const [serverUrl, setServerUrl] = useState('')
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        const getServerUrlAndApiKey = async () => {
+            try {
+                const { serverUrl, apiKey } = await getConfig();
+                setServerUrl(serverUrl);
+                setApiKey(apiKey);
+            } catch (err) {
+                console.error('Error fetching server url and api key: ', err);
+            }
+        }
+        getServerUrlAndApiKey();
+    }, [])
 
     const handleUrlChange = (e) => {
         setServerUrl(e.target.value);
@@ -35,11 +48,11 @@ const CodeTab = () => {
         try {
             const url = new URL(serverUrl);
             if (!['http:', 'https:'].includes(url.protocol)) {
-                toastEmitter.emit(TOAST_EMITTER_KEY, 'Invalid URL protocol');
+                toastEmitter.emit(TOAST_EMITTER_KEY, 'Invalid URL protocol must be http or https');
                 return;
             }
         } catch {
-            toastEmitter.emit(TOAST_EMITTER_KEY, 'Server URL must start with http:// or https://');
+            toastEmitter.emit(TOAST_EMITTER_KEY, 'Invalid server URL');
             return;
         }
 

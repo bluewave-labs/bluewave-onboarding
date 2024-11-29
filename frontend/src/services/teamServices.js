@@ -33,3 +33,13 @@ export const setConfig = async (serverUrl, apiKey) => {
     throw err;
   }
 }
+
+export const getConfig = async () => {
+  try {
+    const response = await apiClient.get(`${baseEndpoint}/get-config`);
+    return response.data;
+  } catch (err) {
+    console.error('Error getting Server URL and API Key: ', err);
+    throw err;
+  }
+}
