@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { after, afterEach, before, beforeEach, describe } from "mocha";
 import waitOn from "wait-on";
-import app from "../../server.js";
 import db from "../../models/index.js";
+import app from "../../server.js";
 import mocks from "../mocks/hint.mock.js";
 import { UserBuilder, validList } from "../mocks/user.mock.js";
 import chai from "./index.js";
@@ -487,6 +487,25 @@ describe("E2e tests hint", () => {
         .set("Authorization", `Bearer ${token}`);
       expect(res).to.have.status(200);
       expect(res.body).to.be.have.length(10);
+      res.body.forEach((it) => {
+        expect(it).to.have.all.keys([
+          "id",
+          "action",
+          "hintContent",
+          "actionButtonText",
+          "actionButtonUrl",
+          "headerBackgroundColor",
+          "headerColor",
+          "textColor",
+          "buttonBackgroundColor",
+          "buttonTextColor",
+          "createdBy",
+          "creator",
+          "header",
+          "targetElement",
+          "tooltipPlacement",
+        ]);
+      });
     });
   });
   describe("GET /api/hint/hints", () => {
@@ -552,6 +571,7 @@ describe("E2e tests hint", () => {
       expect(res).to.have.status(200);
       expect(res.body).not.to.be.deep.equal(hintList);
       expect(res.body).to.have.length(5);
+      expect(res.body.every((it) => it.createdBy === 1)).to.be.true;
     });
   });
   describe("GET /api/hint/get_hint/:id", () => {

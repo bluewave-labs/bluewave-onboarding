@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { after, afterEach, before, beforeEach, describe } from "mocha";
 import waitOn from "wait-on";
-import app from "../../server.js";
 import db from "../../models/index.js";
+import app from "../../server.js";
 import mocks from "../mocks/popup.mock.js";
 import { UserBuilder, validList } from "../mocks/user.mock.js";
 import chai from "./index.js";
@@ -18,15 +18,25 @@ const dbReadyOptions = {
 const popup = mocks.PopupBuilder.popup;
 const popupList = mocks.popupList;
 
-describe("E2e tests popup", () => {
-  describe("POST /api/popup/add_popup", () => {
-    before(async () => {
-      db.sequelize.connectionManager.initPools();
-    });
-    after(async () => {
+const setupTestDatabase = () => {
+  before(async () => {
+    db.sequelize.connectionManager.initPools();
+  });
+
+  after(async () => {
+    try {
       const conn = await db.sequelize.connectionManager.getConnection();
       db.sequelize.connectionManager.releaseConnection(conn);
-    });
+    } catch (error) {
+      console.error("Failed to release database connection:", error);
+      throw error;
+    }
+  });
+};
+
+describe("E2e tests popup", () => {
+  describe("POST /api/popup/add_popup", () => {
+    setupTestDatabase();
     let token;
 
     beforeEach(async () => {
@@ -222,13 +232,7 @@ describe("E2e tests popup", () => {
     });
   });
   describe("DELETE /api/popup/delete_popup/:id", () => {
-    before(async () => {
-      db.sequelize.connectionManager.initPools();
-    });
-    after(async () => {
-      const conn = await db.sequelize.connectionManager.getConnection();
-      db.sequelize.connectionManager.releaseConnection(conn);
-    });
+    setupTestDatabase();
     let token;
 
     beforeEach(async () => {
@@ -327,13 +331,7 @@ describe("E2e tests popup", () => {
     });
   });
   describe("PUT /api/popup/edit_popup/:id", () => {
-    before(async () => {
-      db.sequelize.connectionManager.initPools();
-    });
-    after(async () => {
-      const conn = await db.sequelize.connectionManager.getConnection();
-      db.sequelize.connectionManager.releaseConnection(conn);
-    });
+    setupTestDatabase();
     let token;
 
     beforeEach(async () => {
@@ -535,13 +533,7 @@ describe("E2e tests popup", () => {
     });
   });
   describe("GET /api/popup/all_popups", () => {
-    before(async () => {
-      db.sequelize.connectionManager.initPools();
-    });
-    after(async () => {
-      const conn = await db.sequelize.connectionManager.getConnection();
-      db.sequelize.connectionManager.releaseConnection(conn);
-    });
+    setupTestDatabase();
     let token;
 
     beforeEach(async () => {
@@ -599,13 +591,7 @@ describe("E2e tests popup", () => {
     });
   });
   describe("GET /api/popup/popups", () => {
-    before(async () => {
-      db.sequelize.connectionManager.initPools();
-    });
-    after(async () => {
-      const conn = await db.sequelize.connectionManager.getConnection();
-      db.sequelize.connectionManager.releaseConnection(conn);
-    });
+    setupTestDatabase();
     let token;
 
     beforeEach(async () => {
@@ -664,13 +650,7 @@ describe("E2e tests popup", () => {
     });
   });
   describe("GET /api/popup/get_popup/:id", () => {
-    before(async () => {
-      db.sequelize.connectionManager.initPools();
-    });
-    after(async () => {
-      const conn = await db.sequelize.connectionManager.getConnection();
-      db.sequelize.connectionManager.releaseConnection(conn);
-    });
+    setupTestDatabase();
     let token;
 
     beforeEach(async () => {
