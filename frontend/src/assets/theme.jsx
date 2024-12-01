@@ -1,4 +1,22 @@
 import { createTheme } from "@mui/material/styles";
+//created common tab styles for code clarity in MuiTab
+const commonTabStyles = {
+  root: {
+    fontFamily: "Inter, sans-serif",
+    fontSize: "13px",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "20px",
+    "&.Mui-selected": {
+      color: "var(--main-purple)",
+    },
+    "&:not(.Mui-selected)": {
+      color: "var(--main-text-color)",
+      borderBottom:
+        "1px solid var(--Colors-Foreground-fg-brand-primary_alt, #EAECF0)",
+    },
+  },
+};
 
 // Light theme definition
 export const lightTheme = createTheme({
@@ -11,6 +29,7 @@ export const lightTheme = createTheme({
       default: "var(--background-default-light)",
     },
   },
+
   components: {
     //MuiSvgIcon
     MuiSvgIcon: {
@@ -246,25 +265,9 @@ export const lightTheme = createTheme({
         },
       },
     },
-    // Tab and Tabs customizations
+    // using the common tab styles here...
     MuiTab: {
-      styleOverrides: {
-        root: {
-          fontFamily: "Inter, sans-serif",
-          fontSize: "13px",
-          fontStyle: "normal",
-          fontWeight: 400,
-          lineHeight: "20px",
-          "&.Mui-selected": {
-            color: "var(--main-purple)",
-          },
-          "&:not(.Mui-selected)": {
-            color: "var(--main-text-color)",
-            borderBottom:
-              "1px solid var(--Colors-Foreground-fg-brand-primary_alt, #EAECF0)",
-          },
-        },
-      },
+      styleOverrides: commonTabStyles,
     },
     MuiTabs: {
       styleOverrides: {
@@ -392,24 +395,9 @@ export const darkTheme = createTheme({
         },
       },
     },
+    // Using the common tab styles here
     MuiTab: {
-      styleOverrides: {
-        root: {
-          fontFamily: "Inter, sans-serif",
-          fontSize: "13px",
-          fontStyle: "normal",
-          fontWeight: 400,
-          lineHeight: "20px",
-          "&.Mui-selected": {
-            color: "var(--main-purple)",
-          },
-          "&:not(.Mui-selected)": {
-            color: "var(--main-text-color)",
-            borderBottom:
-              "1px solid var(--Colors-Foreground-fg-brand-primary_alt, #EAECF0)",
-          },
-        },
-      },
+      styleOverrides: commonTabStyles,
     },
     MuiTabs: {
       styleOverrides: {
