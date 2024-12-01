@@ -1,4 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+/* Defining CSS Variables */
+:root {
+  --color-black: #000;
+  --background-default-dark: #121212;
+  --background-default-light: #ffffff;
+  --background-light: #f3f4f7;
+  --background-hover: #f9fafb;
+  --background-dark: #333;
+  --main-purple: #7f56d9;
+  --text-secondary: #808080e6;
+  --text-secondary-light: #808080e5;
+  --border-gray-transparent: #80808033;
+  --main-text-color: #344054;
+  --border-error-solid: #d32f2f;
+  --background-danger: #b32217;
+  --light-border-color: #d0d5dd;
+  --second-text-color: #98a2b3;
+  --spacing-xs: 4px;
+  --main-purple-hover: #6f46c9;
+}
 
 html,
 body,

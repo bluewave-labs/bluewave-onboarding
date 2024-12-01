@@ -5,10 +5,10 @@ export const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#7f56d9",
+      main: "var(--main-purple)",
     },
     background: {
-      default: "#FFFFFF",
+      default: "var(--background-default-light)",
     },
   },
   components: {
@@ -73,7 +73,7 @@ export const lightTheme = createTheme({
         root: {
           cursor: "pointer",
           "&:hover": {
-            backgroundColor: "#F9FAFB",
+            backgroundColor: "var(--background-hover)",
           },
         },
       },
@@ -93,7 +93,7 @@ export const lightTheme = createTheme({
             fontSize: "11px",
             fontWeight: 400,
             lineHeight: "38px",
-            color: "#98A2B3",
+            color: "var(--second-text-color)",
             marginLeft: "8px",
             marginTop: "8px",
           },
@@ -125,7 +125,7 @@ export const lightTheme = createTheme({
           margin: "0px 5px !important",
           fontSize: "13px !important",
           "&.Mui-selected": {
-            backgroundColor: "#F9FAFB !important",
+            backgroundColor: "var(--background-hover)",
             borderRadius: "8px !important",
           },
         },
@@ -151,19 +151,19 @@ export const lightTheme = createTheme({
             color: "white !important",
           },
           "&.MuiDateRangePickerDay-day.Mui-selected": {
-            backgroundColor: "#7f56d9 !important",
+            backgroundColor: "var(--main-purple)",
             color: "white !important",
           },
           "&.MuiDateRangePickerDay-day.Mui-selected:first-child": {
-            backgroundColor: "#7f56d9 !important",
+            backgroundColor: "var(--main-purple)",
           },
           "&.MuiDateRangePickerDay-day.Mui-selected:last-child": {
-            backgroundColor: "#7f56d9 !important",
+            backgroundColor: "var(--main-purple)",
           },
           "&.MuiPickersDay-rangeIntervalDay:not(.Mui-selected):not(:first-child):not(:last-child)":
             {
-              backgroundColor: "#f9fafb !important",
-              color: "#000 !important",
+              backgroundColor: "var(--background-hover)",
+              color: "var(--color-black) !important",
             },
         },
       },
@@ -173,7 +173,7 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           "&.apply": {
-            backgroundColor: "#7f56d9 !important",
+            backgroundColor: "var(--main-purple)",
             color: "white !important",
             width: "142px",
             height: "34px",
@@ -183,8 +183,8 @@ export const lightTheme = createTheme({
             boxShadow: "0px 1px 2px 0px rgba(16, 24, 40, 0.05)",
           },
           "&.cancel": {
-            backgroundColor: "#fff !important",
-            color: "#344054 !important",
+            backgroundColor: "var(--background-default-light) !important",
+            color: "var(--main-text-color) !important",
             width: "142px",
             height: "34px",
             gap: "var(--spacing-xs, 4px)",
@@ -218,12 +218,12 @@ export const lightTheme = createTheme({
       },
       // Secondary checkbox styles
       colorSecondary: {
-        color: "#808080E5",
+        color: "var(--text-secondary-light)",
         "&.Mui-checked": {
-          color: "#808080E5",
+          color: "var(--text-secondary-light)",
         },
         "&.MuiCheckbox-indeterminate": {
-          color: "#808080E5",
+          color: "var(--text-secondary-light)",
         },
       },
     },
@@ -231,8 +231,8 @@ export const lightTheme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: "white",
-          color: "#344054",
+          backgroundColor: "var(--background-default-light)",
+          color: "var(--main-text-color)",
         },
       },
     },
@@ -287,7 +287,7 @@ export const lightTheme = createTheme({
           backgroundColor: "var(--main-purple)",
           transition: "background-color 0.3s, border-color 0.3s",
           "&:hover": {
-            backgroundColor: "#6f46c9",
+            backgroundColor: "var(--main-purple-hover)",
           },
           "&:active": {
             outline: "4px solid #e4dcf6",
@@ -295,7 +295,7 @@ export const lightTheme = createTheme({
           },
           "&:disabled": {
             color: "grey",
-            backgroundColor: "#f3f4f7",
+            backgroundColor: "var(--background-light)",
             borderColor: "#80808033",
             fontWeight: 600,
           },
@@ -307,7 +307,7 @@ export const lightTheme = createTheme({
           boxShadow: "none",
           transition: "background-color 0.3s, border-color 0.3s",
           "&:hover": {
-            backgroundColor: "#b32217",
+            backgroundColor: "var(--background-danger)",
           },
           "&:active": {
             outline: "4px solid #FCCED7",
@@ -341,12 +341,12 @@ export const lightTheme = createTheme({
         },
         // Secondary grey button styling
         outlinedNeutral: {
-          color: "#808080E6",
-          borderColor: "#80808033",
+          color: "var(--text-secondary)",
+          borderColor: "var( --border-gray-transparent)",
           backgroundColor: "white",
           border: "1px solid var(--light-border-color)",
           "&:hover": {
-            backgroundColor: "#F9FAFB",
+            backgroundColor: "var(--background-hover)",
             boxShadow: "none",
           },
           "&:active": {
@@ -368,18 +368,18 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#7f56d9",
+      main: "var( --main-purple)",
     },
     background: {
-      default: "#121212",
+      default: "var(--background-default-dark)",
     },
   },
   components: {
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: "#333",
-          color: "#FFFFFF",
+          backgroundColor: "var(--background-dark)",
+          color: "var(--background-default-light)",
         },
       },
     },
