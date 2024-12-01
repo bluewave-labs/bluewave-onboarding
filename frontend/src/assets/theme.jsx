@@ -109,14 +109,7 @@ export const lightTheme = createTheme({
         },
       },
     },
-    // MuiSvgIcon Styles (icon color)
-    MuiSvgIcon: {
-      styleOverrides: {
-        root: {
-          color: "var(--second-text-color)",
-        },
-      },
-    },
+
     // MuiListItemIcon Styles (icon spacing)
     MuiListItemIcon: {
       styleOverrides: {
