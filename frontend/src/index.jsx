@@ -6,7 +6,7 @@ import { BrowserRouter as Router} from "react-router-dom";
 import { lightTheme } from "./assets/theme";
 import { ThemeProvider } from "@mui/material";
 import { AuthProvider } from "./services/authProvider.jsx";
-import Toast from "./components/Toast/Toast.jsx";
+import Toast from "@components/Toast/Toast.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

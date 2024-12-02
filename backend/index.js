@@ -1,11 +1,11 @@
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const dotenv = require("dotenv");
-const bodyParser = require("body-parser");
-const jsonErrorMiddleware = require("./src/middleware/jsonError.middleware");
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const jsonErrorMiddleware = require('./src/middleware/jsonError.middleware');
 const fileSizeValidator = require('./src/middleware/fileSizeValidator.middleware');
-const { MAX_FILE_SIZE } = require('./src/utils/constants');
+const { MAX_FILE_SIZE } = require('./src/utils/constants.helper');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -21,6 +21,8 @@ const onboardRoutes = require('./src/routes/onboard.routes');
 const teamRoutes = require('./src/routes/team.routes');
 const hint = require('./src/routes/hint.routes');
 const tourRoutes = require('./src/routes/tour.routes');
+const linkRoutes = require('./src/routes/link.routes');
+const helperLinkRoutes = require('./src/routes/helperLink.routes');
 
 const app = express();
 
@@ -28,14 +30,15 @@ app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json({ limit: MAX_FILE_SIZE }));
 app.use(jsonErrorMiddleware);
-app.use(fileSizeValidator);
+// app.use(fileSizeValidator);
 
-const { sequelize } = require("./src/models");
+const { sequelize, Team } = require("./src/models");
+const config = require("./config/config");
 
 sequelize
   .authenticate()
-  .then(() => console.log("Database connected..."))
-  .catch((err) => console.log("Error: " + err));
+  .then(() => console.log('Database connected...'))
+  .catch((err) => console.log('Error: ' + err));
 
 sequelize
   .sync({ force: true })
@@ -55,11 +58,13 @@ app.use('/api/team', teamRoutes);
 // app.use('/api/tours', tourRoutes);
 app.use('/api/hint', hint);
 app.use('/api/tour', tourRoutes);
+app.use('/api/link', linkRoutes);
+app.use('/api/helper-link', helperLinkRoutes);
 
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: "Internal Server Error" });
+  res.status(500).json({ message: 'Internal Server Error' });
 });
 
 const PORT = process.env.PORT || 3000;

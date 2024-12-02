@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
-import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
-import PopupAppearance from '../../components/PopupPageComponents/PopupAppearance/PopupAppearance';
-import PopupContent from '../../components/PopupPageComponents/PopupContent/PopupContent';
+import RichTextEditor from '@components/RichTextEditor/RichTextEditor';
+import PopupAppearance from './PopupPageComponents/PopupAppearance/PopupAppearance';
+import PopupContent from './PopupPageComponents/PopupContent/PopupContent';
 import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
-import { emitToastError } from '../../utils/guideHelpers';
+import { emitToastError } from '../../utils/guideHelper';
 
 const CreatePopupPage = () => {
     const navigate = useNavigate();
@@ -54,8 +54,6 @@ const CreatePopupPage = () => {
                     setActionButtonText(popupData.actionButtonText || 'Take me to subscription page');
                     setButtonAction(popupData.closeButtonAction || 'No action');
                     setPopupSize(popupData.popupSize || 'Small');
-
-                    console.log('Get popup successful:', popupData);
                 } catch (error) {
                     emitToastError(error);
                 }

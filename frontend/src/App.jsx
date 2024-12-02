@@ -6,11 +6,11 @@ import PasswordResetPage from "./scenes/login/PassswordResetPage";
 import ForgotPasswordPage from "./scenes/login/ForgotPasswordPage";
 import CheckYourEmailPage from "./scenes/login/CheckYourEmailPage";
 import SetNewPasswordPage from "./scenes/login/SetNewPassword";
-import Private from "./components/Private";
+import Private from "@components/Private";
 import ProgressStepsMain from "./scenes/progressSteps/ProgressStepsMain";
 import Settings from "./scenes/settings/Settings";
-import BannerPage from "./scenes/bannerPage/BannerPage";
-import BannerDefaultPage from "./scenes/bannerPage/BannerDefaultPage";
+import BannerPage from "./scenes/banner/CreateBannerPage";
+import BannerDefaultPage from "./scenes/banner/BannerDefaultPage";
 import LinksDefaultPage from "./scenes/links/LinksDefaultPage";
 import ToursDefaultPage from "./scenes/tours/ToursDefaultPage";
 import PopupDefaultPage from "./scenes/popup/PopupDefaultPage";
@@ -21,8 +21,23 @@ import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
 
-const App = () => {
+import { useEffect, useState } from "react";
+import { getTeamCount } from "./services/teamServices";
 
+const App = () => {
+  const [isAdminLogin, setIsAdminLogin] = useState(false);
+
+  useEffect(() => {
+    const fetchTeamCount = async () => {
+      try {
+        const { teamExists } = await getTeamCount();
+        setIsAdminLogin(!teamExists);
+      } catch (err) {
+      }
+    }
+    fetchTeamCount();
+  }, []);
+  
   return (
     <>
       <Routes>
@@ -39,19 +54,18 @@ const App = () => {
           <Route path="/settings" element={<Settings />} />
         </Route>
 
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<CreateAccountPage />} />
+        <Route path="/login" element={<LoginPage isAdmin={isAdminLogin}/>} />
+        <Route path="/signup" element={<CreateAccountPage isAdmin={isAdminLogin} setIsAdmin={setIsAdminLogin}/>} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<PasswordResetPage />} />
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
 
-
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
         <Route path="/banner/create" element={<BannerPage />} />
         <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
         <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
-        <Route path="/popup" element={<Private Component={PopupDefaultPage }/>} />
+        <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
         <Route path="/link" element={<LinksDefaultPage />} />
         <Route path="/tour" element={<ToursDefaultPage />} />
         <Route path="/hint/create" element={<CreateHintPage />} />

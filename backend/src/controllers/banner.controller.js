@@ -1,9 +1,8 @@
 const bannerService = require("../service/banner.service.js");
-const { internalServerError } = require("../utils/errors");
-const { isValidHexColor, checkColorFields, validateCloseButtonAction } = require("../utils/guide.helper");
+const { internalServerError } = require("../utils/errors.helper");
+const { validateCloseButtonAction } = require("../utils/guide.helper");
 const { validatePosition } = require("../utils/banner.helper");
-const db = require("../models/index.js"); 
-const Banner = db.Banner;
+const { checkColorFieldsFail } =require("../utils/guide.helper");
 
 class BannerController {
   async addBanner(req, res) {
@@ -27,7 +26,8 @@ class BannerController {
     }
 
     const colorFields = { fontColor, backgroundColor };
-    checkColorFields(colorFields, res);
+    const colorCheck = checkColorFieldsFail(colorFields, res)
+    if(colorCheck){return colorCheck};
 
     try {
       const newBannerData = { ...req.body, createdBy: userId };
@@ -76,8 +76,9 @@ class BannerController {
   async editBanner(req, res) {
     try {
       const { id } = req.params;
+      const { fontColor, backgroundColor, url, position, closeButtonAction, bannerText } = req.body;
   
-      if (!req.body.position || !req.body.closeButtonAction) {
+      if (!position || !closeButtonAction) {
         return res
           .status(400)
           .json({
@@ -85,28 +86,21 @@ class BannerController {
           });
       }
   
-      if (!validatePosition(req.body.position)) {
+      if (!validatePosition(position)) {
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid value for position" }] });
       }
   
-      if (!validateCloseButtonAction(req.body.closeButtonAction)) {
+      if (!validateCloseButtonAction(closeButtonAction)) {
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid value for closeButtonAction" }] });
       }
   
-      const colorFields = ["fontColor", "backgroundColor"];
-       for (const field of colorFields) {
-         if (req.body[field] && !isValidHexColor(req.body[field])) {
-           return res
-             .status(400)
-             .json({
-               errors: [{ msg: `${field} must be a valid hex color code` }],
-             });
-         }
-       }
+      const colorFields = { fontColor, backgroundColor };
+      const colorCheck = checkColorFieldsFail(colorFields, res)
+      if(colorCheck){return colorCheck};
   
       const updatedBanner = await bannerService.updateBanner(id, req.body);
       res.status(200).json(updatedBanner);

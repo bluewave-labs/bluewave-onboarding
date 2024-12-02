@@ -2,7 +2,7 @@ import React from 'react';
 import DefaultPageTemplate from '../../templates/DefaultPageTemplate/DefaultPageTemplate';
 import { getPopups, deletePopup } from '../../services/popupServices';
 import { useNavigate } from 'react-router-dom';
-import { ACTIVITY_TYPES_INFO } from '../../data/GuideMainPageData';
+import { ACTIVITY_TYPES_INFO } from '../../data/guideMainPageData';
 
 const PopupDefaultPage = () => {
     const navigate = useNavigate();

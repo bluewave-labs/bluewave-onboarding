@@ -2,7 +2,7 @@ const settings = require("../../config/settings");
 const { body, validationResult } = require('express-validator');
 const UserService = require("../service/user.service");
 const he = require('he');
-const { internalServerError } = require("../utils/errors");
+const { internalServerError } = require("../utils/errors.helper");
 
 const userService = new UserService();
 
@@ -95,8 +95,8 @@ const getCurrentUser = async (req, res) => {
   try {
     const user = await userService.getUser(userId);
     if (user){
-      const { id, name, surname, email, role } = user;
-      return res.status(200).json({ user: { id, name, surname, email, role: settings.user.roleName[role] } });
+      const { id, name, surname, email, role, picture } = user;
+      return res.status(200).json({ user: { id, name, surname, email, role: settings.user.roleName[role], picture } });
     }
     else{
       return res.status(400).json({ error: "User not found" });

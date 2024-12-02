@@ -1,4 +1,4 @@
-const constants = require("../src/utils/constants");
+const constants = require("../src/utils/constants.helper");
 const userRole = constants.ROLE;
 
 module.exports = {
@@ -18,7 +18,11 @@ module.exports = {
       invite: [userRole.ADMIN],
       removeUser: [userRole.ADMIN],
       update: [userRole.ADMIN],
-      changeRole: [userRole.ADMIN]
+      changeRole: [userRole.ADMIN],
+      setOrg: [userRole.ADMIN],
+      popups: [userRole.ADMIN],
+      hints: [userRole.ADMIN],
+      banners: [userRole.ADMIN],
     }
   }
 };
