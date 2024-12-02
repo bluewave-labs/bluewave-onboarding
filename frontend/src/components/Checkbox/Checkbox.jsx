@@ -1,32 +1,33 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Box from '@mui/material/Box';
-import './CheckboxStyles.css';
+import React, { useState, useCallback } from "react";
+import PropTypes from "prop-types";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Box from "@mui/material/Box";
 
 const getCheckboxStyles = (variant) => ({
-  color: variant === 'primary' ? 'var(--main-purple)' : '#808080E5',
-  '&.Mui-checked': {
-    color: variant === 'primary' ? 'var(--main-purple)' : '#808080E5',
+  color: variant === "primary" ? "var(--main-purple)" : "#808080E5",
+  "&.Mui-checked": {
+    color: variant === "primary" ? "var(--main-purple)" : "#808080E5",
   },
-  '&.MuiCheckbox-indeterminate': {
-    color: variant === 'primary' ? 'var(--main-purple)' : '#808080E5',
+  "&.MuiCheckbox-indeterminate": {
+    color: variant === "primary" ? "var(--main-purple)" : "#808080E5",
   },
 });
 
 const CustomCheckbox = ({
-  label = '',
+  label = "",
   checked = false,
   onChange = () => {},
-  variant = 'primary',
-  className = '',
+  variant = "primary",
+  className = "",
   style = {},
-  size = 'medium',
+  size = "medium",
   indeterminate = false,
   childrenCheckboxes = [],
 }) => {
-  const [childChecked, setChildChecked] = useState(childrenCheckboxes.map(() => false));
+  const [childChecked, setChildChecked] = useState(
+    childrenCheckboxes.map(() => false)
+  );
   const [isChecked, setIsChecked] = useState(checked);
 
   const handleParentChange = useCallback(
@@ -52,7 +53,9 @@ const CustomCheckbox = ({
     setIsChecked(event.target.checked);
   };
 
-  const isIndeterminate = childChecked.some((child) => child !== childChecked[0]);
+  const isIndeterminate = childChecked.some(
+    (child) => child !== childChecked[0]
+  );
 
   const sx = getCheckboxStyles(variant);
 
@@ -61,8 +64,14 @@ const CustomCheckbox = ({
       <FormControlLabel
         control={
           <Checkbox
-            checked={childrenCheckboxes.length > 0 ? childChecked.every(Boolean) : isChecked}
-            onChange={childrenCheckboxes.length > 0 ? handleParentChange : handleChange}
+            checked={
+              childrenCheckboxes.length > 0
+                ? childChecked.every(Boolean)
+                : isChecked
+            }
+            onChange={
+              childrenCheckboxes.length > 0 ? handleParentChange : handleChange
+            }
             indeterminate={indeterminate || isIndeterminate}
             size={size}
             sx={sx}
@@ -73,7 +82,7 @@ const CustomCheckbox = ({
         style={style}
       />
       {childrenCheckboxes.length > 0 && (
-        <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
           {childrenCheckboxes.map((childLabel, index) => (
             <FormControlLabel
               key={index}
@@ -98,10 +107,10 @@ CustomCheckbox.propTypes = {
   label: PropTypes.string,
   checked: PropTypes.bool,
   onChange: PropTypes.func,
-  variant: PropTypes.oneOf(['primary', 'secondary']),
+  variant: PropTypes.oneOf(["primary", "secondary"]),
   className: PropTypes.string,
   style: PropTypes.object,
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  size: PropTypes.oneOf(["small", "medium", "large"]),
   indeterminate: PropTypes.bool,
   childrenCheckboxes: PropTypes.arrayOf(PropTypes.string),
 };

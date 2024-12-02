@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { TextField, InputLabel } from "@mui/material";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ChipAdornment from "../Chips/ChipAdornment";
-import "./CustomTextFieldStyles.css";
 
 const CustomTextField = ({
   id = "",
@@ -12,8 +11,8 @@ const CustomTextField = ({
   displayCheckCircleIcon = false,
   labelText = "",
   value = "",
-  onChange = () => { },
-  onBlur = () => { },
+  onChange = () => {},
+  onBlur = () => {},
   helperText = "",
   error = false,
   multiline = false,
@@ -31,23 +30,37 @@ const CustomTextField = ({
   style,
   labelSubText,
   disabled = false,
-  autofocus = false
+  autofocus = false,
 }) => {
   return (
     <div style={style}>
-      {!checkCircleIconVisible &&
+      {!checkCircleIconVisible && (
         <div>
-          <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
-          {labelSubText && <InputLabel sx={{ fontWeight: '400', fontSize: '13px', margin: 0 }}>{labelSubText}</InputLabel>}
+          <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>
+            {labelText}
+          </InputLabel>
+          {labelSubText && (
+            <InputLabel sx={{ fontWeight: "400", fontSize: "13px", margin: 0 }}>
+              {labelSubText}
+            </InputLabel>
+          )}
         </div>
-      }
-      {checkCircleIconVisible &&
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          {displayCheckCircleIcon && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
-          <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
-          {labelSubText && <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelSubText}</InputLabel>}
+      )}
+      {checkCircleIconVisible && (
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          {displayCheckCircleIcon && (
+            <CheckCircleIcon style={{ color: "green", fontSize: "20px" }} />
+          )}
+          <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>
+            {labelText}
+          </InputLabel>
+          {labelSubText && (
+            <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>
+              {labelSubText}
+            </InputLabel>
+          )}
         </div>
-      }
+      )}
       <TextField
         id={id}
         type={type}
@@ -72,8 +85,8 @@ const CustomTextField = ({
           endAdornment: endAdornment,
           ...(chips &&
             chips.length > 0 && {
-            startAdornment: <ChipAdornment chips={chips} />,
-          }),
+              startAdornment: <ChipAdornment chips={chips} />,
+            }),
         }}
         inputProps={{
           style: {

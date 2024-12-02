@@ -31,11 +31,22 @@ export const lightTheme = createTheme({
   },
 
   components: {
+    //MuiTabPanel
+    MuiTabPanel: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
+      },
+    },
     //MuiSvgIcon
     MuiSvgIcon: {
       styleOverrides: {
         root: {
           color: "var(--main-text-color)",
+        },
+        colorError: {
+          color: "var(--border-error-solid)",
         },
       },
     },
@@ -43,10 +54,15 @@ export const lightTheme = createTheme({
     MuiIconButton: {
       styleOverrides: {
         root: {
-          color: "var(--main-text-color)", // Sets the color for IconButton
+          height: "17px",
+          width: "17px",
+          boxShadow: "none",
+          border: "1.23px solid var(--grey-border)",
+          color: "var(--main-text-color)",
         },
       },
     },
+
     // MuiTextField Styles - ADDED HERE
     MuiTextField: {
       styleOverrides: {
@@ -77,11 +93,41 @@ export const lightTheme = createTheme({
         },
       },
     },
+    // MuiOutlinedInput
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          fontSize: "var(--font-regular)",
+          boxShadow: "0px 1px 2px 0px #1018280d",
+          "& svg": {
+            color: "var(--light-border-color)",
+          },
+          "&:hover fieldset": {
+            borderColor: "var(--main-purple)",
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: "var(--main-purple)",
+          },
+        },
+        notchedOutline: {
+          borderRadius: "8px !important",
+        },
+      },
+    },
+    //MuiDivider
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          margin: "0 10px",
+        },
+      },
+    },
+
     // MuiInputLabel Styles (for labels inside textField) - ADDED HERE
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          fontSize: "13px",
+          fontSize: "var(--font-regular)",
           color: "var(--second-text-color)",
         },
       },
@@ -90,6 +136,7 @@ export const lightTheme = createTheme({
     MuiListItem: {
       styleOverrides: {
         root: {
+          padding: "4px 12px !important",
           cursor: "pointer",
           "&:hover": {
             backgroundColor: "var(--background-hover)",
@@ -97,12 +144,42 @@ export const lightTheme = createTheme({
         },
       },
     },
+    //MuiListItemButton
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "6px",
+        },
+      },
+    },
+    //MuiSwitch
+    MuiSwitch: {
+      styleOverrides: {
+        switchBase: {
+          color: "var(--main-purple)",
+        },
+        track: {
+          backgroundColor: "rgba(var(--main-purple-rgb), 0.5)",
+        },
+      },
+    },
+
     // MuiTypography Styles (dropdown text)
     MuiTypography: {
       styleOverrides: {
         root: {
+          "&.settings-content-text": {
+            fontSize: "var(--font-size-md)",
+            fontWeight: 400,
+            lineHeight: 1.54,
+          },
+          "&.settings-content-obs": {
+            fontSize: "var(--font-size-sm)",
+            fontWeight: 400,
+            lineHeight: 1.45,
+          },
           width: "100%",
-          fontSize: "13px",
+          fontSize: "var(--font-informative)",
           fontWeight: 400,
           lineHeight: "24px",
           color: "var(--main-text-color)",
@@ -137,6 +214,16 @@ export const lightTheme = createTheme({
         },
       },
     },
+
+    //MuiListItemText
+    MuiListItemText: {
+      styleOverrides: {
+        root: {
+          margin: 0,
+        },
+      },
+    },
+
     // MuiMenuItem Styles
     MuiMenuItem: {
       styleOverrides: {
@@ -191,6 +278,9 @@ export const lightTheme = createTheme({
     MuiButtonBase: {
       styleOverrides: {
         root: {
+          "&.paginationButtons": {
+            margin: "0 5px",
+          },
           "&.apply": {
             backgroundColor: "var(--main-purple)",
             color: "white !important",
@@ -246,6 +336,15 @@ export const lightTheme = createTheme({
         },
       },
     },
+    //MuiFormControlLabel
+    MuiFormControlLabel: {
+      styleOverrides: {
+        label: {
+          fontSize: "var(--font-header)",
+        },
+      },
+    },
+
     // AppBar customizations
     MuiAppBar: {
       styleOverrides: {
@@ -280,9 +379,15 @@ export const lightTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: "4px", // Common button styling
+          borderRadius: "4px",
           textTransform: "none",
           boxShadow: "none",
+          color: "var(--main-purple) !important",
+        },
+        // Additional styles for textField buttons
+        textFieldButton: {
+          fontSize: "var(--font-regular)",
+          color: "var(--second-text-color)",
         },
         // Primary button styling
         containedPrimary: {
@@ -328,12 +433,12 @@ export const lightTheme = createTheme({
         },
         // Secondary purple button styling
         outlinedPrimary: {
-          color: "#7F3CD9B2",
+          color: "var(--main-purple-light-opacity)",
           borderColor: "var(--main-purple)",
           backgroundColor: "white",
           border: "1px solid var(--light-border-color)",
           "&:hover": {
-            backgroundColor: "#7F3CD919",
+            backgroundColor: "var(--main-purple-light-opacity)",
             borderColor: "var(--main-purple)",
           },
           "&:active": {
