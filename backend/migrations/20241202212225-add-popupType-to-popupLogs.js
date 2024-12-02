@@ -4,6 +4,19 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.renameTable('popup_logs', 'guide_logs');
+    // Alter the column with an explicit cast using the USING clause
+    await queryInterface.sequelize.query(`
+      ALTER TABLE "guide_logs" 
+      ALTER COLUMN "popupType" TYPE INTEGER 
+      USING 
+        CASE 
+          WHEN "popupType" = 'guide' THEN 1
+          WHEN "popupType" = 'tooltip' THEN 2
+          WHEN "popupType" = 'hotspot' THEN 3
+          WHEN "popupType" = 'checklist' THEN 4
+          ELSE NULL
+        END
+    `);
 
     await queryInterface.changeColumn('guide_logs', 'popupType', {
       type: Sequelize.INTEGER,
@@ -32,7 +45,19 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.renameTable('guide_logs', 'popup_logs');
-
+    // Revert the column type from INTEGER to ENUM with the reverse mapping
+    await queryInterface.sequelize.query(`
+    ALTER TABLE "popup_logs" 
+    ALTER COLUMN "popupType" TYPE ENUM('guide', 'tooltip', 'hotspot', 'checklist') 
+    USING 
+      CASE 
+        WHEN "popupType" = 1 THEN 'guide'
+        WHEN "popupType" = 2 THEN 'tooltip'
+        WHEN "popupType" = 3 THEN 'hotspot'
+        WHEN "popupType" = 4 THEN 'checklist'
+        ELSE NULL
+      END
+  `);
     await queryInterface.changeColumn('popup_logs', 'popupType', {
       type: Sequelize.ENUM('guide', 'tooltip', 'hotspot', 'checklist'),
       allowNull: false,

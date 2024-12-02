@@ -15,7 +15,12 @@ const addPopupLogValidation = [
     body('completed').notEmpty().isBoolean().withMessage('completed must be a boolean value')
 ]
 
+const getLogByUserValidation = [
+    body('userId').notEmpty().withMessage('userId is required').isString().trim().withMessage('userId must be a non-empty string')
+]
+
 module.exports = {
     addPopupLogValidation,
+    getLogByUserValidation,
     GuideType
 }
