@@ -1,26 +1,23 @@
-const popupService = require("../service/popuplog.service.js");
+const guidelogService = require("../service/guidelog.service.js");
 const { internalServerError } = require("../utils/errors.helper.js");
-const db = require("../models/index.js");
-const PopupLog = db.PopupLog;
 
-class PopupLogController {
-  async addPopupLog(req, res) {
+class GuideLogController {
+  async addGuideLog(req, res) {
       try {
           const { popupType, userId, completed } = req.body;
-          // Default completed to false if not provided
           const isCompleted = completed !== undefined ? completed : false;
 
-          const popupLog = await popupService.addPopupLog({ popupType, userId, completed: isCompleted });
+          const guideLog = await guidelogService.addGuideLog({ popupType, userId, completed: isCompleted });
     
-          res.status(201).json(popupLog);
+          res.status(201).json(guideLog);
         } catch (error) {
           res.status(500).json({ message: 'Error logging popup event', error });
         }
       }
   async getAllPopups(req, res) {
     try {
-      const popupLogs = await popupService.getAllPopupLogs();
-      res.status(200).json(popupLogs);
+      const guideLogs = await guidelogService.getAllGuideLogs();
+      res.status(200).json(guideLogs);
     } catch (err) {
       const { statusCode, payload } = internalServerError(
         "GET_ALL_POPUP_LOGS_ERROR",
@@ -31,4 +28,4 @@ class PopupLogController {
   }
 }
 
-module.exports = new PopupLogController();
+module.exports = new GuideLogController();

@@ -1,7 +1,14 @@
-const {body} = require('express-validator')
+const { body } = require('express-validator')
 
-const VALID_POPUP_TYPES = ['guide', 'tooltip', 'hotspot', 'checklist'];
-
+const GuideType = {
+    POPUP: 0,
+    HINT: 1,
+    BANNER: 2,
+    LINK: 3,
+    TOUR: 4,
+    CHECKLIST: 5
+}
+const VALID_POPUP_TYPES = Object.values(GuideType);
 const addPopupLogValidation = [
     body('popupType').notEmpty().withMessage('popupType is required').isIn(VALID_POPUP_TYPES).withMessage('Invalid popupType'),
     body('userId').notEmpty().withMessage('userId is required').isString().trim().withMessage('userId must be a non-empty string'),
@@ -9,5 +16,6 @@ const addPopupLogValidation = [
 ]
 
 module.exports = {
-    addPopupLogValidation
+    addPopupLogValidation,
+    GuideType
 }
