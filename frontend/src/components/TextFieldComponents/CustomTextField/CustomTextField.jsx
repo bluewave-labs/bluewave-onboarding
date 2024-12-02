@@ -30,7 +30,7 @@ const CustomTextField = ({
   style,
   labelSubText,
   disabled = false,
-  autofocus = false,
+  autoFocus = false,
 }) => {
   return (
     <div style={style}>

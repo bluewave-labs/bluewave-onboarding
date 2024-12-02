@@ -398,11 +398,12 @@ export const lightTheme = createTheme({
             backgroundColor: "var(--main-purple-hover)",
           },
           "&:active": {
-            outline: "4px solid #e4dcf6",
-            boxShadow: "0px 0px 0px 4px #9E77ED3D, 0px 1px 2px 0px #1018280D",
+            outline: "4px solid var(--outline-primary)",
+            boxShadow:
+              "0px 0px 0px 4px var(--shadow-primary), 0px 1px 2px 0px var(--shadow-subtle)",
           },
           "&:disabled": {
-            color: "grey",
+            color: " var(--second-text-color)",
             backgroundColor: "var(--background-light)",
             borderColor: "#80808033",
             fontWeight: 600,
@@ -418,8 +419,9 @@ export const lightTheme = createTheme({
             backgroundColor: "var(--background-danger)",
           },
           "&:active": {
-            outline: "4px solid #FCCED7",
-            boxShadow: "0px 0px 0px 4px #FCCED7, 0px 1px 2px 0px #1018280D",
+            outline: "4px solid var(--outline-error)",
+            boxShadow:
+              "0px 0px 0px 4px var(--outline-error), 0px 1px 2px 0px var(--shadow-subtle)",
           },
         },
         // Secondary disabled button styling
@@ -442,9 +444,10 @@ export const lightTheme = createTheme({
             borderColor: "var(--main-purple)",
           },
           "&:active": {
-            outline: "4px solid #D6BBFB",
-            backgroundColor: "white",
-            boxShadow: "0px 0px 0px 4px #9E77ED3D, 0px 1px 2px 0px #1018280D",
+            outline: "4px solid var(--outline-secondary)",
+            backgroundColor: "var(--background-default-light)",
+            boxShadow:
+              "0px 0px 0px 4px var(--shadow-primary), 0px 1px 2px 0px var(--shadow-subtle)",
           },
         },
         // Secondary grey button styling
