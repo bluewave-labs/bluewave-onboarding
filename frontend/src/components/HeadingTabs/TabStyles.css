@@ -13,5 +13,5 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--spacing-md, 8px);
-  border-bottom: 1px solid var(--Colors-Border-border-secondary, #eaecf0);
+  border-bottom: 1px solid var(--light-gray, #eaecf0);
 }

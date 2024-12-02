@@ -13,7 +13,7 @@ const commonTabStyles = {
     "&:not(.Mui-selected)": {
       color: "var(--main-text-color)",
       borderBottom:
-        "1px solid var(--Colors-Foreground-fg-brand-primary_alt, #EAECF0)",
+        "1px solid var(--Colors-Foreground-fg-brand-primary_alt, var(--light-gray))",
     },
   },
 };
@@ -26,7 +26,7 @@ export const lightTheme = createTheme({
       main: "var(--main-purple)",
     },
     background: {
-      default: "var(--background-default-light)",
+      default: "var(--light-background)",
     },
   },
 
@@ -78,7 +78,7 @@ export const lightTheme = createTheme({
           },
           "& .MuiOutlinedInput-root": {
             fontSize: "13px",
-            boxShadow: "0px 1px 2px 0px #1018280d",
+            boxShadow: "0px 1px 2px 0px var(--shadow-subtle)",
             "&:hover fieldset": {
               borderColor: "var(--main-purple)",
             },
@@ -98,7 +98,7 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           fontSize: "var(--font-regular)",
-          boxShadow: "0px 1px 2px 0px #1018280d",
+          boxShadow: "0px 1px 2px 0px var(--shadow-subtle)",
           "& svg": {
             color: "var(--light-border-color)",
           },
@@ -288,17 +288,17 @@ export const lightTheme = createTheme({
             height: "34px",
             gap: "var(--spacing-xs, 4px)",
             border:
-              "1px solid var(--Component-colors-Components-Buttons-Primary-button-primary-border, #7F56D9) !important",
+              "1px solid var(--Component-colors-Components-Buttons-Primary-button-primary-border, var(--main-purple)) !important",
             boxShadow: "0px 1px 2px 0px rgba(16, 24, 40, 0.05)",
           },
           "&.cancel": {
-            backgroundColor: "var(--background-default-light) !important",
+            backgroundColor: "var(--light-background) !important",
             color: "var(--main-text-color) !important",
             width: "142px",
             height: "34px",
             gap: "var(--spacing-xs, 4px)",
             border:
-              "1px solid var(--Component-colors-Components-Buttons-Secondary-button-secondary-border, #D0D5DD) !important",
+              "1px solid var(--Component-colors-Components-Buttons-Secondary-button-secondary-border, var(--light-border-color)) !important",
             boxShadow: "0px 1px 2px 0px rgba(16, 24, 40, 0.05)",
           },
         },
@@ -349,7 +349,7 @@ export const lightTheme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: "var(--background-default-light)",
+          backgroundColor: "var(--light-background)",
           color: "var(--main-text-color)",
         },
       },
@@ -405,7 +405,7 @@ export const lightTheme = createTheme({
           "&:disabled": {
             color: " var(--second-text-color)",
             backgroundColor: "var(--background-light)",
-            borderColor: "#80808033",
+            borderColor: "var(--border-gray-transparent)",
             fontWeight: 600,
           },
         },
@@ -428,8 +428,8 @@ export const lightTheme = createTheme({
         outlinedSecondary: {
           "&:disabled": {
             color: "grey",
-            backgroundColor: "white",
-            borderColor: "#80808033",
+            backgroundColor: "var(--light-background)",
+            borderColor: "var(--border-gray-transparent)",
             fontWeight: 600,
           },
         },
@@ -445,7 +445,7 @@ export const lightTheme = createTheme({
           },
           "&:active": {
             outline: "4px solid var(--outline-secondary)",
-            backgroundColor: "var(--background-default-light)",
+            backgroundColor: "var(--light-background)",
             boxShadow:
               "0px 0px 0px 4px var(--shadow-primary), 0px 1px 2px 0px var(--shadow-subtle)",
           },
@@ -461,8 +461,9 @@ export const lightTheme = createTheme({
             boxShadow: "none",
           },
           "&:active": {
-            outline: "4px solid #80808033",
-            boxShadow: "0px 0px 0px 4px #98A2B324, 0px 1px 2px 0px #1018280D",
+            outline: "4px solid var(--border-gray-transparent)",
+            boxShadow:
+              "0px 0px 0px 4px var(--secondary-muted-text-color-light), 0px 1px 2px 0px var(--shadow-subtle)",
             backgroundColor: "white",
           },
         },
@@ -482,7 +483,7 @@ export const darkTheme = createTheme({
       main: "var( --main-purple)",
     },
     background: {
-      default: "var(--background-default-dark)",
+      default: "var(--background-dark)",
     },
   },
   components: {
@@ -490,7 +491,7 @@ export const darkTheme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: "var(--background-dark)",
-          color: "var(--background-default-light)",
+          color: "var(--light-background)",
         },
       },
     },
