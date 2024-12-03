@@ -21,7 +21,8 @@ module.exports = {
     });
 
     await queryInterface.bulkInsert("teams", [{
-      name: config.defaultTeamName
+      name: config.defaultTeamName,
+      createdAt: new Date()
     }]);
   },
 
