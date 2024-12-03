@@ -9,10 +9,11 @@ const GuideType = {
     CHECKLIST: 5
 }
 const VALID_POPUP_TYPES = Object.values(GuideType);
-const addPopupLogValidation = [
+const addGuideLogValidation = [
     body('popupType').notEmpty().withMessage('popupType is required').isIn(VALID_POPUP_TYPES).withMessage('Invalid popupType'),
     body('userId').notEmpty().withMessage('userId is required').isString().trim().withMessage('userId must be a non-empty string'),
-    body('completed').notEmpty().isBoolean().withMessage('completed must be a boolean value')
+    body('completed').notEmpty().isBoolean().withMessage('completed must be a boolean value'),
+    body('guideId').notEmpty().withMessage('guideId is required').isNumeric().trim().withMessage('guideId must be a non-empty integer'),
 ]
 
 const getLogByUserValidation = [
@@ -20,7 +21,7 @@ const getLogByUserValidation = [
 ]
 
 module.exports = {
-    addPopupLogValidation,
+    addGuideLogValidation,
     getLogByUserValidation,
     GuideType
 }

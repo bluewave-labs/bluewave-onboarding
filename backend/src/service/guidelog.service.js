@@ -2,10 +2,11 @@ const db = require("../models");
 const GuideLog = db.GuideLog;
 
 class GuideLogService {
-  async addGuideLog({ popupType, userId, completed }) {
+  async addGuideLog({ popupType, userId, guideId, completed }) {
     return await GuideLog.create({
       popupType,
       userId,
+      guideId,
       showingTime: new Date(),
       completed
     });
@@ -37,7 +38,6 @@ class GuideLogService {
       throw new Error("Error retrieving Guide Log by UserID");
     }
   }
-  getLogsByUser
 }
 
 module.exports = new GuideLogService();
