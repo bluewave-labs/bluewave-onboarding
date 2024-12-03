@@ -1,9 +1,9 @@
 const settings = require("../../config/settings");
 const TeamService = require("../service/team.service");
 const { internalServerError } = require("../utils/errors.helper");
-const { MAX_ORG_NAME_LENGTH, ORG_NAME_REGEX } = require('../utils/constants.helper');
+const { MAX_ORG_NAME_LENGTH, ORG_NAME_REGEX, VALID_URL_REGEX } = require('../utils/constants.helper');
 const db = require("../models");
-const { encryptApiKey, decryptApiKey } = require("../utils/team.helper");
+const { encryptApiKey, decryptApiKey, validateServerUrl } = require("../utils/team.helper");
 
 const Team = db.Team;
 const teamService = new TeamService();
@@ -87,14 +87,14 @@ const getTeamDetails = async (req, res) => {
       throw new Error("Team data not found");
     }
     const result = {
-        name: data.team.name,
-        users: data.users.map((user)=> ({
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: settings.user.roleName[user.role],
-            createdAt: new Intl.DateTimeFormat('en-US').format(user.createdAt)
-        })),
+      name: data.team.name,
+      users: data.users.map((user) => ({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: settings.user.roleName[user.role],
+        createdAt: new Intl.DateTimeFormat('en-US').format(user.createdAt)
+      })),
     }
     return res.status(200).json(result);
   } catch (err) {
@@ -107,42 +107,43 @@ const getTeamDetails = async (req, res) => {
 };
 
 const updateTeamDetails = async (req, res) => {
-    const { name } = req.body;
-    try {
-      await teamService.updateTeam(name);
-      return res.status(200).json({ message: "Team Details Updated Successfully" });
-    } catch (err) {
-      const { statusCode, payload } = internalServerError(
-        "UPDATE_TEAM_ERROR",
-        err.message,
-      );
-      res.status(statusCode).json(payload);
-    }
+  const { name } = req.body;
+  try {
+    await teamService.updateTeam(name);
+    return res.status(200).json({ message: "Team Details Updated Successfully" });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "UPDATE_TEAM_ERROR",
+      err.message,
+    );
+    res.status(statusCode).json(payload);
+  }
 };
 
 const setConfig = async (req, res) => {
   let { serverUrl, apiKey } = req.body;
-  if (!serverUrl || typeof serverUrl !== 'string' || serverUrl.trim().length === 0) {
-    return res.status(400).json({ message: 'Server URL is required and should be a non-empty string' });
-  }
   if (!apiKey || typeof apiKey !== "string" || apiKey.trim().length === 0) {
     return res.status(400).json({ message: 'API Key is required and should be a non-empty string' });
   }
 
-  serverUrl = serverUrl.trim();
+  serverUrl = serverUrl && serverUrl !== "" ? serverUrl.trim() : serverUrl;
   apiKey = apiKey.trim();
   const encryptedApiKey = encryptApiKey(apiKey);
+  const result = validateServerUrl(serverUrl);
 
-  try {
-    const url = new URL(serverUrl);
-    if (!['http:', 'https:'].includes(url.protocol)) {
-      throw new Error('Invalid protocol');
+  if (!result.valid) {
+    return res.status(400).json({ message: result.errors });
+  }
+
+  if (serverUrl !== "") {
+    try {
+      const url = new URL(serverUrl);
+      if (url.username || url.password) {
+        throw new Error('URL cannot contain credentials');
+      }
+    } catch (err) {
+      return res.status(400).json({ message: 'Invalid server URL format.' });
     }
-    if (url.username || url.password) {
-      throw new Error('URL cannt contain credentials');
-    }
-  } catch (err) {
-    return res.status(400).json({ message: 'Invalid server URL format. Only HTTP/HTTPS protocols are allowed.' });
   }
 
   try {
