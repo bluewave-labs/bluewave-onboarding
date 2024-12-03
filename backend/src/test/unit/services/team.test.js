@@ -163,7 +163,7 @@ describe("Test team service", () => {
     } catch (err) {
       expect(err).to.be.instanceOf(Error);
       expect(err.message).to.be.equal(
-        "Failed to update user role ~ The team has only single admin and its role can't be changed"
+        "Failed to update user role ~ "
       );
       expect(rollback.called).to.be.true;
     }

@@ -1,11 +1,11 @@
 import { expect } from "chai";
 import { afterEach, beforeEach, describe } from "mocha";
 import waitOn from "wait-on";
-import app from "../../server.js";
 import db from "../../models/index.js";
+import app from "../../server.js";
 import { BannerBuilder } from "../mocks/banner.mock.js";
 import userMocks from "../mocks/user.mock.js";
-import chai from "./index.js";
+import chai from "./index.mjs";
 
 const banner = BannerBuilder.banner;
 

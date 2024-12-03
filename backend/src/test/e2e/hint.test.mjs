@@ -3,9 +3,9 @@ import { after, afterEach, before, beforeEach, describe } from "mocha";
 import waitOn from "wait-on";
 import db from "../../models/index.js";
 import app from "../../server.js";
-import mocks from "../mocks/popup.mock.js";
+import mocks from "../mocks/hint.mock.js";
 import { UserBuilder, validList } from "../mocks/user.mock.js";
-import chai from "./index.js";
+import chai from "./index.mjs";
 
 const user = UserBuilder.user;
 const dbReadyOptions = {
@@ -15,28 +15,18 @@ const dbReadyOptions = {
   interval: 1000,
 };
 
-const popup = mocks.PopupBuilder.popup;
-const popupList = mocks.popupList;
+const hint = mocks.HintBuilder.hint;
+const hintList = mocks.hintList;
 
-const setupTestDatabase = () => {
-  before(async () => {
-    db.sequelize.connectionManager.initPools();
-  });
-
-  after(async () => {
-    try {
+describe("E2e tests hint", () => {
+  describe("POST /api/hint/add_hint", () => {
+    before(async () => {
+      db.sequelize.connectionManager.initPools();
+    });
+    after(async () => {
       const conn = await db.sequelize.connectionManager.getConnection();
       db.sequelize.connectionManager.releaseConnection(conn);
-    } catch (error) {
-      console.error("Failed to release database connection:", error);
-      throw error;
-    }
-  });
-};
-
-describe("E2e tests popup", () => {
-  describe("POST /api/popup/add_popup", () => {
-    setupTestDatabase();
+    });
     let token;
 
     beforeEach(async () => {
@@ -59,8 +49,8 @@ describe("E2e tests popup", () => {
     it("should return 401 if no token is provided", async () => {
       const res = await chai.request
         .execute(app)
-        .post("/api/popup/add_popup")
-        .send(popup().build());
+        .post("/api/hint/add_hint")
+        .send(hint().build());
       expect(res).to.have.status(401);
       expect(res.body).to.be.deep.equal({ error: "No token provided" });
     });
@@ -78,161 +68,110 @@ describe("E2e tests popup", () => {
       const newToken = login.body.token;
       const res = await chai.request
         .execute(app)
-        .post("/api/popup/add_popup")
+        .post("/api/hint/add_hint")
         .set("Authorization", `Bearer ${newToken}`)
-        .send(popup().build());
+        .send(hint().build());
       expect(res).to.have.status(403);
       expect(res.body).to.be.deep.equal({
         error: "User does not have required access level",
       });
     });
-    it("should return 400 if popupSize is not provided", async () => {
+    it("should return 400 if action is missing", async () => {
       const res = await chai.request
         .execute(app)
-        .post("/api/popup/add_popup")
+        .post("/api/hint/add_hint")
         .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidPopupSize().build());
+        .send(hint().missingAction().build());
       expect(res).to.have.status(400);
       expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "Invalid value for popupSize or closeButtonAction",
-          },
-        ],
+        errors: [{ msg: "action is required" }],
       });
     });
-    it("should return 400 if closeButtonAction is not provided", async () => {
+    it("should return 400 if action is invalid", async () => {
       const res = await chai.request
         .execute(app)
-        .post("/api/popup/add_popup")
+        .post("/api/hint/add_hint")
         .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidCloseButtonAction().build());
+        .send(hint().invalidAction().build());
       expect(res).to.have.status(400);
       expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "Invalid value for popupSize or closeButtonAction",
-          },
-        ],
-      });
-    });
-    it("should return 400 if popupSize is invalid", async () => {
-      const res = await chai.request
-        .execute(app)
-        .post("/api/popup/add_popup")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidPopupSize().build());
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "Invalid value for popupSize or closeButtonAction",
-          },
-        ],
-      });
-    });
-    it("should return 400 if closeButtonAction is invalid", async () => {
-      const res = await chai.request
-        .execute(app)
-        .post("/api/popup/add_popup")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidCloseButtonAction().build());
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "Invalid value for popupSize or closeButtonAction",
-          },
-        ],
+        errors: [{ msg: "Invalid value for action" }],
       });
     });
     it("should return 400 if headerBackgroundColor is invalid", async () => {
       const res = await chai.request
         .execute(app)
-        .post("/api/popup/add_popup")
+        .post("/api/hint/add_hint")
         .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidHeaderBackgroundColor().build());
+        .send(hint().invalidHeaderBackgroundColor().build());
       expect(res).to.have.status(400);
       expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "headerBackgroundColor must be a valid hex color code",
-          },
-        ],
+        errors: [{ msg: "Invalid value for headerBackgroundColor" }],
       });
     });
     it("should return 400 if headerColor is invalid", async () => {
       const res = await chai.request
         .execute(app)
-        .post("/api/popup/add_popup")
+        .post("/api/hint/add_hint")
         .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidHeaderColor().build());
+        .send(hint().invalidHeaderColor().build());
       expect(res).to.have.status(400);
       expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "headerColor must be a valid hex color code",
-          },
-        ],
+        errors: [{ msg: "Invalid value for headerColor" }],
       });
     });
     it("should return 400 if textColor is invalid", async () => {
       const res = await chai.request
         .execute(app)
-        .post("/api/popup/add_popup")
+        .post("/api/hint/add_hint")
         .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidTextColor().build());
+        .send(hint().invalidTextColor().build());
       expect(res).to.have.status(400);
       expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "textColor must be a valid hex color code",
-          },
-        ],
+        errors: [{ msg: "Invalid value for textColor" }],
       });
     });
     it("should return 400 if buttonBackgroundColor is invalid", async () => {
       const res = await chai.request
         .execute(app)
-        .post("/api/popup/add_popup")
+        .post("/api/hint/add_hint")
         .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidButtonBackgroundColor().build());
+        .send(hint().invalidButtonBackgroundColor().build());
       expect(res).to.have.status(400);
       expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "buttonBackgroundColor must be a valid hex color code",
-          },
-        ],
+        errors: [{ msg: "Invalid value for buttonBackgroundColor" }],
       });
     });
     it("should return 400 if buttonTextColor is invalid", async () => {
       const res = await chai.request
         .execute(app)
-        .post("/api/popup/add_popup")
+        .post("/api/hint/add_hint")
         .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidButtonTextColor().build());
+        .send(hint().invalidButtonTextColor().build());
       expect(res).to.have.status(400);
       expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "buttonTextColor must be a valid hex color code",
-          },
-        ],
+        errors: [{ msg: "Invalid value for buttonTextColor" }],
       });
     });
-    it("should return 201 if popup is created", async () => {
+    it("should return 201 if hint is created", async () => {
+      const { id, ...newHint } = hint().build();
       const res = await chai.request
         .execute(app)
-        .post("/api/popup/add_popup")
+        .post("/api/hint/add_hint")
         .set("Authorization", `Bearer ${token}`)
-        .send(popup().build());
+        .send(newHint);
       expect(res).to.have.status(201);
-      expect(res.body).to.be.deep.equal(popup().build());
+      expect(res.body).to.be.deep.equal({ ...newHint, id: 1 });
     });
   });
-  describe("DELETE /api/popup/delete_popup/:id", () => {
-    setupTestDatabase();
+  describe("DELETE /api/hint/delete_hint/:hintId", () => {
+    before(async () => {
+      db.sequelize.connectionManager.initPools();
+    });
+    after(async () => {
+      const conn = await db.sequelize.connectionManager.getConnection();
+      db.sequelize.connectionManager.releaseConnection(conn);
+    });
     let token;
 
     beforeEach(async () => {
@@ -255,7 +194,7 @@ describe("E2e tests popup", () => {
     it("should return 401 if no token is provided", async () => {
       const res = await chai.request
         .execute(app)
-        .delete("/api/popup/delete_popup/1")
+        .delete("/api/hint/delete_hint/1")
         .send();
       expect(res).to.have.status(401);
       expect(res.body).to.be.deep.equal({ error: "No token provided" });
@@ -274,7 +213,7 @@ describe("E2e tests popup", () => {
       const newToken = login.body.token;
       const res = await chai.request
         .execute(app)
-        .delete("/api/popup/delete_popup/1")
+        .delete("/api/hint/delete_hint/1")
         .set("Authorization", `Bearer ${newToken}`)
         .send();
       expect(res).to.have.status(403);
@@ -282,445 +221,426 @@ describe("E2e tests popup", () => {
         error: "User does not have required access level",
       });
     });
-    it("should return 400 if id is invalid", async () => {
+    it("should return 400 if hint id is invalid", async () => {
       const res = await chai.request
         .execute(app)
-        .delete("/api/popup/delete_popup/invalid")
+        .delete("/api/hint/delete_hint/invalid")
         .set("Authorization", `Bearer ${token}`)
         .send();
       expect(res).to.have.status(400);
       expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "Invalid id",
-          },
-        ],
+        errors: [{ msg: "Invalid hint ID" }],
       });
     });
-    it("should return 400 if popup is not found", async () => {
+    it("should return 404 if hint is not found", async () => {
       const res = await chai.request
         .execute(app)
-        .delete("/api/popup/delete_popup/1")
-        .set("Authorization", `Bearer ${token}`)
-        .send();
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "Popup with the specified id does not exist",
-          },
-        ],
-      });
-    });
-    it("should return 200 if popup is deleted", async () => {
-      const res = await chai.request
-        .execute(app)
-        .post("/api/popup/add_popup")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().build());
-      const popupId = res.body.id;
-      const res2 = await chai.request
-        .execute(app)
-        .delete(`/api/popup/delete_popup/${popupId}`)
-        .set("Authorization", `Bearer ${token}`)
-        .send();
-      expect(res2).to.have.status(200);
-      expect(res2.body).to.be.deep.equal({
-        message: "Popup with ID 1 deleted successfully",
-      });
-    });
-  });
-  describe("PUT /api/popup/edit_popup/:id", () => {
-    setupTestDatabase();
-    let token;
-
-    beforeEach(async () => {
-      process.env.NODE_ENV = "test";
-      try {
-        await waitOn(dbReadyOptions);
-      } catch (err) {
-        console.error("Database not ready in time:", err);
-        throw err;
-      }
-      const login = await chai.request
-        .execute(app)
-        .post("/api/auth/register")
-        .send(user().build());
-      token = login.body.token;
-    });
-    afterEach(async () => {
-      await db.sequelize.sync({ force: true, match: /_test$/ });
-    });
-    it("should return 401 if no token is provided", async () => {
-      const res = await chai.request
-        .execute(app)
-        .put("/api/popup/edit_popup/1")
-        .send(popup().build());
-      expect(res).to.have.status(401);
-      expect(res.body).to.be.deep.equal({ error: "No token provided" });
-    });
-    it("should return 403 if user does not have required access level", async () => {
-      process.env.NODE_ENV = "not-test";
-      await chai.request
-        .execute(app)
-        .post("/api/team/invite")
-        .set("Authorization", `Bearer ${token}`)
-        .send({ invitedEmail: validList[1].email, role: "member" });
-      const login = await chai.request
-        .execute(app)
-        .post("/api/auth/register")
-        .send({ ...validList[1], role: 2 });
-      const newToken = login.body.token;
-      const res = await chai.request
-        .execute(app)
-        .put("/api/popup/edit_popup/1")
-        .set("Authorization", `Bearer ${newToken}`)
-        .send(popup().build());
-      expect(res).to.have.status(403);
-      expect(res.body).to.be.deep.equal({
-        error: "User does not have required access level",
-      });
-    });
-    it("should return 400 if popupSize is not provided", async () => {
-      const res = await chai.request
-        .execute(app)
-        .put("/api/popup/edit_popup/1")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidPopupSize().build());
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "Invalid value for popupSize",
-          },
-        ],
-      });
-    });
-    it("should return 400 if closeButtonAction is not provided", async () => {
-      const res = await chai.request
-        .execute(app)
-        .put("/api/popup/edit_popup/1")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidCloseButtonAction().build());
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "Invalid value for closeButtonAction",
-          },
-        ],
-      });
-    });
-    it("should return 400 if popupSize is invalid", async () => {
-      const res = await chai.request
-        .execute(app)
-        .put("/api/popup/edit_popup/1")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidPopupSize().build());
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "Invalid value for popupSize",
-          },
-        ],
-      });
-    });
-    it("should return 400 if closeButtonAction is invalid", async () => {
-      const res = await chai.request
-        .execute(app)
-        .put("/api/popup/edit_popup/1")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidCloseButtonAction().build());
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "Invalid value for closeButtonAction",
-          },
-        ],
-      });
-    });
-    it("should return 400 if headerBackgroundColor is invalid", async () => {
-      const res = await chai.request
-        .execute(app)
-        .put("/api/popup/edit_popup/1")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidHeaderBackgroundColor().build());
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "headerBackgroundColor must be a valid hex color code",
-          },
-        ],
-      });
-    });
-    it("should return 400 if headerColor is invalid", async () => {
-      const res = await chai.request
-        .execute(app)
-        .put("/api/popup/edit_popup/1")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidHeaderColor().build());
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "headerColor must be a valid hex color code",
-          },
-        ],
-      });
-    });
-    it("should return 400 if textColor is invalid", async () => {
-      const res = await chai.request
-        .execute(app)
-        .put("/api/popup/edit_popup/1")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidTextColor().build());
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "textColor must be a valid hex color code",
-          },
-        ],
-      });
-    });
-    it("should return 400 if buttonBackgroundColor is invalid", async () => {
-      const res = await chai.request
-        .execute(app)
-        .put("/api/popup/edit_popup/1")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidButtonBackgroundColor().build());
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "buttonBackgroundColor must be a valid hex color code",
-          },
-        ],
-      });
-    });
-    it("should return 400 if buttonTextColor is invalid", async () => {
-      const res = await chai.request
-        .execute(app)
-        .put("/api/popup/edit_popup/1")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().invalidButtonTextColor().build());
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "buttonTextColor must be a valid hex color code",
-          },
-        ],
-      });
-    });
-    it("should return 200 if popup is updated", async () => {
-      const res = await chai.request
-        .execute(app)
-        .post("/api/popup/add_popup")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().build());
-      const popupId = res.body.id;
-      const res2 = await chai.request
-        .execute(app)
-        .put(`/api/popup/edit_popup/${popupId}`)
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().build());
-      expect(res2).to.have.status(200);
-      expect(res2.body).to.be.deep.equal(popup().build());
-    });
-  });
-  describe("GET /api/popup/all_popups", () => {
-    setupTestDatabase();
-    let token;
-
-    beforeEach(async () => {
-      process.env.NODE_ENV = "test";
-      try {
-        await waitOn(dbReadyOptions);
-      } catch (err) {
-        console.error("Database not ready in time:", err);
-        throw err;
-      }
-      const login = await chai.request
-        .execute(app)
-        .post("/api/auth/register")
-        .send(user().build());
-      token = login.body.token;
-      await chai.request
-        .execute(app)
-        .post("/api/team/invite")
-        .set("Authorization", `Bearer ${token}`)
-        .send({ invitedEmail: validList[1].email, role: "member" });
-      const login2 = await chai.request
-        .execute(app)
-        .post("/api/auth/register")
-        .send({ ...validList[1], role: 2 });
-      const newToken = login2.body.token;
-      await Promise.all(
-        popupList.map((popup) => {
-          return chai.request
-            .execute(app)
-            .post("/api/popup/add_popup")
-            .set(
-              "Authorization",
-              `Bearer ${popup.createdBy === 1 ? token : newToken}`
-            )
-            .send(popup);
-        })
-      );
-    });
-    afterEach(async () => {
-      await db.sequelize.sync({ force: true, match: /_test$/ });
-    });
-    it("should return 401 if no token is provided", async () => {
-      const res = await chai.request.execute(app).get("/api/popup/all_popups");
-      expect(res).to.have.status(401);
-      expect(res.body).to.be.deep.equal({ error: "No token provided" });
-    });
-    it("should return 200 if popups are found", async () => {
-      const res = await chai.request
-        .execute(app)
-        .get("/api/popup/all_popups")
-        .set("Authorization", `Bearer ${token}`)
-        .send();
-      expect(res).to.have.status(200);
-      expect(res.body).to.have.length(10);
-    });
-  });
-  describe("GET /api/popup/popups", () => {
-    setupTestDatabase();
-    let token;
-
-    beforeEach(async () => {
-      process.env.NODE_ENV = "test";
-      try {
-        await waitOn(dbReadyOptions);
-      } catch (err) {
-        console.error("Database not ready in time:", err);
-        throw err;
-      }
-      const login = await chai.request
-        .execute(app)
-        .post("/api/auth/register")
-        .send(user().build());
-      token = login.body.token;
-      await chai.request
-        .execute(app)
-        .post("/api/team/invite")
-        .set("Authorization", `Bearer ${token}`)
-        .send({ invitedEmail: validList[1].email, role: "member" });
-      const login2 = await chai.request
-        .execute(app)
-        .post("/api/auth/register")
-        .send({ ...validList[1], role: 2 });
-      const newToken = login2.body.token;
-      await Promise.all(
-        popupList.map((it) => {
-          const { id, ...popup } = it;
-          return chai.request
-            .execute(app)
-            .post("/api/popup/add_popup")
-            .set(
-              "Authorization",
-              `Bearer ${popup.createdBy === 1 ? token : newToken}`
-            )
-            .send(popup);
-        })
-      );
-    });
-    afterEach(async () => {
-      await db.sequelize.sync({ force: true, match: /_test$/ });
-    });
-    it("should return 401 if no token is provided", async () => {
-      const res = await chai.request.execute(app).get("/api/popup/popups");
-      expect(res).to.have.status(401);
-      expect(res.body).to.be.deep.equal({ error: "No token provided" });
-    });
-    it("should return 200 if popups are found", async () => {
-      const res = await chai.request
-        .execute(app)
-        .get("/api/popup/popups")
-        .set("Authorization", `Bearer ${token}`)
-        .send();
-      expect(res).to.have.status(200);
-      expect(res.body).to.have.length(5);
-    });
-  });
-  describe("GET /api/popup/get_popup/:id", () => {
-    setupTestDatabase();
-    let token;
-
-    beforeEach(async () => {
-      process.env.NODE_ENV = "test";
-      try {
-        await waitOn(dbReadyOptions);
-      } catch (err) {
-        console.error("Database not ready in time:", err);
-        throw err;
-      }
-      const login = await chai.request
-        .execute(app)
-        .post("/api/auth/register")
-        .send(user().build());
-      token = login.body.token;
-    });
-    afterEach(async () => {
-      await db.sequelize.sync({ force: true, match: /_test$/ });
-    });
-    it("should return 401 if no token is provided", async () => {
-      const res = await chai.request.execute(app).get("/api/popup/get_popup/1");
-      expect(res).to.have.status(401);
-      expect(res.body).to.be.deep.equal({ error: "No token provided" });
-    });
-    it("should return 400 if id is invalid", async () => {
-      const res = await chai.request
-        .execute(app)
-        .get("/api/popup/get_popup/invalid")
-        .set("Authorization", `Bearer ${token}`)
-        .send();
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "Invalid popup ID",
-          },
-        ],
-      });
-    });
-    it("should return 404 if popup is not found", async () => {
-      const res = await chai.request
-        .execute(app)
-        .get("/api/popup/get_popup/1")
+        .delete("/api/hint/delete_hint/1")
         .set("Authorization", `Bearer ${token}`)
         .send();
       expect(res).to.have.status(404);
       expect(res.body).to.be.deep.equal({
-        errors: [
-          {
-            msg: "Popup not found",
-          },
-        ],
+        errors: [{ msg: "Hint not found" }],
       });
     });
-    it("should return 200 if popup is found", async () => {
+    it("should return 200 if hint is deleted", async () => {
+      const { id, ...newHint } = hint().build();
+      const addHint = await chai.request
+        .execute(app)
+        .post("/api/hint/add_hint")
+        .set("Authorization", `Bearer ${token}`)
+        .send(newHint);
       const res = await chai.request
         .execute(app)
-        .post("/api/popup/add_popup")
-        .set("Authorization", `Bearer ${token}`)
-        .send(popup().build());
-      const popupId = res.body.id;
-      const res2 = await chai.request
-        .execute(app)
-        .get(`/api/popup/get_popup/${popupId}`)
+        .delete(`/api/hint/delete_hint/${addHint.body.id}`)
         .set("Authorization", `Bearer ${token}`)
         .send();
-      const { creator, ...rest } = res2.body;
-      expect(res2).to.have.status(200);
-      expect(rest).to.be.deep.equal(popup().build());
-      expect(creator.id).to.be.equal(user().build().id);
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.deep.equal({
+        message: "Hint with ID 1 deleted successfully",
+      });
+    });
+  });
+  describe("PUT /api/hint/edit_hint/:hintId", () => {
+    before(async () => {
+      db.sequelize.connectionManager.initPools();
+    });
+    after(async () => {
+      const conn = await db.sequelize.connectionManager.getConnection();
+      db.sequelize.connectionManager.releaseConnection(conn);
+    });
+    let token;
+
+    beforeEach(async () => {
+      process.env.NODE_ENV = "test";
+      try {
+        await waitOn(dbReadyOptions);
+      } catch (err) {
+        console.error("Database not ready in time:", err);
+        throw err;
+      }
+      const login = await chai.request
+        .execute(app)
+        .post("/api/auth/register")
+        .send(user().build());
+      token = login.body.token;
+    });
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
+    });
+    it("should return 401 if no token is provided", async () => {
+      const res = await chai.request
+        .execute(app)
+        .put("/api/hint/edit_hint/1")
+        .send(hint().build());
+      expect(res).to.have.status(401);
+      expect(res.body).to.be.deep.equal({ error: "No token provided" });
+    });
+    it("should return 403 if user does not have required access level", async () => {
+      process.env.NODE_ENV = "not-test";
+      await chai.request
+        .execute(app)
+        .post("/api/team/invite")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ invitedEmail: validList[1].email, role: "member" });
+      const login = await chai.request
+        .execute(app)
+        .post("/api/auth/register")
+        .send({ ...validList[1], role: 2 });
+      const newToken = login.body.token;
+      const res = await chai.request
+        .execute(app)
+        .put("/api/hint/edit_hint/1")
+        .set("Authorization", `Bearer ${newToken}`)
+        .send(hint().build());
+      expect(res).to.have.status(403);
+      expect(res.body).to.be.deep.equal({
+        error: "User does not have required access level",
+      });
+    });
+    it("should return 400 if action is missing", async () => {
+      const res = await chai.request
+        .execute(app)
+        .put("/api/hint/edit_hint/1")
+        .set("Authorization", `Bearer ${token}`)
+        .send(hint().missingAction().build());
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.deep.equal({
+        errors: [{ msg: "action is required" }],
+      });
+    });
+    it("should return 400 if action is invalid", async () => {
+      const res = await chai.request
+        .execute(app)
+        .put("/api/hint/edit_hint/1")
+        .set("Authorization", `Bearer ${token}`)
+        .send(hint().invalidAction().build());
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.deep.equal({
+        errors: [{ msg: "Invalid value for action" }],
+      });
+    });
+    it("should return 400 if headerBackgroundColor is invalid", async () => {
+      const res = await chai.request
+        .execute(app)
+        .put("/api/hint/edit_hint/1")
+        .set("Authorization", `Bearer ${token}`)
+        .send(hint().invalidHeaderBackgroundColor().build());
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.deep.equal({
+        errors: [{ msg: "Invalid value for headerBackgroundColor" }],
+      });
+    });
+    it("should return 400 if headerColor is invalid", async () => {
+      const res = await chai.request
+        .execute(app)
+        .put("/api/hint/edit_hint/1")
+        .set("Authorization", `Bearer ${token}`)
+        .send(hint().invalidHeaderColor().build());
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.deep.equal({
+        errors: [{ msg: "Invalid value for headerColor" }],
+      });
+    });
+    it("should return 400 if textColor is invalid", async () => {
+      const res = await chai.request
+        .execute(app)
+        .put("/api/hint/edit_hint/1")
+        .set("Authorization", `Bearer ${token}`)
+        .send(hint().invalidTextColor().build());
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.deep.equal({
+        errors: [{ msg: "Invalid value for textColor" }],
+      });
+    });
+    it("should return 400 if buttonBackgroundColor is invalid", async () => {
+      const res = await chai.request
+        .execute(app)
+        .put("/api/hint/edit_hint/1")
+        .set("Authorization", `Bearer ${token}`)
+        .send(hint().invalidButtonBackgroundColor().build());
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.deep.equal({
+        errors: [{ msg: "Invalid value for buttonBackgroundColor" }],
+      });
+    });
+    it("should return 400 if buttonTextColor is invalid", async () => {
+      const res = await chai.request
+        .execute(app)
+        .put("/api/hint/edit_hint/1")
+        .set("Authorization", `Bearer ${token}`)
+        .send(hint().invalidButtonTextColor().build());
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.deep.equal({
+        errors: [{ msg: "Invalid value for buttonTextColor" }],
+      });
+    });
+    it("should return 404 if hint is not found", async () => {
+      const res = await chai.request
+        .execute(app)
+        .put("/api/hint/edit_hint/1")
+        .set("Authorization", `Bearer ${token}`)
+        .send(hint().build());
+      expect(res).to.have.status(404);
+      expect(res.body).to.be.deep.equal({
+        errors: [{ msg: "Hint not found" }],
+      });
+    });
+    it("should return 200 if hint is updated", async () => {
+      const { id, ...newHint } = hint().build();
+      const addHint = await chai.request
+        .execute(app)
+        .post("/api/hint/add_hint")
+        .set("Authorization", `Bearer ${token}`)
+        .send(newHint);
+      const res = await chai.request
+        .execute(app)
+        .put(`/api/hint/edit_hint/${addHint.body.id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ ...hint().build(), hintContent: "new content" });
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.deep.equal({
+        ...hint().build(),
+        hintContent: "new content",
+        id: addHint.body.id,
+      });
+    });
+  });
+  describe("GET /api/hint/all_hints", () => {
+    before(async () => {
+      db.sequelize.connectionManager.initPools();
+    });
+    after(async () => {
+      const conn = await db.sequelize.connectionManager.getConnection();
+      db.sequelize.connectionManager.releaseConnection(conn);
+    });
+    let token;
+
+    beforeEach(async () => {
+      process.env.NODE_ENV = "test";
+      try {
+        await waitOn(dbReadyOptions);
+      } catch (err) {
+        console.error("Database not ready in time:", err);
+        throw err;
+      }
+      const login = await chai.request
+        .execute(app)
+        .post("/api/auth/register")
+        .send(user().build());
+      token = login.body.token;
+      await chai.request
+        .execute(app)
+        .post("/api/team/invite")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ invitedEmail: validList[1].email, role: "member" });
+      const login2 = await chai.request
+        .execute(app)
+        .post("/api/auth/register")
+        .send({ ...validList[1], role: 2 });
+      const newToken = login2.body.token;
+      await Promise.all(
+        hintList.map((popup) => {
+          return chai.request
+            .execute(app)
+            .post("/api/hint/add_hint")
+            .set(
+              "Authorization",
+              `Bearer ${popup.createdBy === 1 ? token : newToken}`
+            )
+            .send(popup);
+        })
+      );
+    });
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
+    });
+    it("should return 401 if no token is provided", async () => {
+      const res = await chai.request.execute(app).get("/api/hint/all_hints");
+      expect(res).to.have.status(401);
+      expect(res.body).to.be.deep.equal({ error: "No token provided" });
+    });
+    it("should return 200 if all hints are returned", async () => {
+      const res = await chai.request
+        .execute(app)
+        .get("/api/hint/all_hints")
+        .set("Authorization", `Bearer ${token}`);
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.have.length(10);
+      res.body.forEach((it) => {
+        expect(it).to.have.all.keys([
+          "id",
+          "action",
+          "hintContent",
+          "actionButtonText",
+          "actionButtonUrl",
+          "headerBackgroundColor",
+          "headerColor",
+          "textColor",
+          "buttonBackgroundColor",
+          "buttonTextColor",
+          "createdBy",
+          "creator",
+          "header",
+          "targetElement",
+          "tooltipPlacement",
+        ]);
+      });
+    });
+  });
+  describe("GET /api/hint/hints", () => {
+    before(async () => {
+      db.sequelize.connectionManager.initPools();
+    });
+    after(async () => {
+      const conn = await db.sequelize.connectionManager.getConnection();
+      db.sequelize.connectionManager.releaseConnection(conn);
+    });
+    let token;
+
+    beforeEach(async () => {
+      process.env.NODE_ENV = "test";
+      try {
+        await waitOn(dbReadyOptions);
+      } catch (err) {
+        console.error("Database not ready in time:", err);
+        throw err;
+      }
+      const login = await chai.request
+        .execute(app)
+        .post("/api/auth/register")
+        .send(user().build());
+      token = login.body.token;
+      await chai.request
+        .execute(app)
+        .post("/api/team/invite")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ invitedEmail: validList[1].email, role: "member" });
+      const login2 = await chai.request
+        .execute(app)
+        .post("/api/auth/register")
+        .send({ ...validList[1], role: 2 });
+      const newToken = login2.body.token;
+      await Promise.all(
+        hintList.map((it) => {
+          const { id, ...popup } = it;
+          return chai.request
+            .execute(app)
+            .post("/api/hint/add_hint")
+            .set(
+              "Authorization",
+              `Bearer ${popup.createdBy === 1 ? token : newToken}`
+            )
+            .send(popup);
+        })
+      );
+    });
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
+    });
+    it("should return 401 if no token is provided", async () => {
+      const res = await chai.request.execute(app).get("/api/hint/hints");
+      expect(res).to.have.status(401);
+      expect(res.body).to.be.deep.equal({ error: "No token provided" });
+    });
+    it("should return 200 if hints are returned", async () => {
+      const res = await chai.request
+        .execute(app)
+        .get("/api/hint/hints")
+        .set("Authorization", `Bearer ${token}`);
+      expect(res).to.have.status(200);
+      expect(res.body).not.to.be.deep.equal(hintList);
+      expect(res.body).to.have.length(5);
+      expect(res.body.every((it) => it.createdBy === 1)).to.be.true;
+    });
+  });
+  describe("GET /api/hint/get_hint/:id", () => {
+    before(async () => {
+      db.sequelize.connectionManager.initPools();
+    });
+    after(async () => {
+      const conn = await db.sequelize.connectionManager.getConnection();
+      db.sequelize.connectionManager.releaseConnection(conn);
+    });
+    let token;
+
+    beforeEach(async () => {
+      process.env.NODE_ENV = "test";
+      try {
+        await waitOn(dbReadyOptions);
+      } catch (err) {
+        console.error("Database not ready in time:", err);
+        throw err;
+      }
+      const login = await chai.request
+        .execute(app)
+        .post("/api/auth/register")
+        .send(user().build());
+      token = login.body.token;
+    });
+    afterEach(async () => {
+      await db.sequelize.sync({ force: true, match: /_test$/ });
+    });
+    it("should return 401 if no token is provided", async () => {
+      const res = await chai.request.execute(app).get("/api/hint/get_hint/1");
+      expect(res).to.have.status(401);
+      expect(res.body).to.be.deep.equal({ error: "No token provided" });
+    });
+    it("should return 400 if hint id is invalid", async () => {
+      const res = await chai.request
+        .execute(app)
+        .get("/api/hint/get_hint/invalid")
+        .set("Authorization", `Bearer ${token}`);
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.deep.equal({
+        errors: [{ msg: "Invalid hint ID" }],
+      });
+    });
+    it("should return 200 if hint is retrieved", async () => {
+      const { id, ...newHint } = hint().build();
+      const addHint = await chai.request
+        .execute(app)
+        .post("/api/hint/add_hint")
+        .set("Authorization", `Bearer ${token}`)
+        .send(newHint);
+      const res = await chai.request
+        .execute(app)
+        .get(`/api/hint/get_hint/${addHint.body.id}`)
+        .set("Authorization", `Bearer ${token}`);
+      expect(res).to.have.status(200);
+      const { creator, ...rest } = res.body;
+      expect(rest).to.be.deep.equal({ ...newHint, id: addHint.body.id });
+      expect(creator).to.have.property("id", 1);
+    });
+    it("should return 404 if hint is not found", async () => {
+      const res = await chai.request
+        .execute(app)
+        .get("/api/hint/get_hint/1")
+        .set("Authorization", `Bearer ${token}`);
+      expect(res).to.have.status(404);
+      expect(res.body).to.be.deep.equal({
+        errors: [{ msg: "Hint not found" }],
+      });
     });
   });
 });

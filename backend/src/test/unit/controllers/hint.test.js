@@ -400,7 +400,7 @@ describe("Test hint controller", () => {
     it("should return 404 if hint is not found", async () => {
       req.params = { hintId: "1" };
       serviceMock.getHintById = sinon
-        .stub(hintService, "getHintById")
+        .stub(hintService, "deleteHint")
         .resolves(null);
       await hintController.deleteHint(req, res);
       const status = res.status.args[0][0];

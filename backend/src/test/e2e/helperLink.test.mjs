@@ -5,7 +5,7 @@ import db from "../../models/index.js";
 import app from "../../server.js";
 import mocks from "../mocks/helperLink.mock.js";
 import { UserBuilder, validList } from "../mocks/user.mock.js";
-import chai from "./index.js";
+import chai from "./index.mjs";
 
 const user = UserBuilder.user;
 const dbReadyOptions = {

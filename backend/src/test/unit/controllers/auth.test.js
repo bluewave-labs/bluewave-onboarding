@@ -307,8 +307,14 @@ describe("Unit test auth controller", () => {
   });
   it("resetPassword - should fail with status 400 if there is no token", async () => {
     req.body = {
-      token: "",
+      token: "Bearer",
     };
+    TokenMock.findOne = sinon.stub(Token, "findOne").resolves({
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzMzMTkzMzkyfQ.XVYpcKA-qHrZGoDs9LJv042w0oqcBnzZPZTsXPgB0g4',
+      userId: 1,
+      type: 'reset',
+      expiresAt: '2144-11-18'
+    });
     await auth.resetPassword(req, res);
     expect(res.status.args[0][0]).to.be.equal(400);
     const body = res.json.args[0][0];

@@ -1,10 +1,10 @@
 import { expect } from "chai";
 import { after, afterEach, before, beforeEach, describe } from "mocha";
 import waitOn from "wait-on";
-import app from "../../server.js";
 import db from "../../models/index.js";
+import app from "../../server.js";
 import mocks from "../mocks/popupLog.mock.js";
-import chai from "./index.js";
+import chai from "./index.mjs";
 
 const dbReadyOptions = {
   resources: ["tcp:localhost:5432"],
@@ -20,7 +20,7 @@ const setupDatabase = () => {
   before(async () => {
     db.sequelize.connectionManager.initPools();
   });
-  
+
   after(async () => {
     const conn = await db.sequelize.connectionManager.getConnection();
     db.sequelize.connectionManager.releaseConnection(conn);
@@ -34,7 +34,7 @@ const setupDatabase = () => {
       throw err;
     }
   });
-  
+
   afterEach(async () => {
     await db.sequelize.sync({ force: true, match: /_test$/ });
   });

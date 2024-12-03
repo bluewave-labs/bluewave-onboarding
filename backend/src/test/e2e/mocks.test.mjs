@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { before, describe } from "mocha";
 import waitOn from "wait-on";
 import app from "../../server.js";
-import chai from "./index.js";
+import chai from "./index.mjs";
 
 const dbReadyOptions = {
   resources: ["tcp:localhost:5432"],
