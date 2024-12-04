@@ -21,6 +21,7 @@ const hint = require('./src/routes/hint.routes');
 const tourRoutes = require('./src/routes/tour.routes');
 const linkRoutes = require('./src/routes/link.routes');
 const helperLinkRoutes = require('./src/routes/helperLink.routes');
+const guideRoutes = require('./src/routes/guide.routes');
 
 const app = express();
 
@@ -30,8 +31,7 @@ app.use(bodyParser.json({ limit: MAX_FILE_SIZE }));
 app.use(jsonErrorMiddleware);
 // app.use(fileSizeValidator);
 
-const { sequelize, Team } = require("./src/models");
-const config = require("./config/config");
+const { sequelize } = require("./src/models");
 
 sequelize
   .authenticate()
@@ -50,7 +50,7 @@ app.use('/api/popup', popup);
 app.use('/api/popup_log', popup_log);
 app.use('/api/banner', banner);
 app.use('/api/team', teamRoutes);
-// app.use('/api/tours', tourRoutes);
+app.use('/api/guide', guideRoutes);
 app.use('/api/hint', hint);
 app.use('/api/tour', tourRoutes);
 app.use('/api/link', linkRoutes);

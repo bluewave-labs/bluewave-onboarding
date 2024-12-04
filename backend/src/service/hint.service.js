@@ -70,6 +70,13 @@ class HintService {
       throw new Error("Error retrieving hint by ID: " + error.message);
     }
   }
+  async getHintByUrl(url) {
+    try {
+      return await Hint.findAll({ where: { url } });
+    } catch (error) {
+      throw new Error("Error retrieving Hint by URL");
+    }
+  };
 }
 
 module.exports = new HintService();
