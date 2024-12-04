@@ -64,7 +64,7 @@ module.exports = {
 
       await queryInterface.sequelize.query(`
         ALTER TABLE "popup_logs" 
-        ALTER COLUMN "popupType" TYPE ENUM('guide', 'tooltip', 'hotspot', 'checklist') 
+        ALTER COLUMN "popupType" TYPE VARCHAR(255) 
         USING 
           CASE 
             WHEN "popupType" = 1 THEN 'guide'
@@ -76,8 +76,11 @@ module.exports = {
       `, { transaction });
 
       await queryInterface.changeColumn('popup_logs', 'popupType', {
-        type: Sequelize.ENUM('guide', 'tooltip', 'hotspot', 'checklist'),
+        type: Sequelize.STRING,
         allowNull: false,
+        validate: {
+          isIn: [['guide', 'tooltip', 'hotspot', 'checklist']],
+        }
       }, { transaction });
 
       await queryInterface.removeColumn('popup_logs', 'guideId', { transaction });
