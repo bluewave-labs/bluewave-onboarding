@@ -32,7 +32,7 @@ jobs:
           eval $(ssh-agent -s)
           ssh-add ~/.ssh/id_rsa
           echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
-
+          
       - name: Configure SSH for easier access
         run: |
           echo "Host staging-server" >> ~/.ssh/config
@@ -48,6 +48,7 @@ jobs:
             cd ~/bluewave-onboarding
             git stash
             git pull
+            git stash apply
             docker compose down
             docker compose build
             docker compose up -d
