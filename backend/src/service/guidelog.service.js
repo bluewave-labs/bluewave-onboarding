@@ -3,13 +3,21 @@ const GuideLog = db.GuideLog;
 
 class GuideLogService {
   async addGuideLog({ popupType, userId, guideId, completed }) {
-    return await GuideLog.create({
-      popupType,
-      userId,
-      guideId,
-      showingTime: new Date(),
-      completed
-    });
+    const transaction = await db.sequelize.transaction();
+    try {
+      const log = await GuideLog.create({
+        popupType,
+        userId,
+        guideId,
+        showingTime: new Date(),
+        completed
+      }, { transaction });
+      await transaction.commit();
+      return log;
+    } catch (err) {
+      await transaction.rollback();
+      throw new Error(`Failed to create guide log: ${err.message}`);
+    }
   }
   async getAllGuideLogs() {
     return await GuideLog.findAll();
