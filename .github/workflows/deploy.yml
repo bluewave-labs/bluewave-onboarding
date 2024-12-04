@@ -32,8 +32,7 @@ jobs:
           eval $(ssh-agent -s)
           ssh-add ~/.ssh/id_rsa
           echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
-
-
+          
       - name: Configure SSH for easier access
         run: |
           echo "Host staging-server" >> ~/.ssh/config
