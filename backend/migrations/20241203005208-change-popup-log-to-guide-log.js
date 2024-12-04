@@ -5,21 +5,22 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.renameTable('popup_logs', 'guide_logs', { transaction });
-      
+      await queryInterface.renameColumn('guide_logs', 'popupType', 'guideType', { transaction });
+
       await queryInterface.sequelize.query(`
         ALTER TABLE "guide_logs" 
-        ALTER COLUMN "popupType" TYPE INTEGER 
+        ALTER COLUMN "guideType" TYPE INTEGER 
         USING 
           CASE 
-            WHEN "popupType" = 'guide' THEN 1
-            WHEN "popupType" = 'tooltip' THEN 2
-            WHEN "popupType" = 'hotspot' THEN 3
-            WHEN "popupType" = 'checklist' THEN 4
-            ELSE 1  -- Default to 'guide' type for invalid values
+            WHEN "guideType" = 'guide' THEN 1
+            WHEN "guideType" = 'tooltip' THEN 2
+            WHEN "guideType" = 'hotspot' THEN 3
+            WHEN "guideType" = 'checklist' THEN 4
+            ELSE 1
           END
       `, { transaction });
 
-      await queryInterface.changeColumn('guide_logs', 'popupType', {
+      await queryInterface.changeColumn('guide_logs', 'guideType', {
         type: Sequelize.INTEGER,
         allowNull: false,
       }, { transaction });
@@ -27,7 +28,7 @@ module.exports = {
       await queryInterface.addColumn('guide_logs', 'guideId', {
         type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 0,  
+        defaultValue: 0,
       }, { transaction });
 
       await queryInterface.addIndex('guide_logs', ['userId'], {
@@ -38,12 +39,12 @@ module.exports = {
         name: 'idx_guide_logs_guideId',
         transaction,
       });
-      await queryInterface.addIndex('guide_logs', ['popupType'], {
-        name: 'idx_guide_logs_popupType',
+      await queryInterface.addIndex('guide_logs', ['guideType'], {
+        name: 'idx_guide_logs_guideType',
         transaction,
       });
-      await queryInterface.addIndex('guide_logs', ['userId', 'guideId', 'popupType'], {
-        name: 'idx_guide_logs_userId_guideId_popupType',
+      await queryInterface.addIndex('guide_logs', ['userId', 'guideId', 'guideType'], {
+        name: 'idx_guide_logs_userId_guideId_guideType',
         unique: false,
         transaction,
       });
@@ -59,6 +60,7 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.renameTable('guide_logs', 'popup_logs', { transaction });
+      await queryInterface.renameColumn('popup_logs', 'guideType', 'popupType', { transaction });
 
       await queryInterface.sequelize.query(`
         ALTER TABLE "popup_logs" 
@@ -82,8 +84,8 @@ module.exports = {
 
       await queryInterface.removeIndex('popup_logs', 'idx_guide_logs_userId', { transaction });
       await queryInterface.removeIndex('popup_logs', 'idx_guide_logs_guideId', { transaction });
-      await queryInterface.removeIndex('popup_logs', 'idx_guide_logs_popupType', { transaction });
-      await queryInterface.removeIndex('popup_logs', 'idx_guide_logs_userId_guideId_popupType', { transaction });
+      await queryInterface.removeIndex('popup_logs', 'idx_guide_logs_guideType', { transaction });
+      await queryInterface.removeIndex('popup_logs', 'idx_guide_logs_userId_guideId_guideType', { transaction });
 
       await transaction.commit();
     } catch (error) {
