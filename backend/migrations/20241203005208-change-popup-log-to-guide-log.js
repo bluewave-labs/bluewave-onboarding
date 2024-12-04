@@ -24,6 +24,7 @@ module.exports = {
     await queryInterface.addColumn('guide_logs', 'guideId', {
       type: Sequelize.INTEGER,
       allowNull: false,
+      defaultValue: 0  // or another appropriate default
     });
 
     await queryInterface.addIndex('guide_logs', ['userId'], {
