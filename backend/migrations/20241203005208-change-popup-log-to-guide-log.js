@@ -12,7 +12,7 @@ module.exports = {
           WHEN "popupType" = 'tooltip' THEN 2
           WHEN "popupType" = 'hotspot' THEN 3
           WHEN "popupType" = 'checklist' THEN 4
-          ELSE NULL
+          ELSE 1  -- Default to 'guide' type for invalid values
         END
     `);
 
