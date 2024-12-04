@@ -16,7 +16,7 @@ module.exports = {
             WHEN "guideType" = 'tooltip' THEN 2
             WHEN "guideType" = 'hotspot' THEN 3
             WHEN "guideType" = 'checklist' THEN 4
-            ELSE 1
+            ELSE 9
           END
       `, { transaction });
 
@@ -71,7 +71,7 @@ module.exports = {
             WHEN "popupType" = 2 THEN 'tooltip'
             WHEN "popupType" = 3 THEN 'hotspot'
             WHEN "popupType" = 4 THEN 'checklist'
-            ELSE NULL
+            ELSE 'guide'
           END
       `, { transaction });
 
