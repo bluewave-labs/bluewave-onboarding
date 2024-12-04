@@ -46,7 +46,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -t staging-server << 'EOF'
             set -e
-            cd ~/bluewave-onboarding
+            cd ~/projects/bluewave-onboarding
             git stash
             git pull
             git stash apply
