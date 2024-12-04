@@ -2,11 +2,11 @@ const db = require("../models");
 const GuideLog = db.GuideLog;
 
 class GuideLogService {
-  async addGuideLog({ popupType, userId, guideId, completed }) {
+  async addGuideLog({ guideType, userId, guideId, completed }) {
     const transaction = await db.sequelize.transaction();
     try {
       const log = await GuideLog.create({
-        popupType,
+        guideType,
         userId,
         guideId,
         showingTime: new Date(),
@@ -31,7 +31,7 @@ class GuideLogService {
         },
       });
     } catch (err) {
-      throw new Error("Error retrieving Guide Log by UserID");
+      throw new Error(`Failed to retrieve guide log for user ${userId}: ${err.message}`);
     }
   }
 
@@ -43,7 +43,7 @@ class GuideLogService {
         },
       });
     } catch (err) {
-      throw new Error("Error retrieving Guide Log by UserID");
+      throw new Error(`Failed to retrieve guide log for user ${userId}: ${err.message}`);
     }
   }
 }

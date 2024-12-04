@@ -19,11 +19,6 @@ module.exports = {
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
     });
-
-    await queryInterface.bulkInsert("teams", [{
-      name: config.defaultTeamName,
-      createdAt: new Date()
-    }]);
   },
 
   down: async (queryInterface, Sequelize) => {

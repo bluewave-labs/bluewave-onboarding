@@ -2,7 +2,7 @@ const { GuideType } = require('../utils/guidelog.helper');
 
 module.exports = (sequelize, DataTypes) => {
     const GuideLog = sequelize.define('GuideLog', {
-        popupType: {
+        guideType: {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
                     args: [
                         Object.values(GuideType),
                     ],
-                    msg: 'popupType must be a valid value.',
+                    msg: 'guideType must be a valid value.',
                 },
             },
         },
@@ -35,20 +35,20 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'guide_logs',
         indexes: [
             {
-                name: 'idx_userId', 
+                name: 'idx_guide_logs_userId', 
                 fields: ['userId'],
             },
             {
-                name: 'idx_guideId', 
+                name: 'idx_guide_logs_guideId', 
                 fields: ['guideId'],
             },
             {
-                name: 'idx_popupType',
-                fields: ['popupType'],
+                name: 'idx_guide_logs_guideType',
+                fields: ['guideType'],
             },
             {
-                name: 'idx_userId_guideId_popupType', 
-                fields: ['userId', 'guideId', 'popupType'],
+                name: 'idx_guide_logs_userId_guideId_guideType', 
+                fields: ['userId', 'guideId', 'guideType'],
                 unique: false,
             },
         ],

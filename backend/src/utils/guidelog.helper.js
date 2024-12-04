@@ -10,7 +10,7 @@ const GuideType = {
 }
 const VALID_POPUP_TYPES = Object.values(GuideType);
 const addGuideLogValidation = [
-    body('popupType').notEmpty().withMessage('popupType is required').isIn(VALID_POPUP_TYPES).withMessage('Invalid popupType'),
+    body('guideType').notEmpty().withMessage('guideType is required').isIn(VALID_POPUP_TYPES).withMessage('Invalid guideType'),
     body('userId').notEmpty().withMessage('userId is required').isString().trim().withMessage('userId must be a non-empty string'),
     body('completed').notEmpty().isBoolean().withMessage('completed must be a boolean value'),
     body('guideId').notEmpty().withMessage('guideId is required').isNumeric().trim().withMessage('guideId must be a non-empty integer'),

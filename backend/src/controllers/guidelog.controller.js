@@ -4,10 +4,10 @@ const { internalServerError } = require("../utils/errors.helper.js");
 class GuideLogController {
   async addGuideLog(req, res) {
       try {
-          const { popupType, userId, completed, guideId } = req.body;
+          const { guideType, userId, completed, guideId } = req.body;
           const isCompleted = completed !== undefined ? completed : false;
 
-          const guideLog = await guidelogService.addGuideLog({ popupType, guideId, userId, completed: isCompleted });
+          const guideLog = await guidelogService.addGuideLog({ guideType, guideId, userId, completed: isCompleted });
     
           res.status(201).json(guideLog);
         } catch (err) {
