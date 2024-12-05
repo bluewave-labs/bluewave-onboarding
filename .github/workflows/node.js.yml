@@ -89,7 +89,7 @@ jobs:
 
       - name: Run tests for backend
         working-directory: ./backend
-        run: npm test
+        run: npm run test:unit
 
       - name: Run tests for frontend
         working-directory: ./frontend
