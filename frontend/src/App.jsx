@@ -22,7 +22,7 @@ import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
 
 import { useEffect, useState } from "react";
-import { getTeamCount } from "./services/teamServices";
+import { getHasUsers } from "./services/loginServices";
 
 const App = () => {
   const [isAdminLogin, setIsAdminLogin] = useState(false);
@@ -30,8 +30,8 @@ const App = () => {
   useEffect(() => {
     const fetchTeamCount = async () => {
       try {
-        const { teamExists } = await getTeamCount();
-        setIsAdminLogin(!teamExists);
+        const { usersExist } = await getHasUsers();
+        setIsAdminLogin(!usersExist);
       } catch (err) {
       }
     }
