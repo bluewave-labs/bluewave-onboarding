@@ -3,24 +3,25 @@ const cors = require('cors');
 const helmet = require('helmet');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
-const jsonErrorMiddleware = require('./middleware/jsonError.middleware');
-const fileSizeValidator = require('./middleware/fileSizeValidator.middleware');
-const { MAX_FILE_SIZE } = require('./utils/constants.helper');
+const jsonErrorMiddleware = require('./src/middleware/jsonError.middleware');
+const fileSizeValidator = require('./src/middleware/fileSizeValidator.middleware');
+const { MAX_FILE_SIZE } = require('./src/utils/constants.helper');
 
 // Load environment variables from .env file
 dotenv.config();
 
-const authRoutes = require('./routes/auth.routes');
-const userRoutes = require('./routes/user.routes');
-const mocks = require('./routes/mocks.routes');
-const popup = require('./routes/popup.routes');
-const popup_log = require('./routes/popuplog.routes');
-const banner = require('./routes/banner.routes');
-const teamRoutes = require('./routes/team.routes');
-const hint = require('./routes/hint.routes');
-const tourRoutes = require('./routes/tour.routes');
-const linkRoutes = require('./routes/link.routes');
-const helperLinkRoutes = require('./routes/helperLink.routes');
+const authRoutes = require('./src/routes/auth.routes');
+const userRoutes = require('./src/routes/user.routes');
+const mocks = require('./src/routes/mocks.routes');
+const popup = require('./src/routes/popup.routes');
+const guide_log = require('./src/routes/guidelog.routes');
+const banner = require('./src/routes/banner.routes');
+const teamRoutes = require('./src/routes/team.routes');
+const hint = require('./src/routes/hint.routes');
+const tourRoutes = require('./src/routes/tour.routes');
+const linkRoutes = require('./src/routes/link.routes');
+const helperLinkRoutes = require('./src/routes/helperLink.routes');
+const guideRoutes = require('./src/routes/guide.routes');
 
 const app = express();
 
@@ -30,8 +31,7 @@ app.use(bodyParser.json({ limit: MAX_FILE_SIZE }));
 app.use(jsonErrorMiddleware);
 // app.use(fileSizeValidator);
 
-const { sequelize, Team } = require("./models");
-const config = require("../config/config");
+const { sequelize } = require("./src/models");
 
 sequelize
   .authenticate()
@@ -39,7 +39,7 @@ sequelize
   .catch((err) => console.log('Error: ' + err));
 
 sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => console.log("Models synced with the database..."))
   .catch((err) => console.log("Error syncing models: " + err));
 
@@ -47,10 +47,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/mock/', mocks);
 app.use('/api/popup', popup);
-app.use('/api/popup_log', popup_log);
+app.use('/api/guide_log', guide_log);
 app.use('/api/banner', banner);
 app.use('/api/team', teamRoutes);
-// app.use('/api/tours', tourRoutes);
+app.use('/api/guide', guideRoutes);
 app.use('/api/hint', hint);
 app.use('/api/tour', tourRoutes);
 app.use('/api/link', linkRoutes);
@@ -60,5 +60,3 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Internal Server Error' });
 });
-
-module.exports = app;

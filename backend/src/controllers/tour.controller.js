@@ -142,6 +142,24 @@ class TourController {
       res.status(statusCode).json(payload);
     }
   }
+
+  async getTourByUrl(req, res) {
+    try {
+      const { url } = req.body;
+
+      if (!url || typeof url !== 'string') {
+        return res.status(400).json({ errors: [{ msg: "URL is missing or invalid" }] });
+      }
+
+      const tour = await tourService.getTourByUrl(url);
+      res.status(200).json({ tour });
+    } catch (error) {
+      internalServerError(
+        "GET_TOUR_BY_URL_ERROR",
+        error.message,
+      );
+    }
+  };
 }
 
 module.exports = new TourController();

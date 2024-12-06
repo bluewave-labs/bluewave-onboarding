@@ -31,13 +31,25 @@ const RichTextEditor = ({
   const [header, setHeader] = useState(initialHeader ?? "");
 
   useEffect(() => {
-    if (initialSetContent) initialSetContent(content);
+    if (initialSetContent) {
+      initialSetContent(content);
+      setContent(content);
+    }
+
+    if(initialHeader){
+      initialSetHeader(header);
+      setHeader(header);
+    }
+
+
   }, [content]);
 
   const handleHeaderChange = (e) => {
     const newHeader = e.target.value;
     setHeader(newHeader);
-    if (initialSetHeader) initialSetHeader(newHeader);
+    if (initialSetHeader) {
+      initialSetHeader(newHeader);
+    }
     console.log(header);
   };
 
@@ -54,7 +66,10 @@ const RichTextEditor = ({
       OrderedList,
     ],
     onUpdate: ({ editor }) => {
-      setHtmlContent(editor.getHTML());
+      let html = editor.getHTML();
+      setHtmlContent(html);
+      setContent(html);
+      console.log(html);
     },
   });
 

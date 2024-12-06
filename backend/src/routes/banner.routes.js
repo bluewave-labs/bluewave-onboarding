@@ -13,5 +13,6 @@ router.put("/edit_banner/:id", authenticateJWT, accessGuard(teamPermissions.bann
 router.get("/all_banners", authenticateJWT, bannerController.getAllBanners);
 router.get("/banners", authenticateJWT, bannerController.getBanners);
 router.get("/get_banner/:id", authenticateJWT, bannerController.getBannerById);
+router.get("/get_banner_by_url", bannerController.getBannerByUrl);
 
 module.exports = router;

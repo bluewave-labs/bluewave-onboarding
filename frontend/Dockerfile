@@ -1,10 +1,11 @@
-FROM node:22
+FROM node:22-alpine3.20
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN rm -rf package-lock.json && npm install
+RUN npm install formik
 
 COPY . .
 

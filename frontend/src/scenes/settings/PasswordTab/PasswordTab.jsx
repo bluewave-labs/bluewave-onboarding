@@ -70,7 +70,7 @@ const PasswordTab = () => {
       <div className={styles.alert}>
         <p className={styles.alertMessage}>
           <span>
-            <WarningAmberRoundedIcon style={{ fontSize: '20px' }} />
+            <WarningAmberRoundedIcon style={{fontSize:'20px'}}/>
           </span>
           New password must contain at least 8 characters and must have at least one uppercase letter, one number, and one symbol.
         </p>

@@ -1,3 +1,4 @@
+const bannerService = require("../service/banner.service");
 const linkService = require("../service/link.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { validateUrl } = require("../utils/link.helper");
@@ -172,6 +173,24 @@ class LinkController {
       res.status(statusCode).json(payload);
     }
   }
+
+  async getLinkByUrl(req, res) {
+    try {
+      const { url } = req.body;
+
+      if (!url || typeof url !== 'string') {
+        return res.status(400).json({ errors: [{ msg: "URL is missing or invalid" }] });
+      }
+
+      const link = await linkService.getLinkByUrl(url);
+      res.status(200).json({ link });
+    } catch (error) {
+      internalServerError(
+        "GET_LINK_BY_URL_ERROR",
+        error.message,
+      );
+    }
+  };
 }
 
 module.exports = new LinkController();
