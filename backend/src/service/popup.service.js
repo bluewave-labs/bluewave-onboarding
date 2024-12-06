@@ -54,6 +54,14 @@ class PopupService {
       throw new Error("Error retrieving popup by ID");
     }
   }
+
+  async getPopupByUrl(url) {
+    try {
+      return await Popup.findAll({ where: { url } });
+    } catch (error) {
+      throw new Error("Error retrieving Popup by URL");
+    }
+  };
 }
 
 module.exports = new PopupService();
