@@ -26,7 +26,7 @@
   margin: 0 auto;
   padding: 20px;
   background-repeat: no-repeat;
-  background-image: url('../../assets/auth-screen-background.svg');
+  background-image: url("../../assets/auth-screen-background.svg");
   background-position: center -350px;
 }
 
@@ -114,10 +114,6 @@
   margin-bottom: 7px;
 }
 
-.password-constraints .MuiSvgIcon-root {
-  color: var(--main-text-color);
-}
-
 .create-account-button {
   margin-top: 20px;
 }
@@ -137,7 +133,7 @@
 }
 
 .error-message {
-  color: #D92D20;
+  color: #d92d20;
   font-size: var(--font-regular);
   font-weight: 400;
   margin-bottom: 1rem;

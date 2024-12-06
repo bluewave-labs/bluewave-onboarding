@@ -71,14 +71,6 @@
         align-items: center;
         margin-bottom: 1rem;
 
-        & .MuiSwitch-check {
-          background-color: var(--main-purple);
-        }
-
-        & .MuiSwitch-track {
-          background-color: rgba(var(--main-purple-rgb), 0.5);
-        }
-
         & > span {
           margin-left: 0.625rem;
           cursor: pointer;
