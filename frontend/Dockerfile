@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --platform=linux --arch=x64 --include=optional
+RUN npm install
 
 COPY . .
 
