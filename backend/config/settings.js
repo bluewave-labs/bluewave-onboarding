@@ -23,12 +23,9 @@ module.exports = {
       popups: [userRole.ADMIN],
       hints: [userRole.ADMIN],
       banners: [userRole.ADMIN],
-<<<<<<< HEAD
-      serverUrlAndApiKey: [userRole.ADMIN]
-=======
+      serverUrlAndApiKey: [userRole.ADMIN],
       links: [userRole.ADMIN],
       tours: [userRole.ADMIN],
->>>>>>> develop
     }
   }
 };
