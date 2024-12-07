@@ -129,13 +129,16 @@ const setConfig = async (req, res) => {
   serverUrl = serverUrl && serverUrl !== "" ? serverUrl.trim() : serverUrl;
   apiKey = apiKey.trim();
   const encryptedApiKey = encryptApiKey(apiKey);
-  const result = validateServerUrl(serverUrl);
 
-  if (!result.valid) {
-    return res.status(400).json({ message: result.errors });
+  if (serverUrl) {
+    const result = validateServerUrl(serverUrl);
+
+    if (!result.valid) {
+      return res.status(400).json({ message: result.errors });
+    }
   }
-
-  if (serverUrl !== "") {
+  
+  if (serverUrl && serverUrl !== "") {
     try {
       const url = new URL(serverUrl);
       if (url.username || url.password) {
