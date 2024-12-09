@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LuAlertTriangle } from "react-icons/lu";
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import styles from "./PasswordTab.module.css";
 import CustomTextField from "@components/TextFieldComponents/CustomTextField/CustomTextField";
 import Button from "@components/Button/Button";
@@ -70,7 +70,7 @@ const PasswordTab = () => {
       <div className={styles.alert}>
         <p className={styles.alertMessage}>
           <span>
-            <LuAlertTriangle />
+            <WarningAmberRoundedIcon style={{fontSize:'20px'}}/>
           </span>
           New password must contain at least 8 characters and must have at least one uppercase letter, one number, and one symbol.
         </p>

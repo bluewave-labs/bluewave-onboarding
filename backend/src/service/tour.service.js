@@ -54,6 +54,14 @@ class TourService {
       throw new Error("Error retrieving tour by ID");
     }
   }
+
+  async getTourByUrl(url) {
+    try {
+      return await Tour.findAll({ where: { url } });
+    } catch (error) {
+      throw new Error("Error retrieving Tour by URL");
+    }
+  };
 }
 
 module.exports = new TourService();
