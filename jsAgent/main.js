@@ -143,7 +143,8 @@ bw.init = (cb) => {
            
            try {
             const onBoardConfig = await bw.data.getData(window.BW_USER); 
-            debugger;
+            console.log('data loaded:' , onBoardConfig);
+            window.bwonboarddata=onBoardConfig;
             if (onBoardConfig.popup.length > 0) {
                 bw.util.loadScriptAsync(BW_POPUP_JS_URL);
             } else if (onBoardConfig.tour?.length > 0) {
