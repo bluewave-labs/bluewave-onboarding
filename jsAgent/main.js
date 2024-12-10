@@ -1,10 +1,8 @@
 //CONSTANTS
 
-const BW_SERVER_ENDPOINT_BASE = 'localhost:3000/api/';
-const BW_POPUP_JS_URL ='popup/get_popup/1';
-const BW_BANNER_JS_URL ='';
-const BW_TOUR_JS_URL ='';
-const BW_LINKS_JS_URL ='';
+const BW_SERVER_ENDPOINT_BASE = 'http://localhost:3000/api/';
+const BW_POPUP_JS_URL= 'http://localhost:8082/popup.js'
+const BW_GUIDE_URL='guide/get_guides_by_url';
 const BW_USER_KEY = 'BW_USER_KEY';
 
 //GLOBALS
@@ -83,11 +81,14 @@ bw.data={
         const requestOptions = {
             method: "POST",
             headers: myHeaders,
-            body: JSON.stringify({ userId }),
+            body: JSON.stringify({ 
+                userId,
+                url : location.origin
+             }),
             redirect: "follow"
         };
 
-        const response = await fetch(`${BW_SERVER_ENDPOINT_BASE}/mock/onboard`, requestOptions);
+        const response = await fetch(`${BW_SERVER_ENDPOINT_BASE}${BW_GUIDE_URL}`, requestOptions);
         const data = await response.json();
         return data;
     }
@@ -126,6 +127,7 @@ bw.user = {
         bw.store.remove(BW_USER_KEY);
     }
 }
+
 bw.init = (cb) => {
     if(!bw.user.checkIfBwUserCreated()){
         bw.user.createUser();
@@ -138,17 +140,23 @@ bw.init = (cb) => {
     function () {
 
         bw.init(async function (){
-            const onBoardConfig = await bw.data.getData(window.BW_USER);
+           
+           try {
+            const onBoardConfig = await bw.data.getData(window.BW_USER); 
             debugger;
-            if (onBoardConfig.popupData) {
+            if (onBoardConfig.popup.length > 0) {
                 bw.util.loadScriptAsync(BW_POPUP_JS_URL);
-            } else if (onBoardConfig.tourData) {
+            } else if (onBoardConfig.tour?.length > 0) {
                 bw.util.loadScriptAsync(BW_TOUR_JS_URL);
-            } else if(onBoardConfig.bannerData){
+            } else if(onBoardConfig.banner?.length > 0){
                 bw.util.loadScriptAsync(BW_BANNER_JS_URL);
-            } else if(onBoardConfig.linkData){
+            } else if(onBoardConfig.link?.length > 0){
                 bw.util.loadScriptAsync(BW_LINKS_JS_URL);
             }
+           } catch (error) {
+            console.log('error :', error);
+           }
+            
         });
     }
 )();

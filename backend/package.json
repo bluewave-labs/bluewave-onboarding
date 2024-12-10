@@ -24,7 +24,7 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.15",
-    
+    "pg": "^8.13.1",
     "sequelize": "^6.37.3"
   },
   "devDependencies": {

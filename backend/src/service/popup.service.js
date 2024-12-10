@@ -72,6 +72,14 @@ class PopupService {
       throw new Error("Error retrieving popups for the given API and Client ID");
     }
   }
+
+  async getPopupByUrl(url) {
+    try {
+      return await Popup.findAll({ where: { url } });
+    } catch (error) {
+      throw new Error("Error retrieving Popup by URL");
+    }
+  };
 }
 
 module.exports = new PopupService();
