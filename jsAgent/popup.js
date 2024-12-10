@@ -1,4 +1,4 @@
-const defaultOptions = {
+const popupDefaultOptions = {
     padding: 20,
     closeButtonAction: "no action",
     popupSize: "small",
@@ -29,7 +29,6 @@ const PopUpSize = Object.freeze({
 });
 
 bw.popup = {
-    
     init: function () {
         bw.popup.addOverlay();
         bw.popup.addModal(()=>{
@@ -45,14 +44,14 @@ bw.popup = {
         let overlay = document.getElementById('bw-overlay');
        
         let option = {
-            ...defaultOptions,
+            ...popupDefaultOptions,
             ...options
         };
         const size = PopUpSize[option.popupSize];
 
         let temp_html = `
         <div id='bw-modal' class='bw-order' style='width: ${size.width}px; height: ${size.height}px; display: block; z-index: 1; border: 1px solid var(--light-border-color); box-sizing: border-box; margin:auto; padding-top: 100px; background-color: rgb(255 255 255 / 0%);;'>
-            <div class='modal-content' style='  height: ${size.height}px; position: relative; margin: auto;padding: 0;border: 1px solid #888; width: 80%; background-color: white;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);'>
+            <div class='modal-content' style='position: relative; margin: auto;padding: 0;border: 1px solid #888; background-color: white;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);'>
                 ${bw.popup.addHeader(option.header, option.headerBackgroundColor, option.headerColor, option.padding)}
                 <div class="modal-body" style='padding: ${option.padding}px ${option.padding}px; display: flex; justify-content: space-between; flex-direction: column; box-sizing: border-box;'>
                     ${option.content}
@@ -75,8 +74,9 @@ bw.popup = {
         return headerHtml;
     },
     addButton: function(text, bgColor, textColor, padding, btnId, btnEvent, btnlink){
-        let buttonHtml = `<div class="modal-button-container" style='padding: ${padding}px ${padding}px;background-color: ${bgColor}; display: flex; justify-content: flex-end; margin-top: 1rem;'>
-            <button id="${btnId}" style="color: ${textColor}">${text}</button>
+        let buttonHtml = `<div class="modal-button-container" style=' display: flex; justify-content: flex-end; margin-top: 1rem;'>
+            <button id="${btnId}" style="color: ${textColor}; padding: ${padding}px ${padding}px;background-color: ${bgColor}; margin: 1rem; border-radius:4px;
+            transition: background-color 0.3s, border-color 0.3s; min-width: 64px; padding: 6px 16px; border: 0; font-family: Inter; font-weight: 500; font-size: 0.875rem; line-height: 1.75;">${text}</button>
         </div>`;
 
         bw.util.bindLive(`#${btnId}`, 'click', function(){

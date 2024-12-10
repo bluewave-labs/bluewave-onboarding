@@ -77,14 +77,8 @@ const CodeTab = () => {
       .then(response => response.json())
       .then(data => {
         const script = document.createElement('script');
-        script.src = 'https://onboarding-demo.bluewavelabs.ca/api/scripts/popupRenderer.js?apiKey=' + apiKey;
+        script.src = 'http://localhost:8082/main.js?apiKey=' + apiKey;
         script.type = 'module';
-        script.onload = () => {
-          import('https://onboarding-demo.bluewavelabs.ca/api/scripts/popupRenderer.js?apiKey=' + apiKey)
-            .then(module => {
-              module.default(data.popupData);
-            });
-        };
         document.head.appendChild(script);
       })
       .catch(error => console.error('Error fetching onboarding data:', error));

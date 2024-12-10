@@ -1,26 +1,31 @@
 //CONSTANTS
+const BW_SERVER_ENDPOINT_BASE =
+    "http://localhost:3000/api/guide/get_guides_by_url";
+const BW_JS_BASE_URL = "http://localhost:8082/";
+const BW_POPUP_JS_URL = `${BW_JS_BASE_URL}popup.js`;
+const BW_LINKS_JS_URL = `${BW_JS_BASE_URL}links.js`;
+const BW_BANNER_JS_URL = `${BW_JS_BASE_URL}banner.js`;
+const BW_TOUR_JS_URL = `${BW_JS_BASE_URL}tour.js`;
 
-const BW_SERVER_ENDPOINT_BASE = 'http://localhost:3000/api/';
-const BW_POPUP_JS_URL= 'http://localhost:8082/popup.js'
-const BW_GUIDE_URL='guide/get_guides_by_url';
-const BW_USER_KEY = 'BW_USER_KEY';
+const BW_USER_KEY = "BW_USER_KEY";
 
 //GLOBALS
-window.BW_USER = '';
-
-if (window.bw === undefined) { window.bw = {} }
-if (bw.util === undefined) { bw.util = {} }
-
-
+window.BW_USER = "";
+if (window.bw === undefined) {
+    window.bw = {};
+}
+if (bw.util === undefined) {
+    bw.util = {};
+}
 
 bw.util = {
-    isScriptLoaded : function (src) {
+    isScriptLoaded: function (src) {
         var scripts = document.getElementsByTagName("script");
         for (var i = 0; i < scripts.length; i++)
-            if (scripts[i].getAttribute('src') == src) return true;
+            if (scripts[i].getAttribute("src") == src) return true;
         return false;
     },
-    loadScriptAsync : function (url, cb, errcb) {
+    loadScriptAsync: function (url, cb, errcb) {
         try {
             if (bw.util.isScriptLoaded(url)) {
                 cb && cb();
@@ -30,7 +35,10 @@ bw.util = {
                 script.async = false;
                 if (script.readyState) {
                     script.onreadystatechange = function () {
-                        if (script.readyState == "loaded" || script.readyState == "complete") {
+                        if (
+                            script.readyState == "loaded" ||
+                            script.readyState == "complete"
+                        ) {
                             script.onreadystatechange = null;
                             cb && cb();
                         }
@@ -44,7 +52,10 @@ bw.util = {
                     errcb && errcb();
                 };
                 script.src = url;
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+                (
+                    document.getElementsByTagName("head")[0] ||
+                    document.getElementsByTagName("body")[0]
+                ).appendChild(script);
             }
         } catch (e) {
             console.log(e);
@@ -54,26 +65,32 @@ bw.util = {
         bw.util.addEvent(cnx || document, event, function (e) {
             var qs = (cnx || document).querySelectorAll(selector);
             if (qs) {
-                var el = e.target || e.srcElement, index = -1;
-                while (el && ((index = Array.prototype.indexOf.call(qs, el)) === -1)) el = el.parentElement;
+                var el = e.target || e.srcElement,
+                    index = -1;
+                while (el && (index = Array.prototype.indexOf.call(qs, el)) === -1)
+                    el = el.parentElement;
                 if (index > -1) cb.call(el, e);
             }
         });
     },
     addEvent: function (el, type, fn) {
-        if (el.attachEvent) el.attachEvent('on' + type, fn); else el.addEventListener(type, fn);
+        if (el.attachEvent) el.attachEvent("on" + type, fn);
+        else el.addEventListener(type, fn);
     },
-    generateGUID :function () {
-        var guid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (o) {
-            var n = Math.random() * 16 | 0,
-                g = o == "x" ? n : (n & 3 | 8);
-            return g.toString(16)
-        });
+    generateGUID: function () {
+        var guid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+            /[xy]/g,
+            function (o) {
+                var n = (Math.random() * 16) | 0,
+                    g = o == "x" ? n : (n & 3) | 8;
+                return g.toString(16);
+            }
+        );
         return guid;
-    }
-}
+    },
+};
 
-bw.data={
+bw.data = {
     getData: async function (userId) {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -81,18 +98,18 @@ bw.data={
         const requestOptions = {
             method: "POST",
             headers: myHeaders,
-            body: JSON.stringify({ 
+            body: JSON.stringify({
                 userId,
-                url : location.origin
-             }),
-            redirect: "follow"
+                url: location.origin,
+            }),
+            redirect: "follow",
         };
 
-        const response = await fetch(`${BW_SERVER_ENDPOINT_BASE}${BW_GUIDE_URL}`, requestOptions);
+        const response = await fetch(BW_SERVER_ENDPOINT_BASE, requestOptions);
         const data = await response.json();
         return data;
-    }
-}
+    },
+};
 
 bw.store = {
     insert: function (key, value) {
@@ -103,8 +120,8 @@ bw.store = {
     },
     get: function (key) {
         return localStorage.getItem(key);
-    }
-}
+    },
+};
 
 bw.user = {
     createUser: function () {
@@ -120,44 +137,42 @@ bw.user = {
         }
         return result;
     },
-    getUserID : function(){
+    getUserID: function () {
         return bw.store.get(BW_USER_KEY);
     },
-    removeUser: function(){
+    removeUser: function () {
         bw.store.remove(BW_USER_KEY);
-    }
-}
+    },
+};
 
 bw.init = (cb) => {
-    if(!bw.user.checkIfBwUserCreated()){
+    if (!bw.user.checkIfBwUserCreated()) {
         bw.user.createUser();
     }
     window.BW_USER = bw.user.getUserID();
     cb && cb();
 };
 
-(
-    function () {
-
-        bw.init(async function (){
-           
-           try {
-            const onBoardConfig = await bw.data.getData(window.BW_USER); 
-            console.log('data loaded:' , onBoardConfig);
-            window.bwonboarddata=onBoardConfig;
+(function () {
+    bw.init(async function () {
+        try {
+            const onBoardConfig = await bw.data.getData(window.BW_USER);
+            console.log("data loaded:", onBoardConfig);
+            window.bwonboarddata = onBoardConfig;
             if (onBoardConfig.popup.length > 0) {
                 bw.util.loadScriptAsync(BW_POPUP_JS_URL);
-            } else if (onBoardConfig.tour?.length > 0) {
+            } 
+            if (onBoardConfig.tour?.length > 0) {
                 bw.util.loadScriptAsync(BW_TOUR_JS_URL);
-            } else if(onBoardConfig.banner?.length > 0){
+            } 
+            if (onBoardConfig.banner?.length > 0) {
                 bw.util.loadScriptAsync(BW_BANNER_JS_URL);
-            } else if(onBoardConfig.link?.length > 0){
+            } 
+            if (onBoardConfig.link?.length > 0) {
                 bw.util.loadScriptAsync(BW_LINKS_JS_URL);
             }
-           } catch (error) {
-            console.log('error :', error);
-           }
-            
-        });
-    }
-)();
+        } catch (error) {
+            console.log("error :", error);
+        }
+    });
+})();
