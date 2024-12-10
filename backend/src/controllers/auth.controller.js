@@ -13,8 +13,8 @@ const {
   findUserByEmail,
 } = require("../service/email.service");
 const settings = require("../../config/settings");
-const he = require("he");
 const { create } = require("domain");
+const { decode } = require("html-entities");
 
 const isTestingEnv = process.env.NODE_ENV === "test";
 const register = async (req, res) => {
@@ -129,7 +129,7 @@ const login = async (req, res) => {
         surname: user.surname,
         email: user.email,
         role: settings.user.roleName[user.role],
-        picture: user.picture ? he.decode(user.picture) : "",
+        picture: user.picture ? decode(user.picture) : "",
       },
       token,
     });
