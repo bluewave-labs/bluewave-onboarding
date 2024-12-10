@@ -34,6 +34,8 @@ const CustomTextField = ({
   disabled = false,
   autofocus = false
 }) => {
+  const computedFullWidth = fullWidth || 
+    ["full", "100%", "stretch"].some(value => TextFieldWidth.toLowerCase().includes(value));
   return (
     <div style={style}>
       {!checkCircleIconVisible &&
@@ -57,8 +59,8 @@ const CustomTextField = ({
         onBlur={onBlur}
         required={Boolean(required)}
         className="textField"
-        sx={{ width: fullWidth?"100%": TextFieldWidth }}
-        fullWidth={fullWidth}
+        sx={{ width: computedFullWidth ? "100%" : TextFieldWidth }}
+        fullWidth={computedFullWidth}
         margin={textFieldMargin}
         value={value}
         onChange={onChange}
