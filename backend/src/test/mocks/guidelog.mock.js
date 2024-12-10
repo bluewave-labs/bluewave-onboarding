@@ -24,17 +24,17 @@ class GuideLogBuilder {
   }
 
   invalidUserId() {
-    this.popupLog.userId = 123;
+    this.guideLog.userId = 123;
     return this;
   }
 
   missingUserId() {
-    this.popupLog.userId = undefined;
+    this.guideLog.userId = undefined;
     return this;
   }
 
   invalidCompleted() {
-    this.popupLog.completed = "invalid";
+    this.guideLog.completed = "invalid";
     return this;
   }
 
