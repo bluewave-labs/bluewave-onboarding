@@ -1,4 +1,5 @@
 const db = require("../models");
+const { Op } = require('sequelize');
 const Banner = db.Banner;
 
 class BannerService {
@@ -57,6 +58,19 @@ class BannerService {
   async getBannerByUrl(url) {
     try {
       return await Banner.findAll({ where: { url } });
+    } catch (error) {
+      throw new Error("Error retrieving banner by URL");
+    }
+  };
+
+  async getIncompleteBannersByUrl(url, ids) {
+    try {
+      return await Banner.findAll({
+        where: {
+          url,
+          id: { [Op.notIn]: ids }
+        }
+      });
     } catch (error) {
       throw new Error("Error retrieving banner by URL");
     }
