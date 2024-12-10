@@ -7,7 +7,7 @@ const { checkColorFieldsFail } = require("../utils/guide.helper");
 class BannerController {
   async addBanner(req, res) {
     const userId = req.user.id;
-    const { position, closeButtonAction, fontColor, backgroundColor } = req.body;
+    const { position, closeButtonAction, fontColor, backgroundColor, actionUrl } = req.body;
 
     if (!position || !closeButtonAction) {
       return res
@@ -23,6 +23,14 @@ class BannerController {
         .json({
           errors: [{ msg: "Invalid value entered" }],
         });
+    }
+
+    if (actionUrl) {
+      try {
+        new URL(actionUrl);
+      } catch (err) {
+        return res.status(400).json({ errors: [{ msg: "Invalid URL format for actionUrl" }] });
+      }
     }
 
     const colorFields = { fontColor, backgroundColor };
@@ -76,7 +84,7 @@ class BannerController {
   async editBanner(req, res) {
     try {
       const { id } = req.params;
-      const { fontColor, backgroundColor, url, position, closeButtonAction, bannerText } = req.body;
+      const { fontColor, backgroundColor, url, position, closeButtonAction, bannerText, actionUrl } = req.body;
 
       if (!position || !closeButtonAction) {
         return res
@@ -96,6 +104,14 @@ class BannerController {
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid value for closeButtonAction" }] });
+      }
+
+      if (actionUrl) {
+        try {
+          new URL(actionUrl);
+        } catch (err) {
+          return res.status(400).json({ errors: [{ msg: "Invalid URL format for actionUrl" }] });
+        }
       }
 
       const colorFields = { fontColor, backgroundColor };
