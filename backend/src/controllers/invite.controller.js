@@ -10,13 +10,13 @@ const sendTeamInvite = async (req, res) => {
     await inviteService.sendInvite(userId, invitedEmail, role);
     return res.status(200).json({
       status: 200,
-      message: 'Invite sent successfully',
+      message: "Invite sent successfully",
       data: null,
     });
   } catch (err) {
     const { statusCode, payload } = internalServerError(
       "SEND_INVITE_ERROR",
-      err.message,
+      err.message
     );
     res.status(statusCode).json(payload);
   }
@@ -28,7 +28,7 @@ const getAllInvites = async (req, res) => {
     return res.status(200).json({
       invites,
       success: true,
-      message: "Invites Retrieved Successfully"
+      message: "Invites Retrieved Successfully",
     });
   } catch (error) {
     return res.status(500).json({
@@ -38,4 +38,4 @@ const getAllInvites = async (req, res) => {
   }
 };
 
-module.exports = { sendTeamInvite, getAllInvites };
+module.exports = { sendTeamInvite, getAllInvites, inviteService };

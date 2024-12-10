@@ -163,5 +163,6 @@ module.exports = {
   checkAtLeastOneField,
   validateProfileUpdate,
   handleValidationErrors,
+  userService,
   hasUsers
 };

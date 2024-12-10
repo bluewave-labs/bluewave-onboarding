@@ -71,7 +71,10 @@ class HelperLinkService {
         where: { id },
         returning: true,
       });
-      if (affectedRows === 0) return null;
+      if (affectedRows === 0) {
+        t.commit();
+        return null;
+      }
       await Promise.all(
         links.map(async (item) => {
           const { id: linkId, ...link } = item;
