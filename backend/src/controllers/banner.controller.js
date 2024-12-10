@@ -11,14 +11,7 @@ const { checkColorFieldsFail } = require("../utils/guide.helper");
 class BannerController {
   async addBanner(req, res) {
     const userId = req.user.id;
-    const {
-      position,
-      closeButtonAction,
-      fontColor,
-      backgroundColor,
-      actionUrl,
-      url,
-    } = req.body;
+    const { position, closeButtonAction, fontColor, backgroundColor, actionUrl } = req.body;
 
     if (!position || !closeButtonAction) {
       return res.status(400).json({
@@ -37,17 +30,9 @@ class BannerController {
 
     if (actionUrl) {
       try {
-        validateUrl(actionUrl, "actionUrl");
+        new URL(actionUrl);
       } catch (err) {
-        return res.status(400).json({ errors: [{ msg: err.message }] });
-      }
-    }
-
-    if (url) {
-      try {
-        validateRelativeUrl(url, "url");
-      } catch (err) {
-        return res.status(400).json({ errors: [{ msg: err.message }] });
+        return res.status(400).json({ errors: [{ msg: "Invalid URL format for actionUrl" }] });
       }
     }
 
@@ -102,14 +87,7 @@ class BannerController {
   async editBanner(req, res) {
     try {
       const { id } = req.params;
-      const {
-        fontColor,
-        backgroundColor,
-        url,
-        position,
-        closeButtonAction,
-        actionUrl,
-      } = req.body;
+      const { fontColor, backgroundColor, url, position, closeButtonAction, bannerText, actionUrl } = req.body;
 
       if (!position || !closeButtonAction) {
         return res.status(400).json({
@@ -131,17 +109,9 @@ class BannerController {
 
       if (actionUrl) {
         try {
-          validateUrl(actionUrl, "actionUrl");
+          new URL(actionUrl);
         } catch (err) {
-          return res.status(400).json({ errors: [{ msg: err.message }] });
-        }
-      }
-
-      if (url) {
-        try {
-          validateRelativeUrl(url, "url");
-        } catch (err) {
-          return res.status(400).json({ errors: [{ msg: err.message }] });
+          return res.status(400).json({ errors: [{ msg: "Invalid URL format for actionUrl" }] });
         }
       }
 
