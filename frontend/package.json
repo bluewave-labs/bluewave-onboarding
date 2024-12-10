@@ -49,6 +49,10 @@
     "vitest": "^1.6.0",
     "webpack": "^5.93.0"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.6.1",
+    "@rollup/rollup-darwin-arm64": "^4.6.1"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
