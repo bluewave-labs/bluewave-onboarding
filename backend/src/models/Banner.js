@@ -2,11 +2,7 @@ const {
   validateHexColor,
   validateActionButton,
 } = require("../utils/guide.helper");
-const {
-  validatePositionWrapper,
-  validateUrl,
-  validateRelativeUrl,
-} = require("../utils/banner.helper");
+const { validatePositionWrapper } = require("../utils/banner.helper");
 
 module.exports = (sequelize, DataTypes) => {
   const Banner = sequelize.define(
@@ -33,11 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       url: {
         type: DataTypes.STRING,
         allowNull: true,
-        validate: {
-          isUrl(value) {
-            validateRelativeUrl(value, "url");
-          },
-        },
       },
       fontColor: {
         type: DataTypes.STRING,
@@ -66,10 +57,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       actionUrl: {
         type: DataTypes.STRING,
-        allowNull: true,
         validate: {
           isUrl(value) {
-            validateUrl(value, "actionUrl");
+            try {
+              new URL(value);
+            } catch {
+              throw new Error("Invalid URL for actionUrl");
+            }
           },
         },
       },
