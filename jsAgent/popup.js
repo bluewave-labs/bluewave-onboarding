@@ -37,7 +37,7 @@ bw.popup = {
      },
     
     addOverlay: function () {
-        document.body.insertAdjacentHTML('afterbegin', `<div id='bw-overlay' style='position: fixed;top: 0;bottom: 0;left: 0;right: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(3px); z-index: 999;'></div>`);
+        document.body.insertAdjacentHTML('afterbegin', `<div id='bw-overlay' style='position: fixed;top: 0;bottom: 0;left: 0;right: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.0); backdrop-filter: blur(0px); z-index: 999;'></div>`);
     },
     addModal: function (cb) {
         const options = window.bwonboarddata.popup[0];
@@ -51,11 +51,10 @@ bw.popup = {
 
         let temp_html = `
         <div id='bw-modal' class='bw-order' style='width: ${size.width}px; height: ${size.height}px; display: block; z-index: 1; border: 1px solid var(--light-border-color); box-sizing: border-box; margin:auto; padding-top: 100px; background-color: rgb(255 255 255 / 0%);;'>
-            <div class='modal-content' style='position: relative; margin: auto;padding: 0;border: 1px solid #888; background-color: white;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);'>
+            <div class='modal-content' style='border-radius: 4px; position: relative; margin: auto;padding: 0;border: 1px solid #888; background-color: white;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);'>
                 ${bw.popup.addHeader(option.header, option.headerBackgroundColor, option.headerColor, option.padding)}
                 <div class="modal-body" style='padding: ${option.padding}px ${option.padding}px; display: flex; justify-content: space-between; flex-direction: column; box-sizing: border-box;'>
                     ${option.content}
-                    
                     ${bw.popup.addButton(option.actionButtonText, option.buttonBackgroundColor, option.buttonTextColor, option.padding, `bw-popup-btn`, option.closeButtonAction, option.url)}
                 </div>
             </div>
@@ -95,6 +94,10 @@ bw.popup = {
     },  
     bindEvents: function(){
         bw.util.bindLive(`#bw-modal-close`, 'click', function(){
+            bw.popup.hideModal();
+        });
+
+        bw.util.bindLive("#bw-overlay", "click",function(){
             bw.popup.hideModal();
         });
     },
