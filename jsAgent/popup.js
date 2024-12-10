@@ -1,5 +1,7 @@
 const popupDefaultOptions = {
     padding: 20,
+    overlayOpacity:"0",
+    overlayBlur:0,
     closeButtonAction: "no action",
     popupSize: "small",
     url: "https://",
@@ -37,7 +39,7 @@ bw.popup = {
      },
     
     addOverlay: function () {
-        document.body.insertAdjacentHTML('afterbegin', `<div id='bw-overlay' style='position: fixed;top: 0;bottom: 0;left: 0;right: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.0); backdrop-filter: blur(0px); z-index: 999;'></div>`);
+        document.body.insertAdjacentHTML('afterbegin', `<div id='bw-overlay' style='position: fixed;top: 0;bottom: 0;left: 0;right: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.${popupDefaultOptions.overlayOpacity}); backdrop-filter: blur(${popupDefaultOptions.overlayBlur}px); z-index: 999;'></div>`);
     },
     addModal: function (cb) {
         const options = window.bwonboarddata.popup[0];
