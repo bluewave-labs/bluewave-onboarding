@@ -79,7 +79,7 @@ const PasswordTab = () => {
         <Button
           text="Save"
           onClick={handleSubmit}
-          style={{ width: '120px', marginTop: '50px'}}
+          style={{ width: '120px', marginTop: '50px' }}
         />
       </div>
     </form>
