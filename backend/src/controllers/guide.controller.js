@@ -1,5 +1,6 @@
 const bannerService = require("../service/banner.service");
-const linkService = require("../service/link.service");
+const guidelogService = require("../service/guidelog.service");
+const helperLinkService = require("../service/helperLink.service");
 const popupService = require("../service/popup.service");
 
 class GuideController {
@@ -10,12 +11,12 @@ class GuideController {
             if (!url || typeof url !== 'string') {
                 return res.status(400).json({ errors: [{ msg: "URL is missing or invalid" }] });
             }
-            const [banner, popup, link] = await Promise.all([
+            const [banner, popup, helperLink] = await Promise.all([
                 bannerService.getBannerByUrl(url),
                 popupService.getPopupByUrl(url),
-                linkService.getLinkByUrl(url),
+                helperLinkService.getAllHelpersWithLinks(),
             ]);
-            res.status(200).json({ banner, popup, link });
+            res.status(200).json({ banner, popup, helperLink });
         } catch (error) {
             internalServerError(
                 "GET_GUIDES_BY_URL_ERROR",
@@ -31,11 +32,26 @@ class GuideController {
             if (!url || typeof url !== 'string') {
                 return res.status(400).json({ errors: [{ msg: "URL is missing or invalid" }] });
             }
-            if (!userId || typeof url !== 'userId') {
+            if (!userId || typeof userId !== 'string') {
                 return res.status(400).json({ errors: [{ msg: "userId is missing or invalid" }] });
             }
 
-            
+            const [completePopupLogs, completeBannerLogs, completeHelperLogs] = await Promise.all([
+                guidelogService.getCompletePopupLogs(userId),
+                guidelogService.getCompleteBannerLogs(userId),
+                guidelogService.getCompleteHelperLogs(userId),
+            ]);
+
+            const popupIds = completePopupLogs.map(log => log.guideId);
+            const bannerIds = completeBannerLogs.map(log => log.guideId);
+            const helperLinkIds = completeHelperLogs.map(log => log.guideId);
+
+            const [banner, popup, helperLink] = await Promise.all([
+                bannerService.getIncompleteBannersByUrl(url, bannerIds),
+                popupService.getIncompletePopupsByUrl(url, popupIds),
+                helperLinkService.getIncompleteHelpers(helperLinkIds),
+            ]);
+            res.status(200).json({ banner, popup, helperLink });
 
         } catch (error) {
             internalServerError(

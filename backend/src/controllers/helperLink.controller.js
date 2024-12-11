@@ -185,6 +185,19 @@ class LinkController {
     }
   }
 
+  async getAllHelpersWithLinks(_, res) {
+    try {
+      const links = await helperService.getAllHelpersWithLinks();
+      res.status(200).json(links);
+    } catch (err) {
+      const { statusCode, payload } = internalServerError(
+        "GET_ALL_HELPERS_WITH_LINKSERROR",
+        err.message
+      );
+      res.status(statusCode).json(payload);
+    }
+  }
+
   async getHelpersByUserId(req, res) {
     try {
       const userId = req.user.id;
