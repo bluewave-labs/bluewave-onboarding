@@ -26,6 +26,7 @@ module.exports = {
       serverUrlAndApiKey: [userRole.ADMIN],
       links: [userRole.ADMIN],
       tours: [userRole.ADMIN],
+      helpers: [userRole.ADMIN],
     }
   }
 };
