@@ -1,5 +1,6 @@
 const db = require("../models");
 const Banner = db.Banner;
+const sequelize = db.sequelize;
 
 class BannerService {
   async getAllBanners() {
