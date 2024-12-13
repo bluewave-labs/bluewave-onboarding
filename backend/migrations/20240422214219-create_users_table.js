@@ -1,7 +1,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    return queryInterface.sequelize.transaction(async (transaction) => {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.sequelize.transaction(async (transaction) => {
       await queryInterface.createTable(
         "users",
         {
@@ -40,8 +40,8 @@ module.exports = {
     });
   },
 
-  async down(queryInterface, Sequelize) {
-    return queryInterface.sequelize.transaction(async (transaction) => {
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.sequelize.transaction(async (transaction) => {
       await queryInterface.dropTable("users", { transaction });
     });
   },
