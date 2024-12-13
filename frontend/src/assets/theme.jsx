@@ -1,4 +1,10 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+// import "../styles/variables.css";
+
+
+const cssVar = (name) =>
+  getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
 //created common tab styles for code clarity in MuiTab
 const commonTabStyles = {
   root: {
@@ -8,10 +14,10 @@ const commonTabStyles = {
     fontWeight: 400,
     lineHeight: "20px",
     "&.Mui-selected": {
-      color: "var(--main-purple)",
+      color: cssVar("--main-purple"),
     },
     "&:not(.Mui-selected)": {
-      color: "var(--main-text-color)",
+      color: cssVar("--main-text-color"),
       borderBottom:
         "1px solid var(--Colors-Foreground-fg-brand-primary_alt, var(--light-gray))",
     },
@@ -23,10 +29,10 @@ export const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "var(--main-purple)",
+      main: cssVar("--main-purple"),
     },
     background: {
-      default: "var(--light-background)",
+      default: cssVar("--light-background"),
     },
   },
 
@@ -43,10 +49,10 @@ export const lightTheme = createTheme({
     MuiSvgIcon: {
       styleOverrides: {
         root: {
-          color: "var(--main-text-color)",
+          color: cssVar("--main-text-color"),
         },
         colorError: {
-          color: "var(--border-error-solid)",
+          color: cssVar("--border-error-solid"),
         },
       },
     },
@@ -58,7 +64,7 @@ export const lightTheme = createTheme({
           width: "17px",
           boxShadow: "none",
           border: "1.23px solid var(--grey-border)",
-          color: "var(--main-text-color)",
+          color: cssVar("--main-text-color"),
         },
       },
     },
@@ -68,10 +74,10 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiSvgIcon-colorError": {
-            color: "var(--border-error-solid)",
+            color: cssVar("--border-error-solid"),
           },
           "& svg": {
-            color: "var(--light-border-color)",
+            color: cssVar("--light-border-color"),
           },
           "& .MuiDivider-root": {
             margin: "0 10px",
@@ -80,15 +86,15 @@ export const lightTheme = createTheme({
             fontSize: "13px",
             boxShadow: "0px 1px 2px 0px var(--shadow-subtle)",
             "&:hover fieldset": {
-              borderColor: "var(--main-purple)",
+              borderColor: cssVar("--main-purple"),
             },
             "&.Mui-focused fieldset": {
-              borderColor: "var(--main-purple)",
+              borderColor: cssVar("--main-purple"),
             },
           },
           "& .MuiButton-root": {
             fontSize: "13px",
-            color: "var(--second-text-color)",
+            color: cssVar("--second-text-color"),
           },
         },
       },
@@ -97,16 +103,16 @@ export const lightTheme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          fontSize: "var(--font-regular)",
+          fontSize: cssVar("--font-regular"),
           boxShadow: "0px 1px 2px 0px var(--shadow-subtle)",
           "& svg": {
-            color: "var(--light-border-color)",
+            color: cssVar("--light-border-color"),
           },
           "&:hover fieldset": {
-            borderColor: "var(--main-purple)",
+            borderColor: cssVar("--main-purple"),
           },
           "&.Mui-focused fieldset": {
-            borderColor: "var(--main-purple)",
+            borderColor: cssVar("--main-purple"),
           },
         },
         notchedOutline: {
@@ -127,8 +133,8 @@ export const lightTheme = createTheme({
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          fontSize: "var(--font-regular)",
-          color: "var(--second-text-color)",
+          fontSize: cssVar("--font-regular"),
+          color: cssVar("--second-text-color"),
         },
       },
     },
@@ -139,7 +145,7 @@ export const lightTheme = createTheme({
           padding: "4px 12px !important",
           cursor: "pointer",
           "&:hover": {
-            backgroundColor: "var(--background-hover)",
+            backgroundColor: cssVar("--background-hover"),
           },
         },
       },
@@ -156,7 +162,7 @@ export const lightTheme = createTheme({
     MuiSwitch: {
       styleOverrides: {
         switchBase: {
-          color: "var(--main-purple)",
+          color: cssVar("--main-purple"),
         },
         track: {
           backgroundColor: "rgba(var(--main-purple-rgb), 0.5)",
@@ -182,14 +188,14 @@ export const lightTheme = createTheme({
           fontSize: "var(--font-informative)",
           fontWeight: 400,
           lineHeight: "24px",
-          color: "var(--main-text-color)",
+          color: cssVar("--main-text-color"),
           display: "inline",
           justifyContent: "center",
           "&.title": {
             fontSize: "11px",
             fontWeight: 400,
             lineHeight: "38px",
-            color: "var(--second-text-color)",
+            color: cssVar("--second-text-color"),
             marginLeft: "8px",
             marginTop: "8px",
           },
@@ -231,7 +237,7 @@ export const lightTheme = createTheme({
           margin: "0px 5px !important",
           fontSize: "13px !important",
           "&.Mui-selected": {
-            backgroundColor: "var(--background-hover)",
+            backgroundColor: cssVar("--background-hover"),
             borderRadius: "8px !important",
           },
         },
@@ -253,22 +259,22 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           "&.Mui-selected": {
-            backgroundColor: "var(--main-purple) !important",
+            backgroundColor: `cssVar("--main-purple")!important`,
             color: "white !important",
           },
           "&.MuiDateRangePickerDay-day.Mui-selected": {
-            backgroundColor: "var(--main-purple)",
+            backgroundColor: cssVar("--main-purple"),
             color: "white !important",
           },
           "&.MuiDateRangePickerDay-day.Mui-selected:first-child": {
-            backgroundColor: "var(--main-purple)",
+            backgroundColor: cssVar("--main-purple"),
           },
           "&.MuiDateRangePickerDay-day.Mui-selected:last-child": {
-            backgroundColor: "var(--main-purple)",
+            backgroundColor: cssVar("--main-purple"),
           },
           "&.MuiPickersDay-rangeIntervalDay:not(.Mui-selected):not(:first-child):not(:last-child)":
             {
-              backgroundColor: "var(--background-hover)",
+              backgroundColor: cssVar("--background-hover"),
               color: "var(--color-black) !important",
             },
         },
@@ -282,7 +288,7 @@ export const lightTheme = createTheme({
             margin: "0 5px",
           },
           "&.apply": {
-            backgroundColor: "var(--main-purple)",
+            backgroundColor: cssVar("--main-purple"),
             color: "white !important",
             width: "142px",
             height: "34px",
@@ -317,22 +323,22 @@ export const lightTheme = createTheme({
       },
       // Primary checkbox styles
       colorPrimary: {
-        color: "var(--main-purple)",
+        color: cssVar("--main-purple"),
         "&.Mui-checked": {
-          color: "var(--main-purple)",
+          color: cssVar("--main-purple"),
         },
         "&.MuiCheckbox-indeterminate": {
-          color: "var(--main-purple)",
+          color: cssVar("--main-purple"),
         },
       },
       // Secondary checkbox styles
       colorSecondary: {
         color: "var(--text-secondary-light)",
         "&.Mui-checked": {
-          color: "var(--text-secondary-light)",
+          color: cssVar("--text-secondary-light"),
         },
         "&.MuiCheckbox-indeterminate": {
-          color: "var(--text-secondary-light)",
+          color: cssVar("--text-secondary-light"),
         },
       },
     },
@@ -340,7 +346,7 @@ export const lightTheme = createTheme({
     MuiFormControlLabel: {
       styleOverrides: {
         label: {
-          fontSize: "var(--font-header)",
+          fontSize: cssVar("--font-header"),
         },
       },
     },
@@ -349,8 +355,8 @@ export const lightTheme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: "var(--light-background)",
-          color: "var(--main-text-color)",
+          backgroundColor: cssVar("--light-background"),
+          color: cssVar("--main-text-color"),
         },
       },
     },
@@ -371,7 +377,7 @@ export const lightTheme = createTheme({
     MuiTabs: {
       styleOverrides: {
         indicator: {
-          backgroundColor: "var(--main-purple)",
+          backgroundColor: cssVar("--main-purple"),
         },
       },
     },
@@ -382,20 +388,20 @@ export const lightTheme = createTheme({
           borderRadius: "4px",
           textTransform: "none",
           boxShadow: "none",
-          color: "var(--main-purple) !important",
+          color: cssVar("--main-purple"),
         },
         // Additional styles for textField buttons
         textFieldButton: {
-          fontSize: "var(--font-regular)",
-          color: "var(--second-text-color)",
+          fontSize: cssVar("--font-regular"),
+          color: cssVar("--second-text-color"),
         },
         // Primary button styling
         containedPrimary: {
           color: "white",
-          backgroundColor: "var(--main-purple)",
+          backgroundColor: cssVar("--main-purple"),
           transition: "background-color 0.3s, border-color 0.3s",
           "&:hover": {
-            backgroundColor: "var(--main-purple-hover)",
+            backgroundColor:cssVar("--main-purple-hover"),
           },
           "&:active": {
             outline: "4px solid var(--outline-primary)",
@@ -405,18 +411,18 @@ export const lightTheme = createTheme({
           "&:disabled": {
             color: " var(--second-text-color)",
             backgroundColor: "var(--background-light)",
-            borderColor: "var(--border-gray-transparent)",
+            borderColor: cssVar("--border-gray-transparent"),
             fontWeight: 600,
           },
         },
         // Error button styling
         containedError: {
           color: "white",
-          backgroundColor: "var(--border-error-solid)",
+          backgroundColor: cssVar("--border-error-solid"),
           boxShadow: "none",
           transition: "background-color 0.3s, border-color 0.3s",
           "&:hover": {
-            backgroundColor: "var(--background-danger)",
+            backgroundColor:cssVar("--background-danger"),
           },
           "&:active": {
             outline: "4px solid var(--outline-error)",
@@ -428,36 +434,36 @@ export const lightTheme = createTheme({
         outlinedSecondary: {
           "&:disabled": {
             color: "grey",
-            backgroundColor: "var(--light-background)",
-            borderColor: "var(--border-gray-transparent)",
+            backgroundColor: cssVar("--light-background"),
+            borderColor: cssVar("--border-gray-transparent"),
             fontWeight: 600,
           },
         },
         // Secondary purple button styling
         outlinedPrimary: {
           color: "var(--main-purple-light-opacity)",
-          borderColor: "var(--main-purple)",
+          borderColor: cssVar("--main-purple"),
           backgroundColor: "white",
           border: "1px solid var(--light-border-color)",
           "&:hover": {
             backgroundColor: "var(--main-purple-light-opacity)",
-            borderColor: "var(--main-purple)",
+            borderColor: cssVar("--main-purple"),
           },
           "&:active": {
             outline: "4px solid var(--outline-secondary)",
-            backgroundColor: "var(--light-background)",
+            backgroundColor: cssVar("--light-background"),
             boxShadow:
               "0px 0px 0px 4px var(--shadow-primary), 0px 1px 2px 0px var(--shadow-subtle)",
           },
         },
         // Secondary grey button styling
         outlinedNeutral: {
-          color: "var(--text-secondary)",
-          borderColor: "var( --border-gray-transparent)",
+          color: cssVar("--text-secondary"),
+          borderColor: cssVar("--border-gray-transparent"),
           backgroundColor: "white",
           border: "1px solid var(--light-border-color)",
           "&:hover": {
-            backgroundColor: "var(--background-hover)",
+            backgroundColor: cssVar("--background-hover"),
             boxShadow: "none",
           },
           "&:active": {
@@ -480,18 +486,18 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "var( --main-purple)",
+      main: cssVar("--main-purple"),
     },
     background: {
-      default: "var(--background-dark)",
+      default: cssVar("--background-dark"),
     },
   },
   components: {
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: "var(--background-dark)",
-          color: "var(--light-background)",
+          backgroundColor: cssVar("--background-dark"),
+          color: cssVar("--light-background"),
         },
       },
     },
@@ -511,7 +517,7 @@ export const darkTheme = createTheme({
     MuiTabs: {
       styleOverrides: {
         indicator: {
-          backgroundColor: "var(--main-purple)",
+          backgroundColor: cssVar("--main-purple"),
         },
       },
     },
@@ -520,3 +526,4 @@ export const darkTheme = createTheme({
     fontFamily: "Inter",
   },
 });
+

@@ -20,7 +20,8 @@ import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
-
+import { ThemeProvider, createTheme } from "@mui/material/styles"; 
+import {lightTheme}  from "./assets/theme"; 
 import { useEffect, useState } from "react";
 import { getTeamCount } from "./services/teamServices";
 
@@ -32,50 +33,78 @@ const App = () => {
       try {
         const { teamExists } = await getTeamCount();
         setIsAdminLogin(!teamExists);
-      } catch (err) {
-      }
-    }
+      } catch (err) {}
+    };
     fetchTeamCount();
   }, []);
-  
+
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Private Component={HomePageTemplate} />}>
-          <Route index element={<Home />} />
-          <Route path="link" element={<LinksDefaultPage />} />
-          <Route path="tour" element={<ToursDefaultPage />} />
+      <ThemeProvider theme={lightTheme}>
+        {" "}
+        {/* Wrap your entire app with ThemeProvider */}
+        <Routes>
+          <Route path="/" element={<Private Component={HomePageTemplate} />}>
+            <Route index element={<Home />} />
+            <Route path="link" element={<LinksDefaultPage />} />
+            <Route path="tour" element={<ToursDefaultPage />} />
+            <Route path="/banner/create" element={<BannerPage />} />
+            <Route
+              path="/popup/create"
+              element={<Private Component={CreatePopupPage} />}
+            />
+            <Route
+              path="/banner"
+              element={<Private Component={BannerDefaultPage} />}
+            />
+            <Route
+              path="/popup"
+              element={<Private Component={PopupDefaultPage} />}
+            />
+            <Route path="/hint/create" element={<CreateHintPage />} />
+            <Route path="/hint" element={<HintDefaultPage />} />
+            <Route path="/settings" element={<Settings />} />
+          </Route>
+
+          <Route path="/login" element={<LoginPage isAdmin={isAdminLogin} />} />
+          <Route
+            path="/signup"
+            element={
+              <CreateAccountPage
+                isAdmin={isAdminLogin}
+                setIsAdmin={setIsAdminLogin}
+              />
+            }
+          />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<PasswordResetPage />} />
+          <Route path="/check-email" element={<CheckYourEmailPage />} />
+          <Route path="/set-new-password" element={<SetNewPasswordPage />} />
+
+          <Route path="/progress-steps" element={<ProgressStepsMain />} />
           <Route path="/banner/create" element={<BannerPage />} />
-          <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
-          <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
-          <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
+          <Route
+            path="/popup/create"
+            element={<Private Component={CreatePopupPage} />}
+          />
+          <Route
+            path="/banner"
+            element={<Private Component={BannerDefaultPage} />}
+          />
+          <Route
+            path="/popup"
+            element={<Private Component={PopupDefaultPage} />}
+          />
+          <Route path="/link" element={<LinksDefaultPage />} />
+          <Route path="/tour" element={<ToursDefaultPage />} />
           <Route path="/hint/create" element={<CreateHintPage />} />
           <Route path="/hint" element={<HintDefaultPage />} />
-          <Route path="/settings" element={<Settings />} />
-        </Route>
-
-        <Route path="/login" element={<LoginPage isAdmin={isAdminLogin}/>} />
-        <Route path="/signup" element={<CreateAccountPage isAdmin={isAdminLogin} setIsAdmin={setIsAdminLogin}/>} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<PasswordResetPage />} />
-        <Route path="/check-email" element={<CheckYourEmailPage />} />
-        <Route path="/set-new-password" element={<SetNewPasswordPage />} />
-
-        <Route path="/progress-steps" element={<ProgressStepsMain />} />
-        <Route path="/banner/create" element={<BannerPage />} />
-        <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
-        <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
-        <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
-        <Route path="/link" element={<LinksDefaultPage />} />
-        <Route path="/tour" element={<ToursDefaultPage />} />
-        <Route path="/hint/create" element={<CreateHintPage />} />
-        <Route path="/hint" element={<HintDefaultPage />} />
-        <Route path="/403" element={<Error403 />} />
-        <Route path="*" element={<Error404 />} />
-
-      </Routes>
+          <Route path="/403" element={<Error403 />} />
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+      </ThemeProvider>
     </>
   );
-}
+};
 
 export default App;
