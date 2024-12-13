@@ -46,8 +46,8 @@ class UserService {
   }
 
   async updateUser(userId, inputs) {
+    const transaction = await sequelize.transaction();
     try {
-      const transaction = await sequelize.transaction();
       const details = {
         ...(inputs.name && { name: inputs.name }),
         ...(inputs.surname && { surname: inputs.surname }),
