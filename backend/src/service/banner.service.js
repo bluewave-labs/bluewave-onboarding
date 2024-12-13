@@ -11,14 +11,22 @@ class BannerService {
   async getBanners(userId) {
     return await Banner.findAll({
       where: {
-        createdBy: userId
+        createdBy: userId,
       },
       include: [{ model: db.User, as: "creator" }],
     });
   }
 
   async createBanner(data) {
-    return await Banner.create(data);
+    const transaction = await sequelize.transaction();
+    try {
+      const banner = await Banner.create(data, { transaction });
+      await transaction.commit();
+      return banner;
+    } catch (err) {
+      await transaction.rollback();
+      throw new Error(`Failed to create banner ~ ${err.message}`);
+    }
   }
 
   async deleteBanner(id) {
@@ -32,16 +40,22 @@ class BannerService {
   }
 
   async updateBanner(id, data) {
-    const [affectedRows, updatedBanners] = await Banner.update(data, {
-      where: { id },
-      returning: true,
-    });
-
-    if (affectedRows === 0) {
-      return null;
+    const transaction = await sequelize.transaction();
+    try {
+      const [affectedRows, updatedBanners] = await Banner.update(data, {
+        where: { id },
+        returning: true,
+        transaction,
+      });
+      if (affectedRows === 0) {
+        return null;
+      }
+      await transaction.commit();
+      return updatedBanners[0];
+    } catch (err) {
+      await transaction.rollback();
+      throw new Error(`Failed to update banner ~ ${err.message}`);
     }
-
-    return updatedBanners[0];
   }
 
   async getBannerById(bannerId) {

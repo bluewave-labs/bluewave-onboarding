@@ -1,5 +1,6 @@
 const db = require("../models");
 const Tour = db.Tour;
+const sequelize = db.sequelize;
 
 class TourService {
   async getAllTours() {
@@ -11,14 +12,22 @@ class TourService {
   async getTours(userId) {
     return await Tour.findAll({
       where: {
-        createdBy: userId
+        createdBy: userId,
       },
       include: [{ model: db.User, as: "creator" }],
     });
   }
 
   async createTour(data) {
-    return await Tour.create(data);
+    const transaction = await sequelize.transaction();
+    try {
+      const tour = await Tour.create(data, { transaction });
+      await transaction.commit();
+      return tour;
+    } catch (error) {
+      await transaction.rollback();
+      throw new Error("Error creating tour");
+    }
   }
 
   async deleteTour(id) {
@@ -32,16 +41,23 @@ class TourService {
   }
 
   async updateTour(id, data) {
-    const [affectedRows, updatedTours] = await Tour.update(data, {
-      where: { id },
-      returning: true,
-    });
+    const transaction = await sequelize.transaction();
+    try {
+      const [affectedRows, updatedTours] = await Tour.update(data, {
+        where: { id },
+        returning: true,
+        transaction,
+      });
 
-    if (affectedRows === 0) {
-      return null;
+      if (affectedRows === 0) {
+        return null;
+      }
+      await transaction.commit();
+      return updatedTours[0];
+    } catch (error) {
+      await transaction.rollback();
+      throw new Error("Error updating tour");
     }
-
-    return updatedTours[0];
   }
 
   async getTourById(tourId) {

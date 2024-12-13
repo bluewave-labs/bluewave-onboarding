@@ -1,5 +1,6 @@
 const db = require("../models");
 const Link = db.Link;
+const sequelize = db.sequelize;
 
 class LinkService {
   async getAllLinks() {
@@ -28,7 +29,15 @@ class LinkService {
   }
 
   async createLink(data) {
-    return await Link.create(data);
+    const transaction = await sequelize.transaction();
+    try {
+      const link = await Link.create(data, { transaction });
+      await transaction.commit();
+      return link;
+    } catch (error) {
+      await transaction.rollback();
+      throw new Error("Error creating link");
+    }
   }
 
   async deleteLink(id) {
@@ -37,14 +46,22 @@ class LinkService {
   }
 
   async updateLink(id, data) {
-    const [affectedRows, updatedPopups] = await Link.update(data, {
-      where: { id },
-      returning: true,
-    });
+    const transaction = await sequelize.transaction();
+    try {
+      const [affectedRows, updatedPopups] = await Link.update(data, {
+        where: { id },
+        returning: true,
+        transaction,
+      });
 
-    if (affectedRows === 0) return null;
+      if (affectedRows === 0) return null;
 
-    return updatedPopups[0];
+      await transaction.commit();
+      return updatedPopups[0];
+    } catch (error) {
+      await transaction.rollback();
+      throw new Error("Error updating link");
+    }
   }
 
   async getLinkById(linkId) {

@@ -1,5 +1,6 @@
 const db = require("../models");
 const Popup = db.Popup;
+const sequelize = db.sequelize;
 
 class PopupService {
   async getAllPopups() {
@@ -11,14 +12,22 @@ class PopupService {
   async getPopups(userId) {
     return await Popup.findAll({
       where: {
-        createdBy: userId
+        createdBy: userId,
       },
       include: [{ model: db.User, as: "creator" }],
     });
   }
 
   async createPopup(data) {
-    return await Popup.create(data);
+    const transaction = await sequelize.transaction();
+    try {
+      const popup = await Popup.create(data, { transaction });
+      await transaction.commit();
+      return popup;
+    } catch (error) {
+      await transaction.rollback();
+      throw new Error("Error creating popup");
+    }
   }
 
   async deletePopup(id) {
@@ -32,16 +41,24 @@ class PopupService {
   }
 
   async updatePopup(id, data) {
-    const [affectedRows, updatedPopups] = await Popup.update(data, {
-      where: { id },
-      returning: true,
-    });
+    const transaction = await sequelize.transaction();
+    try {
+      const [affectedRows, updatedPopups] = await Popup.update(data, {
+        where: { id },
+        returning: true,
+        transaction,
+      });
 
-    if (affectedRows === 0) {
-      return null;
+      if (affectedRows === 0) {
+        return null;
+      }
+
+      await transaction.commit();
+      return updatedPopups[0];
+    } catch (error) {
+      await transaction.rollback();
+      throw new Error("Error updating popup");
     }
-
-    return updatedPopups[0];
   }
 
   async getPopupById(popupId) {

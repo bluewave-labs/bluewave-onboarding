@@ -47,6 +47,7 @@ class UserService {
 
   async updateUser(userId, inputs) {
     try {
+      const transaction = await sequelize.transaction();
       const details = {
         ...(inputs.name && { name: inputs.name }),
         ...(inputs.surname && { surname: inputs.surname }),
@@ -59,15 +60,18 @@ class UserService {
         details, {
         where: { id: userId },
         returning: true,
+        transaction
       });
 
       if (rowsUpdated > 0) {
+        await transaction.commit();
         return updatedUser;
       } else {
         throw new Error('User not found or no changes made');
       }
     }
     catch (err) {
+      await transaction.rollback();
       throw new Error("Error updating user");
     }
   }
