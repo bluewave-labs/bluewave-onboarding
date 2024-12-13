@@ -83,10 +83,12 @@ module.exports = {
         },
         { transaction }
       );
+      await queryInterface.addIndex("hints", ["createdBy"], { transaction });
+      await queryInterface.addIndex("hints", ["action"], { transaction });
+      await queryInterface.addIndex("hints", ["tooltipPlacement"], {
+        transaction,
+      });
     });
-    await queryInterface.addIndex("hints", ["createdBy"]);
-    await queryInterface.addIndex("hints", ["action"]);
-    await queryInterface.addIndex("hints", ["tooltipPlacement"]);
   },
 
   async down(queryInterface, Sequelize) {

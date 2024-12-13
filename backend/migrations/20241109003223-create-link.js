@@ -41,9 +41,8 @@ module.exports = {
         },
         { transaction }
       );
+      await queryInterface.addIndex("link", ["helperId"], { transaction });
     });
-
-    await queryInterface.addIndex("link", ["helperId"]);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.sequelize.transaction(async (transaction) => {

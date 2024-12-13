@@ -43,8 +43,10 @@ module.exports = {
         },
         { transaction }
       );
+      await queryInterface.addIndex("helper_link", ["createdBy"], {
+        transaction,
+      });
     });
-    await queryInterface.addIndex("helper_link", ["createdBy"]);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.sequelize.transaction(async (transaction) => {

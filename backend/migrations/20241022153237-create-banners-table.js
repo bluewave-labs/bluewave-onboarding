@@ -55,9 +55,9 @@ module.exports = {
         },
         { transaction }
       );
+      await queryInterface.addIndex("banners", ["position"], { transaction });
+      await queryInterface.addIndex("banners", ["createdBy"], { transaction });
     });
-    await queryInterface.addIndex("banners", ["position"]);
-    await queryInterface.addIndex("banners", ["createdBy"]);
   },
 
   async down(queryInterface, Sequelize) {

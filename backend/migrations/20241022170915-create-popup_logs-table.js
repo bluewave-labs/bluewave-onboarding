@@ -30,9 +30,11 @@ module.exports = {
         },
         { transaction }
       );
+      await queryInterface.addIndex("popup_logs", ["userId"], { transaction });
+      await queryInterface.addIndex("popup_logs", ["popupType"], {
+        transaction,
+      });
     });
-    await queryInterface.addIndex("popup_logs", ["userId"]);
-    await queryInterface.addIndex("popup_logs", ["popupType"]);
   },
 
   async down(queryInterface, Sequelize) {

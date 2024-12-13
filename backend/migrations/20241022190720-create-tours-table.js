@@ -1,7 +1,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.sequilize.transaction(async (transaction) => {
+    await queryInterface.sequelize.transaction(async (transaction) => {
       await queryInterface.createTable(
         "tours",
         {
@@ -48,14 +48,14 @@ module.exports = {
         },
         { transaction }
       );
+      await queryInterface.addIndex("tours", ["createdBy"], { transaction });
+      await queryInterface.addIndex("tours", ["statusActive"], { transaction });
+      await queryInterface.addIndex("tours", ["pageTargeting"], { transaction });
     });
-    await queryInterface.addIndex("tours", ["createdBy"]);
-    await queryInterface.addIndex("tours", ["statusActive"]);
-    await queryInterface.addIndex("tours", ["pageTargeting"]);
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.sequilize.transaction(async (transaction) => {
+    await queryInterface.sequelize.transaction(async (transaction) => {
       await queryInterface.dropTable("tours", { transaction });
     });
   },
