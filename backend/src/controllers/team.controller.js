@@ -130,4 +130,4 @@ const changeRole = async (req, res) => {
   }
 }
 
-module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, removeMember, changeRole, getTeamCount };
+module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, removeMember, changeRole, getTeamCount, teamService };

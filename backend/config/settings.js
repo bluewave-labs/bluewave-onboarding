@@ -23,6 +23,8 @@ module.exports = {
       popups: [userRole.ADMIN],
       hints: [userRole.ADMIN],
       banners: [userRole.ADMIN],
+      links: [userRole.ADMIN],
+      tours: [userRole.ADMIN],
     }
   }
 };

@@ -79,6 +79,14 @@ class LinkService {
       throw new Error("Error retrieving link by ID");
     }
   }
+
+  async getLinkByUrl(url) {
+    try {
+      return await Link.findAll({ where: { url } });
+    } catch (error) {
+      throw new Error("Error retrieving Link by URL");
+    }
+  };
 }
 
 module.exports = new LinkService();

@@ -189,7 +189,23 @@ class PopupController {
       res.status(statusCode).json(payload);
     }
   }
+  async getPopupByUrl(req, res) {
+    try {
+      const { url } = req.body;
 
+      if (!url || typeof url !== 'string' ) {
+        return res.status(400).json({ errors: [{ msg: "URL is missing or invalid" }] });
+      }
+
+      const popup = await popupService.getPopupByUrl(url);
+      res.status(200).json({popup});
+    } catch (error) {
+      internalServerError(
+        "GET_POPUP_BY_URL_ERROR",
+        error.message,
+      );
+    }
+  };
   
 }
 

@@ -142,6 +142,19 @@ const deleteUser = async (req, res) => {
   }
 }
 
+const hasUsers = async (req, res) => {
+  try {
+    const result = await userService.hasUsers();
+    return res.status(200).json(result);
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "GET_USERS_ERROR",
+      err.message,
+    );
+    res.status(statusCode).json(payload);
+  }
+};
+
 module.exports = {
   getUsersList,
   getCurrentUser,
@@ -149,5 +162,7 @@ module.exports = {
   deleteUser,
   checkAtLeastOneField,
   validateProfileUpdate,
-  handleValidationErrors
+  handleValidationErrors,
+  userService,
+  hasUsers
 };

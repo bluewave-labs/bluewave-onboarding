@@ -111,6 +111,15 @@ class UserService {
     }
 
   }
+  
+  async hasUsers() {
+    try {
+      const userCount = await User.count();
+      return { usersExist: userCount > 0 };
+    } catch (err) {
+      throw new Error("Failed to get user count");
+    }
+  }
 }
 
 module.exports = UserService;

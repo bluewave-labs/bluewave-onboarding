@@ -67,6 +67,14 @@ class BannerService {
       throw new Error("Error retrieving banner by ID");
     }
   }
+
+  async getBannerByUrl(url) {
+    try {
+      return await Banner.findAll({ where: { url } });
+    } catch (error) {
+      throw new Error("Error retrieving banner by URL");
+    }
+  };
 }
 
 module.exports = new BannerService();

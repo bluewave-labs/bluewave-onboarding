@@ -1,25 +1,18 @@
 const express = require("express");
 const tourController = require("../controllers/tour.controller");
 const authenticateJWT = require("../middleware/auth.middleware");
+const settings = require('../../config/settings');
+const accessGuard = require('../middleware/accessGuard.middleware');
 
 const router = express.Router();
+const teamPermissions = settings.team.permissions;
 
-// Create a new tour
-router.post("/add_tour", authenticateJWT, tourController.addTour);
-
-// Delete a tour by ID
-router.delete("/delete_tour/:id", authenticateJWT, tourController.deleteTour);
-
-// Edit a tour by ID
-router.put("/edit_tour/:id", authenticateJWT, tourController.editTour);
-
-// Get all tours
+router.post("/add_tour", authenticateJWT, accessGuard(teamPermissions.tours), tourController.addTour);
+router.delete("/delete_tour/:id", authenticateJWT, accessGuard(teamPermissions.tours), tourController.deleteTour);
+router.put("/edit_tour/:id", authenticateJWT, accessGuard(teamPermissions.tours), tourController.editTour);
 router.get("/all_tours", authenticateJWT, tourController.getAllTours);
-
-// Get tours created by the authenticated user
 router.get("/tours", authenticateJWT, tourController.getTours);
-
-// Get a specific tour by ID
 router.get("/get_tour/:id", authenticateJWT, tourController.getTourById);
+// router.get("/get_tour_by_url", tourController.getTourByUrl);
 
 module.exports = router;
