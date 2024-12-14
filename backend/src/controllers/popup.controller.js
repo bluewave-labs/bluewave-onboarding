@@ -273,7 +273,11 @@ class PopupController {
       res.status(200).json({ popup });
       res.status(200).json({ popup });
     } catch (error) {
-      internalServerError("GET_POPUP_BY_URL_ERROR", error.message);
+      const { payload, statusCode } = internalServerError(
+        "GET_POPUP_BY_URL_ERROR",
+        error.message
+      );
+      res.status(statusCode).json(payload);
     }
   }
   }
