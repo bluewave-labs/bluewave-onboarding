@@ -13,7 +13,5 @@ module.exports = Object.freeze({
     ORG_NAME_REGEX: /^[a-zA-Z0-9\s\-_&.]+$/,
     URL_PROTOCOL_REGEX: /^(https?:\/\/)/,
     URL_DOMAIN_REGEX: /^https?:\/\/([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/,
-    URL_PORT_REGEX: /^https?:\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:[0-9]{1,5})?/,
-    URL_PATH_REGEX: /^https?:\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:[0-9]{1,5})?(\/[^\s]*)?$/
   }); 
   

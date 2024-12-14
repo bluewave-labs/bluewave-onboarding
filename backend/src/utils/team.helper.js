@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { URL_PROTOCOL_REGEX, URL_DOMAIN_REGEX } = require('./constants.helper');
+const { check } = require('express-validator');
 
 require('dotenv').config();
 
@@ -17,10 +18,6 @@ const decryptApiKey = (apiKey) => {
 
 const validateServerUrl = url => {
   const errors = [];
-
-  if (url === "") {
-    return { valid: true, error: null }
-  }
 
   if (!URL_PROTOCOL_REGEX.test(url)) {
     errors.push("Invalid or missing protocol (must be 'http://' or 'https://').")
@@ -43,4 +40,24 @@ const validateServerUrl = url => {
   return { valid: false, errors }
 };
 
-module.exports = { encryptApiKey, decryptApiKey, validateServerUrl };
+const validateSetConfig = [
+  check('apiKey')
+    .exists().withMessage('API Key is required')
+    .isString().withMessage('API Key must be a string')
+    .trim()
+    .notEmpty().withMessage('API Key cannot be empty'),
+
+  check('serverUrl')
+    .optional()
+    .isString().withMessage('Server URL must be a string')
+    .trim()
+    .custom(value => {
+      const result = validateServerUrl(value);
+      if (result.valid) {
+        return true;
+      }
+      throw new Error(result.errors);
+    })
+];
+
+module.exports = { encryptApiKey, decryptApiKey, validateSetConfig };

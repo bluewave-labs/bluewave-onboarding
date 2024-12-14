@@ -3,7 +3,8 @@ const TeamService = require("../service/team.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { MAX_ORG_NAME_LENGTH, ORG_NAME_REGEX, VALID_URL_REGEX } = require('../utils/constants.helper');
 const db = require("../models");
-const { encryptApiKey, decryptApiKey, validateServerUrl } = require("../utils/team.helper");
+const { decryptApiKey, encryptApiKey } = require("../utils/team.helper");
+const { validationResult } = require("express-validator");
 
 const Team = db.Team;
 const teamService = new TeamService();
@@ -121,35 +122,16 @@ const updateTeamDetails = async (req, res) => {
 };
 
 const setConfig = async (req, res) => {
-  let { serverUrl, apiKey } = req.body;
-  if (!apiKey || typeof apiKey !== "string" || apiKey.trim().length === 0) {
-    return res.status(400).json({ message: 'API Key is required and should be a non-empty string' });
-  }
-
-  serverUrl = serverUrl && serverUrl !== "" ? serverUrl.trim() : serverUrl;
-  apiKey = apiKey.trim();
-  const encryptedApiKey = encryptApiKey(apiKey);
-
-  if (serverUrl) {
-    const result = validateServerUrl(serverUrl);
-
-    if (!result.valid) {
-      return res.status(400).json({ message: result.errors });
-    }
-  }
+  const validationErrors = validationResult(req);
   
-  if (serverUrl && serverUrl !== "") {
-    try {
-      const url = new URL(serverUrl);
-      if (url.username || url.password) {
-        throw new Error('URL cannot contain credentials');
-      }
-    } catch (err) {
-      return res.status(400).json({ message: 'Invalid server URL format.' });
-    }
+  if (!validationErrors.isEmpty()) {
+    return res.status(400).json({ errors: validationErrors.array() });
   }
 
   try {
+    const { serverUrl, apiKey } = req.body;
+    const encryptedApiKey = encryptApiKey(apiKey);
+
     await teamService.addServerUrlAndApiKey(serverUrl, encryptedApiKey);
     return res.status(200).json({ message: "Server URL and API Key Set Successfully" });
   } catch (err) {
@@ -190,4 +172,4 @@ const changeRole = async (req, res) => {
   }
 }
 
-module.exports = { setOrganisation, getTeamDetails, getServerUrlAndApiKey, updateTeamDetails, removeMember, changeRole, getTeamCount, setConfig };
+module.exports = { setOrganisation, getTeamDetails, getServerUrlAndApiKey, updateTeamDetails, removeMember, changeRole, getTeamCount, setConfig, teamService };
