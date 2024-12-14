@@ -54,7 +54,31 @@ const BannerPage = () => {
     }
   }, [location.state]);
 
+  const validateUrl = (url) => {
+    try {
+      new URL(url);
+      return null;
+    } catch (err) {
+      return "Invalid URL format";
+    }
+  };
+
   const onSave = async () => {
+    if (actionUrl && actionUrl !== "https://") {
+      const urlError = validateUrl(actionUrl);
+      if (urlError) {
+        emitToastError(urlError);
+        return;
+      }
+    }
+    if (url && url !== "https://") {
+      const urlError = validateUrl(url);
+      if (urlError) {
+        emitToastError(urlError);
+        return;
+      }
+    }
+
     const bannerData = {
       backgroundColor,
       fontColor,

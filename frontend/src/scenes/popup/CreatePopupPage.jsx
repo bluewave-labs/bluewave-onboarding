@@ -52,7 +52,7 @@ const CreatePopupPage = () => {
       stateName: "Button Text Color",
       state: buttonTextColor,
       setState: setButtonTextColor,
-    }
+    },
   ];
 
   useEffect(() => {
@@ -89,7 +89,30 @@ const CreatePopupPage = () => {
     }
   }, [location.state]);
 
+  const validateUrl = (url) => {
+    try {
+      new URL(url);
+      return null;
+    } catch (err) {
+      return "Invalid URL format";
+    }
+  };
+
   const onSave = async () => {
+    if (actionButtonUrl && actionButtonUrl !== "https://") {
+      const urlError = validateUrl(actionButtonUrl);
+      if (urlError) {
+        emitToastError(urlError);
+        return;
+      }
+    }
+    if (url && url !== "https://") {
+      const urlError = validateUrl(url);
+      if (urlError) {
+        emitToastError(urlError);
+        return;
+      }
+    }
     const popupData = {
       popupSize: popupSize.toLowerCase(),
       url,
@@ -109,7 +132,7 @@ const CreatePopupPage = () => {
         ? await editPopup(location.state?.id, popupData)
         : await addPopup(popupData);
 
-        console.log(response);
+      console.log(response);
       const toastMessage = location.state?.isEdit
         ? "You edited this popup"
         : "New popup Saved";
