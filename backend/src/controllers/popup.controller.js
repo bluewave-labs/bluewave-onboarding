@@ -1,7 +1,11 @@
 const popupService = require("../service/popup.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { validateCloseButtonAction } = require("../utils/guide.helper");
-const { validatePopupSize, validateUrl } = require("../utils/popup.helper");
+const {
+  validatePopupSize,
+  validateUrl,
+  validateRelativeUrl,
+} = require("../utils/popup.helper");
 const { checkColorFieldsFail } = require("../utils/guide.helper");
 
 class PopupController {
@@ -47,14 +51,15 @@ class PopupController {
         return res.status(400).json({ errors: [{ msg: err.message }] });
       }
     }
-
+    
     if (url) {
       try {
-        validateUrl(url, "url");
+        validateRelativeUrl(url, "url");
       } catch (err) {
         return res.status(400).json({ errors: [{ msg: err.message }] });
       }
     }
+
 
     const colorFields = {
       headerBackgroundColor,
@@ -166,7 +171,7 @@ class PopupController {
 
       if (url) {
         try {
-          validateUrl(url, "url");
+          validateRelativeUrl(url, "url");
         } catch (err) {
           return res.status(400).json({ errors: [{ msg: err.message }] });
         }
