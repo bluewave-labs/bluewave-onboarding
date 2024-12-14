@@ -1,7 +1,7 @@
 const popupService = require("../service/popup.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { validateCloseButtonAction } = require("../utils/guide.helper");
-const { validatePopupSize } = require("../utils/popup.helper");
+const { validatePopupSize, validateUrl } = require("../utils/popup.helper");
 const { checkColorFieldsFail } = require("../utils/guide.helper");
 
 class PopupController {
@@ -16,6 +16,7 @@ class PopupController {
       buttonBackgroundColor,
       buttonTextColor,
       actionUrl,
+      url,
     } = req.body;
 
     if (!popupSize || !closeButtonAction) {
@@ -35,11 +36,17 @@ class PopupController {
 
     if (actionUrl) {
       try {
-        new URL(actionUrl);
+        validateUrl(actionUrl, "actionUrl");
       } catch (err) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Invalid URL format for actionUrl" }] });
+        return res.status(400).json({ errors: [{ msg: err.message }] });
+      }
+    }
+
+    if (url) {
+      try {
+        validateUrl(url, "url");
+      } catch (err) {
+        return res.status(400).json({ errors: [{ msg: err.message }] });
       }
     }
 
@@ -109,6 +116,7 @@ class PopupController {
         buttonBackgroundColor,
         buttonTextColor,
         actionUrl,
+        url,
       } = req.body;
 
       if (!popupSize || !closeButtonAction) {
@@ -131,11 +139,17 @@ class PopupController {
 
       if (actionUrl) {
         try {
-          new URL(actionUrl);
+          validateUrl(actionUrl, "actionUrl");
         } catch (err) {
-          return res
-            .status(400)
-            .json({ errors: [{ msg: "Invalid URL format for actionUrl" }] });
+          return res.status(400).json({ errors: [{ msg: err.message }] });
+        }
+      }
+
+      if (url) {
+        try {
+          validateUrl(url, "url");
+        } catch (err) {
+          return res.status(400).json({ errors: [{ msg: err.message }] });
         }
       }
 
