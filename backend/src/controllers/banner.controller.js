@@ -261,7 +261,11 @@ class BannerController {
       res.status(200).json({ banner });
       res.status(200).json({ banner });
     } catch (error) {
-      internalServerError("GET_BANNER_BY_URL_ERROR", error.message);
+      const { payload, statusCode } = internalServerError(
+        "GET_BANNER_BY_URL_ERROR",
+        error.message
+      );
+      res.status(statusCode).json(payload);
     }
   }
   }
