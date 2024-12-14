@@ -1,7 +1,11 @@
 const bannerService = require("../service/banner.service.js");
 const { internalServerError } = require("../utils/errors.helper");
 const { validateCloseButtonAction } = require("../utils/guide.helper");
-const { validatePosition, validateUrl } = require("../utils/banner.helper");
+const {
+  validatePosition,
+  validateUrl,
+  validateRelativeUrl,
+} = require("../utils/banner.helper");
 const { checkColorFieldsFail } = require("../utils/guide.helper");
 
 class BannerController {
@@ -41,7 +45,7 @@ class BannerController {
 
     if (url) {
       try {
-        validateUrl(url, "url");
+        validateRelativeUrl(url, "url");
       } catch (err) {
         return res.status(400).json({ errors: [{ msg: err.message }] });
       }
@@ -104,7 +108,6 @@ class BannerController {
         url,
         position,
         closeButtonAction,
-        bannerText,
         actionUrl,
       } = req.body;
 
@@ -136,7 +139,7 @@ class BannerController {
 
       if (url) {
         try {
-          validateUrl(url, "url");
+          validateRelativeUrl(url, "url");
         } catch (err) {
           return res.status(400).json({ errors: [{ msg: err.message }] });
         }
