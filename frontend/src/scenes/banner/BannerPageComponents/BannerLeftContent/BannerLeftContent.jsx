@@ -1,6 +1,7 @@
 import DropdownList from "@components/DropdownList/DropdownList";
 import RadioButton from "@components/RadioButton/RadioButton";
 import CustomTextField from "@components/TextFieldComponents/CustomTextField/CustomTextField";
+import PropTypes from "prop-types";
 import React from "react";
 import styles from "./BannerLeftContent.module.scss";
 
@@ -72,3 +73,13 @@ const BannerLeftContent = ({
 };
 
 export default BannerLeftContent;
+BannerLeftContent.propTypes = {
+  setIsTopPosition: PropTypes.func,
+  url: PropTypes.string,
+  setUrl: PropTypes.func,
+  setButtonAction: PropTypes.func,
+  isTopPosition: PropTypes.bool,
+  buttonAction: PropTypes.string,
+  actionUrl: PropTypes.string,
+  setActionUrl: PropTypes.func,
+};

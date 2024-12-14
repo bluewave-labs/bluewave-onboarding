@@ -2,6 +2,7 @@ import DropdownList from "@components/DropdownList/DropdownList";
 import CustomTextField from "@components/TextFieldComponents/CustomTextField/CustomTextField";
 import { React } from "react";
 import styles from "./PopupContent.module.scss";
+import PropTypes from "prop-types";
 
 const PopupContent = ({
   actionButtonText,
@@ -56,3 +57,13 @@ const PopupContent = ({
 };
 
 export default PopupContent;
+PopupContent.propTypes = {
+  actionButtonText: PropTypes.string,
+  setActionButtonText: PropTypes.func,
+  setActionButtonUrl: PropTypes.func,
+  buttonAction: PropTypes.string,
+  actionButtonUrl: PropTypes.string,
+  setButtonAction: PropTypes.func,
+  url: PropTypes.string,
+  setUrl: PropTypes.func,
+}
