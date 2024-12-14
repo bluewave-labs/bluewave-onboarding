@@ -5,6 +5,7 @@ const {
 const {
   validatePositionWrapper,
   validateUrl,
+  validateRelativeUrl,
 } = require("../utils/banner.helper");
 
 module.exports = (sequelize, DataTypes) => {
@@ -34,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         validate: {
           isUrl(value) {
-            validateUrl(value, "url");
+            validateRelativeUrl(value, "url");
           },
         },
       },

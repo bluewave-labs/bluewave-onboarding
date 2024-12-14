@@ -9,6 +9,7 @@ class BannerBuilder {
       backgroundColor: "#FFFFFF",
       bannerText: "banner 1",
       createdBy: 1,
+      actionUrl: "https://www.google.com",
     };
   }
 

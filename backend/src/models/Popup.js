@@ -5,6 +5,7 @@ const {
 const {
   validatePopupSizeWrapper,
   validateUrl,
+  validateRelativeUrl,
 } = require("../utils/popup.helper");
 
 module.exports = (sequelize, DataTypes) => {
@@ -39,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         validate: {
           isUrl(value) {
-            validateUrl(value, "url");
+            validateRelativeUrl(value, "url");
           },
         },
       },
