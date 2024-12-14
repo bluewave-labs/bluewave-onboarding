@@ -113,34 +113,20 @@ const CodeTab = () => {
 
             <pre><code>
                 {`<!-- Client-side HTML/JS Snippet to be integrated into their website -->
-<script>
-    (function() {
-      const apiKey = '${apiKey}';
-      const apiUrl = '${serverUrl}';
+                    <script>
+                        (function() {
+                            const apiKey = '${apiKey}';
+                            const apiUrl = '${serverUrl}';
 
-      fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId: apiKey })
-      })
-      .then(response => response.json())
-      .then(data => {
-        const script = document.createElement('script');
-        script.src = 'https://onboarding-demo.bluewavelabs.ca/api/scripts/popupRenderer.js?apiKey=' + apiKey;
-        script.type = 'module';
-        script.onload = () => {
-          import('https://onboarding-demo.bluewavelabs.ca/api/scripts/popupRenderer.js?apiKey=' + apiKey)
-            .then(module => {
-              module.default(data.popupData);
-            });
-        };
-        document.head.appendChild(script);
-      })
-      .catch(error => console.error('Error fetching onboarding data:', error));
-    })();
-</script>`}
+                            var s=document.createElement("script");
+                            s.type="text/javascript";
+                            s.async=false;
+                            s.onerror=()=>{console.log("onboard not loaded");};
+                            s.src = 'http://localhost:8082/main.js=${apiKey}';
+                            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+                        })();
+                    </script>
+                `}
             </code></pre>
         </section>
     )

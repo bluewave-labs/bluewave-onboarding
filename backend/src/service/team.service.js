@@ -16,6 +16,7 @@ class TeamService {
             await transaction.commit();
             return team;
         } catch (err) {
+            await transaction.rollback();
             throw new Error("Failed to create team");
         }
     }
@@ -125,7 +126,7 @@ class TeamService {
         }
         catch (err) {
             await transaction.rollback();
-            throw new Error(`"Failed to update user role ~ ${err.message}`);
+            throw new Error(`Failed to update user role ~ ${err.message}`);
         }
     }
 

@@ -23,7 +23,7 @@ function validateLinks(links) {
       result.push({ msg: "Invalid value for url" });
       continue;
     }
-    if (order && order < 1) {
+    if ((order && isNaN(order)) || order < 1) {
       result.push({ msg: "Invalid value for order" });
       continue;
     }
@@ -116,6 +116,10 @@ class LinkController {
       const { title, headerBackgroundColor, linkFontColor, iconColor, links } =
         req.body;
 
+      if (isNaN(id) || id.trim() === "") {
+        return res.status(400).json({ errors: [{ msg: "Invalid id" }] });
+      }
+
       if (!title) {
         return res.status(400).json({
           errors: [{ msg: "header is required" }],
@@ -151,6 +155,13 @@ class LinkController {
         req.body,
         links
       );
+
+      if (!updatedHelper) {
+        return res.status(404).json({
+          errors: [{ msg: "Helper with the specified id does not exist" }],
+        });
+      }
+
       res.status(200).json(updatedHelper);
     } catch (err) {
       const { statusCode, payload } = internalServerError(
@@ -213,4 +224,8 @@ class LinkController {
   }
 }
 
-module.exports = new LinkController();
+module.exports = {
+  controller: new LinkController(),
+  validateColors,
+  validateLinks,
+};

@@ -6,8 +6,6 @@ const { API_BASE_URL } = require("../utils/constants.helper");
 const db = require("../models");
 const User = db.User;
 
-const emailEnabled = process.env.EMAIL_ENABLE === "true";
-
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST || "localhost",
   port: process.env.EMAIL_PORT || 465,
@@ -20,13 +18,12 @@ const transporter = nodemailer.createTransport({
 
 const readHTMLFile = (filePath) => {
   return new Promise((resolve, reject) => {
-    fs.readFile(filePath, { encoding: "utf-8" }, (err, html) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(html);
-      }
-    });
+    try {
+      const file = fs.readFileSync(filePath, { encoding: "utf-8" });
+      resolve(file);
+    } catch (err) {
+      reject(new Error(`Failed to read template file ${filePath}: ${err.message}`));
+    }
   });
 };
 
@@ -35,6 +32,8 @@ const findUserByEmail = async (email) => {
 };
 
 const sendEmail = async (to, subject, templateName, replacements) => {
+  const emailEnabled = process.env.EMAIL_ENABLE === "true";
+
   if (!emailEnabled) {
     console.log("Email sending is disabled.");
     return;
@@ -67,4 +66,9 @@ const sendPasswordResetEmail = async (email, name, resetToken) => {
   });
 };
 
-module.exports = { sendSignupEmail, sendPasswordResetEmail, findUserByEmail };
+module.exports = {
+  sendSignupEmail,
+  sendPasswordResetEmail,
+  findUserByEmail,
+  transporter,
+};

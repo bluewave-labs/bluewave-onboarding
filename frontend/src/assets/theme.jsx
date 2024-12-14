@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material/styles";
 // Light theme definition
 export const lightTheme = createTheme({
   palette: {
-    mode: 'light',
+    mode: "light",
     primary: {
       main: "#7f56d9",
     },
@@ -23,9 +23,9 @@ export const lightTheme = createTheme({
     MuiTab: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
-          fontSize: '14px',
-          padding: '3px 9px'
+          textTransform: "none",
+          fontSize: "14px",
+          padding: "3px 9px",
         },
       },
     },
@@ -38,6 +38,11 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
   },
   typography: {
     fontFamily: "Inter",
@@ -47,7 +52,7 @@ export const lightTheme = createTheme({
 // Dark theme definition
 export const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
     primary: {
       main: "#7f56d9",
     },
@@ -76,9 +81,9 @@ export const darkTheme = createTheme({
     MuiTab: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
-          fontSize: '14px',
-          padding: '3px 9px'
+          textTransform: "none",
+          fontSize: "14px",
+          padding: "3px 9px",
         },
       },
     },

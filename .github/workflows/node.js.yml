@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          check-latest: true
 
       # Clear npm cache
       - name: Clear npm cache
@@ -87,10 +88,9 @@ jobs:
         working-directory: ./frontend
         run: npm run build --if-present
 
-      # Uncomment the following lines to run tests
-      # - name: Run tests for backend
-      #   working-directory: ./backend
-      #   run: npm test
+      - name: Run tests for backend
+        working-directory: ./backend
+        run: npm test
 
       - name: Run tests for frontend
         working-directory: ./frontend
