@@ -132,7 +132,6 @@ const CreatePopupPage = () => {
         ? await editPopup(location.state?.id, popupData)
         : await addPopup(popupData);
 
-      console.log(response);
       const toastMessage = location.state?.isEdit
         ? "You edited this popup"
         : "New popup Saved";
