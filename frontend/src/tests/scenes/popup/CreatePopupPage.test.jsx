@@ -105,7 +105,7 @@ describe('CreatePopupPage component', () => {
 
     // Check initial state of form fields
     const headerBackgroundColor = screen.getByDisplayValue('No action');
-    const headerColor = screen.getByDisplayValue('https://');
+    const headerColor = screen.getAllByDisplayValue('https://')[0];
 
     expect(headerBackgroundColor).not.toBeNull(); // Example for headerBackgroundColor
     expect(headerColor).not.toBeNull(); // Example for headerColor
