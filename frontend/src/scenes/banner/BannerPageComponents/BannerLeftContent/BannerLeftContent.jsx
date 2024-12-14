@@ -1,6 +1,7 @@
 import DropdownList from "@components/DropdownList/DropdownList";
 import RadioButton from "@components/RadioButton/RadioButton";
 import CustomTextField from "@components/TextFieldComponents/CustomTextField/CustomTextField";
+import PropTypes from "prop-types";
 import React from "react";
 import styles from "./BannerLeftContent.module.scss";
 
