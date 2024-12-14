@@ -2,7 +2,10 @@ const {
   validateHexColor,
   validateActionButton,
 } = require("../utils/guide.helper");
-const { validatePopupSizeWrapper } = require("../utils/popup.helper");
+const {
+  validatePopupSizeWrapper,
+  validateUrl,
+} = require("../utils/popup.helper");
 
 module.exports = (sequelize, DataTypes) => {
   const Popup = sequelize.define(
@@ -38,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         validate: {
           isUrl(value) {
-            validateRelativeUrl(value, "url");
+            validateUrl(value, "url");
           },
         },
       },
@@ -112,13 +115,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       actionUrl: {
         type: DataTypes.STRING,
+        allowNull: true,
         validate: {
           isUrl(value) {
-            try {
-              new URL(value);
-            } catch {
-              throw new Error("Invalid URL for actionUrl");
-            }
+            validateUrl(value, "actionUrl");
           },
         },
       },

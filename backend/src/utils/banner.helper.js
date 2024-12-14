@@ -9,18 +9,6 @@ const validatePositionWrapper = (value) => {
   }
 };
 
-const validateRelativeUrl = (value, fieldName) => {
-  if (!value) return;
-  try {
-    new URL(value);
-  } catch (error) {
-    if (value.startsWith('/')) {
-      return
-    }
-    throw new Error(`Invalid URL for ${fieldName}: ${error.message}`);
-  }
-}
-
 const validateUrl = (value, fieldName) => {
   if (!value) return;
   try {
@@ -37,5 +25,4 @@ module.exports = {
   validatePosition,
   validatePositionWrapper,
   validateUrl,
-  validateRelativeUrl,
 };
