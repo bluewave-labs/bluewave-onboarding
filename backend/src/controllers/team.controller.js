@@ -131,10 +131,10 @@ const setServerUrl = async (req, res) => {
   try {
     const { serverUrl } = req.body;
     await teamService.addServerUrl(serverUrl);
-    return res.status(200).json({ message: "Server URL and API Key Set Successfully" });
+    return res.status(200).json({ message: "Server URL Set Successfully" });
   } catch (err) {
     const { statusCode, payload } = internalServerError(
-      "SET_CONFIG_ERROR",
+      "SET_SERVER_URL_ERROR",
       err.message
     )
     res.status(statusCode).json(payload);
