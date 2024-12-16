@@ -24,18 +24,8 @@ class BannerController {
       return res.status(400).json({
         errors: [{ msg: "position and closeButtonAction are required" }],
       });
-      return res.status(400).json({
-        errors: [{ msg: "position and closeButtonAction are required" }],
-      });
     }
 
-    if (
-      !validatePosition(position) ||
-      !validateCloseButtonAction(closeButtonAction)
-    ) {
-      return res.status(400).json({
-        errors: [{ msg: "Invalid value entered" }],
-      });
     if (
       !validatePosition(position) ||
       !validateCloseButtonAction(closeButtonAction)
@@ -66,10 +56,6 @@ class BannerController {
     if (colorCheck) {
       return colorCheck;
     }
-    const colorCheck = checkColorFieldsFail(colorFields, res);
-    if (colorCheck) {
-      return colorCheck;
-    }
 
     try {
       const newBannerData = { ...req.body, createdBy: userId };
@@ -79,7 +65,6 @@ class BannerController {
       console.log(err);
       const { statusCode, payload } = internalServerError(
         "CREATE_BANNER_ERROR",
-        err.message
         err.message
       );
       res.status(statusCode).json(payload);
@@ -100,9 +85,6 @@ class BannerController {
         return res.status(400).json({
           errors: [{ msg: "Banner with the specified id does not exist" }],
         });
-        return res.status(400).json({
-          errors: [{ msg: "Banner with the specified id does not exist" }],
-        });
       }
 
       res
@@ -111,7 +93,6 @@ class BannerController {
     } catch (err) {
       const { statusCode, payload } = internalServerError(
         "DELETE_BANNER_ERROR",
-        err.message
         err.message
       );
       res.status(statusCode).json(payload);
@@ -131,9 +112,6 @@ class BannerController {
       } = req.body;
 
       if (!position || !closeButtonAction) {
-        return res.status(400).json({
-          errors: [{ msg: "position and closeButtonAction are required" }],
-        });
         return res.status(400).json({
           errors: [{ msg: "position and closeButtonAction are required" }],
         });
@@ -172,17 +150,12 @@ class BannerController {
       if (colorCheck) {
         return colorCheck;
       }
-      const colorCheck = checkColorFieldsFail(colorFields, res);
-      if (colorCheck) {
-        return colorCheck;
-      }
 
       const updatedBanner = await bannerService.updateBanner(id, req.body);
       res.status(200).json(updatedBanner);
     } catch (err) {
       const { statusCode, payload } = internalServerError(
         "EDIT_BANNER_ERROR",
-        err.message
         err.message
       );
       res.status(statusCode).json(payload);
@@ -197,7 +170,6 @@ class BannerController {
       const { statusCode, payload } = internalServerError(
         "GET_ALL_BANNERS_ERROR",
         err.message
-        err.message
       );
       res.status(statusCode).json(payload);
     }
@@ -210,8 +182,6 @@ class BannerController {
       res.status(200).json(banners);
     } catch (err) {
       const { statusCode, payload } = internalServerError(
-        "GET_BANNERS_ERROR",
-        err.message
         "GET_BANNERS_ERROR",
         err.message
       );
@@ -238,7 +208,6 @@ class BannerController {
       const { statusCode, payload } = internalServerError(
         "GET_BANNER_BY_ID_ERROR",
         err.message
-        err.message
       );
       res.status(statusCode).json(payload);
     }
@@ -251,14 +220,9 @@ class BannerController {
         return res
           .status(400)
           .json({ errors: [{ msg: "URL is missing or invalid" }] });
-      if (!url || typeof url !== "string") {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "URL is missing or invalid" }] });
       }
 
       const banner = await bannerService.getBannerByUrl(url);
-      res.status(200).json({ banner });
       res.status(200).json({ banner });
     } catch (error) {
       const { payload, statusCode } = internalServerError(
@@ -267,7 +231,6 @@ class BannerController {
       );
       res.status(statusCode).json(payload);
     }
-  }
   }
 }
 
