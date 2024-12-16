@@ -38,9 +38,11 @@ This is a work-in-progress application. The source code is available under GNU A
 
 4. Clone GitHub Repository
 
-``cd ~
+```
+cd ~
 git clone https://github.com/bluewave-labs/bluewave-onboarding.git
-cd bluewave-onboarding``
+cd bluewave-onboarding
+```
 
 5. Configure Nginx
 
