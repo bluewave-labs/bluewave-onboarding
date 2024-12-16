@@ -25,6 +25,7 @@ module.exports = {
       banners: [userRole.ADMIN],
       links: [userRole.ADMIN],
       tours: [userRole.ADMIN],
+      helpers: [userRole.ADMIN],
     }
   }
 };

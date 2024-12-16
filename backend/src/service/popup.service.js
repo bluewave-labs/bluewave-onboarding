@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const db = require("../models");
 const Popup = db.Popup;
 
@@ -55,6 +56,14 @@ class PopupService {
     }
   }
 
+  async getPopupByUrl(url) {
+    try {
+      return await Popup.findAll({ where: { url } });
+    } catch (error) {
+      throw new Error("Error retrieving Popup by URL");
+    }
+  };
+  
   async getPopupByApiAndClientId(apiId, clientId) {
     try {
       return await Popup.findAll({
@@ -73,11 +82,16 @@ class PopupService {
     }
   }
 
-  async getPopupByUrl(url) {
+  async getIncompletePopupsByUrl(url, ids) {
     try {
-      return await Popup.findAll({ where: { url } });
+      return await Popup.findAll({
+        where: {
+          url,
+          id: { [Op.notIn]: ids }
+        }
+      });
     } catch (error) {
-      throw new Error("Error retrieving Popup by URL");
+      throw new Error("Error retrieving popup by URL");
     }
   };
 }
