@@ -99,20 +99,6 @@ const CreatePopupPage = () => {
   };
 
   const onSave = async () => {
-    if (actionButtonUrl && actionButtonUrl !== "https://") {
-      const urlError = validateUrl(actionButtonUrl);
-      if (urlError) {
-        emitToastError(urlError);
-        return;
-      }
-    }
-    if (url && url !== "https://") {
-      const urlError = validateUrl(url);
-      if (urlError) {
-        emitToastError(urlError);
-        return;
-      }
-    }
     const popupData = {
       popupSize: popupSize.toLowerCase(),
       url,
@@ -131,7 +117,7 @@ const CreatePopupPage = () => {
       const response = location.state?.isEdit
         ? await editPopup(location.state?.id, popupData)
         : await addPopup(popupData);
-
+      console.log(response)
       const toastMessage = location.state?.isEdit
         ? "You edited this popup"
         : "New popup Saved";
@@ -139,10 +125,7 @@ const CreatePopupPage = () => {
       toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
       navigate("/popup");
     } catch (error) {
-      const errorMessage = error.response?.data?.message
-        ? `Error: ${error.response.data.message}`
-        : "An unexpected error occurred. Please try again.";
-      toastEmitter.emit(TOAST_EMITTER_KEY, errorMessage);
+      emitToastError(error);
     }
   };
 
