@@ -145,7 +145,8 @@ const CreatePopupPage = () => {
         ? `Error: ${error.response.data.message}`
         : "An unexpected error occurred. Please try again.";
       toastEmitter.emit(TOAST_EMITTER_KEY, errorMessage);
-
+    }
+  }
 
   const handleButtonClick = (index) => {
     setActiveButton(index);
@@ -200,7 +201,6 @@ const CreatePopupPage = () => {
       )}
     />
   );
-
 };
 
 export default CreatePopupPage;
