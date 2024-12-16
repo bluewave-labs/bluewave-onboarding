@@ -66,12 +66,10 @@ const getTeamCount = async (req, res) => {
 const getServerUrlAndApiKey = async (req, res) => {
   try {
     let { serverUrl, apiKey } = await teamService.fetchServerUrlAndApiKey();
-    apiKey = decryptApiKey(apiKey);
-    const data = {
-      serverUrl,
-      apiKey
-    }
-    return res.status(200).json(data);
+    const decryptedApiKey = apiKey === null || apiKey === "" ? "" : decryptApiKey(apiKey);
+    serverUrl = serverUrl === null ? "" : serverUrl;
+
+    return res.status(200).json({ serverUrl, apiKey: decryptedApiKey});
   } catch (err) {
     const { statusCode, payload } = internalServerError(
       "GET_SERVER_URL_AND_API_KEY_ERROR",
@@ -125,12 +123,22 @@ const setConfig = async (req, res) => {
   const validationErrors = validationResult(req);
   
   if (!validationErrors.isEmpty()) {
-    return res.status(400).json({ errors: validationErrors.array() });
+    const errors = [];
+    validationErrors.array().forEach(err => {
+      errors.push(err.msg);
+    });
+    return res.status(400).json({ errors });
   }
 
   try {
     const { serverUrl, apiKey } = req.body;
-    const encryptedApiKey = encryptApiKey(apiKey);
+    let encryptedApiKey;
+
+    if (apiKey === null || apiKey === "" || apiKey === undefined) {
+      encryptedApiKey = "";
+    } else {
+      encryptedApiKey = encryptApiKey(apiKey);
+    }
 
     await teamService.addServerUrlAndApiKey(serverUrl, encryptedApiKey);
     return res.status(200).json({ message: "Server URL and API Key Set Successfully" });

@@ -17,6 +17,10 @@ const decryptApiKey = (apiKey) => {
 }
 
 const validateServerUrl = url => {
+  if (url === "") {
+    return { valid: true, errors: null }
+  }
+
   const errors = [];
 
   if (!URL_PROTOCOL_REGEX.test(url)) {
@@ -42,13 +46,16 @@ const validateServerUrl = url => {
 
 const validateSetConfig = [
   check('apiKey')
-    .exists().withMessage('API Key is required')
+    .optional({
+      values: ["", null, undefined],
+    })
     .isString().withMessage('API Key must be a string')
-    .trim()
-    .notEmpty().withMessage('API Key cannot be empty'),
+    .trim(),
 
   check('serverUrl')
-    .optional()
+    .optional({
+      values: ["", null, undefined]
+    })
     .isString().withMessage('Server URL must be a string')
     .trim()
     .custom(value => {

@@ -8,11 +8,40 @@ import { generateApiKey } from "../../../utils/generalHelper";
 import { emitToastError } from "../../../utils/guideHelper";
 import { setConfig, getConfig } from '../../../services/teamServices';
 import toastEmitter, { TOAST_EMITTER_KEY } from "../../../utils/toastEmitter";
+import { URL_REGEX } from "../../../utils/constants";
 
 const CodeTab = () => {
     const [apiKey, setApiKey] = useState('')
     const [serverUrl, setServerUrl] = useState('')
     const [isLoading, setIsLoading] = useState(false);
+
+    const validateServerUrl = url => {
+        const errors = [];
+
+        if (url === "") {
+            return { valid: true, errors: null };
+        }
+
+        if (!URL_REGEX.PROTOCOL.test(url)) {
+            errors.push("Invalid or missing protocol (must be 'http://' or 'https://').")
+        }
+
+        const domainMatch = url.match(URL_REGEX.DOMAIN);
+        if (!domainMatch) {
+            errors.push("Invalid domain name (must include a valid top-level domain like '.com').");
+        } else {
+            const domain = domainMatch[1];
+            if (!/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(domain)) {
+                errors.push(`Malformed domain: '${domain}'.`);
+            }
+        }
+
+        if (errors.length === 0) {
+            return { valid: true, errors: null }
+        }
+
+        return { valid: false, errors }
+    };
 
     useEffect(() => {
         const getServerUrlAndApiKey = async () => {
@@ -28,6 +57,8 @@ const CodeTab = () => {
     }, [])
 
     const handleUrlChange = (e) => {
+
+
         setServerUrl(e.target.value);
     };
 
@@ -40,28 +71,15 @@ const CodeTab = () => {
     }
 
     const onSave = async () => {
-        if (!serverUrl.trim()) {
-            toastEmitter.emit(TOAST_EMITTER_KEY, 'Server URL cannot be empty');
+        const { valid, errors } = validateServerUrl(serverUrl);
+
+        if (!valid) {
+            errors.forEach(err => {
+                toastEmitter.emit(TOAST_EMITTER_KEY, err);
+            });
             return;
         }
 
-        try {
-            const url = new URL(serverUrl);
-            if (!['http:', 'https:'].includes(url.protocol)) {
-                toastEmitter.emit(TOAST_EMITTER_KEY, 'Invalid URL protocol must be http or https');
-                return;
-            }
-        } catch {
-            toastEmitter.emit(TOAST_EMITTER_KEY, 'Invalid server URL');
-            return;
-        }
-
-
-        if (!apiKey.trim()) {
-            toastEmitter.emit(TOAST_EMITTER_KEY, 'API key cannot be empty');
-            return;
-        }
-        
         try {
             setIsLoading(true);
             const response = await setConfig(serverUrl, apiKey);
@@ -80,15 +98,15 @@ const CodeTab = () => {
 
             {/* api key */}
             <div className={styles.block}>
-                <p style={{marginRight:'2rem'}}>API key:</p>
+                <p style={{ marginRight: '2rem' }}>API key:</p>
                 <CustomTextField
                     value={apiKey}
                     onChange={handleApiKeyChange}
-                    style={{textAlign: 'right' }}
+                    style={{ textAlign: 'right' }}
                     TextFieldWidth="550px"
                 />
                 <DeleteOutlinedIcon onClick={deleteApiKey} style={{ cursor: 'pointer', fontSize: '24px', color: 'var(--main-text-color)' }} />
-                <Button text='Regenerate' onClick={() => setApiKey(generateApiKey())} sx={{width:'120px'}}/>
+                <Button text='Regenerate' onClick={() => setApiKey(generateApiKey())} sx={{ width: '120px' }} />
             </div>
             {/* server url */}
             <div className={styles.block}>
@@ -96,13 +114,13 @@ const CodeTab = () => {
                 <CustomTextField
                     value={serverUrl}
                     onChange={handleUrlChange}
-                    style={{textAlign: 'right' }}
+                    style={{ textAlign: 'right' }}
                     TextFieldWidth="550px"
                 />
-                <span/>
-                <Button text='Save' sx={{width:'120px'}} onClick={onSave}/>
+                <span />
+                <Button text='Save' sx={{ width: '120px' }} onClick={onSave} />
             </div>
-            <h2 style={{marginTop: '25px'}}>Code in your webpage</h2>
+            <h2 style={{ marginTop: '25px' }}>Code in your webpage</h2>
             <div className={styles.informativeBlock}>
                 <p className={styles.content}>
                     Code snippet to copy in your web page between {"<head>"} and {"</head>"}. Make sure you edit the API URL.
