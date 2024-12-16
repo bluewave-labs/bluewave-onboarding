@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const settings = require("../../config/settings");
 const db = require("../models");
 const Team = db.Team;
@@ -41,6 +42,28 @@ class TeamService {
             throw new Error("Failed to get team count");
         }
     };
+
+    async fetchServerUrl() {
+        try {
+            const { serverUrl } = await Team.findOne();
+            return serverUrl;
+        } catch (err) {
+            throw new Error("Failed to fetch server url");
+        }
+    }
+
+    async addServerUrl(serverUrl) {
+        const transaction = await sequelize.transaction();
+        try {
+            await Team.update({
+                serverUrl
+            }, { where: {} }, { transaction });
+            await transaction.commit();
+        } catch (err) {
+            await transaction.rollback();
+            throw new Error("Failed to add server url")
+        }
+    }
 
     async updateTeam(name) {
         const transaction = await sequelize.transaction();

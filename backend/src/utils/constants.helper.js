@@ -11,5 +11,7 @@ module.exports = Object.freeze({
     },
     MAX_ORG_NAME_LENGTH: 100,
     ORG_NAME_REGEX: /^[a-zA-Z0-9\s\-_&.]+$/,
+    URL_PROTOCOL_REGEX: /^(https?:\/\/)/,
+    URL_DOMAIN_REGEX: /^https?:\/\/([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/,
   }); 
   
