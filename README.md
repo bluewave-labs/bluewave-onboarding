@@ -50,20 +50,19 @@ Open the Nginx configuration file:
 
 Add the following configuration. Change YOUR_DOMAIN_NAME with your domain name:
 
-``server {
+```server {
     listen 80;
     server_name YOUR_DOMAIN_NAME;
-    return 301 https://$host$request_uri;
-}
+    return 301 https://$host$request_uri; 
+    }
+
 server {
     listen 443 ssl;
     server_name YOUR_DOMAIN_NAME;
-
     ssl_certificate /etc/letsencrypt/live/YOUR_DOMAIN_NAME/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/YOUR_DOMAIN_NAME/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
-
 
     location / {
         proxy_pass http://localhost:4173;
@@ -80,7 +79,9 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
-}``
+}
+```
+
 
 6. Create a symbolic link to enable the configuration:
 
