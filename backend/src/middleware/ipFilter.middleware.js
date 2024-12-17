@@ -47,3 +47,5 @@ const ipFilter = async (req, res, next) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+module.exports = ipFilter;
