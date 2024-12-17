@@ -8,12 +8,16 @@ import {
 import HelperLinkProvider from "../../services/linksProvider";
 import DefaultPageTemplate from "../../templates/DefaultPageTemplate/DefaultPageTemplate";
 import NewLinksPopup from "./NewLinksPopup";
+import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
 const LinksDefaultPage = () => {
   const [currentHelper, setCurrentHelper] = useState({});
   const [currentLinks, setCurrentLinks] = useState([]);
   const [showNewLinksPopup, setShowNewLinksPopup] = useState(false);
   const [helperState, setHelperState] = useState(null)
+  const [itemsUpdated, setItemsUpdated] = useState(false);
+
+  const { openDialog, isOpen } = useDialog();
 
   const style = {
     display: "flex",
@@ -25,35 +29,38 @@ const LinksDefaultPage = () => {
   };
 
   return (
-    <HelperLinkProvider>
-      <div style={style}>
-        {showNewLinksPopup ? (
+    <>
+      <HelperLinkProvider>
+        <div style={style}>
           <NewLinksPopup
             currentHelper={currentHelper}
             currentLinks={currentLinks}
             setHelper={setCurrentHelper}
             setShowNewLinksPopup={setShowNewLinksPopup}
             helperState={helperState}
+            setItemsUpdated={setItemsUpdated}
           />
-        ) : (
           <DefaultPageTemplate
             getItems={getHelpers}
             deleteItem={deleteHelper}
-            navigateToCreate={async ({ state }) => {
-              if (state?.isEdit) {
-                const { links, ...data } = await getHelperById(state.id);
-                setCurrentHelper(data);
-                setCurrentLinks(links.sort((a, b) => a.order - b.order));
-                setHelperState(state)
-              } else {
-                setCurrentHelper({
-                  title: "",
-                  headerBackgroundColor: "#F8F9F8",
-                  linkFontColor: "#344054",
-                  iconColor: "#7F56D9",
-                });
-              }
-              setShowNewLinksPopup(true);
+            itemsUpdated={itemsUpdated}
+            onEditItem={async (id) => {
+              const { links, ...data } = await getHelperById(id);
+              setCurrentHelper(data);
+              setCurrentLinks(links.sort((a, b) => a.order - b.order));
+              setHelperState({ isEdit: true, id });
+              openDialog();
+            }}
+            navigateToCreate={() => {
+              setCurrentHelper({
+                title: "",
+                headerBackgroundColor: "#F8F9F8",
+                linkFontColor: "#344054",
+                iconColor: "#7F56D9",
+              });
+              setHelperState({ isEdit: false });
+              setCurrentLinks([]);
+              openDialog();
             }}
             itemType={ACTIVITY_TYPES_INFO.HELPERLINKS}
             itemTypeInfo={ACTIVITY_TYPES_INFO.HELPERLINKS}
@@ -64,9 +71,9 @@ const LinksDefaultPage = () => {
               iconColor: helper.iconColor,
             })}
           />
-        )}
-      </div>
-    </HelperLinkProvider>
+        </div>
+      </HelperLinkProvider>
+    </>
   );
 };
 

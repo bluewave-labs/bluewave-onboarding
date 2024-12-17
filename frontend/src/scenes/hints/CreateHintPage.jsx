@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Turndown from "turndown";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import RichTextEditor from "@components/RichTextEditor/RichTextEditor";
@@ -11,55 +11,82 @@ import { emitToastError } from "../../utils/guideHelper";
 import { useLocation } from "react-router";
 import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
-const HintPage = ({ isEdit, itemId, setItemsUpdated }) => {
-  const { closeDialog } = useDialog();
-  const location = useLocation();
-  const [activeButton, setActiveButton] = useState(0);
+const HintPage = ({ isEdit, setIsEdit, itemId, setItemsUpdated }) => {
+  const [hintStates, setHintStates] = useState({
+    headerBackgroundColor: "#FFFFFF",
+    headerColor: "#101828",
+    textColor: "#344054",
+    buttonBackgroundColor: "#7F56D9",
+    buttonTextColor: "#FFFFFF",
+    header: "",
+    content: "",
+    actionButtonUrl: "https://",
+    actionButtonText: "Take me to subscription page",
+    action: "No action",
+    targetElement: ".element",
+    tooltipPlacement: "Top",
+    activeButton: 0,
+  });
+  const {
+    headerBackgroundColor,
+    headerColor,
+    textColor,
+    buttonBackgroundColor,
+    buttonTextColor,
+    header,
+    content,
+    actionButtonUrl,
+    actionButtonText,
+    action,
+    targetElement,
+    tooltipPlacement,
+    activeButton,
+  } = hintStates;
 
-  const handleButtonClick = (index) => {
-    setActiveButton(index);
+  const { closeDialog, isOpen } = useDialog();
+  const location = useLocation();
+
+  const updateHintStates = (key, value) => {
+    setHintStates((prevState) => ({
+      ...prevState,
+      [key]: value,
+    }));
   };
 
-  const [headerBackgroundColor, setHeaderBackgroundColor] = useState("#FFFFFF");
-  const [headerColor, setHeaderColor] = useState("#101828");
-  const [textColor, setTextColor] = useState("#344054");
-  const [buttonBackgroundColor, setButtonBackgroundColor] = useState("#7F56D9");
-  const [buttonTextColor, setButtonTextColor] = useState("#FFFFFF");
+  const markdownContent = useMemo(() => {
+    const turndown = new Turndown();
+    return turndown.turndown(content);
+  }, [content]);
 
-  const [header, setHeader] = useState("");
-  const [content, setContent] = useState("");
-
-  const markdownContent = new Turndown().turndown(content);
-
-  const [actionButtonUrl, setActionButtonUrl] = useState("https://");
-  const [actionButtonText, setActionButtonText] = useState(
-    "Take me to subscription page"
-  );
-  const [action, setAction] = useState("No action");
-  const [targetElement, setTargetElement] = useState(".element");
-  const [tooltipPlacement, setTooltipPlacement] = useState("Top");
+  const handleButtonClick = (index) => {
+    updateHintStates("activeButton", index);
+  };
 
   const stateList = [
     {
       stateName: "Header Background Color",
       state: headerBackgroundColor,
-      setState: setHeaderBackgroundColor,
+      setState: (value) => updateHintStates("headerBackgroundColor", value),
     },
     {
       stateName: "Header Color",
       state: headerColor,
-      setState: setHeaderColor,
+      setState: (value) => updateHintStates("headerColor", value),
     },
-    { stateName: "Text Color", state: textColor, setState: setTextColor },
+    {
+      stateName: "Text Color",
+      state: textColor,
+      setState: (value) => updateHintStates("textColor", value),
+    },
     {
       stateName: "Button Background Color",
       state: buttonBackgroundColor,
-      setState: setButtonBackgroundColor,
+      setState: (value) => updateHintStates("buttonBackgroundColor", value),
     },
     {
       stateName: "Button Text Color",
       state: buttonTextColor,
-      setState: setButtonTextColor,
+      setState: (value) => updateHintStates("buttonTextColor", value),
     },
   ];
 
@@ -68,16 +95,24 @@ const HintPage = ({ isEdit, itemId, setItemsUpdated }) => {
       const fetchHintData = async () => {
         try {
           const hintData = await getHintById(itemId);
-          setHeaderBackgroundColor(hintData.headerBackgroundColor || "#F8F9F8");
-          setHeaderColor(hintData.headerColor || "#101828");
-          setTextColor(hintData.textColor || "#344054");
-          setButtonBackgroundColor(hintData.buttonBackgroundColor || "#7F56D9");
-          setButtonTextColor(hintData.buttonTextColor || "#FFFFFF");
-          setHeader(hintData.header || "");
-          setContent(hintData.hintContent || "");
-          setActionButtonUrl(hintData.actionButtonUrl || "https://");
-          setActionButtonText(hintData.actionButtonText || "");
-          setAction(hintData.action || "No action");
+          const updatedStates = {
+            headerBackgroundColor: hintData.headerBackgroundColor || "#F8F9F8",
+            headerColor: hintData.headerColor || "#101828",
+            textColor: hintData.textColor || "#344054",
+            buttonBackgroundColor: hintData.buttonBackgroundColor || "#7F56D9",
+            buttonTextColor: hintData.buttonTextColor || "#FFFFFF",
+            header: hintData.header || "",
+            content: hintData.hintContent || "",
+            actionButtonUrl: hintData.actionButtonUrl || "https://",
+            actionButtonText: hintData.actionButtonText || "",
+            action: hintData.action || "No action",
+            targetElement: hintData.targetElement || "",
+            tooltipPlacement: hintData.tooltipPlacement || "Top",
+          };
+          setHintStates((prevState) => ({
+            ...prevState,
+            ...updatedStates,
+          }));
         } catch (error) {
           emitToastError(error);
         }
@@ -108,8 +143,6 @@ const HintPage = ({ isEdit, itemId, setItemsUpdated }) => {
       const toastMessage = isEdit ? "You edited this hint" : "New hint saved";
       toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
       setItemsUpdated((prev) => !prev);
-      setHeader("");
-      setContent("");
       closeDialog();
     } catch (error) {
       const errorMessage = error.response?.data?.message
@@ -118,6 +151,28 @@ const HintPage = ({ isEdit, itemId, setItemsUpdated }) => {
       toastEmitter.emit(TOAST_EMITTER_KEY, errorMessage);
     }
   };
+
+  // reset states when dialog is closed
+  useEffect(() => {
+    if (!isOpen && location.pathname === "/hint") {
+      setHintStates({
+        headerBackgroundColor: "#FFFFFF",
+        headerColor: "#101828",
+        textColor: "#344054",
+        buttonBackgroundColor: "#7F56D9",
+        buttonTextColor: "#FFFFFF",
+        header: "",
+        content: "",
+        actionButtonUrl: "https://",
+        actionButtonText: "Take me to subscription page",
+        action: "No action",
+        targetElement: ".element",
+        tooltipPlacement: "Top",
+        activeButton: 0,
+      });
+      setIsEdit(false);
+    }
+  }, [isOpen, location.pathname]);
 
   return (
     <GuideTemplate
@@ -134,8 +189,8 @@ const HintPage = ({ isEdit, itemId, setItemsUpdated }) => {
             marginTop: "1rem",
           }}
           header={header}
-          setHeader={setHeader}
-          setContent={setContent}
+          setHeader={(value) => updateHintStates("header", value)}
+          setContent={(value) => updateHintStates("content", value)}
           content={content}
           previewComponent={() => (
             <HintComponent
@@ -154,15 +209,11 @@ const HintPage = ({ isEdit, itemId, setItemsUpdated }) => {
       leftContent={() => (
         <HintLeftContent
           actionButtonText={actionButtonText}
-          setActionButtonText={setActionButtonText}
           actionButtonUrl={actionButtonUrl}
-          setActionButtonUrl={setActionButtonUrl}
           action={action}
-          setAction={setAction}
           targetElement={targetElement}
-          setTargetElement={setTargetElement}
           tooltipPlacement={tooltipPlacement}
-          setTooltipPlacement={setTooltipPlacement}
+          updateHintStates={updateHintStates}
         />
       )}
       leftAppearance={() => <HintLeftAppearance data={stateList} />}

@@ -88,7 +88,8 @@ const Settings = () => {
       className={s.settings}
       ref={settingsRef}
       onSubmit={handleClose}
-      role='form'
+      role="form"
+      data-testid="settings-form"
     >
       <div className={s.settings__header}>
         <span className={s["settings__header--title"]}>Add new link</span>
@@ -97,37 +98,37 @@ const Settings = () => {
           <CloseOutlinedIcon
             onClick={handleClose}
             style={{ color: "#98A2B3", fontSize: "20px", cursor: "pointer" }}
-            data-testid='close'
+            data-testid="close"
           />
         </div>
       </div>
       <div className={s.settings__content}>
         <input
-          type='hidden'
-          name='id'
+          type="hidden"
+          name="id"
           value={state.id}
           onChange={handleChange}
         />
-        <label htmlFor='title' className={s["settings__content--label"]}>
+        <label htmlFor="title" className={s["settings__content--label"]}>
           <span className={s["settings__content--text"]}>Title</span>
           <input
             className={s["settings__content--input"]}
-            id='title'
-            type='text'
-            name='title'
+            id="title"
+            type="text"
+            name="title"
             onChange={handleChange}
             value={state.title}
           />
         </label>
-        <label htmlFor='url' className={s["settings__content--label"]}>
+        <label htmlFor="url" className={s["settings__content--label"]}>
           <span className={s["settings__content--text"]}>
             URL to open (can be a relative URL)
           </span>
           <input
             className={s["settings__content--input"]}
-            id='url'
-            type='text'
-            name='url'
+            id="url"
+            type="text"
+            name="url"
             onChange={handleChange}
             value={state.url}
           />
@@ -138,19 +139,19 @@ const Settings = () => {
         </label>
 
         <label
-          htmlFor='switch'
+          htmlFor="switch"
           className={`${s["settings__content--label"]} ${s.last}`}
         >
           <Switch
-            id='switch'
-            name='target'
+            id="switch"
+            name="target"
             onChange={handleChange}
             value={state.target}
           />
           <span>Open in a new tab</span>
         </label>
       </div>
-      <button type='submit' style={{ display: "none" }}>
+      <button type="submit" style={{ display: "none" }}>
         Submit
       </button>
     </form>

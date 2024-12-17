@@ -3,32 +3,44 @@ import DropdownList from "../../DropdownList/DropdownList";
 import CustomTextField from "../../TextFieldComponents/CustomTextField/CustomTextField";
 import "./HintLeftContent.css";
 
-const HintLeftContent = ({ actionButtonText, setActionButtonText, actionButtonUrl, setActionButtonUrl, action, setAction, targetElement, setTargetElement, tooltipPlacement, setTooltipPlacement }) => {
+const HintLeftContent = ({
+  actionButtonText,
+  actionButtonUrl,
+  action,
+  targetElement,
+  tooltipPlacement,
+  updateHintStates,
+}) => {
   const handleActionButtonText = (event) => {
-    setActionButtonText(event.target.value);
+    updateHintStates("actionButtonText", event.target.value);
   };
   const handleActionButtonUrl = (event) => {
-    setActionButtonUrl(event.target.value);
+    updateHintStates("actionButtonUrl", event.target.value);
   };
   const handleActionChange = (newAction) => {
-    setAction(newAction);
+    if (newAction && newAction !== action) {
+      updateHintStates("action", newAction);
+    }
   };
-
-  const handleTargetElement = (newAction) => {
-    setTargetElement(newAction);
+  const handleTargetElement = (event) => {
+    updateHintStates("targetElement", event.target.value);
   };
-
   const handleTooltipPlacement = (newAction) => {
-    setTooltipPlacement(newAction);
-  }
+    if (newAction && newAction !== tooltipPlacement) {
+      updateHintStates("tooltipPlacement", newAction);
+    }
+  };
 
   return (
     <div className="left-content-container">
-      <h2 className="hint-label" style={{ marginTop: "16px" }}>
+      <h2
+        className="hint-label"
+        style={{ marginTop: "16px", marginBottom: "8px" }}
+      >
         Action
       </h2>
       <DropdownList
-        actions={["No action", "Open a URL", "Open a URL in a new tab"]}
+        actions={["No action", "Open URL", "Open URL in a new tab"]}
         onActionChange={handleActionChange}
         selectedActionString={action.toLowerCase()}
       />
@@ -57,7 +69,9 @@ const HintLeftContent = ({ actionButtonText, setActionButtonText, actionButtonUr
         onChange={handleTargetElement}
         helperText="Page element to attach tooltip to"
       />
-      <h2 className="hint-label">Tooltip Placement</h2>
+      <h2 className="hint-label" style={{ marginBottom: "8px" }}>
+        Tooltip Placement
+      </h2>
       <DropdownList
         actions={["Top", "Right", "Bottom", "Left"]}
         onActionChange={handleTooltipPlacement}

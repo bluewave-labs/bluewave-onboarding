@@ -43,6 +43,7 @@ const PopupDefaultPage = () => {
         />
         <CreatePopupPage
           isEdit={isEdit}
+          setIsEdit={setIsEdit}
           itemId={itemId}
           setItemsUpdated={setItemsUpdated}
         />

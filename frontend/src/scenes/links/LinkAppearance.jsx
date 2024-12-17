@@ -7,6 +7,7 @@ const LinkAppearance = () => {
   if (!context) {
     throw new Error("LinkAppearance must be used within a HelperLinkProvider");
   }
+
   const { helper, setHelper } = context;
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const LinkAppearance = () => {
           id='header'
           className={s.appearance__input}
           name='title'
-          value={helper.title}
+          value={helper.title || ""}
           onChange={handleChange}
         />
       </label>
@@ -42,7 +43,7 @@ const LinkAppearance = () => {
               type='color'
               id='header-bg'
               name='headerBackgroundColor'
-              value={helper.headerBackgroundColor}
+              value={helper.headerBackgroundColor || "#F8F9F8"}
               onChange={handleChange}
             />
             <span
@@ -56,14 +57,14 @@ const LinkAppearance = () => {
         Link font color{" "}
         <div className={s.appearance__color}>
           <span className={`${s.appearance__input} ${s.link}`}>
-            {helper.linkFontColor}
+            {helper.linkFontColor || "#344054"}
           </span>
           <div className={s.appearance__circle}>
             <input
               type='color'
               id='link-color'
               name='linkFontColor'
-              value={helper.linkFontColor}
+              value={helper.linkFontColor || "#344054"}
               onChange={handleChange}
             />
             <span
@@ -84,7 +85,7 @@ const LinkAppearance = () => {
               type='color'
               id='icon'
               name='iconColor'
-              value={helper.iconColor}
+              value={helper.iconColor || "#7F56D9"}
               onChange={handleChange}
             />
             <span

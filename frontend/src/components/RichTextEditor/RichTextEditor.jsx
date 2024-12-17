@@ -10,6 +10,7 @@ import OrderedList from "@tiptap/extension-ordered-list";
 import Toolbar from "./Toolbar/EditorToolbar";
 import EditorTabs from "./Tabs/EditorTabs";
 import CustomTextField from "../TextFieldComponents/CustomTextField/CustomTextField";
+import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
 const RichTextEditor = ({
   sx = {},
@@ -20,6 +21,7 @@ const RichTextEditor = ({
   content,
 }) => {
   const [mode, setMode] = useState("editor");
+  // const { header, setHeader, content, setContent } = useDialog();
 
   const Preview = previewComponent;
 

@@ -42,6 +42,7 @@ const HintDefaultPage = () => {
       />
       <CreateHintPage
         isEdit={isEdit}
+        setIsEdit={setIsEdit}
         itemId={itemId}
         setItemsUpdated={setItemsUpdated}
       />

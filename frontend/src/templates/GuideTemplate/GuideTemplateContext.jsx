@@ -17,7 +17,13 @@ export const GuideTemplateProvider = ({ children }) => {
   const closeDialog = () => setIsOpen(false);
 
   return (
-    <GuideTemplateContext.Provider value={{ isOpen, openDialog, closeDialog }}>
+    <GuideTemplateContext.Provider
+      value={{
+        isOpen,
+        openDialog,
+        closeDialog,
+      }}
+    >
       {children}
     </GuideTemplateContext.Provider>
   );

@@ -10,6 +10,7 @@ import { emitToastError } from "../../utils/guideHelper";
 import toastEmitter, { TOAST_EMITTER_KEY } from "../../utils/toastEmitter";
 import LinkAppearance from "./LinkAppearance";
 import LinkContent from "./LinkContent";
+import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 import s from "./LinkPage.module.scss";
 
 const NewLinksPopup = ({
@@ -17,6 +18,8 @@ const NewLinksPopup = ({
   setShowNewLinksPopup,
   currentLinks,
   helperState,
+  setItemsUpdated,
+  autoOpen = false,
 }) => {
   const [activeBtn, setActiveBtn] = useState(0);
 
@@ -31,6 +34,14 @@ const NewLinksPopup = ({
     setHelperToEdit,
   } = useContext(HelperLinkContext);
 
+  const { openDialog, closeDialog, isOpen } = useDialog();
+
+  useEffect(() => {
+    if (autoOpen) {
+      openDialog();
+    }
+  }, [autoOpen, openDialog]);
+
   useEffect(() => {
     setHelper(currentHelper);
     if (currentLinks?.length) {
@@ -39,7 +50,12 @@ const NewLinksPopup = ({
     if (helperState?.isEdit) {
       setHelperToEdit(helperState.id);
     }
-  }, []);
+    if (!isOpen) {
+      setLinks([]);
+      setHelper({});
+      setHelperToEdit(null);
+    }
+  }, [openDialog, isOpen]);
 
   const buildToastError = (msg) =>
     msg.response
@@ -75,6 +91,8 @@ const NewLinksPopup = ({
         ? updateHelper(helper, formattedLinks)
         : createHelper(helper, formattedLinks));
       setHelper(newHelper);
+      setItemsUpdated((prevState) => !prevState);
+      closeDialog();
     } catch (err) {
       emitToastError(buildToastError(err));
       return null;
@@ -110,7 +128,7 @@ const NewLinksPopup = ({
   return (
     <div className={s.new__container}>
       <GuideTemplate
-        title='New helper link'
+        title={helperState?.isEdit ? "Edit Helper Link" : "New Helper Link"}
         activeButton={activeBtn}
         handleButtonClick={setActiveBtn}
         rightContent={rightContent}

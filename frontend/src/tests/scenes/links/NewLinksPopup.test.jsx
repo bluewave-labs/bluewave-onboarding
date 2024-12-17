@@ -6,6 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 import NewLinksPopup from "../../../scenes/links/NewLinksPopup";
 import { AuthProvider } from "../../../services/authProvider";
 import HelperLinkProvider from "../../../services/linksProvider";
+import { GuideTemplateProvider } from "../../../templates/GuideTemplate/GuideTemplateContext";
 import * as loginServices from "../../../services/loginServices";
 
 vi.mock("../../../services/loginServices");
@@ -33,16 +34,19 @@ const renderPopup = async () => {
   return render(
     <Router>
       <AuthProvider>
-        <HelperLinkProvider>
-          <NewLinksPopup
-            currentHelper={{
-              title: "",
-              headerBackgroundColor: "#F8F9F8",
-              linkFontColor: "#344054",
-              iconColor: "#7F56D9",
-            }}
-          />
-        </HelperLinkProvider>
+        <GuideTemplateProvider>
+          <HelperLinkProvider>
+            <NewLinksPopup
+              autoOpen={true}
+              currentHelper={{
+                title: "",
+                headerBackgroundColor: "#F8F9F8",
+                linkFontColor: "#344054",
+                iconColor: "#7F56D9",
+              }}
+            />
+          </HelperLinkProvider>
+        </GuideTemplateProvider>
       </AuthProvider>
     </Router>
   );
@@ -53,7 +57,7 @@ const addNewLink = async (title, url, target = true) => {
   await act(async () => {
     await userEvent.click(addNewLinkBtn);
   });
-  const settings = await screen.findByRole("form");
+  const settings = await screen.findByTestId("settings-form");
   expect(settings).to.exist;
   const inputs = settings.querySelectorAll("input");
   await act(async () => {
@@ -78,7 +82,10 @@ const openAppearance = async () => {
 describe("Test Helper Link popup", () => {
   it("Tests if the popup is rendered correctly", async () => {
     const { asFragment } = await renderPopup();
-    expect(asFragment()).to.matchSnapshot();
+    await waitFor(() => {
+      screen.debug(); // Log the rendered DOM
+      expect(asFragment()).to.matchSnapshot();
+    });
   });
   describe("Test adding a new link", () => {
     it("should open the settings drawer when add new link is clicked", async () => {
@@ -87,7 +94,7 @@ describe("Test Helper Link popup", () => {
       await act(async () => {
         await userEvent.click(addNewLinkBtn);
       });
-      const settings = await screen.findByRole("form");
+      const settings = await screen.findByTestId("settings-form");
       expect(settings).to.exist;
       const inputs = settings.querySelectorAll("input");
       expect(inputs).toHaveLength(4);

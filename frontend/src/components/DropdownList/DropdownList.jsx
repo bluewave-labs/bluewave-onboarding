@@ -26,12 +26,6 @@ const DropdownList = ({
       return actions[selectedActionIndex] || "";
     };
     setSelectedAction(getInitialSelectedAction());
-  }, []);
-
-  useEffect(() => {
-    if (onActionChange) {
-      onActionChange(selectedAction);
-    }
   }, [selectedAction, onActionChange]);
 
   const handleChange = (event) => {
