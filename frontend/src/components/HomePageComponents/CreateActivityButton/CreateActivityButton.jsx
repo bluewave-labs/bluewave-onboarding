@@ -15,7 +15,7 @@ const CreateActivityButton = ({
         display: "flex",
         backgroundColor: "grey.100",
         width: "100%",
-        border: "0.5px solid var(--grey-border)",
+        border: "1px solid var(--grey-border)",
         color: "var(--main-text-color)",
         paddingX: "30px",
         paddingY: "20px",
@@ -24,7 +24,7 @@ const CreateActivityButton = ({
         justifyContent: "center",
         transition: "box-shadow 0.3s ease",
         "&:hover": {
-          border: "0.5px solid #d1d5db",
+          border: "1px solid #d1d5db",
           backgroundColor: "grey.200",
         },
       }}
@@ -38,7 +38,7 @@ const CreateActivityButton = ({
 CreateActivityButton.propTypes = {
   skeletonType: PropTypes.node,
   placeholder: PropTypes.string,
-  onButtonClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default CreateActivityButton;
