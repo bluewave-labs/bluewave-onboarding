@@ -13,7 +13,7 @@ const CreateActivityButton = ({
       onClick={onClick}
       sx={{
         display: "flex",
-        backgroundColor: "grey.100",
+        backgroundColor: "var(--background-color)",
         width: "100%",
         border: "1px solid var(--grey-border)",
         color: "var(--main-text-color)",
@@ -24,8 +24,8 @@ const CreateActivityButton = ({
         justifyContent: "center",
         transition: "box-shadow 0.3s ease",
         "&:hover": {
-          border: "1px solid #d1d5db",
-          backgroundColor: "grey.200",
+          border: "1px solid var(--light-border-color)",
+          backgroundColor: "var(--light-gray)",
         },
       }}
     >

@@ -8,28 +8,28 @@ const PopUpSkeleton = () => {
         variant="rectangular"
         width={210}
         height={30}
-        sx={{ bgcolor: "grey.100" }}
+        sx={{ bgcolor: "var(--light-gray)" }}
         animation={false}
       />
       <Skeleton
         variant="rectangular"
         width={210}
         height={30}
-        sx={{ bgcolor: "grey.100" }}
+        sx={{ bgcolor: "var(--light-gray)" }}
         animation={false}
       />
       <Skeleton
         variant="rectangular"
         width={210}
         height={30}
-        sx={{ bgcolor: "grey.100" }}
+        sx={{ bgcolor: "var(--light-gray)" }}
         animation={false}
       />
       <Skeleton
         variant="rectangular"
         width={210}
         height={30}
-        sx={{ bgcolor: "grey.100" }}
+        sx={{ bgcolor: "var(--light-gray)" }}
         animation={false}
       />
       <Skeleton

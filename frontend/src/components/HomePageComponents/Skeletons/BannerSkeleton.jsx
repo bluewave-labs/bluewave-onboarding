@@ -15,14 +15,14 @@ const BannerSkeleton = () => {
         variant="rectangular"
         width={210}
         height={25}
-        sx={{ bgcolor: "grey.100" }}
+        sx={{ bgcolor: "var(--light-gray)" }}
         animation={false}
       />
       <Skeleton
         variant="rectangular"
         width={210}
         height={20}
-        sx={{ bgcolor: "grey.100" }}
+        sx={{ bgcolor: "var(--light-gray)" }}
         animation={false}
       />
 
