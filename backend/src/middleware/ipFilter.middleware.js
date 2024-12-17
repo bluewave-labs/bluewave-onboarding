@@ -2,7 +2,6 @@ const parseIpRange = (allowedIpsEnv) => {
   if (!allowedIpsEnv) return [];
 
   const ranges = allowedIpsEnv.split(",").map((range) => range.trim());
-  // IP range expected format is "baseIp/rangeStart-rangeEnd" (e.g. 192.168.1/1-255)
   return ranges.map((range) => {
     const [baseIp, endRange] = range.split("/");
     if (!baseIp || !endRange) throw new Error("Invalid IP range format");
