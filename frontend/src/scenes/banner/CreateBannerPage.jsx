@@ -64,21 +64,6 @@ const BannerPage = () => {
   };
 
   const onSave = async () => {
-    if (actionUrl && actionUrl !== "https://") {
-      const urlError = validateUrl(actionUrl);
-      if (urlError) {
-        emitToastError(urlError);
-        return;
-      }
-    }
-    if (url && url !== "https://") {
-      const urlError = validateUrl(url);
-      if (urlError) {
-        emitToastError(urlError);
-        return;
-      }
-    }
-
     const bannerData = {
       backgroundColor,
       fontColor,
