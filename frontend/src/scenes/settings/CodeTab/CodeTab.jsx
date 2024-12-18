@@ -64,15 +64,14 @@ const CodeTab = () => {
                 {`<!-- Client-side HTML/JS Snippet to be integrated into their website -->
                     <script>
                         (function() {
-                            const apiKey = '${apiKey}';
                             const apiUrl = '${serverUrl}';
 
                             var s=document.createElement("script");
                             s.type="text/javascript";
                             s.async=false;
                             s.onerror=()=>{console.log("onboard not loaded");};
-                            s.src = 'http://localhost:8082/main.js=${apiKey}';
-                            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+                            s.src = 'http://localhost:8082/main.js';
+                            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(s);
                         })();
                     </script>
                 `}
