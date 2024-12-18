@@ -1,11 +1,11 @@
-import { React } from "react";
-import PropTypes from "prop-types";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { Dialog } from "@mui/material";
-import styles from "./GuideTemplate.module.scss";
 import classNames from "classnames";
-import Button from "../../components/Button/Button";
+import PropTypes from "prop-types";
+import { React, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button/Button";
+import styles from "./GuideTemplate.module.scss";
 import { useDialog } from "./GuideTemplateContext";
 
 const GuideTemplate = ({
@@ -20,14 +20,14 @@ const GuideTemplate = ({
   const { isOpen, closeDialog } = useDialog();
   const navigate = useNavigate();
   const buttons = ["Content", "Appearance"];
+
   return (
     <Dialog
       open={isOpen}
       onClose={closeDialog}
-      maxWidth="lg"
-      style={{ position: "fixed" }}
+      maxWidth='lg'
       //fullWidth
-      //PaperProps={{ style: {} }}
+      PaperProps={{ style: { position: "static" } }}
     >
       <div className={styles.container}>
         <div className={styles.popup}>
@@ -63,13 +63,13 @@ const GuideTemplate = ({
             </div>
             <div className={styles.optionButtons}>
               <Button
-                text="Cancel"
-                buttonType="secondary-grey"
+                text='Cancel'
+                buttonType='secondary-grey'
                 onClick={() => {
                   closeDialog();
                 }}
               />
-              <Button text="Save" onClick={onSave} />
+              <Button text='Save' onClick={onSave} />
             </div>
           </div>
         </div>
