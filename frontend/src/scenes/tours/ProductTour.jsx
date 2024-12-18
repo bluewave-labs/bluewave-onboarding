@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import List from '../../components/TourComponents/List/List';
-import ContentArea from '../../components/TourComponents/ContentArea/ContentArea';
-import ContentHeader from '../../components/TourComponents/ContentHeader/ContentHeader';
-import ConfirmationPopup from '../../components/TourComponents/ConfirmationPopup/ConfirmationPopup';
-import Button from '../../components/Button/Button';
+import List from '../../templates/GuideMainPageTemplate/GuideMainPageComponents/List/List';
+import ContentArea from '../../templates/GuideMainPageTemplate/GuideMainPageComponents/ContentArea/ContentArea';
+import ConfirmationPopup from '../../templates/GuideMainPageTemplate/GuideMainPageComponents/ConfirmationPopup/ConfirmationPopup';
+import Button from '@components/Button/Button';
 import './ProductTourStyles.css';
-import Settings from '../../components/Settings/Settings';
+import CreateToursPopup from './CreateToursPopup/CreateToursPopup';
 
 const TourPage = ({ items }) => {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -70,7 +69,7 @@ const TourPage = ({ items }) => {
       {/* Settings Component - Position and Animation */}
       {showSettings && (
         <div className="settings-container">
-          <Settings onClose={toggleSettings}/>
+          <CreateToursPopup onClose={toggleSettings}/>
         </div>
       )}
 

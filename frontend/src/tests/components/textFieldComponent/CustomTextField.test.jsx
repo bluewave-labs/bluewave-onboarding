@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import CustomTextField from '../../../components/TextFieldComponents/CustomTextField/CustomTextField';
+import CustomTextField from '@components/TextFieldComponents/CustomTextField/CustomTextField';
 
 describe('CustomTextField', () => {
   it('renders the CustomTextField with default props', () => {

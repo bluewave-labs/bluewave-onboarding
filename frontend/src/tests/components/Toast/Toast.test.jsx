@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, act } from '@testing-library/react';
-import Toast from '../../../components/Toast/Toast';
+import Toast from '@components/Toast/Toast';
 import toastEmitter, { TOAST_EMITTER_KEY } from '../../../utils/toastEmitter';
 
 describe('Toast', () => {

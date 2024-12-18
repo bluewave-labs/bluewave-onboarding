@@ -19,25 +19,28 @@ import UserProfileSidebar from '../UserProfileSidebar/UserProfileSidebar';
 
 const menuItems = [
   { text: 'Home', icon: <HomeIcon />, route: '/' },
-  { text: 'SERVE A CONTENT', title: true },
-  { text: 'Tours', icon: <DirectionsBusIcon />, route: '/tour' },
+  // { text: 'SERVE A CONTENT', title: true },
+  // { text: 'Tours', icon: <DirectionsBusIcon />, route: '/tour' },
   { text: 'Hints', icon: <TipsIcon />, route: '/hint' },
-  { text: 'Checklist', icon: <ChecklistIcon /> },
-  { text: 'MAKE AN ANNOUNCEMENT', title: true },
+  // { text: 'Checklist', icon: <ChecklistIcon /> },
+  // { text: 'MAKE AN ANNOUNCEMENT', title: true },
   { text: 'Popups', icon: <SmsIcon />, route: '/popup' },
   { text: 'Banners', icon: <SportsIcon />, route: '/banner' },
   { text: 'Helper Links', icon: <LinkIcon />, route: '/link' },
-  { text: 'GET FEEDBACK', title: true },
-  { text: 'Feedback', icon: <ChatIcon /> },
-  { text: 'Surveys', icon: <ListIcon /> },
-  { text: 'Support', icon: <SportsIcon /> },
-];
+  // { text: 'GET FEEDBACK', title: true },
+  // { text: 'Feedback', icon: <ChatIcon /> },
+  // { text: 'Surveys', icon: <ListIcon /> },
+  { text: 'Support', icon: <SportsIcon />, route: 'https://github.com/bluewave-labs/bluewave-onboarding' }];
 
 function LeftMenu() {
   const navigate = useNavigate();
 
   const handleNavigation = (route) => {
-    if (route) navigate(route);
+    if (route && route.startsWith('/')) {
+      navigate(route);  
+    } else if (route) {
+      window.open(route, '_blank', 'noopener,noreferrer'); 
+    }
   };
 
   return (

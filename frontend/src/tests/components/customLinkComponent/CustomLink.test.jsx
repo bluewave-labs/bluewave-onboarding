@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import CustomLink from '../../../components/CustomLink/CustomLink';
+import CustomLink from '@components/CustomLink/CustomLink';
 
 describe('CustomLink', () => {
   it('renders CustomLink with text and url', () => {

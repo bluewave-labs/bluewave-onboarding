@@ -15,7 +15,7 @@
 .toast {
   background-color: white;
   border: 1px solid var(--light-border-color);
-  font-size: 13px;
+  font-size: var(--font-regular);
   line-height: 20px;
   color: var(--third-text-color);
   padding: 16px;

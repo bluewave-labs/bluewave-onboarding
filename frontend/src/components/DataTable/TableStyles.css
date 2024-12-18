@@ -83,7 +83,7 @@
     align-items: center;
     gap: var(--spacing-xs, 4px);
     border-radius: var(--radius-xs, 4px);
-    border: 1px solid var(--Component-colors-Components-Buttons-Secondary-button-secondary-border, #D0D5DD);
+    border: 1px solid var(--Component-colors-Components-Buttons-Secondary-button-secondary-border, var(--light-border-color));
     background: var(--Component-colors-Components-Buttons-Secondary-button-secondary-bg, #FFF);
 
     /* Shadows/shadow-xs */

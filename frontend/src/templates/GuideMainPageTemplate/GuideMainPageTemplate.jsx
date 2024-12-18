@@ -1,21 +1,24 @@
-import React from 'react';
-import List from '../../components/TourComponents/List/List';
-import ContentArea from '../../components/TourComponents/ContentArea/ContentArea';
-import ContentHeader from '../../components/TourComponents/ContentHeader/ContentHeader';
-import ConfirmationPopup from '../../components/TourComponents/ConfirmationPopup/ConfirmationPopup';
-import Button from '../../components/Button/Button';
+import React, { useEffect, useState } from 'react';
+import List from './GuideMainPageComponents/List/List';
+import ContentArea from './GuideMainPageComponents/ContentArea/ContentArea';
+import ContentHeader from './GuideMainPageComponents/ContentHeader/ContentHeader';
+import ConfirmationPopup from './GuideMainPageComponents/ConfirmationPopup/ConfirmationPopup';
+import Button from '@components/Button/Button';
 import './GuideMainPageTemplate.css';
-import { activityInfoData } from '../../data/GuideMainPageData';
+import { activityInfoData } from '../../data/guideMainPageData';
+import { useAuth } from '../../services/authProvider';
+import { renderIfAuthorized } from '../../utils/generalHelper';
 
 const GuideMainPageTemplate = ({ items, handleDelete, isPopupOpen, handleClosePopup, type, onClick }) => {
-
+  const {  userInfo } = useAuth();
+  const role = userInfo.role;
   const { heading, paragraph, buttonText, title } = activityInfoData[type];
 
   return (
     <div className="product-page-container">
       <div className="product-page-header">
         <ContentHeader title={title} />
-        <Button text={buttonText} onClick={onClick} />
+        {renderIfAuthorized(role, 'admin', <Button text={buttonText} onClick={onClick} />)}
       </div>
       <div className="product-page">
         <ContentArea className="content-area">

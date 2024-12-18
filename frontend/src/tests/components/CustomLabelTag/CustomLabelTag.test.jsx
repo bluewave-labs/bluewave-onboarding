@@ -1,7 +1,7 @@
 
 import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
-import CustomLabelTag from '../../../components/CustomLabelTag/CustomLabelTag';
+import CustomLabelTag from '@components/CustomLabelTag/CustomLabelTag';
 
 
 describe('CustomLabelTag', () => {

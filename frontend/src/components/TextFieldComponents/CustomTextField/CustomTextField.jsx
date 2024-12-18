@@ -13,6 +13,7 @@ const CustomTextField = ({
   labelText = "",
   value = "",
   onChange = () => { },
+  onBlur = () => { },
   helperText = "",
   error = false,
   multiline = false,
@@ -27,25 +28,39 @@ const CustomTextField = ({
   textFieldMargin = "normal",
   type = "text",
   required = false,
-  style
+  style,
+  labelSubText,
+  fullWidth=false, 
+  disabled = false,
+  autofocus = false
 }) => {
+  const computedFullWidth = fullWidth || 
+    ["full", "100%", "stretch"].some(value => TextFieldWidth.toLowerCase().includes(value));
   return (
-    <div style={style}>
-      {!checkCircleIconVisible && <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>}
+    <div style={{...style,  ...(computedFullWidth && { width: '100%' })}} >
+      {!checkCircleIconVisible &&
+        <div>
+          <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
+          {labelSubText && <InputLabel sx={{ fontWeight: '400', fontSize: '13px', margin: 0 }}>{labelSubText}</InputLabel>}
+        </div>
+      }
       {checkCircleIconVisible &&
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           {displayCheckCircleIcon && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
           <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
+          {labelSubText && <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelSubText}</InputLabel>}
         </div>
       }
       <TextField
         id={id}
         type={type}
         name={name}
+        autoFocus={autofocus}
+        onBlur={onBlur}
         required={Boolean(required)}
         className="textField"
-        sx={{ width: TextFieldWidth }}
-        fullWidth
+        sx={{ width: computedFullWidth ? "100%" : TextFieldWidth }}
+        fullWidth={computedFullWidth}
         margin={textFieldMargin}
         value={value}
         onChange={onChange}
@@ -54,6 +69,7 @@ const CustomTextField = ({
         multiline={multiline}
         rows={rows}
         helperText={helperText}
+        disabled={disabled}
         InputProps={{
           startAdornment: startAdornment,
           endAdornment: endAdornment,
@@ -81,6 +97,7 @@ CustomTextField.propTypes = {
   labelText: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   defaultValue: PropTypes.string,
   helperText: PropTypes.string,
   error: PropTypes.bool,
@@ -104,6 +121,7 @@ CustomTextField.propTypes = {
   displayCheckCircleIcon: PropTypes.bool,
   textFieldMargin: PropTypes.string,
   type: PropTypes.string,
+  fullWidth: PropTypes.bool, 
   required: PropTypes.bool,
 };
 

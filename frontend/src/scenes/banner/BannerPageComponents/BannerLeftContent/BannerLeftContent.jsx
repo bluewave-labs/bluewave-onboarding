@@ -42,14 +42,14 @@ const BannerLeftContent = ({
       <h2>Position</h2>
       <div className={styles.radioContent}>
         <RadioButton
-          label='Top (centered)'
+          label="Top (centered)"
           checked={isTopPosition}
           onChange={() => handlePositionChange(true)}
         />
       </div>
       <div className={styles.radioContent}>
         <RadioButton
-          label='Bottom (centered)'
+          label="Bottom (centered)"
           checked={!isTopPosition}
           onChange={() => handlePositionChange(false)}
         />
@@ -57,14 +57,14 @@ const BannerLeftContent = ({
 
       <h2 style={{ marginBottom: 0, marginTop: "1.2rem" }}>URL</h2>
       <CustomTextField
-        TextFieldWidth='241px'
+        TextFieldWidth="241px"
         value={url}
         onChange={handleSetUrl}
       />
 
       <h2 style={{ marginBottom: 0, marginTop: "1.2rem" }}>Action URL</h2>
       <CustomTextField
-        TextFieldWidth='241px'
+        TextFieldWidth="241px"
         value={actionUrl}
         onChange={handleSetActionUrl}
       />

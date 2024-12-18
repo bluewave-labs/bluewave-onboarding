@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import Button from '../../../components/Button/Button';
+import Button from '@components/Button/Button';
 
 describe('Button component', () => {
   it('renders with default props', () => {
