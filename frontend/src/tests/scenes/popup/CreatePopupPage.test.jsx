@@ -83,7 +83,7 @@ describe('CreatePopupPage component', () => {
     await waitFor(() => {
       expect(emitSpy).toHaveBeenCalledWith(
         expect.anything(), // The first argument is the key, which can be anything
-        expect.stringContaining('An unexpected error occurred')
+        expect.stringContaining('An error occurred')
       );
     });
 
@@ -100,7 +100,7 @@ describe('CreatePopupPage component', () => {
 
     // Check initial state of form fields
     const headerBackgroundColor = screen.getByDisplayValue('No action');
-    const headerColor = screen.getByDisplayValue('https://');
+    const headerColor = screen.getAllByDisplayValue('https://')[0];
 
     expect(headerBackgroundColor).not.toBeNull(); // Example for headerBackgroundColor
     expect(headerColor).not.toBeNull(); // Example for headerColor

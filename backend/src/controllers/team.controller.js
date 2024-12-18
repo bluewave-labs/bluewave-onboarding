@@ -3,6 +3,7 @@ const TeamService = require("../service/team.service");
 const { internalServerError } = require("../utils/errors.helper");
 const { MAX_ORG_NAME_LENGTH, ORG_NAME_REGEX } = require('../utils/constants.helper');
 const db = require("../models");
+const { validationResult } = require('express-validator');
 
 const Team = db.Team;
 const teamService = new TeamService();
@@ -50,12 +51,27 @@ const setOrganisation = async (req, res) => {
 
 const getTeamCount = async (req, res) => {
   try {
-    const teamCount = await Team.count();
-    return res.status(200).json({ teamExists: teamCount > 0 });
+    const result = await teamService.getTeamCount();
+    return res.status(200).json(result);
   } catch (err) {
     const { statusCode, payload } = internalServerError(
       "GET_TEAM_COUNT_ERROR",
       err.message,
+    );
+    res.status(statusCode).json(payload);
+  }
+};
+
+const getServerUrl = async (req, res) => {
+  try {
+    let serverUrl = await teamService.fetchServerUrl();
+    serverUrl = serverUrl === null ? "" : serverUrl;
+
+    return res.status(200).json({ serverUrl });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "GET_SERVER_URL_ERROR",
+      err.message
     );
     res.status(statusCode).json(payload);
   }
@@ -101,6 +117,30 @@ const updateTeamDetails = async (req, res) => {
     }
 };
 
+const setServerUrl = async (req, res) => {
+  const validationErrors = validationResult(req);
+  
+  if (!validationErrors.isEmpty()) {
+    const errors = [];
+    validationErrors.array().forEach(err => {
+      errors.push(err.msg);
+    });
+    return res.status(400).json({ errors });
+  }
+
+  try {
+    const { serverUrl } = req.body;
+    await teamService.addServerUrl(serverUrl);
+    return res.status(200).json({ message: "Server URL Set Successfully" });
+  } catch (err) {
+    const { statusCode, payload } = internalServerError(
+      "SET_SERVER_URL_ERROR",
+      err.message
+    )
+    res.status(statusCode).json(payload);
+  }
+}
+
 const removeMember = async (req, res) => {
   const userId = req.user.id;
   const { memberId } = req.params;
@@ -130,4 +170,4 @@ const changeRole = async (req, res) => {
   }
 }
 
-module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, removeMember, changeRole, getTeamCount };
+module.exports = { setOrganisation, getTeamDetails, updateTeamDetails, removeMember, changeRole, getTeamCount, getServerUrl, setServerUrl, teamService };

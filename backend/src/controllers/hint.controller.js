@@ -1,8 +1,6 @@
 const HintService = require("../service/hint.service");
 const { internalServerError } = require("../utils/errors.helper");
 const validateHintData = require("../utils/hint.helper");
-const db = require("../models");
-const Hint = db.Hint;
 
 class HintController {
   async addHint(req, res) {
@@ -147,6 +145,24 @@ class HintController {
       res.status(statusCode).json(payload);
     }
   }
+
+  async getHintByUrl(req, res) {
+    try {
+      const { url } = req.body;
+
+      if (!url || typeof url !== 'string') {
+        return res.status(400).json({ errors: [{ msg: "URL is missing or invalid" }] });
+      }
+
+      const hint = await HintService.getHintByUrl(url);
+      res.status(200).json({ hint });
+    } catch (error) {
+      internalServerError(
+        "GET_HINT_BY_URL_ERROR",
+        error.message,
+      );
+    }
+  };
 }
 
 module.exports = new HintController();

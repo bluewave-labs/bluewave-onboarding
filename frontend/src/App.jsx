@@ -20,8 +20,23 @@ import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
 
-const App = () => {
+import { useEffect, useState } from "react";
+import { getHasUsers } from "./services/loginServices";
 
+const App = () => {
+  const [isAdminLogin, setIsAdminLogin] = useState(false);
+
+  useEffect(() => {
+    const fetchTeamCount = async () => {
+      try {
+        const { usersExist } = await getHasUsers();
+        setIsAdminLogin(!usersExist);
+      } catch (err) {
+      }
+    }
+    fetchTeamCount();
+  }, []);
+  
   return (
       <Routes>
         <Route path="/" element={<Private Component={HomePageTemplate} />}>
@@ -36,15 +51,13 @@ const App = () => {
           <Route path="/settings" element={<Settings />} />
         </Route>
 
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<CreateAccountPage />} />
+        <Route path="/login" element={<LoginPage isAdmin={isAdminLogin}/>} />
+        <Route path="/signup" element={<CreateAccountPage isAdmin={isAdminLogin} setIsAdmin={setIsAdminLogin}/>} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<PasswordResetPage />} />
         <Route path="/check-email" element={<CheckYourEmailPage />} />
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
 
-
-    
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
         <Route path="/banner/create" element={<BannerPage />} />
         <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />

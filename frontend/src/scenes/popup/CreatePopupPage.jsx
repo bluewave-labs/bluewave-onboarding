@@ -19,13 +19,13 @@ const CreatePopupPage = ({autoOpen = false, isEdit, itemId, setItemsUpdated}) =>
     }
   }, [autoOpen, openDialog]);
 
-    const [activeButton, setActiveButton] = useState(0);
+  const [activeButton, setActiveButton] = useState(0);
 
-    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#F8F9F8');
-    const [headerColor, setHeaderColor] = useState('#101828');
-    const [textColor, setTextColor] = useState('#344054');
-    const [buttonBackgroundColor, setButtonBackgroundColor] = useState('#7F56D9');
-    const [buttonTextColor, setButtonTextColor] = useState('#FFFFFF');
+  const [headerBackgroundColor, setHeaderBackgroundColor] = useState("#F8F9F8");
+  const [headerColor, setHeaderColor] = useState("#101828");
+  const [textColor, setTextColor] = useState("#344054");
+  const [buttonBackgroundColor, setButtonBackgroundColor] = useState("#7F56D9");
+  const [buttonTextColor, setButtonTextColor] = useState("#FFFFFF");
 
     const [header, setHeader] = useState('');
     const [content, setContent] = useState('');
@@ -44,13 +44,25 @@ const CreatePopupPage = ({autoOpen = false, isEdit, itemId, setItemsUpdated}) =>
         }
     }, [popupSize]);
 
-    const stateList = [
-        { stateName: 'Header Background Color', state: headerBackgroundColor, setState: setHeaderBackgroundColor },
-        { stateName: 'Header Color', state: headerColor, setState: setHeaderColor },
-        { stateName: 'Text Color', state: textColor, setState: setTextColor },
-        { stateName: 'Button Background Color', state: buttonBackgroundColor, setState: setButtonBackgroundColor },
-        { stateName: 'Button Text Color', state: buttonTextColor, setState: setButtonTextColor },
-    ];
+  const stateList = [
+    {
+      stateName: "Header Background Color",
+      state: headerBackgroundColor,
+      setState: setHeaderBackgroundColor,
+    },
+    { stateName: "Header Color", state: headerColor, setState: setHeaderColor },
+    { stateName: "Text Color", state: textColor, setState: setTextColor },
+    {
+      stateName: "Button Background Color",
+      state: buttonBackgroundColor,
+      setState: setButtonBackgroundColor,
+    },
+    {
+      stateName: "Button Text Color",
+      state: buttonTextColor,
+      setState: setButtonTextColor,
+    },
+  ];
 
     useEffect(() => {
         if (isEdit) {
@@ -58,64 +70,70 @@ const CreatePopupPage = ({autoOpen = false, isEdit, itemId, setItemsUpdated}) =>
                 try {
                     const popupData = await getPopupById(itemId);
 
-                    // Update the state with the fetched data
-                    setHeaderBackgroundColor(popupData.headerBackgroundColor || '#F8F9F8');
-                    setHeaderColor(popupData.headerColor || '#101828');
-                    setTextColor(popupData.textColor || '#344054');
-                    setButtonBackgroundColor(popupData.buttonBackgroundColor || '#7F56D9');
-                    setButtonTextColor(popupData.buttonTextColor || '#FFFFFF');
-                    setHeader(popupData.header || '');
-                    setContent(popupData.content || '');
-                    setActionButtonUrl(popupData.url || 'https://');
-                    setActionButtonText(popupData.actionButtonText || 'Take me to subscription page');
-                    setButtonAction(popupData.closeButtonAction || 'No action');
-                    setPopupSize(popupData.popupSize || 'Small');
-                } catch (error) {
-                    emitToastError(error);
-                }
-            };
-
-            fetchPopupData();
-        }
-    }, [isEdit, itemId]);
-
-    const onSave = async () => {
-        const popupData = {
-            popupSize: popupSize.toLowerCase(),
-            url: actionButtonUrl,
-            actionButtonText: actionButtonText,
-            headerBackgroundColor: headerBackgroundColor,
-            headerColor: headerColor,
-            textColor: textColor,
-            buttonBackgroundColor: buttonBackgroundColor,
-            buttonTextColor: buttonTextColor,
-            closeButtonAction: buttonAction.toLowerCase(),
-            header: header,
-            content: content
-        };
-        try {
-            const response = isEdit
-                ? await editPopup(itemId, popupData)
-                : await addPopup(popupData);
-
-            const toastMessage = isEdit ? 'You edited this popup' : 'New popup Saved'
-
-            toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage)
-            setItemsUpdated(prevState => !prevState);
-            setHeader('');
-            setContent('');
-            closeDialog();
+          // Update the state with the fetched data
+          setHeaderBackgroundColor(
+            popupData.headerBackgroundColor || "#F8F9F8"
+          );
+          setHeaderColor(popupData.headerColor || "#101828");
+          setTextColor(popupData.textColor || "#344054");
+          setButtonBackgroundColor(
+            popupData.buttonBackgroundColor || "#7F56D9"
+          );
+          setButtonTextColor(popupData.buttonTextColor || "#FFFFFF");
+          setHeader(popupData.header || "");
+          setContent(popupData.content || "");
+          setActionButtonUrl(popupData.actionUrl || "https://");
+          setUrl(popupData.url || "https://");
+          setActionButtonText(
+            popupData.actionButtonText || "Take me to subscription page"
+          );
+          setButtonAction(popupData.closeButtonAction || "No action");
+          setPopupSize(popupData.popupSize || "Small");
         } catch (error) {
-            const errorMessage = error.response?.data?.message
-                ? `Error: ${error.response.data.message}`
-                : 'An unexpected error occurred. Please try again.';
-            toastEmitter.emit(TOAST_EMITTER_KEY, errorMessage);
+          emitToastError(error);
         }
-    }
+      };
 
-    const handleButtonClick = (index) => {
-        setActiveButton(index);
+      fetchPopupData();
+    }
+  }, [isEdit, itemId]);
+
+  const onSave = async () => {
+    const popupData = {
+      popupSize: popupSize.toLowerCase(),
+      url,
+      actionUrl: actionButtonUrl,
+      actionButtonText,
+      headerBackgroundColor,
+      headerColor,
+      textColor,
+      buttonBackgroundColor,
+      buttonTextColor,
+      closeButtonAction: buttonAction.toLowerCase(),
+      header,
+      content,
     };
+    try {
+      const response = isEdit
+        ? await editPopup(location.state?.id, popupData)
+        : await addPopup(popupData);
+      const toastMessage = isEdit
+        ? "You edited this popup"
+        : "New popup Saved";
+
+      toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
+      setItemsUpdated(prevState => !prevState);
+      setHeader('');
+      setContent('');
+      closeDialog();
+    } catch (error) {
+      emitToastError(error);
+    }
+  };
+
+  const handleButtonClick = (index) => {
+    setActiveButton(index);
+  };
 
     return (
       <GuideTemplate
@@ -158,6 +176,8 @@ const CreatePopupPage = ({autoOpen = false, isEdit, itemId, setItemsUpdated}) =>
             actionButtonText={actionButtonText}
             setButtonAction={setButtonAction}
             buttonAction={buttonAction}
+            url={url}
+            setUrl={setUrl}
           />
         )}
         leftAppearance={() => (
