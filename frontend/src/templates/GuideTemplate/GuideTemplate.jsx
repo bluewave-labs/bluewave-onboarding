@@ -65,7 +65,7 @@ const GuideTemplate = ({
                 text="Cancel"
                 buttonType="secondary-grey"
                 onClick={() => {
-                  navigate("/");
+                  closeDialog();
                 }}
               />
               <Button text="Save" onClick={onSave} />

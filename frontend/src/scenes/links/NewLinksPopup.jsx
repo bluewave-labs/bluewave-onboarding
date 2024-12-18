@@ -8,17 +8,22 @@ import { HelperLinkContext } from "../../services/linksProvider";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import { emitToastError } from "../../utils/guideHelper";
 import toastEmitter, { TOAST_EMITTER_KEY } from "../../utils/toastEmitter";
-import LinkAppearance from "./LinkAppearance";
-import LinkContent from "./LinkContent";
+import LinkAppearance from "./LinkPageComponents/LinkAppearance";
+import LinkContent from "./LinkPageComponents/LinkContent";
+import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 import s from "./LinkPage.module.scss";
+import { getHelperById } from "../../services/helperLinkService";
 
 const NewLinksPopup = ({
-  currentHelper,
-  setShowNewLinksPopup,
-  currentLinks,
-  helperState,
+  autoOpen = false,
+  isEdit,
+  setIsEdit,
+  itemId,
+  setItemsUpdated
 }) => {
   const [activeBtn, setActiveBtn] = useState(0);
+  const [currentHelper, setCurrentHelper] = useState({});
+  const [currentLinks, setCurrentLinks] = useState([]);
 
   const {
     showSettings,
@@ -31,22 +36,51 @@ const NewLinksPopup = ({
     setHelperToEdit,
   } = useContext(HelperLinkContext);
 
+  const { openDialog, closeDialog, isOpen } = useDialog();
+  const fetchHelperData = async () => {
+    const { links, ...data } = await getHelperById(id);
+    setCurrentHelper(data);
+    setCurrentLinks(links.sort((a, b) => a.order - b.order));
+    setHelperToEdit(itemId);
+  }
+
   useEffect(() => {
+    if (autoOpen) {
+      openDialog();
+    }
+  }, [autoOpen, openDialog]);
+
+  useEffect(() => {
+    handleLinks
     setHelper(currentHelper);
     if (currentLinks?.length) {
       setLinks(currentLinks);
     }
-    if (helperState?.isEdit) {
-      setHelperToEdit(helperState.id);
+    if (isEdit) {
+      fetchHelperData()
     }
-  }, []);
+    else {
+      setCurrentHelper({
+        title: "",
+        headerBackgroundColor: "#F8F9F8",
+        linkFontColor: "#344054",
+        iconColor: "#7F56D9",
+      });
+      setCurrentLinks([]);
+    }
+    if (!isOpen) {
+      setLinks([]);
+      setHelper({});
+      setHelperToEdit(null);
+    }
+  }, [openDialog, isOpen]);
 
   const buildToastError = (msg) =>
     msg.response
       ? msg
       : {
-          response: { data: { errors: [{ msg }] } },
-        };
+        response: { data: { errors: [{ msg }] } },
+      };
 
   const handleLinks = async (item) => {
     const { id, ...link } = item;
@@ -75,6 +109,8 @@ const NewLinksPopup = ({
         ? updateHelper(helper, formattedLinks)
         : createHelper(helper, formattedLinks));
       setHelper(newHelper);
+      setItemsUpdated((prevState) => !prevState);
+      closeDialog();
     } catch (err) {
       emitToastError(buildToastError(err));
       return null;
@@ -107,10 +143,12 @@ const NewLinksPopup = ({
   const leftContent = () => <LinkContent />;
   const leftAppearance = () => <LinkAppearance />;
 
+
+
   return (
     <div className={s.new__container}>
       <GuideTemplate
-        title='New helper link'
+        title={isEdit ? "Edit Helper Link" : "New Helper Link"}
         activeButton={activeBtn}
         handleButtonClick={setActiveBtn}
         rightContent={rightContent}

@@ -8,12 +8,10 @@ import HintLeftAppearance from "@components/HintPageComponents/HintLeftAppearanc
 import { addHint, getHintById, editHint } from '../../services/hintServices';
 import toastEmitter, { TOAST_EMITTER_KEY } from "../../utils/toastEmitter";
 import { emitToastError } from "../../utils/guideHelper";
-import { useLocation } from "react-router";
 import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
 const HintPage = ({ isEdit, itemId, setItemsUpdated }) => {
   const { closeDialog } = useDialog();
-  const location = useLocation();
   const [activeButton, setActiveButton] = useState(0);
 
   const handleButtonClick = (index) => {

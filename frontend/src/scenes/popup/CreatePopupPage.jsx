@@ -115,7 +115,7 @@ const CreatePopupPage = ({ autoOpen = false, isEdit, itemId, setItemsUpdated }) 
     };
     try {
       const response = isEdit
-        ? await editPopup(location.state?.id, popupData)
+        ? await editPopup(itemId, popupData)
         : await addPopup(popupData);
       const toastMessage = isEdit
         ? "You edited this popup"

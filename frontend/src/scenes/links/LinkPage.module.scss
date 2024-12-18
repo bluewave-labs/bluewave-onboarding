@@ -13,6 +13,15 @@ $box-shadow-color: rgba(16, 24, 40, 0.05);
   }
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
 .body {
   &__title {
     font-family: Inter;

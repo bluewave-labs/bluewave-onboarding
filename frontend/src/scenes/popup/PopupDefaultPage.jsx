@@ -3,25 +3,11 @@ import DefaultPageTemplate from '../../templates/DefaultPageTemplate/DefaultPage
 import CreatePopupPage from './CreatePopupPage';
 import { getPopups, deletePopup } from '../../services/popupServices';
 import { ACTIVITY_TYPES_INFO } from '../../data/guideMainPageData';
-import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
 const PopupDefaultPage = () => {
     const [itemsUpdated, setItemsUpdated] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [itemId, setItemId] = useState(null);
-    const { openDialog } = useDialog();
-     
-    const openEditPopupDialog = (id) => {
-      setIsEdit(true);
-      setItemId(id);
-      openDialog();
-    };
-
-    const openNewPopupDialog = () => {
-      setIsEdit(false);
-      setItemId(null);
-      openDialog();
-    };
 
     const getPopupDetails = (popup) => ({
         title: `Popup ${popup.id}`,
@@ -34,12 +20,12 @@ const PopupDefaultPage = () => {
         <DefaultPageTemplate
           getItems={getPopups}
           deleteItem={deletePopup}
-          navigateToCreate={openNewPopupDialog}
+          setIsEdit={setIsEdit}
+          setItemId={setItemId}
           itemType={ACTIVITY_TYPES_INFO.POPUPS}
           itemTypeInfo={ACTIVITY_TYPES_INFO.POPUPS}
           getItemDetails={getPopupDetails}
           itemsUpdated={itemsUpdated}
-          onEditItem={openEditPopupDialog}
         />
         <CreatePopupPage
           isEdit={isEdit}
