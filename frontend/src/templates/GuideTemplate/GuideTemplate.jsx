@@ -25,6 +25,7 @@ const GuideTemplate = ({
       open={isOpen}
       onClose={closeDialog}
       maxWidth="lg"
+      style={{ position: "fixed" }}
       //fullWidth
       //PaperProps={{ style: {} }}
     >
