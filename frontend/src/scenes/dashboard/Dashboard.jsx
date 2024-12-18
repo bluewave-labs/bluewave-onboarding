@@ -5,9 +5,8 @@ import styles from "./Dashboard.module.scss";
 import StatisticCardList from "../../components/HomePageComponents/StatisticCardsList/StatisticCardsList";
 import CreateActivityButtonList from "../../components/HomePageComponents/CreateActivityButtonList/CreateActivityButtonList";
 import { useNavigate } from "react-router-dom";
-import PopUpSkeleton from "../../components/HomePageComponents/Skeletons/PopUpSkeleton";
 import BannerSkeleton from "../../components/HomePageComponents/Skeletons/BannerSkeleton";
-import HelperSkeleton from "../../components/HomePageComponents/Skeletons/HelperSkeleton";
+import CustomSkeleton from "../../components/HomePageComponents/Skeletons/CustomSkeleton";
 
 const Dashboard = ({ fullName }) => {
   const navigate = useNavigate();
@@ -19,7 +18,15 @@ const Dashboard = ({ fullName }) => {
 
   const buttons = [
     {
-      skeletonType: <PopUpSkeleton />,
+      skeletonType: (
+        <CustomSkeleton
+          frontSkeletonProps={{
+            position: "absolute",
+            top: 20,
+            left: 30,
+          }}
+        />
+      ),
       placeholder: "Create a popup",
       onClick: () => navigate("/popup/create"),
     },
@@ -29,8 +36,16 @@ const Dashboard = ({ fullName }) => {
       onClick: () => navigate("/banner/create"),
     },
     {
-      skeletonType: <HelperSkeleton />,
-      placeholder: "Add a hint to your app",
+      skeletonType: (
+        <CustomSkeleton
+          frontSkeletonProps={{
+            position: "absolute",
+            bottom: "1rem",
+            right: "0.8rem",
+          }}
+        />
+      ),
+      placeholder: "Create a new helper link",
       onClick: () => navigate("/hint/create"),
     },
   ];

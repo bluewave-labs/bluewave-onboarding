@@ -27,6 +27,12 @@
     --dark-background: #121212;
     --light-surface: #f5f5f5;
     --dark-surface: #1e1e1e;
+    --gray-50: #fbfbfb;
+    --gray-100: #f8f8f8;
+    --gray-200: #C6C6C7;
+    --gray-250: #F3F3F3;
+    --blue-50: #E2EBFF;
+    --blue-300: #A8C1FF;
   
     /* Custom label tag component */
     --label-orange-bg: #fff3e0;

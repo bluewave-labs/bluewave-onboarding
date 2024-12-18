@@ -13,7 +13,7 @@ const CreateActivityButton = ({
       onClick={onClick}
       sx={{
         display: "flex",
-        backgroundColor: "var(--background-color)",
+        backgroundColor: "var(--gray-50)",
         width: "100%",
         border: "1px solid var(--grey-border)",
         color: "var(--main-text-color)",
@@ -22,10 +22,14 @@ const CreateActivityButton = ({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        textTransform: "none",
         transition: "box-shadow 0.3s ease",
         "&:hover": {
-          border: "1px solid var(--light-border-color)",
-          backgroundColor: "var(--light-gray)",
+          border: "1px solid var(--gray-200)",
+          backgroundColor: "var(--gray-100)",
+          ".childSkeleton": {
+            border: "1px solid var(--blue-300)",
+          },
         },
       }}
     >
