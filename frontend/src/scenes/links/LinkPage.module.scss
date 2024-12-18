@@ -53,8 +53,6 @@ $box-shadow-color: rgba(16, 24, 40, 0.05);
     flex-direction: column;
     margin-bottom: 1rem;
     width: fit-content;
-
-    font-family: Inter;
     font-size: 0.813rem;
     font-weight: 400;
     line-height: 1.54;
@@ -68,6 +66,9 @@ $box-shadow-color: rgba(16, 24, 40, 0.05);
     height: $input-height;
     border-radius: 0.5rem;
     display: inline-block;
+    font-size: var(--font-regular);
+    color: var(--main-text-color);
+    font-family: Inter;
 
     &:first-of-type {
       margin-top: 5px;
