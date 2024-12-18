@@ -1,7 +1,14 @@
+const getIpFromRequest = (req) => {
+  const forwardedFor = req.headers["x-forwarded-for"];
+  const remoteAddress = req.connection.remoteAddress;
+  console.log({ forwardedFor, remoteAddress });
+  return (forwardedFor || remoteAddress).replace("::ffff:", "");
+};
+
 const parseIpRange = (allowedIpsEnv) => {
   if (!allowedIpsEnv) return [];
 
-  const ranges = allowedIpsEnv.split(",").map((range) => range.trim());
+  const ranges = allowedIpsEnv.split(", ").map((range) => range.trim());
   return ranges.map((range) => {
     const [baseIp, endRange] = range.split("/");
     if (!baseIp || !endRange) throw new Error("Invalid IP range format");
@@ -33,11 +40,23 @@ const isIpAllowed = (currentIp, allowedRanges) => {
 
 const ipFilter = async (req, res, next) => {
   try {
-    const currentIp =
-      req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-    const allowedRanges = parseIpRange(process.env.ALLOWED_IPS_RANGE);
+    const currentIp = getIpFromRequest(req);
+    const allowedIpsEnv = process.env.ALLOWED_IPS;
+    const allowedRanges = parseIpRange(process.env.ALLOWED_IP_RANGE);
+    if (!allowedIpsEnv && !allowedRanges.length) {
+      next();
+      return;
+    } else if (!allowedIpsEnv) {
+      if (!isIpAllowed(currentIp, allowedRanges)) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+      next();
+      return;
+    }
 
-    if (!isIpAllowed(currentIp, allowedRanges)) {
+    const allowedIps = allowedIpsEnv.split(", ").map((ip) => ip.trim());
+
+    if (!allowedIps.includes(currentIp)) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
