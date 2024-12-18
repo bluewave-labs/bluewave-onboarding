@@ -73,7 +73,7 @@ const PopupComponent = ({
                 style={{
                   backgroundColor: buttonBackgroundColor,
                   color: buttonTextColor,
-                  margin: "1rem",
+                  marginRight: "1rem",
                 }}
                 text={previewBtnText}
                 onClick={handleButtonClick} // Add onClick handler
