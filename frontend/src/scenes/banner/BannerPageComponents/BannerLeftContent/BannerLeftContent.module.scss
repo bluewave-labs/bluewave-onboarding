@@ -1,0 +1,19 @@
+@use '../../../../styles/globals.scss' as *;
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    h2{
+        @include text-style(regular);
+        margin-top: 1.5rem;
+    }
+    h3{
+        @include text-style(regular);
+    }
+    .radioContent{
+        display: flex;
+        font-size: 13px;
+    }
+}

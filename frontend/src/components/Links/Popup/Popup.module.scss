@@ -1,0 +1,35 @@
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400;
+  background-color: #fff;
+  box-shadow: 0px 8px 8px -4px #10182808;
+  box-shadow: 0px 20px 24px -4px #10182814;
+  padding: 24px;
+  border-radius: 12px;
+
+  &__title {
+    margin: 0 0 4px;
+    font-family: Inter;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.75;
+  }
+
+  &__desc {
+    margin: 0 0 24px;
+    font-family: Inter;
+    font-size: 0.813rem;
+    font-weight: 400;
+    line-height: 1.54;
+  }
+
+  &__btn {
+    &--container {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.tableHeader {
+    background-color: rgba(250, 250, 250, 1);
+}
+
+.heading {
+    color: var(--second-text-color) !important ;
+    font-size: 12px ;
+}
+
+.nameCol {
+    display: flex !important;
+    flex-direction: column;
+    font-size: var(--font-regular) ;
+}
+
+.data {
+    font-size: var(--font-regular) ;
+    color: var(--second-text-color) !important;
+
+}
+
+.role{
+    align-items: center;
+    display: flex;
+}
