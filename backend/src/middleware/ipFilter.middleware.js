@@ -1,7 +1,6 @@
 const getIpFromRequest = (req) => {
   const forwardedFor = req.headers["x-forwarded-for"];
   const remoteAddress = req.connection.remoteAddress;
-  console.log({ forwardedFor, remoteAddress });
   return (forwardedFor || remoteAddress).replace("::ffff:", "");
 };
 
