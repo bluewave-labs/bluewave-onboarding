@@ -59,16 +59,16 @@
 }
 
 .small {
-  width: 400px;
-  height: 250px;
+  min-width: 400px;
+  min-height: 250px;
 }
 
 .medium {
-  width: 500px;
-  height: 300px;
+  min-width: 500px;
+  min-height: 300px;
 }
 
 .large {
-  width: 700px;
-  height: 350px;
+  min-width: 700px;
+  min-height: 350px;
 }
