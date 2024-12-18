@@ -17,13 +17,10 @@ import { getHelperById } from "../../services/helperLinkService";
 const NewLinksPopup = ({
   autoOpen = false,
   isEdit,
-  setIsEdit,
   itemId,
   setItemsUpdated
 }) => {
   const [activeBtn, setActiveBtn] = useState(0);
-  const [currentHelper, setCurrentHelper] = useState({});
-  const [currentLinks, setCurrentLinks] = useState([]);
 
   const {
     showSettings,
@@ -38,9 +35,9 @@ const NewLinksPopup = ({
 
   const { openDialog, closeDialog, isOpen } = useDialog();
   const fetchHelperData = async () => {
-    const { links, ...data } = await getHelperById(id);
-    setCurrentHelper(data);
-    setCurrentLinks(links.sort((a, b) => a.order - b.order));
+    const { links, ...data } = await getHelperById(itemId);
+    setHelper(data);
+    setLinks(links.sort((a, b) => a.order - b.order));
     setHelperToEdit(itemId);
   }
 
@@ -51,22 +48,17 @@ const NewLinksPopup = ({
   }, [autoOpen, openDialog]);
 
   useEffect(() => {
-    handleLinks
-    setHelper(currentHelper);
-    if (currentLinks?.length) {
-      setLinks(currentLinks);
-    }
     if (isEdit) {
       fetchHelperData()
     }
     else {
-      setCurrentHelper({
+      setHelper({
         title: "",
         headerBackgroundColor: "#F8F9F8",
         linkFontColor: "#344054",
         iconColor: "#7F56D9",
       });
-      setCurrentLinks([]);
+      setLinks([]);
     }
     if (!isOpen) {
       setLinks([]);
@@ -142,8 +134,6 @@ const NewLinksPopup = ({
   const rightContent = () => <Preview />;
   const leftContent = () => <LinkContent />;
   const leftAppearance = () => <LinkAppearance />;
-
-
 
   return (
     <div className={s.new__container}>

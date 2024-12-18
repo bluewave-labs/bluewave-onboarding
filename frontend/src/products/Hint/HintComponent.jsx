@@ -1,6 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import "./hintComponent.css";
+import "./HintComponent.css";
 import Button from "../../components/Button/Button";
 
 const HintComponent = ({

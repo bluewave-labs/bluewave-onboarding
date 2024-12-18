@@ -24,7 +24,6 @@ const LinksDefaultPage = () => {
         <div className={s.container}>
           <NewLinksPopup
             isEdit={isEdit}
-            setIsEdit={setIsEdit}
             itemId={itemId}
             setItemsUpdated={setItemsUpdated}
           />
