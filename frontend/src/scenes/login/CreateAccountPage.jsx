@@ -100,7 +100,7 @@ function CreateAccountPage({ isAdmin = false, setIsAdmin}) {
             <CustomTextField
               id="name"
               name="name"
-              type="name"
+              type="text"
               labelText="Name*:"
               checkCircleIconVisible={true}
               displayCheckCircleIcon={touched.name && !errors.name}
@@ -120,7 +120,7 @@ function CreateAccountPage({ isAdmin = false, setIsAdmin}) {
             <CustomTextField
               id="surname"
               name="surname"
-              type="surname"
+              type="text"
               labelText="Surname*:"
               checkCircleIconVisible={true}
               displayCheckCircleIcon={touched.surname && !errors.surname}

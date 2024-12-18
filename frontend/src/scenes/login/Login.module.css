@@ -43,9 +43,8 @@
 }
 
 .form-group input[type="email"],
-.form-group input[type="name"],
-.form-group input[type="password"],
-.form-group input[type="surname"] {
+.form-group input[type="text"],
+.form-group input[type="password"] {
   width: 100%;
   border: 1px solid var(--light-border-color);
   border-radius: 8px;

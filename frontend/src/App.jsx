@@ -41,14 +41,11 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Private Component={HomePageTemplate} />}>
           <Route index element={<Home />} />
-          <Route path="link" element={<LinksDefaultPage />} />
-          <Route path="tour" element={<ToursDefaultPage />} />
-          <Route path="/banner/create" element={<BannerPage />} />
-          <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
+          <Route path="/link" element={<LinksDefaultPage />} />
+          <Route path="/tour" element={<ToursDefaultPage />} />
           <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
           <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
           <Route path="/hint" element={<HintDefaultPage />} />
-          <Route path="/settings" element={<Settings />} />
         </Route>
 
         <Route path="/login" element={<LoginPage isAdmin={isAdminLogin}/>} />
@@ -59,14 +56,6 @@ const App = () => {
         <Route path="/set-new-password" element={<SetNewPasswordPage />} />
 
         <Route path="/progress-steps" element={<ProgressStepsMain />} />
-        <Route path="/banner/create" element={<BannerPage />} />
-        <Route path="/popup/create" element={<Private Component={CreatePopupPage} />} />
-        <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
-        <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
-        <Route path="/link" element={<LinksDefaultPage />} />
-        <Route path="/tour" element={<ToursDefaultPage />} />
-        <Route path="/hint" element={<HintDefaultPage />} />
-        <Route path="/popup" element={<PopupDefaultPage/>} />
         <Route path="/403" element={<Error403 />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
