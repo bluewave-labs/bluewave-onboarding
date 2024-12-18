@@ -30,28 +30,28 @@ const CustomTextField = ({
   required = false,
   style,
   labelSubText = "",
-  fullWidth=false, 
+  fullWidth = false,
   disabled = false,
   autofocus = false,
 }) => {
-  const computedFullWidth = fullWidth || 
+  const computedFullWidth = fullWidth ||
     ["full", "100%", "stretch"].some(value => TextFieldWidth.toLowerCase().includes(value));
   return (
-    <div style={{...style,  ...(computedFullWidth && { width: '100%' })}} >
-      {!checkCircleIconVisible &&
+    <div style={{ ...style, ...(computedFullWidth && { width: '100%' }) }} >
+      {!checkCircleIconVisible && 
         <div>
-         <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
-         {labelSubText && <InputLabel sx={{ fontWeight: '400', fontSize: '13px', margin: 0 }}>{labelSubText}</InputLabel>}
-       </div>
-      )}
-      {checkCircleIconVisible && (
-       <div style={{ display: 'flex', gap: '0.5rem' }}>
-         {displayCheckCircleIcon && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
-         <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
-         {labelSubText && <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelSubText}</InputLabel>}
-       </div>
-      )}
-
+          <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
+          {labelSubText && <InputLabel sx={{ fontWeight: '400', fontSize: '13px', margin: 0 }}>{labelSubText}</InputLabel>}
+        </div>
+      }
+      {checkCircleIconVisible && 
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          {displayCheckCircleIcon && <CheckCircleIcon style={{ color: 'green', fontSize: '20px' }} />}
+          <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
+          {labelSubText && <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelSubText}</InputLabel>}
+        </div>
+      }
+      
       <TextField
         id={id}
         type={type}
@@ -59,7 +59,7 @@ const CustomTextField = ({
         autoFocus={autofocus}
         onBlur={onBlur}
         required={Boolean(required)}
-        className={"textField"}
+        className="textField"
         sx={{ width: computedFullWidth ? "100%" : TextFieldWidth, marginTop: 1 }}
         fullWidth={computedFullWidth}
         margin={textFieldMargin}
@@ -90,8 +90,8 @@ const CustomTextField = ({
             endAdornment: endAdornment,
             ...(chips &&
               chips.length > 0 && {
-                startAdornment: <ChipAdornment chips={chips} />,
-              }),
+              startAdornment: <ChipAdornment chips={chips} />,
+            }),
           },
         }}
       />
@@ -127,7 +127,7 @@ CustomTextField.propTypes = {
   displayCheckCircleIcon: PropTypes.bool,
   textFieldMargin: PropTypes.string,
   type: PropTypes.string,
-  fullWidth: PropTypes.bool, 
+  fullWidth: PropTypes.bool,
   required: PropTypes.bool,
 };
 

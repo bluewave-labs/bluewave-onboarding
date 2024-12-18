@@ -10,10 +10,10 @@ import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
 import { emitToastError } from '../../utils/guideHelper';
 import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
-const CreatePopupPage = ({autoOpen = false, isEdit, itemId, setItemsUpdated}) => {
+const CreatePopupPage = ({ autoOpen = false, isEdit, itemId, setItemsUpdated }) => {
   const { openDialog, closeDialog } = useDialog();
 
-     useEffect(() => {
+  useEffect(() => {
     if (autoOpen) {  // auto open dialog to run tests
       openDialog();
     }
@@ -27,22 +27,22 @@ const CreatePopupPage = ({autoOpen = false, isEdit, itemId, setItemsUpdated}) =>
   const [buttonBackgroundColor, setButtonBackgroundColor] = useState("#7F56D9");
   const [buttonTextColor, setButtonTextColor] = useState("#FFFFFF");
 
-    const [header, setHeader] = useState('');
-    const [content, setContent] = useState('');
+  const [header, setHeader] = useState('');
+  const [content, setContent] = useState('');
 
-    const markdownContent = new Turndown().turndown(content);
-    
-    const [actionButtonUrl, setActionButtonUrl] = useState("https://");
-    const [actionButtonText, setActionButtonText] = useState("Take me to subscription page");
-    const [buttonAction, setButtonAction] = useState('No action');
-    const [popupSize, setPopupSize] = useState('Small');
-    const [stablePopupSize, setStablePopupSize] = useState('');
+  const markdownContent = new Turndown().turndown(content);
+  const [url, setUrl] = useState("https://");
+  const [actionButtonUrl, setActionButtonUrl] = useState("https://");
+  const [actionButtonText, setActionButtonText] = useState("Take me to subscription page");
+  const [buttonAction, setButtonAction] = useState('No action');
+  const [popupSize, setPopupSize] = useState('Small');
+  const [stablePopupSize, setStablePopupSize] = useState('');
 
-    useEffect(() => {
-        if (popupSize) {
-          setStablePopupSize(popupSize); // prevent passing empty string to PopupComponent
-        }
-    }, [popupSize]);
+  useEffect(() => {
+    if (popupSize) {
+      setStablePopupSize(popupSize); // prevent passing empty string to PopupComponent
+    }
+  }, [popupSize]);
 
   const stateList = [
     {
@@ -64,11 +64,11 @@ const CreatePopupPage = ({autoOpen = false, isEdit, itemId, setItemsUpdated}) =>
     },
   ];
 
-    useEffect(() => {
-        if (isEdit) {
-            const fetchPopupData = async () => {
-                try {
-                    const popupData = await getPopupById(itemId);
+  useEffect(() => {
+    if (isEdit) {
+      const fetchPopupData = async () => {
+        try {
+          const popupData = await getPopupById(itemId);
 
           // Update the state with the fetched data
           setHeaderBackgroundColor(
@@ -135,60 +135,60 @@ const CreatePopupPage = ({autoOpen = false, isEdit, itemId, setItemsUpdated}) =>
     setActiveButton(index);
   };
 
-    return (
-      <GuideTemplate
-        title={isEdit ? "Edit Popup" : "New Popup"}
-        activeButton={activeButton}
-        handleButtonClick={handleButtonClick}
-        onSave={onSave}
-        rightContent={() => (
-          <RichTextEditor
-            previewComponent={() => (
-              <PopupComponent
-                header={header}
-                content={markdownContent}
-                previewBtnText={actionButtonText}
-                headerBackgroundColor={headerBackgroundColor}
-                headerColor={headerColor}
-                textColor={textColor}
-                buttonBackgroundColor={buttonBackgroundColor}
-                buttonTextColor={buttonTextColor}
-                popupSize={stablePopupSize}
-              />
-            )}
-            header={header}
-            setHeader={setHeader}
-            setContent={setContent}
-            content={content}
-            sx={{
-              minWidth: "400px",
-              maxWidth: "700px",
-              marginLeft: "2.5rem",
-              marginTop: "1rem",
-            }}
-          />
-        )}
-        leftContent={() => (
-          <PopupContent
-            actionButtonUrl={actionButtonUrl}
-            setActionButtonText={setActionButtonText}
-            setActionButtonUrl={setActionButtonUrl}
-            actionButtonText={actionButtonText}
-            setButtonAction={setButtonAction}
-            buttonAction={buttonAction}
-            url={url}
-            setUrl={setUrl}
-          />
-        )}
-        leftAppearance={() => (
-          <PopupAppearance
-            data={stateList}
-            setPopupSize={setPopupSize}
-            popupSize={popupSize}
-          />
-        )}
-      />
-    );
+  return (
+    <GuideTemplate
+      title={isEdit ? "Edit Popup" : "New Popup"}
+      activeButton={activeButton}
+      handleButtonClick={handleButtonClick}
+      onSave={onSave}
+      rightContent={() => (
+        <RichTextEditor
+          previewComponent={() => (
+            <PopupComponent
+              header={header}
+              content={markdownContent}
+              previewBtnText={actionButtonText}
+              headerBackgroundColor={headerBackgroundColor}
+              headerColor={headerColor}
+              textColor={textColor}
+              buttonBackgroundColor={buttonBackgroundColor}
+              buttonTextColor={buttonTextColor}
+              popupSize={stablePopupSize}
+            />
+          )}
+          header={header}
+          setHeader={setHeader}
+          setContent={setContent}
+          content={content}
+          sx={{
+            minWidth: "400px",
+            maxWidth: "700px",
+            marginLeft: "2.5rem",
+            marginTop: "1rem",
+          }}
+        />
+      )}
+      leftContent={() => (
+        <PopupContent
+          actionButtonUrl={actionButtonUrl}
+          setActionButtonText={setActionButtonText}
+          setActionButtonUrl={setActionButtonUrl}
+          actionButtonText={actionButtonText}
+          setButtonAction={setButtonAction}
+          buttonAction={buttonAction}
+          url={url}
+          setUrl={setUrl}
+        />
+      )}
+      leftAppearance={() => (
+        <PopupAppearance
+          data={stateList}
+          setPopupSize={setPopupSize}
+          popupSize={popupSize}
+        />
+      )}
+    />
+  );
 };
 
 export default CreatePopupPage;

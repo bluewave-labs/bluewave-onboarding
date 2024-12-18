@@ -47,7 +47,6 @@
 .form-group input[type="password"],
 .form-group input[type="surname"] {
   width: 100%;
-  padding: 8px 12px;
   border: 1px solid var(--light-border-color);
   border-radius: 8px;
   font-size: var(--font-regular);
