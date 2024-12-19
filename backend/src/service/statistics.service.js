@@ -24,7 +24,7 @@ class StatisticsService {
         );
         const percentageDifference =
           lastMonthViews.length === 0
-            ? 100
+            ? 0
             : Math.round(
                 ((thisMonthViews.length - lastMonthViews.length) /
                   lastMonthViews.length) *

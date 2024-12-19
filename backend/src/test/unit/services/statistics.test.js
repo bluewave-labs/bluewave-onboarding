@@ -27,13 +27,13 @@ describe("Test statistics service", () => {
       userId: 1,
     });
     const expected = [
-      { views: 2, change: 100, guideType: 'popup' },
-      { views: 2, change: 100, guideType: 'hint' },
-      { views: 2, change: 100, guideType: 'banner' },
-      { views: 0, change: 100, guideType: 'link' },
-      { views: 3, change: 100, guideType: 'tour' },
-      { views: 1, change: 100, guideType: 'checklist' }
-    ]
+      { views: 2, change: 0, guideType: "popup" },
+      { views: 2, change: 0, guideType: "hint" },
+      { views: 2, change: 0, guideType: "banner" },
+      { views: 0, change: 0, guideType: "link" },
+      { views: 3, change: 0, guideType: "tour" },
+      { views: 1, change: 0, guideType: "checklist" },
+    ];
     expect(GuideLogMock.findAll.called).to.equal(true);
     expect(statistics).to.be.an("array");
     expect(statistics).to.have.lengthOf(6);
