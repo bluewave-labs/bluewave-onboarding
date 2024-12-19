@@ -33,6 +33,7 @@ db.Hint = require("./Hint.js")(sequelize, Sequelize.DataTypes);
 db.Tour = require("./Tour.js")(sequelize, Sequelize.DataTypes);
 db.Link = require("./Link.js")(sequelize, Sequelize.DataTypes);
 db.HelperLink = require("./HelperLink.js")(sequelize, Sequelize.DataTypes);
+db.Statistics = require("./Statistics.js")(sequelize, Sequelize.DataTypes);
 
 // Define associations here
 db.User.hasMany(db.Popup, { foreignKey: "createdBy", as: "popups" });
