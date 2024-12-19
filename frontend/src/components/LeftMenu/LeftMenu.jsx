@@ -11,6 +11,7 @@ import {
   ListOutlined as ListIcon,
   MarkChatUnreadOutlined as ChatIcon,
 } from '@mui/icons-material';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import './LeftMenu.css';
 import Logo from '../Logo/Logo';
 import { useNavigate } from 'react-router-dom';
@@ -30,16 +31,18 @@ const menuItems = [
   // { text: 'GET FEEDBACK', title: true },
   // { text: 'Feedback', icon: <ChatIcon /> },
   // { text: 'Surveys', icon: <ListIcon /> },
-  { text: 'Support', icon: <SportsIcon />, route: 'https://github.com/bluewave-labs/bluewave-onboarding' }];
+  { text: 'Support', icon: <SportsIcon />, route: 'https://github.com/bluewave-labs/bluewave-onboarding' },
+  { text: 'Settings', icon: <SettingsOutlinedIcon />, route:'/settings' }
+];
 
 function LeftMenu() {
   const navigate = useNavigate();
 
   const handleNavigation = (route) => {
     if (route && route.startsWith('/')) {
-      navigate(route);  
+      navigate(route);
     } else if (route) {
-      window.open(route, '_blank', 'noopener,noreferrer'); 
+      window.open(route, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -63,7 +66,7 @@ function LeftMenu() {
             )
           ))}
         </List>
-        <Divider />
+        {/* <Divider /> */}
       </div>
       <UserProfileSidebar />
     </div>

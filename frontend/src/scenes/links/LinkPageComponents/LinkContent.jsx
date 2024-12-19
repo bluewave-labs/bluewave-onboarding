@@ -1,10 +1,10 @@
 import { Link } from "@mui/material";
 import { useContext, useState } from "react";
-import CardContainer from "../../components/Links/Card";
-import Card from "../../components/Links/Card/Card";
-import Popup from "../../components/Links/Popup/Popup";
-import { HelperLinkContext } from "../../services/linksProvider";
-import s from "./LinkPage.module.scss";
+import CardContainer from "@components/Links/Card";
+import Card from "@components/Links/Card/Card";
+import Popup from "@components/Links/Popup/Popup";
+import { HelperLinkContext } from "../../../services/linksProvider";
+import s from "../LinkPage.module.scss";
 
 const LinkContent = () => {
   const [draggingItem, setDraggingItem] = useState(null);

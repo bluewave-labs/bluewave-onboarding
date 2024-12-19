@@ -1,30 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DefaultPageTemplate from '../../templates/DefaultPageTemplate/DefaultPageTemplate';
 import { getBanners, deleteBanner } from '../../services/bannerServices';
-import { useNavigate } from 'react-router-dom';
 import { ACTIVITY_TYPES_INFO } from '../../data/guideMainPageData';
+import BannerPage from './CreateBannerPage';
 
 const BannerDefaultPage = () => {
-    const navigate = useNavigate();
+    const [itemsUpdated, setItemsUpdated] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
+    const [itemId, setItemId] = useState(null);
 
     const getBannerDetails = (banner) => ({
         title: `Banner ${banner.id}`,
         text: banner.bannerText,
     });
 
-    const navigateToCreate = (state) => {
-        navigate('/banner/create', state);
-    };
-
     return (
-        <DefaultPageTemplate
-            getItems={getBanners}
-            deleteItem={deleteBanner}
-            navigateToCreate={navigateToCreate}
-            itemType={ACTIVITY_TYPES_INFO.BANNERS}
-            itemTypeInfo={ACTIVITY_TYPES_INFO.BANNERS}
-            getItemDetails={getBannerDetails}
-        />
+        <>
+            <DefaultPageTemplate
+                getItems={getBanners}
+                deleteItem={deleteBanner}
+                setIsEdit={setIsEdit}
+                setItemId={setItemId}
+                itemType={ACTIVITY_TYPES_INFO.BANNERS}
+                itemTypeInfo={ACTIVITY_TYPES_INFO.BANNERS}
+                getItemDetails={getBannerDetails}
+                itemsUpdated={itemsUpdated}
+            />
+            <BannerPage
+                isEdit={isEdit}
+                itemId={itemId}
+                setItemsUpdated={setItemsUpdated}
+            />
+        </>
     );
 };
 

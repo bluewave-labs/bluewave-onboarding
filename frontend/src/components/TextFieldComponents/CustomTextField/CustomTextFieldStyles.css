@@ -22,6 +22,7 @@
   &.Mui-focused fieldset {
     border-color: var(--main-purple);
   }
+  border-radius: 8px !important;
 
 }
 
@@ -33,8 +34,4 @@
 .MuiBox-root .MuiInputLabel-root {
   font-size: var(--font-regular);
   color: var(--second-text-color);
-}
-
-.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
-  border-radius: 8px !important;
 }
