@@ -6,7 +6,7 @@ class StatisticsService {
   async generateStatistics({ userId }) {
     const views = await Promise.all(
       Object.entries(GuideType).map(async ([guideName, guideType]) => {
-        await GuideLog.findAll({
+        const logs = await GuideLog.findAll({
           where: {
             guideType,
             userId,
@@ -16,18 +16,20 @@ class StatisticsService {
         thisMonth.setDate(thisMonth.getDate() - 30);
         const lastMonth = new Date();
         lastMonth.setDate(lastMonth.getDate() - 60);
-        const thisMonthViews = views.filter(
-          (view) => view.showingTime >= thisMonth
+        const thisMonthViews = logs.filter(
+          (log) => log.showingTime >= thisMonth && log.guideType === guideType
         );
-        const lastMonthViews = views.filter(
-          (view) =>
-            view.showingTime >= lastMonth && view.showingTime < thisMonth
+        const lastMonthViews = logs.filter(
+          (log) => log.showingTime >= lastMonth && log.showingTime < thisMonth && log.guideType === guideType
         );
-        const percentageDifference = Math.round(
-          ((thisMonthViews.length - lastMonthViews.length) /
-            lastMonthViews.length) *
-            100
-        );
+        const percentageDifference =
+          lastMonthViews.length === 0
+            ? 100
+            : Math.round(
+                ((thisMonthViews.length - lastMonthViews.length) /
+                  lastMonthViews.length) *
+                  100
+              );
         const result = {
           views: thisMonthViews.length,
           change: percentageDifference,
