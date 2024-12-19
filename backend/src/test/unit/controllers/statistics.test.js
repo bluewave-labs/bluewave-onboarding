@@ -29,12 +29,15 @@ describe("Test Statistics controller", () => {
     it("should return status 500 if something goes wrong", async () => {
       serviceMock.generateStatistics = sinon
         .stub(service, "generateStatistics")
-        .rejects();
+        .rejects(`Failed to generate statistics:`);
       await controller.getStatistics(req, res);
       const status = res.status.firstCall.args[0];
       const json = res.json.firstCall.args[0];
       expect(status).to.be.equal(500);
-      expect(json).to.be.deep.equal({ message: 'Internal server error' });
+      expect(json).to.be.deep.equal({
+        error: "Internal Server Error",
+        errorCode: "GET_STATISTICS_ERROR",
+      });
     });
   });
 });
