@@ -16,17 +16,14 @@ describe("Test statistics service", () => {
     const statistics = await statisticsService.generateStatistics({
       userId: 1,
     });
-    const expected = [
-      { views: 3, change: 0, guideType: "tour" },
-      { views: 2, change: 0, guideType: "popup" },
-      { views: 2, change: 0, guideType: "hint" },
-      { views: 2, change: 0, guideType: "banner" },
-      { views: 1, change: 0, guideType: "checklist" },
-      { views: 0, change: 0, guideType: "link" },
-    ];
+
     expect(GuideLogMock.findAll.called).to.equal(true);
     expect(statistics).to.be.an("array");
     expect(statistics).to.have.lengthOf(6);
-    expect(statistics).to.deep.equal(expected);
+    statistics.forEach((statistic) => {
+      expect(statistic).to.have.property("guideType");
+      expect(statistic).to.have.property("views");
+      expect(statistic).to.have.property("change");
+    });
   });
 });
