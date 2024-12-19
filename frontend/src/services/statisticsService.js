@@ -6,13 +6,12 @@ const getStatistics = async () => {
     const response = await apiClient.get(`/statistics/`);
     return response.data;
   } catch (error) {
-    if (error.response.data.errors?.[0].msg) {
-      emitToastError(error);
-    } else {
-      emitToastError({
-        response: { data: { errors: [{ msg: error.message }] } },
-      });
-    }
+    const errorMessage =
+      error.response?.data?.errors?.[0]?.msg || error.message;
+    emitToastError({
+      response: { data: { errors: [{ msg: errorMessage }] } },
+    });
+    return null;
   }
 };
 

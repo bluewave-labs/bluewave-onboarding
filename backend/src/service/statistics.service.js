@@ -4,34 +4,43 @@ const GuideLog = db.GuideLog;
 
 class StatisticsService {
   async generateStatistics({ userId }) {
+    const now = new Date();
+    const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const twoMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 2, 1);
     const views = await Promise.all(
       Object.entries(GuideType).map(async ([guideName, guideType]) => {
         const logs = await GuideLog.findAll({
           where: {
             guideType: Number(guideType),
             userId,
+            showingTime: {
+              [db.Sequelize.Op.gte]: twoMonthsAgo,
+            },
           },
         });
-        const thisMonth = new Date();
-        thisMonth.setDate(thisMonth.getDate() - 30);
-        const lastMonth = new Date();
-        lastMonth.setDate(lastMonth.getDate() - 60);
-        const thisMonthViews = logs.filter(
-          (log) => log.showingTime >= thisMonth && log.guideType === guideType
-        );
-        const lastMonthViews = logs.filter(
-          (log) => log.showingTime >= lastMonth && log.showingTime < thisMonth && log.guideType === guideType
+        const { thisMonthViews, lastMonthViews } = logs.reduce(
+          (acc, log) => {
+            if (log.guideType !== guideType) {
+              return acc;
+            }
+            if (log.showingTime >= thisMonth) {
+              acc.thisMonthViews += 1;
+            } else if (log.showingTime >= lastMonth) {
+              acc.lastMonthViews += 1;
+            }
+            return acc;
+          },
+          { thisMonthViews: 0, lastMonthViews: 0 }
         );
         const percentageDifference =
-          lastMonthViews.length === 0
+          lastMonthViews === 0
             ? 0
             : Math.round(
-                ((thisMonthViews.length - lastMonthViews.length) /
-                  lastMonthViews.length) *
-                  100
+                ((thisMonthViews - lastMonthViews) / lastMonthViews) * 100
               );
         const result = {
-          views: thisMonthViews.length,
+          views: thisMonthViews,
           change: percentageDifference,
           guideType: guideName.toLowerCase(),
         };

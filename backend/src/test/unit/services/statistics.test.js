@@ -9,16 +9,6 @@ const GuideLog = db.GuideLog;
 
 describe("Test statistics service", () => {
   const GuideLogMock = {};
-  let commit;
-  let rollback;
-  beforeEach(() => {
-    commit = sinon.spy();
-    rollback = sinon.spy();
-    sinon.stub(db.sequelize, "transaction").callsFake(async () => ({
-      commit,
-      rollback,
-    }));
-  });
   afterEach(sinon.restore);
   it("should return statistics", async () => {
     const guideLogs = mocks.guideLogList;
@@ -27,12 +17,12 @@ describe("Test statistics service", () => {
       userId: 1,
     });
     const expected = [
+      { views: 3, change: 0, guideType: "tour" },
       { views: 2, change: 0, guideType: "popup" },
       { views: 2, change: 0, guideType: "hint" },
       { views: 2, change: 0, guideType: "banner" },
-      { views: 0, change: 0, guideType: "link" },
-      { views: 3, change: 0, guideType: "tour" },
       { views: 1, change: 0, guideType: "checklist" },
+      { views: 0, change: 0, guideType: "link" },
     ];
     expect(GuideLogMock.findAll.called).to.equal(true);
     expect(statistics).to.be.an("array");
