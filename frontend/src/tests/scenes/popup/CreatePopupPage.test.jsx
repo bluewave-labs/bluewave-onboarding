@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import CreatePopupPage from '../../../scenes/popup/CreatePopupPage';
 import * as popupServices from '../../../services/popupServices';
 import * as loginServices from '../../../services/loginServices';
-import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { act } from 'react';
 import toastEmitter from '../../../utils/toastEmitter';
 import { GuideTemplateProvider } from '../../../templates/GuideTemplate/GuideTemplateContext';

@@ -24,7 +24,6 @@ const NewLinksPopup = ({
   setItemsUpdated,
 }) => {
   const [activeBtn, setActiveBtn] = useState(0);
-
   const {
     showSettings,
     helper,
@@ -36,13 +35,25 @@ const NewLinksPopup = ({
     setHelperToEdit,
   } = useContext(HelperLinkContext);
 
+  const DEFAULT_VALUES = {
+    title: "",
+    headerBackgroundColor: "#F8F9F8",
+    linkFontColor: "#344054",
+    iconColor: "#7F56D9",
+  }
   const { openDialog, closeDialog, isOpen } = useDialog();
   const fetchHelperData = async () => {
-    const { links, ...data } = await getHelperById(itemId);
-    setHelper(data);
-    setLinks(links.sort((a, b) => a.order - b.order));
-    setHelperToEdit(itemId);
-  };
+    try {
+      const { links, ...data } = await getHelperById(itemId);
+      setHelper(data);
+      setLinks(links.sort((a, b) => a.order - b.order));
+      setHelperToEdit(itemId);
+    }
+    catch (error) {
+      emitToastError(buildToastError(error));
+      closeDialog();
+    }
+  }
 
   useEffect(() => {
     if (autoOpen) {
@@ -54,12 +65,7 @@ const NewLinksPopup = ({
     if (isEdit) {
       fetchHelperData();
     } else {
-      setHelper({
-        title: "",
-        headerBackgroundColor: "#F8F9F8",
-        linkFontColor: "#344054",
-        iconColor: "#7F56D9",
-      });
+      setHelper(DEFAULT_VALUES);
       setLinks([]);
     }
     if (!isOpen) {
@@ -73,8 +79,8 @@ const NewLinksPopup = ({
     msg.response
       ? msg
       : {
-          response: { data: { errors: [{ msg }] } },
-        };
+        response: { data: { errors: [{ msg }] } },
+      };
 
   const handleLinks = async (item) => {
     const { id, ...link } = item;

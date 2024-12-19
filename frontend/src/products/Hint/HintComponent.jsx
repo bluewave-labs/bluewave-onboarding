@@ -2,6 +2,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import "./HintComponent.css";
 import Button from "../../components/Button/Button";
+import PropTypes from 'prop-types';
 
 const HintComponent = ({
   header,
@@ -49,4 +50,14 @@ const HintComponent = ({
   );
 };
 
+HintComponent.propTypes = {
+  header: PropTypes.string,
+  content: PropTypes.string.isRequired,
+  previewBtnText: PropTypes.string,
+  headerBackgroundColor: PropTypes.string,
+  headerColor: PropTypes.string,
+  textColor: PropTypes.string,
+  buttonBackgroundColor: PropTypes.string,
+  buttonTextColor: PropTypes.string
+};
 export default HintComponent;

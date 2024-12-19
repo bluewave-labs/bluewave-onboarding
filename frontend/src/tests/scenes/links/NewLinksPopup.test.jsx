@@ -7,6 +7,8 @@ import NewLinksPopup from "../../../scenes/links/NewLinksPopup";
 import { AuthProvider } from "../../../services/authProvider";
 import HelperLinkProvider from "../../../services/linksProvider";
 import * as loginServices from "../../../services/loginServices";
+import { GuideTemplateProvider } from '../../../templates/GuideTemplate/GuideTemplateContext';
+import LinksDefaultPage from "../../../scenes/links/LinksDefaultPage";
 
 vi.mock("../../../services/loginServices");
 vi.mock("../../../services/helperLinkService");
@@ -25,34 +27,34 @@ const logIn = async () => {
       password: "password123",
     });
     localStorage.setItem("authToken", "mockAuthToken");
+    localStorage.setItem('userInfo', JSON.stringify({ role: 'admin' }));
   });
 };
 
 const renderPopup = async () => {
   await logIn();
   return render(
-    <Router>
-      <AuthProvider>
-        <HelperLinkProvider>
-          <NewLinksPopup
-            currentHelper={{
-              title: "",
-              headerBackgroundColor: "#F8F9F8",
-              linkFontColor: "#344054",
-              iconColor: "#7F56D9",
-            }}
-          />
-        </HelperLinkProvider>
-      </AuthProvider>
-    </Router>
+
+    <GuideTemplateProvider>
+      <Router>
+        <AuthProvider>
+          <HelperLinkProvider>
+            <NewLinksPopup autoOpen isEdit={false} itemId={1} setItemsUpdated={() => {}}/>
+          </HelperLinkProvider>
+        </AuthProvider>
+      </Router>
+    </GuideTemplateProvider>
   );
 };
 
 const addNewLink = async (title, url, target = true) => {
+  // Proceed with clicking "+ Add new link" button
   const addNewLinkBtn = await screen.findByText("+ Add new link");
   await act(async () => {
     await userEvent.click(addNewLinkBtn);
   });
+
+  // Continue with form interactions
   const settings = await screen.findByRole("form");
   expect(settings).to.exist;
   const inputs = settings.querySelectorAll("input");
