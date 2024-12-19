@@ -7,7 +7,7 @@ const statisticsService = require("../../../service/statistics.service.js");
 
 const GuideLog = db.GuideLog;
 
-describe.only("Test statistics service", () => {
+describe("Test statistics service", () => {
   const GuideLogMock = {};
   let commit;
   let rollback;
