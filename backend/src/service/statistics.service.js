@@ -8,7 +8,7 @@ class StatisticsService {
       Object.entries(GuideType).map(async ([guideName, guideType]) => {
         const logs = await GuideLog.findAll({
           where: {
-            guideType,
+            guideType: Number(guideType),
             userId,
           },
         });
@@ -38,7 +38,7 @@ class StatisticsService {
         return result;
       })
     );
-    return views;
+    return views.sort((a, b) => b.views - a.views);
   }
 }
 
