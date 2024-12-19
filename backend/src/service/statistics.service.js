@@ -1,12 +1,11 @@
 const db = require("../models");
 const { GuideType } = require("../utils/guidelog.helper");
 const GuideLog = db.GuideLog;
-const Statistics = db.Statistics;
 
 class StatisticsService {
   async generateStatistics({ userId }) {
     const views = await Promise.all(
-      Object.entries(GuideLog).map(async ([guideName, guideType]) => {
+      Object.entries(GuideType).map(async ([guideName, guideType]) => {
         await GuideLog.findAll({
           where: {
             guideType,
@@ -32,27 +31,12 @@ class StatisticsService {
         const result = {
           views: thisMonthViews.length,
           change: percentageDifference,
-          guideType: guideName,
+          guideType: guideName.toLowerCase(),
         };
-        const newData = await Statistics.create(result);
-        return newData;
+        return result;
       })
     );
     return views;
-  }
-
-  async getStatisticsByUserId({ userId }) {
-    return await Statistics.findAll({
-      where: { userId },
-      order: [["createdAt", "DESC"]],
-    });
-  }
-
-  async getStatisticsByGuideType({ guideType, userId }) {
-    return await Statistics.findAll({
-      where: { guideType, userId },
-      order: [["createdAt", "DESC"]],
-    });
   }
 }
 
