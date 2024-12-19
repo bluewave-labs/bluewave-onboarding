@@ -5,15 +5,15 @@ import styles from "./Dashboard.module.scss";
 import StatisticCardList from "./HomePageComponents/StatisticCardsList/StatisticCardsList";
 import CreateActivityButtonList from "./HomePageComponents/CreateActivityButtonList/CreateActivityButtonList";
 import { useNavigate } from "react-router-dom";
-import BannerSkeleton from "../../components/HomePageComponents/Skeletons/BannerSkeleton";
-import CustomSkeleton from "../../components/HomePageComponents/Skeletons/CustomSkeleton";
+import BannerSkeleton from "./HomePageComponents/Skeletons/BannerSkeleton";
+import CustomSkeleton from "./HomePageComponents/Skeletons/CustomSkeleton";
 
 const Dashboard = ({ name }) => {
   const navigate = useNavigate();
   const metrics = [
-    { metricName: "Popup views", metricValue: 5000, changeRate: 5 },
-    { metricName: "Hint views", metricValue: 2000, changeRate: -20 },
-    { metricName: "Banner Views", metricValue: 3000, changeRate: 15 },
+    { metricName: "Popup views", metricValue: 134, changeRate: 62 },
+    { metricName: "Banner views", metricValue: 292, changeRate: 24 },
+    { metricName: "Helper link views", metricValue: 2000, changeRate: -20 },
   ];
 
   const buttons = [
@@ -24,6 +24,8 @@ const Dashboard = ({ name }) => {
             position: "absolute",
             top: 20,
             left: 30,
+            width: 80,
+            height: 35,
           }}
         />
       ),
@@ -42,6 +44,8 @@ const Dashboard = ({ name }) => {
             position: "absolute",
             bottom: "1rem",
             right: "0.8rem",
+            width: 75,
+            height: 60,
           }}
         />
       ),

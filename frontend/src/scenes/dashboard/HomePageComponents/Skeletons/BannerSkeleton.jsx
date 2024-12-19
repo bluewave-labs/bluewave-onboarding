@@ -8,15 +8,15 @@ const BannerSkeleton = () => {
         variant="rounded"
         width={80}
         height={10}
-        sx={{ bgcolor: "grey.300" }}
+        sx={{ bgcolor: "var(--gray-300" }}
         animation={false}
       />
 
       <Skeleton
         variant="rounded"
         width={210}
-        height={25}
-        sx={{ bgcolor: "var(--gray-250)" }}
+        height={28}
+        sx={{ bgcolor: "var(--gray-200)" }}
         animation={false}
       />
 
@@ -24,7 +24,7 @@ const BannerSkeleton = () => {
         variant="rounded"
         width={210}
         height={20}
-        sx={{ bgcolor: "var(--gray-250)" }}
+        sx={{ bgcolor: "var(--gray-200)" }}
         animation={false}
       />
 
@@ -33,11 +33,11 @@ const BannerSkeleton = () => {
         sx={{
           position: "absolute",
           top: 12,
-          left: -10,
+          left: -8,
           bgcolor: "var(--blue-50)",
         }}
         variant="rounded"
-        width={260}
+        width={250}
         height={20}
         animation={false}
       />

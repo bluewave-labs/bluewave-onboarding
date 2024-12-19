@@ -9,17 +9,17 @@ const CustomSkeleton = ({ items = 4, frontSkeletonProps = {} }) => {
           key={index}
           variant="rounded"
           width={210}
-          height={20}
+          height={18}
           animation={false}
-          sx={{ bgcolor: "var(--gray-250)" }}
+          sx={{ bgcolor: "var(--gray-200)" }}
         />
       ))}
 
       <Skeleton
         className="childSkeleton"
         variant={frontSkeletonProps?.variant || "rounded"}
-        width={100}
-        height={50}
+        width={frontSkeletonProps?.width || 100}
+        height={frontSkeletonProps?.height || 50}
         animation={false}
         sx={{
           ...frontSkeletonProps,
