@@ -4,12 +4,13 @@ const GuideLog = db.GuideLog;
 
 class StatisticsService {
   async generateStatistics({ userId }) {
-    const now = new Date();
-    const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-    const twoMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 2, 1);
-    const views = await Promise.all(
-      Object.entries(GuideType).map(async ([guideName, guideType]) => {
+    try {
+      const now = new Date();
+      const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+      const twoMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 2, 1);
+      const views = [];
+      for (const [guideName, guideType] of Object.entries(GuideType)) {
         const logs = await GuideLog.findAll({
           where: {
             guideType: Number(guideType),
@@ -44,10 +45,13 @@ class StatisticsService {
           change: percentageDifference,
           guideType: guideName.toLowerCase(),
         };
-        return result;
-      })
-    );
-    return views.sort((a, b) => b.views - a.views);
+        views.push(result);
+      }
+      return views.sort((a, b) => b.views - a.views);
+    } catch (error) {
+      console.log(error);
+      throw new Error(`Failed to generate statistics: ${error.message}`);
+    }
   }
 }
 
