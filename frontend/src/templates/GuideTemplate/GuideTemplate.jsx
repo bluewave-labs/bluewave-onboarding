@@ -2,8 +2,7 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { Dialog } from "@mui/material";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import { React, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { React } from "react";
 import Button from "../../components/Button/Button";
 import styles from "./GuideTemplate.module.scss";
 import { useDialog } from "./GuideTemplateContext";
@@ -18,7 +17,6 @@ const GuideTemplate = ({
   onSave = () => null,
 }) => {
   const { isOpen, closeDialog } = useDialog();
-  const navigate = useNavigate();
   const buttons = ["Content", "Appearance"];
 
   return (
@@ -26,7 +24,6 @@ const GuideTemplate = ({
       open={isOpen}
       onClose={closeDialog}
       maxWidth='lg'
-      //fullWidth
       PaperProps={{ style: { position: "static" } }}
     >
       <div className={styles.container}>

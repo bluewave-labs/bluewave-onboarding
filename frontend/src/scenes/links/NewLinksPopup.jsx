@@ -164,28 +164,10 @@ const NewLinksPopup = ({
 };
 
 NewLinksPopup.propTypes = {
-  currentHelper: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    headerBackgroundColor: PropTypes.string,
-    linkFontColor: PropTypes.string,
-    iconColor: PropTypes.string,
-  }),
-  currentLinks: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      url: PropTypes.string,
-      target: PropTypes.bool,
-      x: PropTypes.number,
-      y: PropTypes.number,
-    })
-  ),
-  setShowNewLinksPopup: PropTypes.func,
-  helperState: PropTypes.shape({
-    isEdit: PropTypes.bool,
-    id: PropTypes.number,
-  }),
+  autoOpen: PropTypes.bool,
+  isEdit: PropTypes.bool.isRequired,
+  itemId: PropTypes.number,
+  setItemsUpdated: PropTypes.func.isRequired,
 };
 
 export default NewLinksPopup;

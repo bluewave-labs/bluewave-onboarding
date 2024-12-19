@@ -1,6 +1,5 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { act } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 import NewLinksPopup from "../../../scenes/links/NewLinksPopup";
@@ -8,7 +7,6 @@ import { AuthProvider } from "../../../services/authProvider";
 import HelperLinkProvider from "../../../services/linksProvider";
 import * as loginServices from "../../../services/loginServices";
 import { GuideTemplateProvider } from '../../../templates/GuideTemplate/GuideTemplateContext';
-import LinksDefaultPage from "../../../scenes/links/LinksDefaultPage";
 
 vi.mock("../../../services/loginServices");
 vi.mock("../../../services/helperLinkService");
@@ -39,7 +37,7 @@ const renderPopup = async () => {
       <Router>
         <AuthProvider>
           <HelperLinkProvider>
-            <NewLinksPopup autoOpen isEdit={false} itemId={1} setItemsUpdated={() => {}}/>
+            <NewLinksPopup autoOpen isEdit={false} itemId={1} setItemsUpdated={() => { }} />
           </HelperLinkProvider>
         </AuthProvider>
       </Router>
