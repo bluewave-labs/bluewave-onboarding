@@ -9,13 +9,11 @@ import SetNewPasswordPage from "./scenes/login/SetNewPassword";
 import Private from "@components/Private";
 import ProgressStepsMain from "./scenes/progressSteps/ProgressStepsMain";
 import Settings from "./scenes/settings/Settings";
-import BannerPage from "./scenes/banner/CreateBannerPage";
 import BannerDefaultPage from "./scenes/banner/BannerDefaultPage";
 import LinksDefaultPage from "./scenes/links/LinksDefaultPage";
 import ToursDefaultPage from "./scenes/tours/ToursDefaultPage";
 import PopupDefaultPage from "./scenes/popup/PopupDefaultPage";
 import HintDefaultPage from "./scenes/hints/HintDefaultPage";
-import CreatePopupPage from "./scenes/popup/CreatePopupPage";
 import { Error404 } from "./scenes/errors/404";
 import { Error403 } from "./scenes/errors/403";
 import HomePageTemplate from "./templates/HomePageTemplate/HomePageTemplate";
@@ -46,6 +44,7 @@ const App = () => {
           <Route path="/banner" element={<Private Component={BannerDefaultPage} />} />
           <Route path="/popup" element={<Private Component={PopupDefaultPage} />} />
           <Route path="/hint" element={<HintDefaultPage />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
 
         <Route path="/login" element={<LoginPage isAdmin={isAdminLogin}/>} />
