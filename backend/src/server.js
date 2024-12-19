@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const jsonErrorMiddleware = require("./middleware/jsonError.middleware");
 const fileSizeValidator = require("./middleware/fileSizeValidator.middleware");
 const { MAX_FILE_SIZE } = require("./utils/constants.helper");
+const ipFilter = require("./middleware/ipFilter.middleware");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -30,6 +31,7 @@ app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json({ limit: MAX_FILE_SIZE }));
 app.use(jsonErrorMiddleware);
+app.use(ipFilter);
 // app.use(fileSizeValidator);
 
 const { sequelize } = require("./models");
