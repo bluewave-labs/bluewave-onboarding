@@ -3,11 +3,10 @@ import { apiClient } from "./apiClient";
 
 const getStatistics = async () => {
   try {
-    const response = await apiClient.get(`/api/statistics`);
+    const response = await apiClient.get(`/statistics/`);
     return response.data;
   } catch (error) {
-    console.error("Get Statistics error:", error.response);
-    if (error.response.data.errors[0].msg) {
+    if (error.response.data.errors?.[0].msg) {
       emitToastError(error);
     } else {
       emitToastError({
