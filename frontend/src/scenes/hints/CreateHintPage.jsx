@@ -12,7 +12,7 @@ import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
 const HintPage = ({ isEdit, itemId, setItemsUpdated }) => {
   const { closeDialog } = useDialog();
-  const markdownContent = new Turndown().turndown(content);
+
 
   const [activeButton, setActiveButton] = useState(0);
 
@@ -28,7 +28,8 @@ const HintPage = ({ isEdit, itemId, setItemsUpdated }) => {
 
   const [header, setHeader] = useState("");
   const [content, setContent] = useState("");
-
+  const markdownContent = new Turndown().turndown(content);
+  
   const [actionButtonUrl, setActionButtonUrl] = useState("https://");
   const [actionButtonText, setActionButtonText] = useState("Take me to subscription page");
   const [action, setAction] = useState("No action");
