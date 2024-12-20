@@ -16,8 +16,8 @@ const settings = require("../../config/settings");
 const he = require("he");
 const { create } = require("domain");
 
-const isTestingEnv = process.env.NODE_ENV === "test";
 const register = async (req, res) => {
+  const isTestingEnv = process.env.NODE_ENV === "test";
   try {
     const { name, surname, email, password } = req.body;
     const existingUser = await findUserByEmail(email);
@@ -164,6 +164,7 @@ const logout = async (req, res) => {
 };
 
 const forgetPassword = async (req, res) => {
+  const isTestingEnv = process.env.NODE_ENV === "test";
   try {
     const { email } = req.body;
     const user = await findUserByEmail(email);
@@ -180,6 +181,11 @@ const forgetPassword = async (req, res) => {
     });
 
     await sendPasswordResetEmail(user.email, user.name, resetToken);
+    if (isTestingEnv) {
+      return res
+        .status(200)
+        .json({ message: "Password reset token sent", resetToken });
+    }
     res.status(200).json({ message: "Password reset token sent" });
   } catch (error) {
     console.error("Error in forget password:", error);

@@ -1,5 +1,12 @@
-const { validateHexColor, validateActionButton } = require('../utils/guide.helper');
-const { validatePopupSizeWrapper } = require('../utils/popup.helper');
+const {
+  validateHexColor,
+  validateActionButton,
+} = require("../utils/guide.helper");
+const {
+  validatePopupSizeWrapper,
+  validateUrl,
+  validateRelativeUrl,
+} = require("../utils/popup.helper");
 
 module.exports = (sequelize, DataTypes) => {
   const Popup = sequelize.define(
@@ -15,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isValidAction(value) {
-              validateActionButton(value);
+            validateActionButton(value);
           },
         },
       },
@@ -24,13 +31,18 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isValidPopupSize(value) {
-              validatePopupSizeWrapper(value);
+            validatePopupSizeWrapper(value);
           },
         },
       },
       url: {
         type: DataTypes.STRING,
         allowNull: true,
+        validate: {
+          isUrl(value) {
+            validateRelativeUrl(value, "url");
+          },
+        },
       },
       actionButtonText: {
         type: DataTypes.STRING,
@@ -42,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "#FFFFFF",
         validate: {
           isHexColor(value) {
-              validateHexColor(value, 'headerBackgroundColor');
+            validateHexColor(value, "headerBackgroundColor");
           },
         },
       },
@@ -52,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "#FFFFFF",
         validate: {
           isHexColor(value) {
-              validateHexColor(value, 'headerColor');
+            validateHexColor(value, "headerColor");
           },
         },
       },
@@ -62,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "#FFFFFF",
         validate: {
           isHexColor(value) {
-              validateHexColor(value, 'textColor');
+            validateHexColor(value, "textColor");
           },
         },
       },
@@ -72,7 +84,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "#FFFFFF",
         validate: {
           isHexColor(value) {
-              validateHexColor(value, 'buttonBackgroundColor');
+            validateHexColor(value, "buttonBackgroundColor");
           },
         },
       },
@@ -82,7 +94,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "#FFFFFF",
         validate: {
           isHexColor(value) {
-              validateHexColor(value, 'buttonTextColor');
+            validateHexColor(value, "buttonTextColor");
           },
         },
       },
@@ -96,6 +108,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: "",
       },
+      actionUrl: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          isUrl(value) {
+            validateUrl(value, "actionUrl");
+          },
+        },
+      },
       createdBy: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -108,7 +129,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       tableName: "popup",
       timestamps: false,
-    },
+    }
   );
 
   Popup.associate = (models) => {

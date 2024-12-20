@@ -13,5 +13,6 @@ router.put("/edit_popup/:id", authenticateJWT, accessGuard(teamPermissions.popup
 router.get("/all_popups", authenticateJWT, popupController.getAllPopups);
 router.get("/popups", authenticateJWT, popupController.getPopups);
 router.get("/get_popup/:id", authenticateJWT, popupController.getPopupById);
+router.get("/get_popup_by_url", popupController.getPopupByUrl);
 
 module.exports = router;

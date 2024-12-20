@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const db = require("../models");
 const HelperLink = db.HelperLink;
 const Link = db.Link;
@@ -14,6 +15,31 @@ class HelperLinkService {
           },
         },
       ],
+    });
+  }
+
+  async getAllHelpersWithLinks() {
+    return await HelperLink.findAll({
+      include: [
+        {
+          model: Link,
+          as: "links",
+        },
+      ]
+    });
+  }
+
+  async getIncompleteHelpers(ids) {
+    return await HelperLink.findAll({
+      include: [
+        {
+          model: Link,
+          as: "links",
+        },
+      ],
+      where: {
+        id: { [Op.notIn]: ids }
+      }
     });
   }
 
@@ -71,7 +97,10 @@ class HelperLinkService {
         where: { id },
         returning: true,
       });
-      if (affectedRows === 0) return null;
+      if (affectedRows === 0) {
+        t.commit();
+        return null;
+      }
       await Promise.all(
         links.map(async (item) => {
           const { id: linkId, ...link } = item;

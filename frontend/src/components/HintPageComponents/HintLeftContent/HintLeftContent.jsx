@@ -24,13 +24,15 @@ const HintLeftContent = ({ actionButtonText, setActionButtonText, actionButtonUr
 
   return (
     <div className="left-content-container">
-      <h2 className="hint-label">Action</h2>
+      <h2 className="hint-label" style={{ marginTop: "16px" }}>
+        Action
+      </h2>
       <DropdownList
         actions={["No action", "Open a URL", "Open a URL in a new tab"]}
         onActionChange={handleActionChange}
         selectedActionString={action.toLowerCase()}
       />
-      <h2 className="hint-label" style={{ marginBottom: 0 }}>
+      <h2 className="hint-label" style={{ marginBottom: 0, marginTop: "16px" }}>
         Action button url (can be relative)
       </h2>
       <CustomTextField
@@ -56,7 +58,11 @@ const HintLeftContent = ({ actionButtonText, setActionButtonText, actionButtonUr
         helperText="Page element to attach tooltip to"
       />
       <h2 className="hint-label">Tooltip Placement</h2>
-      <DropdownList actions={["Top", "Right", "Bottom", "Left"]} onActionChange={handleTooltipPlacement} selectedActionString={tooltipPlacement} />
+      <DropdownList
+        actions={["Top", "Right", "Bottom", "Left"]}
+        onActionChange={handleTooltipPlacement}
+        selectedActionString={tooltipPlacement}
+      />
     </div>
   );
 };

@@ -9,3 +9,7 @@ export const APP_TITLE = 'Bluewave Onboarding';
 export const SUPPORT_EMAIL = 'support@bluewave.com';
 
 export const roles = Object.freeze(["admin", "member"]);
+export const URL_REGEX = Object.freeze({
+  PROTOCOL: /^(https?:\/\/)/,
+  DOMAIN: /^https?:\/\/([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/,
+});

@@ -84,4 +84,13 @@ export const getCurrentUser = async () => {
   }
 };
 
+export const getHasUsers = async () => {
+  try {
+    const response = await apiClient.get("users/has-users");
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export default authClient;
