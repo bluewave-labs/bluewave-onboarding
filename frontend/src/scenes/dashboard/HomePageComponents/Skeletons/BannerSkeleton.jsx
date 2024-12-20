@@ -11,17 +11,15 @@ const BannerSkeleton = () => {
         sx={{ bgcolor: "var(--gray-300" }}
         animation={false}
       />
-
       <Skeleton
-        variant="rounded"
+        variant="rectangular"
         width={210}
         height={28}
         sx={{ bgcolor: "var(--gray-200)" }}
         animation={false}
       />
-
       <Skeleton
-        variant="rounded"
+        variant="rectangular"
         width={210}
         height={20}
         sx={{ bgcolor: "var(--gray-200)" }}
@@ -29,7 +27,6 @@ const BannerSkeleton = () => {
       />
 
       <Skeleton
-        className="childSkeleton"
         sx={{
           position: "absolute",
           top: 12,

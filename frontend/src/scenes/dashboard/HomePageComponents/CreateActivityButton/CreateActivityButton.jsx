@@ -24,7 +24,6 @@ const CreateActivityButton = ({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        textTransform: "none",
         transition: "box-shadow 0.3s ease",
         "&:hover": {
           border: "1px solid var(--gray-250)",
