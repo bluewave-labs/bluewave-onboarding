@@ -1,72 +1,45 @@
 import React, { useState } from "react";
 import { ACTIVITY_TYPES_INFO } from "../../data/guideMainPageData";
-import {
-  deleteHelper,
-  getHelperById,
-  getHelpers,
-} from "../../services/helperLinkService";
+import { deleteHelper, getHelpers} from "../../services/helperLinkService";
 import HelperLinkProvider from "../../services/linksProvider";
 import DefaultPageTemplate from "../../templates/DefaultPageTemplate/DefaultPageTemplate";
 import NewLinksPopup from "./NewLinksPopup";
+import styles from "./LinkPage.module.scss";
 
 const LinksDefaultPage = () => {
-  const [currentHelper, setCurrentHelper] = useState({});
-  const [currentLinks, setCurrentLinks] = useState([]);
-  const [showNewLinksPopup, setShowNewLinksPopup] = useState(false);
-  const [helperState, setHelperState] = useState(null)
+  const [itemsUpdated, setItemsUpdated] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [itemId, setItemId] = useState(null);
 
-  const style = {
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-  };
+  const getItemDetails = (helper) => ({
+    title: helper.title,
+    headerBackgroundColor: helper.headerBackgroundColor,
+    linkFontColor: helper.linkFontColor,
+    iconColor: helper.iconColor,
+  })
 
   return (
-    <HelperLinkProvider>
-      <div style={style}>
-        {showNewLinksPopup ? (
+    <>
+      <HelperLinkProvider>
+        <div className={styles.container}>
           <NewLinksPopup
-            currentHelper={currentHelper}
-            currentLinks={currentLinks}
-            setHelper={setCurrentHelper}
-            setShowNewLinksPopup={setShowNewLinksPopup}
-            helperState={helperState}
+            isEdit={isEdit}
+            itemId={itemId}
+            setItemsUpdated={setItemsUpdated}
           />
-        ) : (
           <DefaultPageTemplate
             getItems={getHelpers}
             deleteItem={deleteHelper}
-            navigateToCreate={async ({ state }) => {
-              if (state?.isEdit) {
-                const { links, ...data } = await getHelperById(state.id);
-                setCurrentHelper(data);
-                setCurrentLinks(links.sort((a, b) => a.order - b.order));
-                setHelperState(state)
-              } else {
-                setCurrentHelper({
-                  title: "",
-                  headerBackgroundColor: "#F8F9F8",
-                  linkFontColor: "#344054",
-                  iconColor: "#7F56D9",
-                });
-              }
-              setShowNewLinksPopup(true);
-            }}
+            itemsUpdated={itemsUpdated}
+            setIsEdit={setIsEdit}
+            setItemId={setItemId}
             itemType={ACTIVITY_TYPES_INFO.HELPERLINKS}
             itemTypeInfo={ACTIVITY_TYPES_INFO.HELPERLINKS}
-            getItemDetails={(helper) => ({
-              title: helper.title,
-              headerBackgroundColor: helper.headerBackgroundColor,
-              linkFontColor: helper.linkFontColor,
-              iconColor: helper.iconColor,
-            })}
+            getItemDetails={getItemDetails}
           />
-        )}
-      </div>
-    </HelperLinkProvider>
+        </div>
+      </HelperLinkProvider>
+    </>
   );
 };
 
