@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test Helper Link popup > Tests if the popup is rendered correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="new__container"
+  />
+</DocumentFragment>
+`;

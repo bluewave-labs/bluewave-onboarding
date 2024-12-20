@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, act, fireEvent } from '@testing-library/react';
-import ToastItem from '../../../components/Toast/ToastItem';
+import ToastItem from '@components/Toast/ToastItem';
 
 describe('ToastItem', () => {
   const mockRemoveToast = vi.fn();

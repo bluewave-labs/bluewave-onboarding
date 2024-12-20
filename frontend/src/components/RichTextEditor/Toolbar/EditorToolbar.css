@@ -1,36 +1,20 @@
-#toolbar {
+.toolbar-container {
   display: flex;
+  gap: 1px;
+  align-items: center;
+  width: 70%;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.ql-toolbar.ql-snow {
-  border: none;
+.toolbar-container button {
+  color:  var(--second-text-color);
 }
 
-.ql-stroke {
-  stroke: var(--second-text-color) !important;
+.toolbar-container button[disabled] {
+  color: var(--light-border-color);
 }
 
-.ql-active .ql-stroke {
-  stroke: var(--main-purple) !important;
-}
-
-button:hover .ql-stroke {
-  stroke: var(--main-purple) !important;
-}
-
-.ql-snow .ql-picker {
-  color: var(--second-text-color) !important;
-}
-
-.ql-snow.ql-toolbar .ql-picker-label:hover {
-  color: var(--main-purple) !important;
-}
-
-.ql-snow.ql-toolbar .ql-picker-label.ql-active {
-  color: var(--main-purple) !important;
-}
-
-.ql-toolbar .ql-picker-item:hover {
-  color: var(--main-purple) !important;
+.toolbar-container .MuiButtonBase-root {
+  min-width: 0!important;
 }

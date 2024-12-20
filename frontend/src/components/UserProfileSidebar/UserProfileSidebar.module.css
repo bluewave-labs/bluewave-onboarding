@@ -18,7 +18,7 @@
 }
 
 .user-name {
-    font-size: 13px;
+    font-size: var(--font-regular);
     font-weight: 600;
     line-height: 20px;
     color: var(--main-text-color);
@@ -26,16 +26,8 @@
 
 .user-role {
     margin: 0;
-    font-size: 13px;
+    font-size: var(--font-regular);
     font-weight: 400;
     line-height: 20px;
     color: var(--main-text-color);
-}
-
-.dropdown-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0.4em 0.4em;
-    margin: 1px
 }

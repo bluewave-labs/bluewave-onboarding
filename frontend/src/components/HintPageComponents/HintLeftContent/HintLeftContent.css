@@ -9,6 +9,6 @@
 
 .hint-label {
     font-weight: 400;
-    font-size: 13px;
-    margin-top: 1.5rem;
+    font-size: var(--font-regular);
+    margin-top: 0.5rem;
 }

@@ -1,18 +1,53 @@
-import React from "react";
-import DateDisplay from "../../components/HomePageComponents/DateDisplay/DateDisplay";
-import UserTitle from "../../components/HomePageComponents/UserTitle/UserTitle";
-import styles from "./Dashboard.module.scss";
-import StatisticCardList from "../../components/HomePageComponents/StatisticCardsList/StatisticCardsList";
-import CreateActivityButtonList from "../../components/HomePageComponents/CreateActivityButtonList/CreateActivityButtonList";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LoadingArea from "../../components/LoadingPage/LoadingArea";
+import { getStatistics } from "../../services/statisticsService";
+import styles from "./Dashboard.module.scss";
+import CreateActivityButtonList from "./HomePageComponents/CreateActivityButtonList/CreateActivityButtonList";
+import DateDisplay from "./HomePageComponents/DateDisplay/DateDisplay";
+import StatisticCardList from "./HomePageComponents/StatisticCardsList/StatisticCardsList";
+import UserTitle from "./HomePageComponents/UserTitle/UserTitle";
 
-const Dashboard = ({ fullName }) => {
+const mapMetricName = (guideType) => {
+  switch (guideType) {
+    case "popup":
+      return "Popups views";
+    case "hint":
+      return "Hints views";
+    case "banner":
+      return "Banners views";
+    case "link":
+      return "Links views";
+    case "tour":
+      return "Tours views";
+    case "checklist":
+      return "Checklists views";
+    default:
+      return "Unknown";
+  }
+};
+
+const MAX_METRICS_DISPLAYED = 3;
+
+const Dashboard = ({ name }) => {
   const navigate = useNavigate();
-  const metrics = [
-    { metricName: "Popup views", metricValue: 5000, changeRate: 5 },
-    { metricName: "Hint views", metricValue: 2000, changeRate: -20 },
-    { metricName: "Banner Views", metricValue: 3000, changeRate: 15 },
-  ];
+  const [isLoading, setIsLoading] = useState(true);
+  const [metrics, setMetrics] = useState([]);
+
+  useEffect(() => {
+    getStatistics().then((data) => {
+      setMetrics(
+        data
+          ?.map((metric) => ({
+            metricName: mapMetricName(metric.guideType),
+            metricValue: metric.views,
+            changeRate: metric.change,
+          }))
+          ?.filter((_, i) => i < MAX_METRICS_DISPLAYED)
+      );
+      setIsLoading(false);
+    });
+  }, []);
 
   const buttons = [
     {
@@ -29,18 +64,15 @@ const Dashboard = ({ fullName }) => {
     },
   ];
   return (
-
-      <div className={styles.container}>
-        <div className={styles.top}>
-          <UserTitle fullName={fullName} />
-          <DateDisplay />
-        </div>
-        <div className={styles.text}>
-          Start with a popular onboarding process
-        </div>
-        <CreateActivityButtonList buttons={buttons} />
-        <StatisticCardList metrics={metrics} />
+    <div className={styles.container}>
+      <div className={styles.top}>
+        <UserTitle name={name} />
+        <DateDisplay />
       </div>
+      <div className={styles.text}>Start with a popular onboarding process</div>
+      <CreateActivityButtonList buttons={buttons} />
+      {isLoading ? <LoadingArea /> : <StatisticCardList metrics={metrics} />}
+    </div>
   );
 };
 

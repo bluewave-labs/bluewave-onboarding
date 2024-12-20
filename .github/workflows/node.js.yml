@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          check-latest: true
 
       # Clear npm cache
       - name: Clear npm cache
@@ -43,23 +44,23 @@ jobs:
         run: |
           rm -rf ./frontend/node_modules ./frontend/package-lock.json
 
-      # Cache backend dependencies
-      - name: Cache backend dependencies
-        uses: actions/cache@v3
-        with:
-          path: ./backend/node_modules
-          key: backend-node-modules-${{ matrix.node-version }}-${{ hashFiles('backend/package-lock.json') }}
-          restore-keys: |
-            backend-node-modules-${{ matrix.node-version }}-
+      # # Cache backend dependencies
+      # - name: Cache backend dependencies
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ./backend/node_modules
+      #     key: backend-node-modules-${{ matrix.node-version }}-${{ hashFiles('backend/package-lock.json') }}
+      #     restore-keys: |
+      #       backend-node-modules-${{ matrix.node-version }}-
 
-      # Cache frontend dependencies
-      - name: Cache frontend dependencies
-        uses: actions/cache@v3
-        with:
-          path: ./frontend/node_modules
-          key: frontend-node-modules-${{ matrix.node-version }}-${{ hashFiles('frontend/package-lock.json') }}
-          restore-keys: |
-            frontend-node-modules-${{ matrix.node-version }}-
+      # # Cache frontend dependencies
+      # - name: Cache frontend dependencies
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ./frontend/node_modules
+      #     key: frontend-node-modules-${{ matrix.node-version }}-${{ hashFiles('frontend/package-lock.json') }}
+      #     restore-keys: |
+      #       frontend-node-modules-${{ matrix.node-version }}-
 
       - name: Install dependencies for backend
         working-directory: ./backend
@@ -87,13 +88,12 @@ jobs:
         working-directory: ./frontend
         run: npm run build --if-present
 
-      # Uncomment the following lines to run tests
-      # - name: Run tests for backend
-      #   working-directory: ./backend
-      #   run: npm test
-
       - name: Run tests for frontend
         working-directory: ./frontend
+        run: npm test
+
+      - name: Run tests for backend
+        working-directory: ./backend
         run: npm test
 
       - name: Run Docker container

@@ -1,89 +1,103 @@
-import React, { useState, useEffect} from "react";
-import EditorInput from "./EditorInput/EditorInput";
-import EditorTabs from "./Tabs/EditorTabs";
-import EditorToolbar from "./Toolbar/EditorToolbar";
-import "react-quill/dist/quill.snow.css";
-import { Box } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import "./RichTextEditor.css";
+import { useEditor, EditorContent } from "@tiptap/react";
+import { StarterKit } from "@tiptap/starter-kit";
+import Heading from "@tiptap/extension-heading";
+import Link from "@tiptap/extension-link";
+import BulletList from "@tiptap/extension-bullet-list";
+import OrderedList from "@tiptap/extension-ordered-list";
+import Toolbar from "./Toolbar/EditorToolbar";
+import EditorTabs from "./Tabs/EditorTabs";
 import CustomTextField from "../TextFieldComponents/CustomTextField/CustomTextField";
-import PreviewComponent from "./Preview/PreviewComponent";
 
 const RichTextEditor = ({
-  previewBtnText,
-  content: initialContent,
-  setContent: initialSetContent,
-  header: initialHeader,
-  setHeader: initialSetHeader,
-  headerBackgroundColor,
-  headerColor,
-  textColor,
-  buttonBackgroundColor,
-  buttonTextColor,
-  sx }) => {
+  sx = {},
+  previewComponent,
+  header,
+  setHeader,
+  setContent,
+  content,
+}) => {
+  const [mode, setMode] = useState("editor");
 
-  const [content, setContent] = useState(initialContent ?? "");
-  const [header, setHeader] = useState(initialHeader ?? "");
-
-  useEffect(() => {
-    if (initialSetContent) initialSetContent(content);
-  }, [content])
+  const Preview = previewComponent;
 
   const handleHeaderChange = (e) => {
-    const newHeader = e.target.value;
-    setHeader(newHeader);
-    if (initialSetHeader) initialSetHeader(newHeader);
-    console.log(header);
+    setHeader(e.target.value);
   };
 
-  const [mode, setMode] = useState("editor");
-  const modules = {
-    toolbar: {
-      container: "#toolbar",
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        heading: false,
+        bulletList: false,
+        orderedList: false,
+      }),
+      Heading,
+      Link,
+      BulletList,
+      OrderedList,
+    ],
+    content,
+    onUpdate: ({ editor }) => {
+      setContent(editor.getHTML());
     },
-    clipboard: {
-      matchVisual: false,
+    onDestroy: () => {
+      setContent("");
+      setHeader("");
     },
-  };
-
+  });
+  
+  // Set initial content of the editor to the content prop during editing
+  useEffect(() => {
+    if (editor?.isEmpty && content !== "<p></p>") {
+      editor.commands.setContent(content);
+    }
+  }, [content]);
+  
   return (
-    <Box className="container" sx={sx}>
+    <div style={{ ...sx }}>
       {mode === "editor" ? (
         <>
           <CustomTextField
             labelText="Header"
             labelFontWeight={600}
             inputHeight="40px"
-            TextFieldWidth={'100%'}
+            TextFieldWidth="100%"
             value={header}
             onChange={handleHeaderChange}
-            style={{ marginBottom: '2rem' }}
+            style={{ marginBottom: "2rem" }}
           />
           <label className="editor-label">Content</label>
-
-          <Box className="row">
-            <EditorToolbar mode={mode} />
-            <EditorInput
-              value={content}
-              onChange={setContent}
-              modules={modules}
-            />
-          </Box>
+          <div className="editor-container">
+            <Toolbar editor={editor} />
+            <EditorContent editor={editor}/>
+          </div>
         </>
       ) : (
-        <PreviewComponent
-          header={header}
-          content={content}
-          previewBtnText={previewBtnText}
-          headerBackgroundColor={headerBackgroundColor}
-          headerColor={headerColor}
-          buttonBackgroundColor={buttonBackgroundColor}
-          buttonTextColor={buttonTextColor}
-          textColor={textColor}
-        />
+        <Preview />
       )}
-      <EditorTabs mode={mode} setMode={setMode} sx={{ marginTop: '1rem' }} />
-    </Box>
+      <EditorTabs
+        mode={mode}
+        setMode={setMode}
+        sx={{
+          position: "absolute",
+          top: "400px",
+          left: 0,
+        }}
+      />
+    </div>
   );
+};
+
+RichTextEditor.propTypes = {
+  sx: PropTypes.object,
+  previewComponent: PropTypes.elementType.isRequired,
+  header: PropTypes.string,
+  setHeader: PropTypes.func,
+  setContent: PropTypes.func,
+  content: PropTypes.string,
 };
 
 export default RichTextEditor;

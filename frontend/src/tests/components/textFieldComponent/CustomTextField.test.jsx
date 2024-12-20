@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import CustomTextField from '../../../components/TextFieldComponents/CustomTextField/CustomTextField';
+import CustomTextField from '@components/TextFieldComponents/CustomTextField/CustomTextField';
 
 describe('CustomTextField', () => {
   it('renders the CustomTextField with default props', () => {
@@ -67,7 +67,7 @@ describe('CustomTextField', () => {
   it('renders with custom input height', () => {
     render(<CustomTextField labelText="Test Label" inputHeight="50px" />);
 
-    expect(screen.getByRole('textbox').style.height).toBe('50px');
+    expect(screen.getByRole('textbox').closest('.MuiOutlinedInput-root').style.height).toBe('50px');
   });
 
   it('renders with custom label font weight', () => {
