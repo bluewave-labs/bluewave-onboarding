@@ -31,7 +31,9 @@ app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json({ limit: MAX_FILE_SIZE }));
 app.use(jsonErrorMiddleware);
-app.use(ipFilter);
+if (process.env.ENABLE_IP_CHECK === 'true') {
+  app.use(ipFilter);
+}
 // app.use(fileSizeValidator);
 
 const { sequelize } = require("./models");
