@@ -4,7 +4,7 @@ import { deleteHelper, getHelpers} from "../../services/helperLinkService";
 import HelperLinkProvider from "../../services/linksProvider";
 import DefaultPageTemplate from "../../templates/DefaultPageTemplate/DefaultPageTemplate";
 import NewLinksPopup from "./NewLinksPopup";
-import s from "./LinkPage.module.scss";
+import styles from "./LinkPage.module.scss";
 
 const LinksDefaultPage = () => {
   const [itemsUpdated, setItemsUpdated] = useState(false);
@@ -21,7 +21,7 @@ const LinksDefaultPage = () => {
   return (
     <>
       <HelperLinkProvider>
-        <div className={s.container}>
+        <div className={styles.container}>
           <NewLinksPopup
             isEdit={isEdit}
             itemId={itemId}

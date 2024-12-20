@@ -13,7 +13,7 @@ import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 import { emitToastError } from "../../utils/guideHelper";
 import toastEmitter, { TOAST_EMITTER_KEY } from "../../utils/toastEmitter";
-import s from "./LinkPage.module.scss";
+import styles from "./LinkPage.module.scss";
 import LinkAppearance from "./LinkPageComponents/LinkAppearance";
 import LinkContent from "./LinkPageComponents/LinkContent";
 
@@ -149,7 +149,7 @@ const NewLinksPopup = ({
   const leftAppearance = () => <LinkAppearance />;
 
   return (
-    <div className={s.new__container}>
+    <div className={styles.new__container}>
       <GuideTemplate
         title={isEdit ? "Edit Helper Link" : "New Helper Link"}
         activeButton={activeBtn}
