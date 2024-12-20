@@ -27,6 +27,7 @@ const BannerSkeleton = () => {
       />
 
       <Skeleton
+        className="childSkeleton"
         sx={{
           position: "absolute",
           top: 12,
