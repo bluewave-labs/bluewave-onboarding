@@ -11,7 +11,7 @@ class TourService {
   async getTours(userId) {
     return await Tour.findAll({
       where: {
-        createdBy: userId
+        createdBy: userId,
       },
       include: [{ model: db.User, as: "creator" }],
     });
@@ -61,7 +61,7 @@ class TourService {
     } catch (error) {
       throw new Error("Error retrieving Tour by URL");
     }
-  };
+  }
 }
 
 module.exports = new TourService();
