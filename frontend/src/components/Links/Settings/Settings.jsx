@@ -40,7 +40,7 @@ const Settings = () => {
     } else {
       setState({
         ...defaultState,
-        id: Math.floor(Date.now() * Math.random()).toString(),
+        id: `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
       });
     }
     window.addEventListener("mousedown", handleMouseDown);
