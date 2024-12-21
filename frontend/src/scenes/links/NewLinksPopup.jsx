@@ -7,7 +7,7 @@ import {
   getHelperById,
   updateHelper,
 } from "../../services/helperLinkService";
-import { deleteLink, getLinkById } from "../../services/linkService";
+import { deleteLink } from "../../services/linkService";
 import { HelperLinkContext } from "../../services/linksProvider";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
 import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
@@ -16,6 +16,13 @@ import toastEmitter, { TOAST_EMITTER_KEY } from "../../utils/toastEmitter";
 import styles from "./LinkPage.module.scss";
 import LinkAppearance from "./LinkPageComponents/LinkAppearance";
 import LinkContent from "./LinkPageComponents/LinkContent";
+
+const DEFAULT_VALUES = {
+  title: "",
+  headerBackgroundColor: "#F8F9F8",
+  linkFontColor: "#344054",
+  iconColor: "#7F56D9",
+};
 
 const NewLinksPopup = ({
   autoOpen = false,
@@ -35,12 +42,6 @@ const NewLinksPopup = ({
     setHelperToEdit,
   } = useContext(HelperLinkContext);
 
-  const DEFAULT_VALUES = {
-    title: "",
-    headerBackgroundColor: "#F8F9F8",
-    linkFontColor: "#344054",
-    iconColor: "#7F56D9",
-  }
   const { openDialog, closeDialog, isOpen } = useDialog();
   const fetchHelperData = async () => {
     try {
@@ -48,12 +49,11 @@ const NewLinksPopup = ({
       setHelper(data);
       setLinks(links.sort((a, b) => a.order - b.order));
       setHelperToEdit(itemId);
-    }
-    catch (error) {
+    } catch (error) {
       emitToastError(buildToastError(error));
       closeDialog();
     }
-  }
+  };
 
   useEffect(() => {
     if (autoOpen) {
@@ -79,8 +79,8 @@ const NewLinksPopup = ({
     msg.response
       ? msg
       : {
-        response: { data: { errors: [{ msg }] } },
-      };
+          response: { data: { errors: [{ msg }] } },
+        };
 
   const handleLinks = async (item) => {
     const { id, ...link } = item;
@@ -89,8 +89,7 @@ const NewLinksPopup = ({
       return null;
     }
     try {
-      const exists = await getLinkById(id);
-      if (exists?.id) return { ...link, id };
+      if (typeof id === "number") return item;
       return { ...link };
     } catch (err) {
       emitToastError(err);
@@ -105,7 +104,7 @@ const NewLinksPopup = ({
       if (formattedLinks.some((it) => !it)) {
         return null;
       }
-      newHelper = await (helperToEdit
+      newHelper = await (isEdit
         ? updateHelper(helper, formattedLinks)
         : createHelper(helper, formattedLinks));
       setHelper(newHelper);
@@ -115,7 +114,7 @@ const NewLinksPopup = ({
       emitToastError(buildToastError(err));
       return null;
     }
-    if (helperToEdit && deletedLinks.length) {
+    if (isEdit && deletedLinks.length) {
       await Promise.all(
         deletedLinks.map(async (it) => {
           try {
@@ -128,11 +127,11 @@ const NewLinksPopup = ({
       );
     }
     if (newHelper) {
-      const toastMessage = helper.id
+      const toastMessage = isEdit
         ? "You edited this Helper Link"
         : "New Helper Link saved";
       toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
-      setShowNewLinksPopup(false);
+      closeDialog();
       setHelper({});
       setLinks([]);
       setHelperToEdit(null);
