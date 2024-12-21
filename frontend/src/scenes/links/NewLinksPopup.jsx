@@ -132,7 +132,6 @@ const NewLinksPopup = ({
         ? "You edited this Helper Link"
         : "New Helper Link saved";
       toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
-      setShowNewLinksPopup(false);
       setHelper({});
       setLinks([]);
       setHelperToEdit(null);
