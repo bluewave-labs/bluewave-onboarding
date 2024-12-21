@@ -2,24 +2,28 @@ import PropTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
 import Settings from "../../components/Links/Settings/Settings";
 import Preview from "../../products/LinkPreview";
-import { createHelper, updateHelper } from "../../services/helperLinkService";
+import {
+  createHelper,
+  getHelperById,
+  updateHelper,
+} from "../../services/helperLinkService";
 import { deleteLink, getLinkById } from "../../services/linkService";
 import { HelperLinkContext } from "../../services/linksProvider";
 import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
+import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 import { emitToastError } from "../../utils/guideHelper";
 import toastEmitter, { TOAST_EMITTER_KEY } from "../../utils/toastEmitter";
-import LinkAppearance from "./LinkAppearance";
-import LinkContent from "./LinkContent";
-import s from "./LinkPage.module.scss";
+import styles from "./LinkPage.module.scss";
+import LinkAppearance from "./LinkPageComponents/LinkAppearance";
+import LinkContent from "./LinkPageComponents/LinkContent";
 
 const NewLinksPopup = ({
-  currentHelper,
-  setShowNewLinksPopup,
-  currentLinks,
-  helperState,
+  autoOpen = false,
+  isEdit,
+  itemId,
+  setItemsUpdated,
 }) => {
   const [activeBtn, setActiveBtn] = useState(0);
-
   const {
     showSettings,
     helper,
@@ -31,22 +35,52 @@ const NewLinksPopup = ({
     setHelperToEdit,
   } = useContext(HelperLinkContext);
 
+  const DEFAULT_VALUES = {
+    title: "",
+    headerBackgroundColor: "#F8F9F8",
+    linkFontColor: "#344054",
+    iconColor: "#7F56D9",
+  }
+  const { openDialog, closeDialog, isOpen } = useDialog();
+  const fetchHelperData = async () => {
+    try {
+      const { links, ...data } = await getHelperById(itemId);
+      setHelper(data);
+      setLinks(links.sort((a, b) => a.order - b.order));
+      setHelperToEdit(itemId);
+    }
+    catch (error) {
+      emitToastError(buildToastError(error));
+      closeDialog();
+    }
+  }
+
   useEffect(() => {
-    setHelper(currentHelper);
-    if (currentLinks?.length) {
-      setLinks(currentLinks);
+    if (autoOpen) {
+      openDialog();
     }
-    if (helperState?.isEdit) {
-      setHelperToEdit(helperState.id);
+  }, [autoOpen, openDialog]);
+
+  useEffect(() => {
+    if (isEdit) {
+      fetchHelperData();
+    } else {
+      setHelper(DEFAULT_VALUES);
+      setLinks([]);
     }
-  }, []);
+    if (!isOpen) {
+      setLinks([]);
+      setHelper({});
+      setHelperToEdit(null);
+    }
+  }, [openDialog, isOpen]);
 
   const buildToastError = (msg) =>
     msg.response
       ? msg
       : {
-          response: { data: { errors: [{ msg }] } },
-        };
+        response: { data: { errors: [{ msg }] } },
+      };
 
   const handleLinks = async (item) => {
     const { id, ...link } = item;
@@ -75,6 +109,8 @@ const NewLinksPopup = ({
         ? updateHelper(helper, formattedLinks)
         : createHelper(helper, formattedLinks));
       setHelper(newHelper);
+      setItemsUpdated((prevState) => !prevState);
+      closeDialog();
     } catch (err) {
       emitToastError(buildToastError(err));
       return null;
@@ -96,7 +132,6 @@ const NewLinksPopup = ({
         ? "You edited this Helper Link"
         : "New Helper Link saved";
       toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
-      setShowNewLinksPopup(false);
       setHelper({});
       setLinks([]);
       setHelperToEdit(null);
@@ -104,13 +139,18 @@ const NewLinksPopup = ({
   };
 
   const rightContent = () => <Preview />;
-  const leftContent = () => <LinkContent />;
+  const leftContent = () => (
+    <>
+      {showSettings && <Settings />}
+      <LinkContent />
+    </>
+  );
   const leftAppearance = () => <LinkAppearance />;
 
   return (
-    <div className={s.new__container}>
+    <div className={styles.new__container}>
       <GuideTemplate
-        title='New helper link'
+        title={isEdit ? "Edit Helper Link" : "New Helper Link"}
         activeButton={activeBtn}
         handleButtonClick={setActiveBtn}
         rightContent={rightContent}
@@ -118,34 +158,15 @@ const NewLinksPopup = ({
         leftAppearance={leftAppearance}
         onSave={handleSaveHelper}
       />
-      {showSettings && <Settings />}
     </div>
   );
 };
 
 NewLinksPopup.propTypes = {
-  currentHelper: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    headerBackgroundColor: PropTypes.string,
-    linkFontColor: PropTypes.string,
-    iconColor: PropTypes.string,
-  }),
-  currentLinks: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      url: PropTypes.string,
-      target: PropTypes.bool,
-      x: PropTypes.number,
-      y: PropTypes.number,
-    })
-  ),
-  setShowNewLinksPopup: PropTypes.func,
-  helperState: PropTypes.shape({
-    isEdit: PropTypes.bool,
-    id: PropTypes.number,
-  }),
+  autoOpen: PropTypes.bool,
+  isEdit: PropTypes.bool.isRequired,
+  itemId: PropTypes.number,
+  setItemsUpdated: PropTypes.func.isRequired,
 };
 
 export default NewLinksPopup;

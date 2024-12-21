@@ -23,3 +23,23 @@ export const getTeamCount = async () => {
     throw err;
   }
 }
+
+export const addServerUrl = async url => {
+  try {
+    const response = await apiClient.put(`${baseEndpoint}/server-url`, { serverUrl: url });
+    return response.data;
+  } catch (err) {
+    console.error('Error setting server url: ', err);
+    throw err;
+  }
+}
+
+export const getServerUrl = async () => {
+  try {
+    const response = await apiClient.get(`${baseEndpoint}/server-url`);
+    return response.data;
+  } catch (err) {
+    console.error('Error getting server url: ', err);
+    throw err;
+  }
+};

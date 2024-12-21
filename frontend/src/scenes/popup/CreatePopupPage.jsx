@@ -1,20 +1,23 @@
-import RichTextEditor from "@components/RichTextEditor/RichTextEditor";
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import {
-  addPopup,
-  editPopup,
-  getPopupById,
-} from "../../services/popupServices";
-import GuideTemplate from "../../templates/GuideTemplate/GuideTemplate";
-import { emitToastError } from "../../utils/guideHelper";
-import toastEmitter, { TOAST_EMITTER_KEY } from "../../utils/toastEmitter";
-import PopupAppearance from "./PopupPageComponents/PopupAppearance/PopupAppearance";
-import PopupContent from "./PopupPageComponents/PopupContent/PopupContent";
+import React, { useState, useEffect } from 'react';
+import Turndown from 'turndown';
+import GuideTemplate from '../../templates/GuideTemplate/GuideTemplate';
+import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
+import PopupComponent from "../../products/Popup/PopupComponent";
+import PopupAppearance from './PopupPageComponents/PopupAppearance/PopupAppearance';
+import PopupContent from './PopupPageComponents/PopupContent/PopupContent';
+import { addPopup, getPopupById, editPopup } from '../../services/popupServices';
+import toastEmitter, { TOAST_EMITTER_KEY } from '../../utils/toastEmitter';
+import { emitToastError } from '../../utils/guideHelper';
+import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
-const CreatePopupPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+const CreatePopupPage = ({ autoOpen = false, isEdit, itemId, setItemsUpdated }) => {
+  const { openDialog, closeDialog } = useDialog();
+
+  useEffect(() => {
+    if (autoOpen) {  // auto open dialog to run tests
+      openDialog();
+    }
+  }, [autoOpen, openDialog]);
 
   const [activeButton, setActiveButton] = useState(0);
 
@@ -24,16 +27,22 @@ const CreatePopupPage = () => {
   const [buttonBackgroundColor, setButtonBackgroundColor] = useState("#7F56D9");
   const [buttonTextColor, setButtonTextColor] = useState("#FFFFFF");
 
-  const [header, setHeader] = useState("");
-  const [content, setContent] = useState("");
+  const [header, setHeader] = useState('');
+  const [content, setContent] = useState('');
 
-  const [actionButtonUrl, setActionButtonUrl] = useState("https://");
+  const markdownContent = new Turndown().turndown(content);
   const [url, setUrl] = useState("https://");
-  const [actionButtonText, setActionButtonText] = useState(
-    "Take me to subscription page"
-  );
-  const [buttonAction, setButtonAction] = useState("No action");
-  const [popupSize, setPopupSize] = useState("Small");
+  const [actionButtonUrl, setActionButtonUrl] = useState("https://");
+  const [actionButtonText, setActionButtonText] = useState("Take me to subscription page");
+  const [buttonAction, setButtonAction] = useState('No action');
+  const [popupSize, setPopupSize] = useState('Small');
+  const [stablePopupSize, setStablePopupSize] = useState('');
+
+  useEffect(() => {
+    if (popupSize) {
+      setStablePopupSize(popupSize); // prevent passing empty string to PopupComponent
+    }
+  }, [popupSize]);
 
   const stateList = [
     {
@@ -56,10 +65,10 @@ const CreatePopupPage = () => {
   ];
 
   useEffect(() => {
-    if (location.state?.isEdit) {
+    if (isEdit) {
       const fetchPopupData = async () => {
         try {
-          const popupData = await getPopupById(location.state.id);
+          const popupData = await getPopupById(itemId);
 
           // Update the state with the fetched data
           setHeaderBackgroundColor(
@@ -87,32 +96,9 @@ const CreatePopupPage = () => {
 
       fetchPopupData();
     }
-  }, [location.state]);
-
-  const validateUrl = (url) => {
-    try {
-      new URL(url);
-      return null;
-    } catch (err) {
-      return "Invalid URL format";
-    }
-  };
+  }, [isEdit, itemId]);
 
   const onSave = async () => {
-    if (actionButtonUrl && actionButtonUrl !== "https://") {
-      const urlError = validateUrl(actionButtonUrl);
-      if (urlError) {
-        emitToastError(urlError);
-        return;
-      }
-    }
-    if (url && url !== "https://") {
-      const urlError = validateUrl(url);
-      if (urlError) {
-        emitToastError(urlError);
-        return;
-      }
-    }
     const popupData = {
       popupSize: popupSize.toLowerCase(),
       url,
@@ -128,21 +114,20 @@ const CreatePopupPage = () => {
       content,
     };
     try {
-      const response = location.state?.isEdit
-        ? await editPopup(location.state?.id, popupData)
+      const response = isEdit
+        ? await editPopup(itemId, popupData)
         : await addPopup(popupData);
-
-      const toastMessage = location.state?.isEdit
+      const toastMessage = isEdit
         ? "You edited this popup"
         : "New popup Saved";
 
       toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
-      navigate("/popup");
+      setItemsUpdated(prevState => !prevState);
+      setHeader('');
+      setContent('');
+      closeDialog();
     } catch (error) {
-      const errorMessage = error.response?.data?.message
-        ? `Error: ${error.response.data.message}`
-        : "An unexpected error occurred. Please try again.";
-      toastEmitter.emit(TOAST_EMITTER_KEY, errorMessage);
+      emitToastError(error);
     }
   };
 
@@ -152,25 +137,31 @@ const CreatePopupPage = () => {
 
   return (
     <GuideTemplate
-      title={location.state?.isEdit ? "Edit Popup" : "New Popup"}
+      title={isEdit ? "Edit Popup" : "New Popup"}
       activeButton={activeButton}
       handleButtonClick={handleButtonClick}
       onSave={onSave}
       rightContent={() => (
         <RichTextEditor
+          previewComponent={() => (
+            <PopupComponent
+              header={header}
+              content={markdownContent}
+              previewBtnText={actionButtonText}
+              headerBackgroundColor={headerBackgroundColor}
+              headerColor={headerColor}
+              textColor={textColor}
+              buttonBackgroundColor={buttonBackgroundColor}
+              buttonTextColor={buttonTextColor}
+              popupSize={stablePopupSize}
+            />
+          )}
           header={header}
-          content={content}
           setHeader={setHeader}
           setContent={setContent}
-          previewBtnText={actionButtonText}
-          headerBackgroundColor={headerBackgroundColor}
-          headerColor={headerColor}
-          textColor={textColor}
-          buttonBackgroundColor={buttonBackgroundColor}
-          buttonTextColor={buttonTextColor}
-          popupSize={popupSize}
+          content={content}
           sx={{
-            width: "100%",
+            minWidth: "400px",
             maxWidth: "700px",
             marginLeft: "2.5rem",
             marginTop: "1rem",
