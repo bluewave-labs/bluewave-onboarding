@@ -39,6 +39,7 @@ const HintComponent = ({
                   backgroundColor: buttonBackgroundColor,
                   color: buttonTextColor,
                   marginBottom: "1rem",
+                  borderRadius: '8px'
                 }}
                 text={previewBtnText}
               ></Button>
