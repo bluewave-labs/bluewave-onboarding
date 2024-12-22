@@ -29,7 +29,7 @@ const HintComponent = ({
           </div>
         )}
         <div className="preview-content-container" style={{ color: textColor }}>
-          <div>
+          <div className="preview-content">
             <ReactMarkdown>{content}</ReactMarkdown>
           </div>
           <div className="preview-button-container">
@@ -38,7 +38,7 @@ const HintComponent = ({
                 style={{
                   backgroundColor: buttonBackgroundColor,
                   color: buttonTextColor,
-                  margin: "1rem",
+                  marginBottom: "1rem",
                 }}
                 text={previewBtnText}
               ></Button>
