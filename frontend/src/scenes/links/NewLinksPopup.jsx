@@ -43,6 +43,15 @@ const NewLinksPopup = ({
   } = useContext(HelperLinkContext);
 
   const { openDialog, closeDialog, isOpen } = useDialog();
+
+  const resetHelper = (close = true) => {
+    close && closeDialog();
+    setHelper({});
+    setLinks([]);
+    setHelperToEdit(null);
+    setDeletedLinks([]);
+  };
+
   const fetchHelperData = async () => {
     try {
       const { links, ...data } = await getHelperById(itemId);
@@ -51,23 +60,15 @@ const NewLinksPopup = ({
       setHelperToEdit(itemId);
     } catch (error) {
       emitToastError(buildToastError(error));
-      closeDialog();
+      resetHelper();
     }
-  };
-
-  const resetHelper = () => {
-    closeDialog();
-    setHelper({});
-    setLinks([]);
-    setHelperToEdit(null);
-    setDeletedLinks([]);
   };
 
   useEffect(() => {
     if (autoOpen) {
       openDialog();
     }
-  }, [autoOpen, openDialog]);
+  }, [autoOpen]);
 
   useEffect(() => {
     if (isEdit) {
@@ -77,9 +78,9 @@ const NewLinksPopup = ({
       setLinks([]);
     }
     if (!isOpen) {
-      resetHelper();
+      resetHelper(false);
     }
-  }, [openDialog, isOpen]);
+  }, [isOpen]);
 
   const buildToastError = (msg) =>
     msg.response
@@ -115,7 +116,6 @@ const NewLinksPopup = ({
         : createHelper(helper, formattedLinks));
       setHelper(newHelper);
       setItemsUpdated((prevState) => !prevState);
-      closeDialog();
     } catch (err) {
       emitToastError(buildToastError(err));
       return null;
