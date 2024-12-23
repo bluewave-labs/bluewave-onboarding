@@ -38,7 +38,6 @@ const NewLinksPopup = ({
     links,
     deletedLinks,
     setLinks,
-    helperToEdit,
     setHelperToEdit,
     setDeletedLinks,
   } = useContext(HelperLinkContext);
