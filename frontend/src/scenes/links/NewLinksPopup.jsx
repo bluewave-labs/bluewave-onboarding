@@ -40,6 +40,7 @@ const NewLinksPopup = ({
     setLinks,
     helperToEdit,
     setHelperToEdit,
+    setDeletedLinks,
   } = useContext(HelperLinkContext);
 
   const { openDialog, closeDialog, isOpen } = useDialog();
@@ -53,6 +54,14 @@ const NewLinksPopup = ({
       emitToastError(buildToastError(error));
       closeDialog();
     }
+  };
+
+  const resetHelper = () => {
+    closeDialog();
+    setHelper({});
+    setLinks([]);
+    setHelperToEdit(null);
+    setDeletedLinks([]);
   };
 
   useEffect(() => {
@@ -69,9 +78,7 @@ const NewLinksPopup = ({
       setLinks([]);
     }
     if (!isOpen) {
-      setLinks([]);
-      setHelper({});
-      setHelperToEdit(null);
+      resetHelper();
     }
   }, [openDialog, isOpen]);
 
@@ -118,7 +125,7 @@ const NewLinksPopup = ({
       await Promise.all(
         deletedLinks.map(async (it) => {
           try {
-            return await deleteLink({ ...it, helperId: helperToEdit });
+            return await deleteLink(it.id);
           } catch (err) {
             emitToastError(err);
             return null;
@@ -131,10 +138,7 @@ const NewLinksPopup = ({
         ? "You edited this Helper Link"
         : "New Helper Link saved";
       toastEmitter.emit(TOAST_EMITTER_KEY, toastMessage);
-      closeDialog();
-      setHelper({});
-      setLinks([]);
-      setHelperToEdit(null);
+      resetHelper();
     }
   };
 
