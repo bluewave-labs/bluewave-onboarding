@@ -1,9 +1,10 @@
 import { Skeleton } from "@mui/material";
 import styles from "./Skeleton.module.scss";
+import { baseSkeletonStyles } from "./BaseSkeletonStyles";
 
-const BaseSkeleton = ({ items = 4, frontSkeletonProps = {} }) => {
-
-    const skeletonStyles = { bgcolor: "var(--gray-200)", borderRadius: "3.12px" };
+const BaseSkeleton = ({ guideType, items = 4 }) => {
+  const skeletonStyles = { bgcolor: "var(--gray-200)", borderRadius: "3.12px" };
+  const guideTypeStyles = baseSkeletonStyles[guideType] || {};
 
   return (
     <div className={styles.skeletonContainer}>
@@ -15,17 +16,17 @@ const BaseSkeleton = ({ items = 4, frontSkeletonProps = {} }) => {
           height={18}
           animation={false}
           sx={skeletonStyles}
-          />
+        />
       ))}
 
       <Skeleton
         className="childSkeleton"
-        variant={frontSkeletonProps?.variant || "rounded"}
-        width={frontSkeletonProps?.width || 100}
-        height={frontSkeletonProps?.height || 50}
+        variant="rounded"
+        width={guideTypeStyles.width || 100}
+        height={guideTypeStyles.height || 50}
         animation={false}
         sx={{
-          ...frontSkeletonProps,
+          ...guideTypeStyles,
           bgcolor: "var(--blue-50)",
         }}
       />

@@ -53,17 +53,7 @@ const Dashboard = ({ name }) => {
 
   const buttons = [
     {
-      skeletonType: (
-        <BaseSkeleton
-          frontSkeletonProps={{
-            position: "absolute",
-            top: 25,
-            left: 30,
-            width: 80,
-            height: 35,
-          }}
-        />
-      ),
+      skeletonType: <BaseSkeleton guideType="popup" />,
       placeholder: "Create a popup",
       onClick: () => navigate("/popup/create"),
     },
@@ -73,17 +63,7 @@ const Dashboard = ({ name }) => {
       onClick: () => navigate("/banner/create"),
     },
     {
-      skeletonType: (
-        <BaseSkeleton
-          frontSkeletonProps={{
-            position: "absolute",
-            bottom: "1.3rem",
-            right: "1rem",
-            width: 75,
-            height: 60,
-          }}
-        />
-      ),
+      skeletonType: <BaseSkeleton guideType="helperLink" />,
       placeholder: "Create a new helper link",
       onClick: () => navigate("/hint/create"),
     },
