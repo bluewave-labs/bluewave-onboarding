@@ -26,12 +26,11 @@
 
 }
 
-.textField .MuiButton-root {
+.MuiBox-root .MuiInputLabel-root {
   font-size: var(--font-regular);
   color: var(--second-text-color);
 }
 
-.MuiBox-root .MuiInputLabel-root {
-  font-size: var(--font-regular);
-  color: var(--second-text-color);
+.MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled{
+  box-sizing: border-box;
 }

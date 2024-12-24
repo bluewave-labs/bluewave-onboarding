@@ -29,6 +29,15 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          '&.Mui-disabled': {
+            outline:0
+          },
+        },
+      },
+    },
     MuiDrawer: {
       styleOverrides: {
         paper: {

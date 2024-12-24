@@ -1,4 +1,4 @@
-.radio-button {
+.radioButton {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -6,25 +6,25 @@
     margin-bottom: 13px;
 }
 
-input {
+.radioButton input {
     accent-color: var(--main-purple);
 }
 
-input:active {
+.radioButton input:active {
     outline: 5px solid var(--light-border-color);
     border-radius: 5px;
 }
 
-.radio-primary input {
+.radioPrimary input {
     accent-color: var(--main-purple);
 }
 
-.radio-secondary input {
+.radioSecondary input {
     accent-color: var(--light-gray);
 }
 
-label {
+.label {
     color: var(--main-text-color);
     margin-left: 8px;
-    white-space: nowrap; 
+    white-space: nowrap;
 }
