@@ -1,6 +1,5 @@
 //CONSTANTS
-const BW_SERVER_ENDPOINT_BASE =
-    "http://localhost:3000/api/guide/get_guides_by_url";
+const BW_SERVER_ENDPOINT_BASE = "http://localhost:3000/api/guide/get_guides_by_url";
 const BW_JS_BASE_URL = "http://localhost:8082/";
 const BW_POPUP_JS_URL = `${BW_JS_BASE_URL}popup.js`;
 const BW_LINKS_JS_URL = `${BW_JS_BASE_URL}links.js`;
@@ -35,10 +34,7 @@ bw.util = {
                 script.async = false;
                 if (script.readyState) {
                     script.onreadystatechange = function () {
-                        if (
-                            script.readyState == "loaded" ||
-                            script.readyState == "complete"
-                        ) {
+                        if (script.readyState == "loaded" || script.readyState == "complete") {
                             script.onreadystatechange = null;
                             cb && cb();
                         }
@@ -52,10 +48,7 @@ bw.util = {
                     errcb && errcb();
                 };
                 script.src = url;
-                (
-                    document.getElementsByTagName("head")[0] ||
-                    document.getElementsByTagName("body")[0]
-                ).appendChild(script);
+                (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
             }
         } catch (e) {
             console.log(e);
