@@ -20,11 +20,7 @@ const Popup = () => {
 
   const handleClosePopup = async () => {
     setIsPopupOpen(false);
-    setLinks(
-      links.filter(
-        (it) => it.title !== itemToDelete.title && it.id !== itemToDelete.id
-      )
-    );
+    setLinks(links.filter((it) => it.id !== itemToDelete.id));
     typeof itemToDelete.id === "number" &&
       setDeletedLinks((prev) => [...prev, itemToDelete]);
     setItemToDelete(null);
