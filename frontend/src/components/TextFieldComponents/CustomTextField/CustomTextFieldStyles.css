@@ -30,7 +30,3 @@
   font-size: var(--font-regular);
   color: var(--second-text-color);
 }
-
-.MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled{
-  box-sizing: border-box;
-}
