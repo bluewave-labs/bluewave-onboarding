@@ -59,29 +59,29 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-  # frontend:
-  #   build: ./frontend
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules
-  #   ports:
-  #     - "4173:4173"
-  #   develop:
-  #     watch:
-  #       - action: sync
-  #         path: ./frontend
-  #         target: /app
-  #         ignore:
-  #           - node_modules/
-  #   environment:
-  #     - NODE_ENV=${NODE_ENV:-development}
-  #   command: >
-  #       bash -c "
-  #         if [ \"$NODE_ENV\" = \"development\" ]; then
-  #           npm run dev;
-  #         elif [ \"$NODE_ENV\" != \"development\" ]; then
-  #           npm run build && npm run preview;
-  #         fi"
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "4173:4173"
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app
+          ignore:
+            - node_modules/
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+    command: >
+        bash -c "
+          if [ \"$NODE_ENV\" = \"development\" ]; then
+            npm run dev;
+          elif [ \"$NODE_ENV\" != \"development\" ]; then
+            npm run build && npm run preview;
+          fi"
   mailhog:
     image: mailhog/mailhog
     ports:
