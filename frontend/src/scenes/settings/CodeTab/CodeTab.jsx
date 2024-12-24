@@ -114,8 +114,8 @@ const CodeTab = () => {
                             s.type="text/javascript";
                             s.async=false;
                             s.onerror=()=>{console.log("onboard not loaded");};
-                            s.src = 'http://localhost:8082;
-                            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+                            s.src = 'http://localhost:8082/main.js';
+                            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(s);
                         })();
                     </script>
                 `}
