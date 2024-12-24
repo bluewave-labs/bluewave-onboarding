@@ -37,7 +37,7 @@ const CustomTextField = ({
   const computedFullWidth = fullWidth ||
     ["full", "100%", "stretch"].some(value => TextFieldWidth.toLowerCase().includes(value));
   return (
-    <div style={{ ...style, ...(computedFullWidth && { width: '100%' }), boxSizing: 'border-box' }}>
+    <div style={{ ...style, ...(computedFullWidth && { width: '100%' })}}>
       {!checkCircleIconVisible &&
         <div>
           <InputLabel sx={{ fontWeight: labelFontWeight, margin: 0 }}>{labelText}</InputLabel>
