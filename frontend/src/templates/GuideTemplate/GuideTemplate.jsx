@@ -21,9 +21,10 @@ const GuideTemplate = ({
 
   return (
     <Dialog
+      closeAfterTransition={isOpen}
       open={isOpen}
       onClose={closeDialog}
-      maxWidth='lg'
+      maxWidth="lg"
       PaperProps={{ style: { position: "static" } }}
     >
       <div className={styles.container}>
@@ -60,13 +61,13 @@ const GuideTemplate = ({
             </div>
             <div className={styles.optionButtons}>
               <Button
-                text='Cancel'
-                buttonType='secondary-grey'
+                text="Cancel"
+                buttonType="secondary-grey"
                 onClick={() => {
                   closeDialog();
                 }}
               />
-              <Button text='Save' onClick={onSave} />
+              <Button text="Save" onClick={onSave} />
             </div>
           </div>
         </div>
