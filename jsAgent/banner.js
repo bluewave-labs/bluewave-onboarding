@@ -16,6 +16,12 @@ bw.banner={
         bw.banner.bindClick();
     },
     putHtml:function(){
+        const options = window.bwonboarddata.banner[0];
+        let option = {
+            ...bannerDefaultOptions,
+            ...options
+        };
+
         let temp_html = `
             <div id="bw-banner" style="position: fixed; top: 50px; z-index: 999999; height:50px; width:435px; background-color: #80e0ff; left: 50%; transform: translate(-50%, -50%);
                 line-height: 13px; font-weight: 400; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem; border-radius: 5px;">
