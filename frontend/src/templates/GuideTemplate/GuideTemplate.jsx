@@ -21,7 +21,7 @@ const GuideTemplate = ({
 
   return (
     <Dialog
-      closeAfterTransition={false}
+      closeAfterTransition={isOpen}
       open={isOpen}
       onClose={closeDialog}
       maxWidth="lg"

@@ -11,7 +11,7 @@ import {
 
 const ConfirmationPopup = ({ open, onConfirm, onCancel }) => {
   return (
-    <Dialog open={open} onClose={onCancel} closeAfterTransition={false}>
+    <Dialog open={open} onClose={onCancel} closeAfterTransition={open}>
       <DialogTitle>Confirm Action</DialogTitle>
       <DialogContent>
         <DialogContentText>
