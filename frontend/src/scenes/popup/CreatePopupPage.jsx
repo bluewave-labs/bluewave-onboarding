@@ -59,10 +59,8 @@ const CreatePopupPage = ({
   }, [popupSize]);
 
   const fetchPopupData = async () => {
-    console.log({ itemId });
     try {
       const popupData = await getPopupById(itemId);
-      console.log({ popupData });
 
       // Update the state with the fetched data
       setHeaderBackgroundColor(popupData.headerBackgroundColor || "#F8F9F8");
@@ -85,10 +83,7 @@ const CreatePopupPage = ({
     }
   };
 
-  console.log({ isEdit });
-
   useEffect(() => {
-    console.log({ isEdit });
     if (isEdit) {
       fetchPopupData();
     }
