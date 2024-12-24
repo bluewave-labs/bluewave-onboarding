@@ -15,6 +15,7 @@ const GuideTemplate = ({
   rightContent = () => null,
   leftAppearance = () => null,
   onSave = () => null,
+  setIsEdit = () => null,
 }) => {
   const { isOpen, closeDialog } = useDialog();
   const buttons = ["Content", "Appearance"];
@@ -65,6 +66,7 @@ const GuideTemplate = ({
                 buttonType="secondary-grey"
                 onClick={() => {
                   closeDialog();
+                  setIsEdit(false);
                 }}
               />
               <Button text="Save" onClick={onSave} />

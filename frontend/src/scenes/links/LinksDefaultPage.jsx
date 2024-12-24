@@ -25,6 +25,7 @@ const LinksDefaultPage = () => {
           isEdit={isEdit}
           itemId={itemId}
           setItemsUpdated={setItemsUpdated}
+          setIsEdit={setIsEdit}
         />
         <DefaultPageTemplate
           getItems={getHelpers}

@@ -30,6 +30,7 @@ const BannerDefaultPage = () => {
                 isEdit={isEdit}
                 itemId={itemId}
                 setItemsUpdated={setItemsUpdated}
+                setIsEdit={setIsEdit}
             />
         </>
     );

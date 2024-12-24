@@ -12,7 +12,7 @@ import BannerLeftContent from "./BannerPageComponents/BannerLeftContent/BannerLe
 import BannerPreview from "./BannerPageComponents/BannerPreview/BannerPreview";
 import { useDialog } from "../../templates/GuideTemplate/GuideTemplateContext";
 
-const BannerPage = ({isEdit,  itemId,  setItemsUpdated}) => {
+const BannerPage = ({isEdit,  itemId,  setItemsUpdated, setIsEdit }) => {
   const [backgroundColor, setBackgroundColor] = useState("#F9F5FF");
   const [fontColor, setFontColor] = useState("#344054");
   const [activeButton, setActiveButton] = useState(0);
@@ -83,6 +83,7 @@ const BannerPage = ({isEdit,  itemId,  setItemsUpdated}) => {
       activeButton={activeButton}
       handleButtonClick={handleButtonClick}
       onSave={onSave}
+      setIsEdit={setIsEdit}
       rightContent={() => (
         <BannerPreview
           backgroundColor={backgroundColor}
