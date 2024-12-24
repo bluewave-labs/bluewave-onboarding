@@ -30,6 +30,7 @@ const HintDefaultPage = () => {
         isEdit={isEdit}
         itemId={itemId}
         setItemsUpdated={setItemsUpdated}
+        setIsEdit={setIsEdit}
       />
     </>
   );
