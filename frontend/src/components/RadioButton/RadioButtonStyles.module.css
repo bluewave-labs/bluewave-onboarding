@@ -6,23 +6,6 @@
     margin-bottom: 13px;
 }
 
-.radioButton input {
-    accent-color: var(--main-purple);
-}
-
-.radioButton input:active {
-    outline: 5px solid var(--light-border-color);
-    border-radius: 5px;
-}
-
-.radioPrimary input {
-    accent-color: var(--main-purple);
-}
-
-.radioSecondary input {
-    accent-color: var(--light-gray);
-}
-
 .label {
     color: var(--main-text-color);
     margin-left: 8px;
