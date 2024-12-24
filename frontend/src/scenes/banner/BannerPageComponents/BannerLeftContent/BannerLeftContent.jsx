@@ -6,29 +6,15 @@ import React from "react";
 import styles from "./BannerLeftContent.module.scss";
 
 const BannerLeftContent = ({
-  setIsTopPosition,
-  url,
-  setUrl,
-  setButtonAction,
-  isTopPosition,
-  buttonAction,
-  actionUrl,
-  setActionUrl,
+  state,
+  updateState,
 }) => {
-  const handleSetUrl = (event) => {
-    setUrl(event.target.value);
+  const handleInputChange = (key) => (event) => {
+    updateState({ [key]: event.target.value });
   };
 
-  const handleSetActionUrl = (event) => {
-    setActionUrl(event.target.value);
-  };
-
-  const handleActionChange = (newAction) => {
-    setButtonAction(newAction);
-  };
-
-  const handlePositionChange = (newPosition) => {
-    setIsTopPosition(newPosition);
+  const handleBooleanChange = (key, value) => () => {
+    updateState({ [key]: value });
   };
 
   return (
@@ -36,50 +22,50 @@ const BannerLeftContent = ({
       <h2>Action</h2>
       <DropdownList
         actions={["No action", "Open URL", "Open URL in a new tab"]}
-        onActionChange={handleActionChange}
-        selectedActionString={buttonAction}
+        onActionChange={(newAction) => updateState({ buttonAction: newAction })}
+        selectedActionString={state.buttonAction}
       />
-      <h2 style={{ marginBottom: '10px'}}>Position</h2>
+      <h2 style={{ marginBottom: "10px" }}>Position</h2>
       <div className={styles.radioContent}>
         <RadioButton
-          label='Top (centered)'
-          checked={isTopPosition}
-          onChange={() => handlePositionChange(true)}
+          label="Top (centered)"
+          checked={state.isTopPosition}
+          onChange={handleBooleanChange("isTopPosition", true)}
         />
       </div>
       <div className={styles.radioContent}>
         <RadioButton
-          label='Bottom (centered)'
-          checked={!isTopPosition}
-          onChange={() => handlePositionChange(false)}
+          label="Bottom (centered)"
+          checked={!state.isTopPosition}
+          onChange={handleBooleanChange("isTopPosition", false)}
         />
       </div>
 
       <h2>URL</h2>
       <CustomTextField
-        TextFieldWidth='241px'
-        value={url}
-        onChange={handleSetUrl}
+        TextFieldWidth="241px"
+        value={state.url}
+        onChange={handleInputChange("url")}
       />
 
       <h2>Action URL</h2>
       <CustomTextField
-        TextFieldWidth='241px'
-        value={actionUrl}
-        onChange={handleSetActionUrl}
+        TextFieldWidth="241px"
+        value={state.actionUrl}
+        onChange={handleInputChange("actionUrl")}
       />
     </div>
   );
 };
 
 export default BannerLeftContent;
+
 BannerLeftContent.propTypes = {
-  setIsTopPosition: PropTypes.func,
-  url: PropTypes.string,
-  setUrl: PropTypes.func,
-  setButtonAction: PropTypes.func,
-  isTopPosition: PropTypes.bool,
-  buttonAction: PropTypes.string,
-  actionUrl: PropTypes.string,
-  setActionUrl: PropTypes.func,
+  state: PropTypes.shape({
+    url: PropTypes.string,
+    buttonAction: PropTypes.string,
+    isTopPosition: PropTypes.bool,
+    actionUrl: PropTypes.string,
+  }),
+  updateState: PropTypes.func.isRequired,
 };
