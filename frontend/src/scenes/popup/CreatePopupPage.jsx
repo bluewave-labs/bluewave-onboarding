@@ -231,6 +231,6 @@ export default CreatePopupPage;
 CreatePopupPage.propTypes = {
   autoOpen: PropTypes.bool,
   isEdit: PropTypes.bool,
-  itemId: PropTypes.string,
+  itemId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   setItemsUpdated: PropTypes.func,
 };
