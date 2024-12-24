@@ -25,7 +25,8 @@ const Popup = () => {
         (it) => it.title !== itemToDelete.title && it.id !== itemToDelete.id
       )
     );
-    setDeletedLinks((prev) => [...prev, itemToDelete]);
+    typeof itemToDelete.id === "number" &&
+      setDeletedLinks((prev) => [...prev, itemToDelete]);
     setItemToDelete(null);
   };
 
