@@ -7,6 +7,8 @@ import CreateActivityButtonList from "./HomePageComponents/CreateActivityButtonL
 import DateDisplay from "./HomePageComponents/DateDisplay/DateDisplay";
 import StatisticCardList from "./HomePageComponents/StatisticCardsList/StatisticCardsList";
 import UserTitle from "./HomePageComponents/UserTitle/UserTitle";
+import BannerSkeleton from "./HomePageComponents/Skeletons/BannerSkeleton";
+import BaseSkeleton from "./HomePageComponents/Skeletons/BaseSkeleton";
 
 const mapMetricName = (guideType) => {
   switch (guideType) {
@@ -51,18 +53,22 @@ const Dashboard = ({ name }) => {
 
   const buttons = [
     {
+      skeletonType: <BaseSkeleton guideType="popup" />,
       placeholder: "Create a popup",
       onClick: () => navigate("/popup/create"),
     },
     {
-      placeholder: "Add a hint to your app",
-      onClick: () => navigate("/hint/create"),
-    },
-    {
+      skeletonType: <BannerSkeleton />,
       placeholder: "Create a new banner",
       onClick: () => navigate("/banner/create"),
     },
+    {
+      skeletonType: <BaseSkeleton guideType="helperLink" />,
+      placeholder: "Create a new helper link",
+      onClick: () => navigate("/hint/create"),
+    },
   ];
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
